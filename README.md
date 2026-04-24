@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/beebeeb-io/site/blob/main/LICENSE"><img src="https://img.shields.io/github/license/beebeeb-io/site" alt="License"></a>
+  <a href="https://github.com/beebeeb-io/site/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-CC%20BY--NC--ND%204.0-blue" alt="License"></a>
   <a href="https://github.com/beebeeb-io/site/actions"><img src="https://img.shields.io/github/actions/workflow/status/beebeeb-io/site/ci.yml?branch=main" alt="CI"></a>
   <a href="https://github.com/beebeeb-io/site/graphs/contributors"><img src="https://img.shields.io/github/contributors/beebeeb-io/site" alt="Contributors"></a>
   <a href="https://github.com/beebeeb-io/site/stargazers"><img src="https://img.shields.io/github/stars/beebeeb-io/site" alt="Stars"></a>
@@ -105,7 +105,9 @@ If you discover a security vulnerability, please report it responsibly. See [SEC
 
 ## License
 
-This project is licensed under the [GNU Affero General Public License v3.0](LICENSE).
+This project is licensed under [CC BY-NC-ND 4.0](LICENSE) (Creative Commons Attribution-NonCommercial-NoDerivatives).
+
+You may view the source code, but you may not use the content, branding, or design commercially or create derivative works. The Beebeeb client apps (core, web, mobile, desktop, CLI) are open source under AGPL-3.0 — this license applies only to the marketing website.
 
 Copyright (C) 2025-2026 [Initlabs B.V.](https://initlabs.nl)
 
