@@ -1,0 +1,51 @@
+---
+import RegionBadge from './RegionBadge.astro';
+
+const columns = [
+  { title: 'Product', items: ['Drive', 'Photos', 'Sharing', 'Team vaults', 'Desktop apps', 'Mobile apps'] },
+  { title: 'Security', items: ['Whitepaper', 'Open source', 'Audit reports', 'Bug bounty', 'Security page'] },
+  { title: 'Company', items: ['About', 'Careers', 'Blog', 'Press', 'Contact'] },
+  { title: 'Legal', items: ['Privacy', 'Terms', 'DPA', 'Transparency report', 'Imprint'] },
+];
+---
+
+<footer class="px-8 pt-12 pb-7 bg-paper-2 border-t border-line">
+  <div class="max-w-[1100px] mx-auto">
+    <div class="grid grid-cols-[1.4fr_repeat(4,1fr)] gap-6 mb-9">
+      <div>
+        <a href="/" class="text-[15px] font-bold tracking-tight text-ink no-underline">
+          beebeeb<span class="text-amber">.io</span>
+        </a>
+        <div class="text-xs text-ink-3 mt-3 leading-relaxed max-w-[260px]">
+          Beebeeb &middot; operated by Initlabs B.V.<br />
+          Kelvinstraat 34A, 6601 HE Wijchen<br />
+          KvK 95157565 &middot; BTW NL867023430B01
+        </div>
+      </div>
+      {columns.map((col) => (
+        <div>
+          <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-2.5">
+            {col.title}
+          </div>
+          <div class="flex flex-col gap-1.5">
+            {col.items.map((item) => (
+              <span class="text-[12.5px] text-ink-2 cursor-default">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="pt-5 border-t border-line flex items-center gap-3.5 text-[11px] text-ink-3 flex-wrap">
+      <span>&copy; 2026 Initlabs B.V.</span>
+      <span>&middot;</span>
+      <RegionBadge />
+      <span class="ml-auto flex items-center gap-2.5">
+        <span>Status</span>
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10.5px] font-mono bg-[oklch(0.95_0.05_155)] border border-[oklch(0.85_0.1_155)] text-[oklch(0.35_0.12_155)]">
+          <span class="w-1.5 h-1.5 rounded-full bg-green"></span>
+          All systems
+        </span>
+      </span>
+    </div>
+  </div>
+</footer>

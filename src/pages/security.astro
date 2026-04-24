@@ -1,0 +1,160 @@
+---
+import Base from '../layouts/base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+---
+
+<Base title="Security — Beebeeb" description="How encryption works at Beebeeb. Zero-knowledge by architecture, not by promise.">
+  <Nav active="Security" />
+
+  <!-- Hero -->
+  <section class="px-8 pt-[72px] pb-12 text-center relative" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 85%);">
+    <div class="text-[11px] font-semibold tracking-[0.04em] uppercase text-amber-deep">How encryption works at Beebeeb</div>
+    <h1 class="text-[56px] leading-[1.05] font-bold tracking-[-0.03em] mt-3.5 max-w-[900px] mx-auto">
+      We don't ask you to trust us.<br />
+      <span class="text-ink-3">We designed a system that cannot betray you.</span>
+    </h1>
+    <p class="text-base text-ink-2 mt-[22px] max-w-[640px] mx-auto leading-relaxed">
+      Your passphrase never leaves your device. Your keys never touch our servers. Every file — and every filename — is encrypted before it's uploaded.
+    </p>
+  </section>
+
+  <!-- Flow diagram -->
+  <section class="px-12 pt-12 pb-[72px] bg-paper">
+    <div class="border border-line rounded-xl bg-paper-2 p-10">
+      <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 text-center mb-8">The lifecycle of a file</div>
+      <div class="grid grid-cols-5 items-center">
+        <!-- Step 01 -->
+        <div class="text-center px-3">
+          <div class="w-16 h-16 rounded-2xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1">
+            <svg class="w-6 h-6 text-amber-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="font-mono text-[10px] text-ink-4 mt-3">01</div>
+          <div class="text-sm font-semibold mt-1">On your device</div>
+          <p class="text-[11px] text-ink-3 mt-1.5 leading-relaxed max-w-[180px] mx-auto">You choose a passphrase. We derive a 256-bit master key with Argon2id.</p>
+        </div>
+        <!-- Arrow -->
+        <div class="flex flex-col items-center gap-2">
+          <div class="h-0.5 w-full" style="background: repeating-linear-gradient(90deg, var(--color-line-2) 0, var(--color-line-2) 6px, transparent 6px, transparent 12px);"></div>
+          <span class="font-mono text-[10.5px] text-amber-deep">AES-256-GCM</span>
+        </div>
+        <!-- Step 02 -->
+        <div class="text-center px-3">
+          <div class="w-16 h-16 rounded-2xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1">
+            <svg class="w-6 h-6 text-amber-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="font-mono text-[10px] text-ink-4 mt-3">02</div>
+          <div class="text-sm font-semibold mt-1">Encrypted locally</div>
+          <p class="text-[11px] text-ink-3 mt-1.5 leading-relaxed max-w-[180px] mx-auto">Each chunk and filename is sealed before it leaves the machine.</p>
+        </div>
+        <!-- Arrow -->
+        <div class="flex flex-col items-center gap-2">
+          <div class="h-0.5 w-full" style="background: repeating-linear-gradient(90deg, var(--color-line-2) 0, var(--color-line-2) 6px, transparent 6px, transparent 12px);"></div>
+          <span class="font-mono text-[10.5px] text-amber-deep">TLS 1.3</span>
+        </div>
+        <!-- Step 03 -->
+        <div class="text-center px-3">
+          <div class="w-16 h-16 rounded-2xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1">
+            <svg class="w-6 h-6 text-amber-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </div>
+          <div class="font-mono text-[10px] text-ink-4 mt-3">03</div>
+          <div class="text-sm font-semibold mt-1">Stored in Frankfurt</div>
+          <p class="text-[11px] text-ink-3 mt-1.5 leading-relaxed max-w-[180px] mx-auto">We only ever see ciphertext and opaque blob IDs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Primitives grid -->
+  <section class="px-12 pt-8 pb-16 bg-paper">
+    <h2 class="text-[28px] font-bold tracking-[-0.02em] mb-2">The primitives</h2>
+    <p class="text-[11px] text-ink-3 mb-7 max-w-[540px]">No novel crypto. Every primitive is a well-understood, widely-audited standard.</p>
+    <div class="grid grid-cols-3 gap-4">
+      {[
+        ['Key derivation', 'Argon2id', 'memory: 256 MiB · iterations: 4 · parallelism: 2'],
+        ['Symmetric cipher', 'AES-256-GCM', 'per-chunk nonces · 16-byte auth tags'],
+        ['Asymmetric cipher', 'X25519 + ChaCha20-Poly1305', 'used for sharing sealed links'],
+        ['Transport', 'TLS 1.3 + HSTS preload', 'certificate pinning in mobile & desktop'],
+        ['Metadata', 'Encrypted filenames & paths', 'we see only opaque IDs and sizes'],
+        ['Password reset', 'Recovery kit (your choice)', 'we cannot reset a passphrase. Ever.'],
+      ].map(([label, value, sub]) => (
+        <div class="p-5 bg-paper-2 rounded-xl border border-line">
+          <div class="text-[10px] font-semibold tracking-[0.04em] uppercase text-amber-deep">{label}</div>
+          <div class="font-mono text-[15px] font-semibold mt-1.5">{value}</div>
+          <p class="text-[11px] text-ink-3 mt-2 leading-relaxed">{sub}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Threat model -->
+  <section class="px-12 py-16 bg-paper-2 border-t border-b border-line">
+    <h2 class="text-[28px] font-bold tracking-[-0.02em] mb-7">What we defend against — honestly</h2>
+    <div class="grid grid-cols-2 gap-4">
+      {[
+        { ok: true, title: 'A server breach', body: 'Attackers get ciphertext and blob IDs. Without your passphrase, there is nothing to read.' },
+        { ok: true, title: 'A rogue Beebeeb employee', body: 'No Beebeeb employee has the keys required to decrypt your files. The system refuses, not the policy.' },
+        { ok: true, title: 'A lawful government request', body: "We hand over what we have: ciphertext and metadata-free audit logs. It's useless." },
+        { ok: true, title: 'ISP or network eavesdropping', body: 'TLS 1.3 + cert pinning. The payload inside is already encrypted anyway.' },
+        { ok: false, title: 'Malware on your device', body: 'Nothing we can do. If your device is compromised, keys in memory are compromised. Hygiene matters.' },
+        { ok: false, title: 'Forgotten passphrase + lost recovery kit', body: 'We cannot help. This is the design. We would rather say no than pretend otherwise.' },
+      ].map((item) => (
+        <div class:list={[
+          'p-5 rounded-xl bg-paper flex gap-3.5 border',
+          item.ok ? 'border-line' : 'border-[oklch(0.9_0.04_30)]',
+        ]}>
+          <div class:list={[
+            'w-7 h-7 rounded-lg shrink-0 flex items-center justify-center text-sm font-bold border',
+            item.ok
+              ? 'bg-[oklch(0.95_0.05_155)] border-[oklch(0.85_0.1_155)] text-[oklch(0.45_0.14_155)]'
+              : 'bg-[oklch(0.96_0.03_30)] border-[oklch(0.85_0.08_30)] text-[oklch(0.5_0.15_30)]',
+          ]}>
+            {item.ok ? (
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            ) : (
+              <span>!</span>
+            )}
+          </div>
+          <div class="flex-1">
+            <div class="text-sm font-semibold">{item.title}</div>
+            <p class="text-[11px] text-ink-3 mt-1 leading-relaxed">{item.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Audits -->
+  <section class="px-12 py-16 bg-paper">
+    <div class="grid grid-cols-2 gap-12 items-start">
+      <div>
+        <h2 class="text-[28px] font-bold tracking-[-0.02em]">Audited. Publicly.</h2>
+        <p class="text-[15px] text-ink-2 mt-3 leading-relaxed">
+          We hire external firms to break our system and publish everything they find. Every finding, every fix, signed PGP. If you think you've spotted a flaw, our bug bounty pays cash.
+        </p>
+        <div class="flex gap-2.5 mt-5">
+          <Button variant="primary" size="sm">Read the audit reports</Button>
+          <Button variant="ghost" size="sm">Bug bounty program</Button>
+        </div>
+      </div>
+      <div class="bg-paper-2 rounded-xl border border-line p-5">
+        {[
+          ['Cure53', '2025-09', 'Web client + SDK', 'Resolved: 2 medium · 3 low'],
+          ['Radically Open Security', '2025-03', 'Desktop sync engine', 'Resolved: 1 high · 4 low'],
+          ['NCC Group', '2024-11', 'Cryptographic primitives', 'No findings above informational'],
+        ].map(([firm, date, scope, res], i, arr) => (
+          <div class:list={['grid grid-cols-[1fr_auto] gap-1.5 items-center py-3.5', i < arr.length - 1 ? 'border-b border-line' : '']}>
+            <div>
+              <div class="text-sm font-semibold">{firm}</div>
+              <p class="text-[11px] text-ink-3 mt-0.5">{scope} &middot; {res}</p>
+            </div>
+            <div class="font-mono text-[11px] text-ink-3">{date}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>

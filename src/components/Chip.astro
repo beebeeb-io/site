@@ -1,0 +1,25 @@
+---
+interface Props {
+  variant?: 'default' | 'amber' | 'green' | 'filled';
+  class?: string;
+}
+
+const { variant = 'default', class: className } = Astro.props;
+
+const variantClasses: Record<string, string> = {
+  default: 'bg-paper-2 border-line text-ink-3',
+  amber: 'bg-amber-bg border-amber-deep/30 text-amber-deep',
+  green: 'bg-[oklch(0.95_0.05_155)] border-[oklch(0.85_0.1_155)] text-[oklch(0.35_0.12_155)]',
+  filled: 'bg-ink text-paper border-ink',
+};
+
+const classes = [
+  'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10.5px] font-mono font-medium border leading-relaxed',
+  variantClasses[variant],
+  className,
+].filter(Boolean).join(' ');
+---
+
+<span class={classes}>
+  <slot />
+</span>

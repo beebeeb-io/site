@@ -1,0 +1,12 @@
+---
+interface Props {
+  region?: string;
+}
+
+const { region = 'EU sovereign' } = Astro.props;
+---
+
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-paper-2 border border-line-2 text-ink-3">
+  <span class="w-1.5 h-1.5 rounded-full bg-green"></span>
+  {region}
+</span>

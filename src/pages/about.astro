@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="About — Beebeeb" description="Two brothers from Wijchen building the European cloud that answers to you.">
+  <Nav />
+
+  <!-- Hero -->
+  <section class="px-12 pt-20 pb-12 text-center" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 85%);">
+    <div class="text-[11px] font-semibold tracking-[0.04em] uppercase text-amber-deep">Made in Europe, on purpose</div>
+    <h1 class="text-[52px] leading-[1.05] font-bold tracking-[-0.03em] mt-3 max-w-[900px] mx-auto">
+      Two brothers. One hive.<br />
+      <span class="text-ink-3">A cloud that answers to you.</span>
+    </h1>
+  </section>
+
+  <!-- Founder story + At a glance -->
+  <section class="px-20 py-14 bg-paper">
+    <div class="grid grid-cols-2 gap-14 items-start">
+      <div>
+        <h2 class="text-[26px] font-bold tracking-[-0.02em] mb-4">Why we're building this</h2>
+        <div class="text-[15px] leading-[1.75] text-ink-2 space-y-3.5">
+          <p>
+            In 2024, a friend running a small practice asked us where to put her client files. She didn't want a US cloud, didn't trust the "sovereign" re-sellers, and couldn't afford enterprise E2EE. Nothing satisfying existed.
+          </p>
+          <p>
+            So we started Beebeeb. One of us spent years building reliable infrastructure for other companies. The other came from product and engineering. We built the thing our friend wanted: boring crypto, no silent telemetry, EU jurisdiction by design.
+          </p>
+          <p>
+            We're incorporated in the Netherlands — Initlabs B.V., KvK 95157565 — and we publish our warrant canary every month. When you pay us, the money goes into building the product and paying the people building it. No VC clock, no Delaware parent.
+          </p>
+        </div>
+      </div>
+
+      <!-- At a glance card -->
+      <div class="bg-paper-2 rounded-xl border border-line p-6 sticky top-6">
+        <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-3.5">At a glance</div>
+        {[
+          ['Founded', '2025, Wijchen NL'],
+          ['Entity', 'Initlabs B.V.'],
+          ['KvK', '95157565'],
+          ['BTW', 'NL867023430B01'],
+          ['Team', '2 co-founders · hiring'],
+          ['Status', 'Pre-launch · closed beta'],
+          ['Data residency', 'EU only'],
+          ['Investors', 'Bootstrapped'],
+        ].map(([key, val], i, arr) => (
+          <div class:list={['grid grid-cols-[1fr_auto] py-2.5', i < arr.length - 1 ? 'border-b border-line' : '']}>
+            <span class="text-[11px] text-ink-3">{key}</span>
+            <span class="font-mono text-[11.5px] text-ink">{val}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="px-12 pt-12 pb-[72px] bg-paper-2 border-t border-b border-line">
+    <h2 class="text-[26px] font-bold tracking-[-0.02em] mb-6 text-center">The two of us.</h2>
+    <div class="grid grid-cols-2 gap-5 max-w-[760px] mx-auto">
+      {[
+        {
+          name: 'Bram Langelaar',
+          role: 'Co-founder · CEO',
+          bio: 'Product and go-to-market. Talks to customers, writes the copy, owns the roadmap. Wijchen, NL.',
+          initials: 'BL',
+          color: 'oklch(0.8 0.1 55)',
+        },
+        {
+          name: 'Guus Langelaar',
+          role: 'Co-founder · CTO',
+          bio: 'Infrastructure and crypto. Has racked a server on a Sunday. Wijchen, NL.',
+          initials: 'GL',
+          color: 'oklch(0.75 0.12 70)',
+        },
+      ].map((person) => (
+        <div class="bg-paper rounded-xl p-[22px] border border-line flex gap-3.5">
+          <div class="w-14 h-14 rounded-full shrink-0 flex items-center justify-center text-xl font-semibold text-paper" style={`background: ${person.color};`}>
+            {person.initials}
+          </div>
+          <div>
+            <div class="text-[15px] font-semibold">{person.name}</div>
+            <div class="text-[10px] font-semibold tracking-[0.04em] uppercase text-ink-3 mt-0.5">{person.role}</div>
+            <p class="text-[11px] text-ink-3 mt-2.5 leading-relaxed">{person.bio}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+    <p class="text-[11px] text-ink-3 text-center mt-5">
+      25 more hands on cryptography, reliability, support, legal, and the hive. All based in the EU. We'll never move.
+    </p>
+  </section>
+
+  <!-- Promises -->
+  <section class="px-12 py-14 bg-paper">
+    <h2 class="text-[26px] font-bold tracking-[-0.02em] mb-2">What we promise</h2>
+    <p class="text-[11px] text-ink-3 mb-7 max-w-[500px]">Five things we commit to, in writing, forever.</p>
+    <div class="grid grid-cols-5 gap-3">
+      {[
+        ['01', 'EU-only by design', "No subsidiary, no sub-processor, no server outside the EU. If this changes, you'll know a year in advance."],
+        ['02', 'Zero knowledge', 'We will never add a backdoor, key escrow, or decryption capability. Not for ourselves, not for governments.'],
+        ['03', 'No telemetry', 'No analytics SDKs. No crash reports unless you opt in. No third-party scripts on this page.'],
+        ['04', 'No ads, ever', 'We sell storage. Not your attention and not your data. This is in our articles of incorporation.'],
+        ['05', 'Bought? Open-sourced', 'If we are ever acquired or shut down, all client apps become public domain within 30 days.'],
+      ].map(([n, title, body]) => (
+        <div class="p-[18px] bg-paper-2 rounded-xl border border-line">
+          <div class="font-mono text-[11px] text-amber-deep">{n}</div>
+          <h3 class="text-sm font-semibold mt-2.5">{title}</h3>
+          <p class="text-[11px] text-ink-3 mt-2 leading-relaxed">{body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <Footer />
+</Base>
