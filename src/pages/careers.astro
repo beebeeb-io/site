@@ -1,0 +1,76 @@
+---
+import Base from '../layouts/base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import Chip from '../components/Chip.astro';
+
+const roles = [
+  {
+    title: 'Founding backend engineer (Go)',
+    location: 'Remote EU · Wijchen 1d/wk',
+    team: 'Platform',
+    note: 'First hire',
+  },
+  {
+    title: 'Founding client engineer (TS · Swift or Kotlin)',
+    location: 'Remote EU',
+    team: 'Apps',
+    note: 'First hire',
+  },
+];
+
+const facts = [
+  '2 co-founders · hiring #1 and #2',
+  'Remote-first · EU-only by policy',
+  'Bootstrapped · no VC',
+  'Meaningful equity · honest cash',
+];
+---
+
+<Base title="Careers — Beebeeb" description="Join us at employee number one. We're hiring our first two engineers." path="/careers">
+  <Nav />
+
+  <section class="px-8 pt-14 pb-16 bg-paper">
+    <div class="max-w-[960px] mx-auto">
+      <!-- Hero -->
+      <Chip variant="amber">Hiring our first engineers &middot; 2 roles</Chip>
+      <h1 class="text-[40px] font-semibold tracking-[-0.03em] mt-3.5 max-w-[720px]">Join us at employee number one.</h1>
+      <p class="text-[15px] text-ink-2 mt-2.5 max-w-[680px] leading-relaxed">
+        Beebeeb is two brothers in Wijchen — Bram (CEO) and Guus (CTO) Langelaar — building a zero-knowledge cloud for European SMBs. We're hiring the next two people. If you want to own whole systems, read every line of our code, and ship without process theatre, read on.
+      </p>
+
+      <!-- Fact cards -->
+      <div class="mt-9 grid grid-cols-4 gap-3">
+        {facts.map((fact) => (
+          <div class="p-3.5 bg-paper-2 border border-line rounded-[10px] text-[12.5px] text-ink-2 font-medium">{fact}</div>
+        ))}
+      </div>
+
+      <!-- Open roles -->
+      <div class="mt-11">
+        <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-3">Open roles</div>
+        <div class="border border-line-2 rounded-[10px] overflow-hidden">
+          {roles.map((r, i) => (
+            <div class:list={['px-5 py-[18px] flex items-center gap-3.5', i < roles.length - 1 ? 'border-b border-line' : '']}>
+              <div class="flex-1">
+                <div class="text-[15px] font-semibold">{r.title}</div>
+                <div class="font-mono text-[10.5px] text-ink-3 mt-0.5">{r.team} &middot; {r.note}</div>
+              </div>
+              <span class="text-[12.5px] text-ink-2">{r.location}</span>
+              <Button size="sm">View role &rarr;</Button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Not a fit -->
+      <div class="mt-10 p-[22px] border border-line-2 rounded-xl bg-paper-2">
+        <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-1.5">Not a fit right now?</div>
+        <p class="text-[13.5px]">Email <span class="font-mono text-xs">contact@beebeeb.io</span> with what you'd want to build here. We read everything, and we remember.</p>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>

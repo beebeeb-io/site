@@ -1,0 +1,126 @@
+---
+import Base from '../layouts/base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Terms of Service — Beebeeb" description="Terms of service for Beebeeb, the zero-knowledge cloud operated by Initlabs B.V.">
+  <Nav />
+
+  <section class="px-8 pt-14 pb-20 bg-paper">
+    <div class="max-w-[760px] mx-auto">
+      <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-2">Legal</div>
+      <h1 class="text-[32px] font-semibold tracking-[-0.03em]">Terms of Service</h1>
+      <p class="text-sm text-ink-2 mt-2 leading-relaxed">
+        Effective 1 January 2026 &middot; Initlabs B.V. &middot; KvK 95157565
+      </p>
+
+      <div class="mt-10 space-y-10 text-[14px] text-ink-2 leading-[1.75]">
+
+        <!-- 1 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">1. Acceptance</h2>
+          <p>By creating an account or using any Beebeeb service you agree to these terms. If you do not agree, do not use the service.</p>
+        </div>
+
+        <!-- 2 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">2. The service</h2>
+          <p>Beebeeb provides encrypted cloud storage. Files are encrypted on your device before upload. We store encrypted blobs that we cannot read, decrypt, or inspect.</p>
+        </div>
+
+        <!-- 3 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">3. Account responsibilities</h2>
+          <p>You are responsible for your password and recovery phrase. We cannot reset either. Keep your recovery phrase in a safe place. If you share your account credentials with someone, you are responsible for their actions.</p>
+        </div>
+
+        <!-- 4 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">4. Data ownership</h2>
+          <p>Your data belongs to you. We claim no rights over your files. We store encrypted blobs we cannot read. You can export or delete your data at any time.</p>
+        </div>
+
+        <!-- 5 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">5. Acceptable use</h2>
+          <p>You may not use Beebeeb to:</p>
+          <ul class="mt-2 space-y-1.5 list-disc list-inside">
+            <li>Store or distribute illegal content under Dutch or EU law</li>
+            <li>Abuse, overload, or interfere with the service or other users</li>
+            <li>Reverse engineer, decompile, or attempt to extract the source code of the server software</li>
+            <li>Resell access without written permission</li>
+          </ul>
+          <p class="mt-2">We may suspend or terminate accounts that violate these rules.</p>
+        </div>
+
+        <!-- 6 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">6. Service availability</h2>
+          <p>We operate the service on a best-effort basis. We aim for 99.9% uptime but do not guarantee it. Scheduled maintenance windows are announced at least 48 hours in advance. We are not liable for data loss resulting from outages, though we design against it.</p>
+        </div>
+
+        <!-- 7 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">7. Encryption disclaimer</h2>
+          <p>Beebeeb uses zero-knowledge encryption. This means:</p>
+          <ul class="mt-2 space-y-1.5 list-disc list-inside">
+            <li>We never have access to your encryption keys</li>
+            <li>We cannot recover your data if you lose both your password and your recovery phrase</li>
+            <li>This is by design, not a limitation</li>
+          </ul>
+          <p class="mt-2">If you lose your password <strong>and</strong> your recovery phrase, your data is permanently unrecoverable. We cannot make exceptions.</p>
+        </div>
+
+        <!-- 8 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">8. Payment and billing</h2>
+          <p>Paid plans are billed monthly or annually via Stripe. Prices are in EUR and exclude VAT unless stated otherwise. You can cancel at any time; your plan continues until the end of the billing period.</p>
+        </div>
+
+        <!-- 9 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">9. Termination</h2>
+          <p>You can delete your account at any time from your account settings. When you delete your account:</p>
+          <ul class="mt-2 space-y-1.5 list-disc list-inside">
+            <li>Your encrypted data is shredded within 30 days</li>
+            <li>Your email and audit logs are retained for 13 months for legal compliance, then deleted</li>
+            <li>We confirm deletion by email</li>
+          </ul>
+          <p class="mt-2">We may terminate your account if you violate these terms, with notice where possible.</p>
+        </div>
+
+        <!-- 10 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">10. Liability</h2>
+          <p>To the extent permitted by Dutch law, our liability is limited to the amount you paid us in the 12 months before the event giving rise to the claim. We are not liable for indirect, incidental, or consequential damages.</p>
+        </div>
+
+        <!-- 11 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">11. Changes to these terms</h2>
+          <p>We may update these terms. When we make material changes, we will email you at least 30 days before they take effect. Continued use after the effective date means you accept the updated terms.</p>
+        </div>
+
+        <!-- 12 -->
+        <div>
+          <h2 class="text-lg font-semibold text-ink mb-2">12. Governing law</h2>
+          <p>These terms are governed by Dutch law. Disputes are resolved exclusively by the competent courts in the Netherlands.</p>
+        </div>
+
+        <!-- Company details -->
+        <div class="pt-6 border-t border-line">
+          <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-2">Operator</div>
+          <div class="font-mono text-[12.5px] text-ink-2 leading-relaxed">
+            <div>Initlabs B.V.</div>
+            <div>Kelvinstraat 34A, 6601 HE Wijchen, Netherlands</div>
+            <div>KvK 95157565 &middot; BTW NL867023430B01</div>
+            <div>contact@beebeeb.io</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>

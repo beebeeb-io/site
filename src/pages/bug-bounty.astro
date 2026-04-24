@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Chip from '../components/Chip.astro';
+
+const rewards = [
+  { severity: 'Critical', amount: '€10,000 – €25,000', example: 'Break zero-knowledge, key extraction', highlight: true },
+  { severity: 'High', amount: '€2,500 – €10,000', example: 'Auth bypass, SSRF to keys', highlight: false },
+  { severity: 'Medium', amount: '€500 – €2,500', example: 'IDOR, privilege escalation', highlight: false },
+  { severity: 'Low', amount: '€100 – €500', example: 'Info disclosure, weak defaults', highlight: false },
+];
+---
+
+<Base title="Bug Bounty — Beebeeb" description="Security is the whole product. Find a flaw, get paid, help us fix it." path="/bug-bounty">
+  <Nav />
+
+  <section class="px-8 pt-11 pb-16 bg-paper">
+    <div class="max-w-[760px] mx-auto">
+      <!-- Hero -->
+      <Chip variant="green">Rewards up to €25,000</Chip>
+      <h1 class="text-[32px] font-semibold tracking-[-0.03em] mt-3.5">Find a flaw. Get paid. Help us fix it.</h1>
+      <p class="text-sm text-ink-2 mt-2 leading-[1.65]">
+        Security is the whole product. We run a continuous program with clear rules — no lawyers, no threats, just gratitude and money.
+      </p>
+
+      <!-- Rewards grid -->
+      <div class="mt-[30px] grid grid-cols-4 gap-2.5">
+        {rewards.map((r) => (
+          <div class:list={['p-3.5 rounded-[10px] border', r.highlight ? 'bg-amber-bg border-amber-deep' : 'bg-paper-2 border-line']}>
+            <div class="text-[13px] font-semibold">{r.severity}</div>
+            <div class:list={['text-sm font-bold mt-1', r.highlight ? 'text-amber-deep' : 'text-ink']}>{r.amount}</div>
+            <div class="font-mono text-[10.5px] text-ink-3 mt-1.5 leading-relaxed">{r.example}</div>
+          </div>
+        ))}
+      </div>
+
+      <!-- How to report -->
+      <div class="mt-[30px]">
+        <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-2.5">How to report</div>
+        <div class="p-[18px] bg-paper-2 border border-line rounded-[10px] font-mono text-[12.5px] text-ink-2 leading-[1.7]">
+          <div>Email: security@beebeeb.io</div>
+          <div>PGP:   4096R / 7D9A 42C3 FA1E 88B0 &middot; <a class="text-amber-deep" href="#">fingerprint</a></div>
+          <div class="mt-2 text-ink-3"># first reply within 24h &middot; triage within 72h</div>
+        </div>
+      </div>
+
+      <!-- Hall of fame -->
+      <div class="mt-6">
+        <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-2.5">Hall of fame</div>
+        <div class="p-[18px] bg-paper-2 border border-dashed border-line-2 rounded-[10px] text-[12.5px] text-ink-3 leading-relaxed">
+          Empty for now — the program opens at public launch. First researchers to submit valid findings are named here with their permission, and paid out in EUR via SEPA.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>

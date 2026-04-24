@@ -2,10 +2,35 @@
 import RegionBadge from './RegionBadge.astro';
 
 const columns = [
-  { title: 'Product', items: ['Drive', 'Photos', 'Sharing', 'Team vaults', 'Desktop apps', 'Mobile apps'] },
-  { title: 'Security', items: ['Whitepaper', 'Open source', 'Audit reports', 'Bug bounty', 'Security page'] },
-  { title: 'Company', items: ['About', 'Careers', 'Blog', 'Press', 'Contact'] },
-  { title: 'Legal', items: ['Privacy', 'Terms', 'DPA', 'Transparency report', 'Imprint'] },
+  { title: 'Product', items: [
+    { label: 'Drive', href: '#' },
+    { label: 'Photos', href: '#' },
+    { label: 'Sharing', href: '#' },
+    { label: 'Team vaults', href: '#' },
+    { label: 'Desktop apps', href: '#' },
+    { label: 'Mobile apps', href: '#' },
+  ]},
+  { title: 'Security', items: [
+    { label: 'Whitepaper', href: '#' },
+    { label: 'Open source', href: '#' },
+    { label: 'Audit reports', href: '#' },
+    { label: 'Bug bounty', href: '/bug-bounty' },
+    { label: 'Security page', href: '/security' },
+  ]},
+  { title: 'Company', items: [
+    { label: 'About', href: '/about' },
+    { label: 'Careers', href: '/careers' },
+    { label: 'Blog', href: '#' },
+    { label: 'Press', href: '#' },
+    { label: 'Contact', href: '#' },
+  ]},
+  { title: 'Legal', items: [
+    { label: 'Privacy', href: '/privacy' },
+    { label: 'Terms', href: '/terms' },
+    { label: 'DPA', href: '#' },
+    { label: 'Transparency report', href: '#' },
+    { label: 'Imprint', href: '/imprint' },
+  ]},
 ];
 ---
 
@@ -29,7 +54,9 @@ const columns = [
           </div>
           <div class="flex flex-col gap-1.5">
             {col.items.map((item) => (
-              <span class="text-[12.5px] text-ink-2 cursor-default">{item}</span>
+              item.href === '#'
+                ? <span class="text-[12.5px] text-ink-2 cursor-default">{item.label}</span>
+                : <a href={item.href} class="text-[12.5px] text-ink-2 hover:text-ink transition-colors duration-150 no-underline">{item.label}</a>
             ))}
           </div>
         </div>

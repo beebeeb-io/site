@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="Imprint — Beebeeb" description="Legal entity information for Beebeeb, operated by Initlabs B.V. in Wijchen, Netherlands.">
+  <Nav />
+
+  <section class="px-8 pt-14 pb-20 bg-paper">
+    <div class="max-w-[760px] mx-auto">
+      <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-2">Legal</div>
+      <h1 class="text-[32px] font-semibold tracking-[-0.03em]">Imprint</h1>
+      <p class="text-sm text-ink-2 mt-2 leading-relaxed">
+        Information required by section 5 TMG and Dutch commercial law.
+      </p>
+
+      <div class="mt-10 bg-paper-2 border border-line rounded-xl p-7">
+        <div class="grid grid-cols-[auto_1fr] gap-x-8 gap-y-4 text-[14px]">
+          <span class="text-ink-3 text-[12.5px]">Company</span>
+          <span class="font-semibold">Initlabs B.V.</span>
+
+          <span class="text-ink-3 text-[12.5px]">Address</span>
+          <span>Kelvinstraat 34A<br />6601 HE Wijchen<br />Netherlands</span>
+
+          <span class="text-ink-3 text-[12.5px]">Chamber of Commerce (KvK)</span>
+          <span class="font-mono text-[13px]">95157565</span>
+
+          <span class="text-ink-3 text-[12.5px]">VAT number (BTW)</span>
+          <span class="font-mono text-[13px]">NL867023430B01</span>
+
+          <span class="text-ink-3 text-[12.5px]">Email</span>
+          <span class="font-mono text-[13px]">contact@beebeeb.io</span>
+
+          <span class="text-ink-3 text-[12.5px]">Directors</span>
+          <span>Bram Langelaar<br />Guus Langelaar</span>
+        </div>
+      </div>
+
+      <div class="mt-8 text-[13px] text-ink-3 leading-relaxed">
+        <p>Responsible for content in accordance with section 18(2) MStV: Bram Langelaar, at the address above.</p>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>

@@ -1,0 +1,63 @@
+---
+import Base from '../layouts/base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Chip from '../components/Chip.astro';
+
+const entries = [
+  {
+    date: 'Apr 22, 2026',
+    tag: 'security',
+    tagVariant: 'amber' as const,
+    title: 'Post-quantum key exchange (X25519 + ML-KEM) in preview',
+    body: "New vaults can opt into hybrid key agreement. Existing vaults will be migrated automatically in Q3 — no action required. Details in docs.",
+  },
+  {
+    date: 'Apr 15, 2026',
+    tag: 'feature',
+    tagVariant: 'green' as const,
+    title: 'File request links',
+    body: "You can now generate a public upload link that lets anyone send you files, encrypted to your key from the browser. They don't need a Beebeeb account.",
+  },
+  {
+    date: 'Apr 8, 2026',
+    tag: 'mobile',
+    tagVariant: 'default' as const,
+    title: 'iOS 17.5 · share extension',
+    body: 'Send any file to Beebeeb from Photos, Files, Mail, or Safari.',
+  },
+  {
+    date: 'Mar 29, 2026',
+    tag: 'fix',
+    tagVariant: 'default' as const,
+    title: 'Large folder uploads > 100k files',
+    body: 'Previously stalled around 65k. Now chunks in 2k batches and continues across sessions.',
+  },
+];
+---
+
+<Base title="Changelog — Beebeeb" description="What shipped, what changed, what broke." path="/changelog">
+  <Nav />
+
+  <section class="px-8 pt-12 pb-16 bg-paper">
+    <div class="max-w-[760px] mx-auto">
+      <h1 class="text-[32px] font-semibold tracking-[-0.03em]">Changelog</h1>
+      <p class="text-sm text-ink-2 mt-1.5">What shipped, what changed, what broke. Subscribe via <a class="text-amber-deep" href="#">RSS</a>.</p>
+
+      <div class="mt-8">
+        {entries.map((e, i) => (
+          <div class:list={['py-6', i < entries.length - 1 ? 'border-b border-line' : '']}>
+            <div class="flex items-center gap-2.5">
+              <span class="font-mono text-[10.5px] text-ink-3 w-[100px]">{e.date}</span>
+              <Chip variant={e.tagVariant}>{e.tag}</Chip>
+            </div>
+            <h2 class="text-[18px] font-semibold mt-2.5 tracking-[-0.01em]">{e.title}</h2>
+            <p class="text-[13.5px] text-ink-2 mt-1.5 leading-[1.65]">{e.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</Base>

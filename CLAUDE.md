@@ -16,10 +16,15 @@ bun run build # Static output in dist/
 - `/security` — How encryption works (flow diagram, primitives, threat model)
 - `/pricing` — 4 plans (Free/Personal/Team/Business)
 - `/about` — Founder story, company details, 5 promises
+- `/status` — System status (service grid, 90-day uptime bars, incidents)
+- `/docs` — Documentation landing (search bar, 6-card category grid)
+- `/changelog` — Reverse-chronological entries with tag chips
+- `/careers` — Open roles, company facts, contact CTA
+- `/bug-bounty` — Rewards table, reporting instructions, hall of fame
 
 ## Design references
 
-`../../design/hifi/hifi-landing.jsx` and `../../design/hifi/hifi-marketing.jsx`
+`../../design/hifi/hifi-landing.jsx`, `../../design/hifi/hifi-marketing.jsx`, and `../../design/hifi/hifi-public-extra.jsx`
 
 ## Brand rules
 
