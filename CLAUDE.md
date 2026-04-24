@@ -27,3 +27,8 @@ ALL copy comes from the design files. Don't invent marketing language.
 - Company: Initlabs B.V., KvK 95157565, BTW NL867023430B01, Kelvinstraat 34A, 6601 HE Wijchen
 - Voice: honest, precise, calm. No adjectives that can't be measured.
 - Name infrastructure: "Hetzner · Germany" not "EU cloud"
+
+
+## Keep shared docs in sync
+
+When you add/change/remove endpoints, types, build commands, or dependencies: update the relevant skill file in `/home/guus/code/beebeeb.io/.claude/skills/` (beebeeb-api.md, beebeeb-designs.md, beebeeb-stack.md, beebeeb-dev.md). Other agents depend on these being accurate.
