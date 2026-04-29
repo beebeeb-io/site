@@ -1,0 +1,8 @@
+{
+  "collectionName": "components_blocks_status_grids",
+  "info": { "displayName": "Status Grid", "icon": "apps" },
+  "attributes": {
+    "services": { "type": "json" },
+    "incidents": { "type": "json" }
+  }
+}

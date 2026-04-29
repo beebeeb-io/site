@@ -1,0 +1,27 @@
+---
+interface Props {
+  title?: string;
+  body?: string;
+  facts?: { label: string; value: string }[];
+  [key: string]: unknown;
+}
+
+const { title, body, facts = [] } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper">
+  <div class="max-w-[900px] mx-auto">
+    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-6 bb-fade-up">{title}</h2>}
+    {body && <div class="prose text-ink-2 leading-relaxed mb-10 bb-fade-up bb-delay-1" set:html={body} />}
+    {facts.length > 0 && (
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bb-fade-up bb-delay-2" data-stagger>
+        {facts.map((f) => (
+          <div class="p-4 border border-line rounded-lg text-center bb-fade-up">
+            <div class="text-2xl font-bold text-amber-deep">{f.value}</div>
+            <div class="text-[11px] text-ink-3 mt-1">{f.label}</div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>

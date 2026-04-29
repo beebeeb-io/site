@@ -1,0 +1,24 @@
+---
+interface Props {
+  label?: string;
+  title?: string;
+  description?: string;
+  [key: string]: unknown;
+}
+
+const { label, title, description } = Astro.props;
+---
+
+<section class="px-8 pt-[72px] pb-12 text-center relative" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 85%);">
+  {label && (
+    <div class="text-[11px] font-semibold tracking-[0.04em] uppercase text-amber-deep bb-fade-up">{label}</div>
+  )}
+  {title && (
+    <h1 class="text-[56px] leading-[1.05] font-bold tracking-[-0.03em] mt-3.5 max-w-[900px] mx-auto bb-fade-up bb-delay-1" set:html={title} />
+  )}
+  {description && (
+    <p class="text-base text-ink-2 mt-[22px] max-w-[640px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+      {description}
+    </p>
+  )}
+</section>

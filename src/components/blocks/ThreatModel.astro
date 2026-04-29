@@ -1,0 +1,35 @@
+---
+interface Props {
+  title?: string;
+  items?: { defended: boolean; title: string; body: string }[];
+  [key: string]: unknown;
+}
+
+const { title, items = [] } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper-2 border-t border-line">
+  <div class="max-w-[900px] mx-auto">
+    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-10 bb-fade-up">{title}</h2>}
+    <div class="space-y-3" data-stagger>
+      {items.map((item) => (
+        <div class="flex gap-4 p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class:list={[
+            'w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5',
+            item.defended ? 'bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)]' : 'bg-paper-3 text-ink-3',
+          ]}>
+            {item.defended ? (
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            ) : (
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            )}
+          </div>
+          <div>
+            <div class="text-[14px] font-semibold mb-1">{item.title}</div>
+            <div class="text-[13px] text-ink-2 leading-relaxed">{item.body}</div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

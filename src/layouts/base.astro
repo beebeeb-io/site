@@ -1,51 +1,146 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import SEO from '../components/global/SEO.astro';
+import ComingSoon from '../components/ComingSoon.astro';
+import { fetchGlobal } from '../lib/strapi';
+import '../styles/global.css';
+import '../styles/utilities.css';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import '@fontsource/inter/700.css';
+import '@fontsource/inter/800.css';
+import '@fontsource/jetbrains-mono/400.css';
+import '@fontsource/jetbrains-mono/500.css';
+import '@fontsource/jetbrains-mono/600.css';
+
 interface Props {
   title: string;
   description?: string;
   path?: string;
+  noindex?: boolean;
+  jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
-const { title, description = 'Beebeeb is the European cloud for people who want their files encrypted before they leave their device, stored on EU soil, and governed by EU law.', path } = Astro.props;
+const {
+  title,
+  description = 'Beebeeb is the European cloud for people who want their files encrypted before they leave their device, stored on EU soil, and governed by EU law.',
+  path,
+  noindex,
+  jsonLd,
+} = Astro.props;
 
-const siteUrl = 'https://beebeeb.io';
-const canonicalUrl = path ? `${siteUrl}${path}` : siteUrl;
-const ogImage = `${siteUrl}/og-image.png`;
+const globalData = await fetchGlobal();
+const siteMode = globalData?.site_mode || 'live';
 ---
 
-<!doctype html>
+{siteMode === 'coming-soon' ? (
+  <ComingSoon
+    title={globalData?.coming_soon_title}
+    subtitle={globalData?.coming_soon_subtitle}
+    cta_label={globalData?.coming_soon_cta_label}
+    cta_href={globalData?.coming_soon_cta_href}
+  />
+) : (
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalUrl} />
-
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:image" content={ogImage} />
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImage} />
-
-    <title>{title}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-      rel="stylesheet"
+    <SEO
+      title={title}
+      description={description}
+      path={path}
+      noindex={noindex}
+      jsonLd={jsonLd}
     />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#faf9f7" />
+    <ClientRouter />
   </head>
   <body class="min-h-screen">
-    <slot />
+    <div class="bb-scroll-progress" transition:persist></div>
+
+    <Nav />
+
+    <main class="pt-16" transition:animate="fade">
+      <slot />
+    </main>
+
+    <div transition:persist="footer">
+      <Footer />
+    </div>
+
+    <script is:inline src="/scripts/main.js"></script>
+    <script is:inline>
+      window.__bbInitialized = false;
+    </script>
+    <script is:inline>
+      document.addEventListener('astro:after-swap', function () {
+        var obs = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1, rootMargin: '0px 0px -40px 0px' },
+        );
+        document
+          .querySelectorAll(
+            '.bb-fade-up:not(.visible), .bb-reveal-left:not(.visible), .bb-reveal-right:not(.visible), .bb-reveal-scale:not(.visible)',
+          )
+          .forEach(function (el) {
+            obs.observe(el);
+          });
+
+        document.querySelectorAll('.faq-question').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var item = btn.closest('.faq-item');
+            var wasOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(function (other) {
+              if (other !== item) other.classList.remove('open');
+            });
+            item.classList.toggle('open', !wasOpen);
+          });
+        });
+
+        var navbar = document.getElementById('navbar');
+        if (navbar) {
+          navbar.classList.toggle('scrolled', window.scrollY > 80);
+        }
+
+        var menuToggle = document.getElementById('menuToggle');
+        var mobileMenu = document.getElementById('mobileMenu');
+        var mobileBackdrop = document.getElementById('mobileMenuBackdrop');
+        function closeMobile() {
+          if (mobileMenu) {
+            mobileMenu.classList.remove('open');
+            if (mobileBackdrop) mobileBackdrop.classList.remove('open');
+            document.body.style.overflow = '';
+          }
+        }
+        if (menuToggle)
+          menuToggle.addEventListener('click', function () {
+            if (mobileMenu) {
+              mobileMenu.classList.add('open');
+              if (mobileBackdrop) mobileBackdrop.classList.add('open');
+              document.body.style.overflow = 'hidden';
+            }
+          });
+        if (mobileBackdrop) mobileBackdrop.addEventListener('click', closeMobile);
+        if (mobileMenu) {
+          mobileMenu.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', closeMobile);
+          });
+        }
+
+        window.scrollTo(0, 0);
+      });
+    </script>
   </body>
 </html>
-
-<style is:global>
-  @import '../styles/global.css';
-</style>
+)}

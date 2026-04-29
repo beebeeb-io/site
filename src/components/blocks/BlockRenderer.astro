@@ -1,0 +1,65 @@
+---
+import HeroLanding from './HeroLanding.astro';
+import HeroSimple from './HeroSimple.astro';
+import TrustBar from './TrustBar.astro';
+import PillarsGrid from './PillarsGrid.astro';
+import ComparisonTable from './ComparisonTable.astro';
+import FounderQuote from './FounderQuote.astro';
+import CtaSection from './CtaSection.astro';
+import PricingGrid from './PricingGrid.astro';
+import SecurityFlow from './SecurityFlow.astro';
+import PrimitivesGrid from './PrimitivesGrid.astro';
+import ThreatModel from './ThreatModel.astro';
+import AuditList from './AuditList.astro';
+import AboutStory from './AboutStory.astro';
+import PromisesList from './PromisesList.astro';
+import LegalText from './LegalText.astro';
+import FaqAccordion from './FaqAccordion.astro';
+import RichText from './RichText.astro';
+import ChangelogList from './ChangelogList.astro';
+import StatusGrid from './StatusGrid.astro';
+import DocsGrid from './DocsGrid.astro';
+import CareersList from './CareersList.astro';
+import BountyTable from './BountyTable.astro';
+
+interface Props {
+  blocks: Array<{
+    __component: string;
+    [key: string]: unknown;
+  }>;
+}
+
+const { blocks } = Astro.props;
+
+const componentMap: Record<string, any> = {
+  'blocks.hero-landing': HeroLanding,
+  'blocks.hero-simple': HeroSimple,
+  'blocks.trust-bar': TrustBar,
+  'blocks.pillars-grid': PillarsGrid,
+  'blocks.comparison-table': ComparisonTable,
+  'blocks.founder-quote': FounderQuote,
+  'blocks.cta-section': CtaSection,
+  'blocks.pricing-grid': PricingGrid,
+  'blocks.security-flow': SecurityFlow,
+  'blocks.primitives-grid': PrimitivesGrid,
+  'blocks.threat-model': ThreatModel,
+  'blocks.audit-list': AuditList,
+  'blocks.about-story': AboutStory,
+  'blocks.promises-list': PromisesList,
+  'blocks.legal-text': LegalText,
+  'blocks.faq-accordion': FaqAccordion,
+  'blocks.rich-text': RichText,
+  'blocks.changelog-list': ChangelogList,
+  'blocks.status-grid': StatusGrid,
+  'blocks.docs-grid': DocsGrid,
+  'blocks.careers-list': CareersList,
+  'blocks.bounty-table': BountyTable,
+};
+---
+{blocks.map((block) => {
+  const Component = componentMap[block.__component];
+  if (!Component) {
+    return <div class="container py-8 opacity-50 font-mono text-sm text-ink-3">Block: {block.__component}</div>;
+  }
+  return <Component {...block} />;
+})}

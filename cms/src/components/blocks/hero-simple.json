@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_hero_simples",
+  "info": { "displayName": "Hero Simple", "icon": "layout" },
+  "attributes": {
+    "label": { "type": "string" },
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" }
+  }
+}

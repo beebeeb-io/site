@@ -1,6 +1,4 @@
 ---
-import RegionBadge from './RegionBadge.astro';
-
 const columns = [
   { title: 'Product', items: [
     { label: 'Drive', href: '#' },
@@ -8,71 +6,68 @@ const columns = [
     { label: 'Sharing', href: '#' },
     { label: 'Team vaults', href: '#' },
     { label: 'Desktop apps', href: '#' },
-    { label: 'Mobile apps', href: '#' },
   ]},
   { title: 'Security', items: [
-    { label: 'Whitepaper', href: '#' },
-    { label: 'Open source', href: '#' },
-    { label: 'Audit reports', href: '#' },
+    { label: 'How it works', href: '/security' },
+    { label: 'Audits', href: '#' },
+    { label: 'Warrant canary', href: '#' },
     { label: 'Bug bounty', href: '/bug-bounty' },
-    { label: 'Security page', href: '/security' },
+    { label: 'Whitepaper', href: '#' },
   ]},
   { title: 'Company', items: [
     { label: 'About', href: '/about' },
     { label: 'Careers', href: '/careers' },
-    { label: 'Blog', href: '#' },
     { label: 'Press', href: '#' },
     { label: 'Contact', href: '#' },
   ]},
   { title: 'Legal', items: [
-    { label: 'Privacy', href: '/privacy' },
     { label: 'Terms', href: '/terms' },
+    { label: 'Privacy', href: '/privacy' },
     { label: 'DPA', href: '#' },
-    { label: 'Transparency report', href: '#' },
+    { label: 'Sub-processors', href: '#' },
     { label: 'Imprint', href: '/imprint' },
   ]},
 ];
 ---
 
-<footer class="px-8 pt-12 pb-7 bg-paper-2 border-t border-line">
+<footer class="bg-ink text-paper" style="padding: 48px 32px 32px;">
   <div class="max-w-[1100px] mx-auto">
-    <div class="grid grid-cols-[1.4fr_repeat(4,1fr)] gap-6 mb-9">
+    <div class="grid grid-cols-[2fr_1fr_1fr_1fr_1fr] gap-10 mb-10" style="grid-template-columns: 2fr 1fr 1fr 1fr 1fr;">
       <div>
-        <a href="/" class="text-[15px] font-bold tracking-tight text-ink no-underline">
+        <a href="/" class="text-[15px] font-bold tracking-tight text-paper no-underline">
           beebeeb<span class="text-amber">.io</span>
         </a>
-        <div class="text-xs text-ink-3 mt-3 leading-relaxed max-w-[260px]">
-          Beebeeb &middot; operated by Initlabs B.V.<br />
-          Kelvinstraat 34A, 6601 HE Wijchen<br />
-          KvK 95157565 &middot; BTW NL867023430B01
+        <div class="text-xs mt-3 leading-relaxed max-w-[260px]" style="color: oklch(0.75 0.01 80);">
+          End-to-end encrypted cloud, made in Europe. Zero-knowledge by architecture, not by promise.
+        </div>
+        <div class="mt-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px]" style="background: oklch(0.3 0.01 90); border: 1px solid oklch(0.35 0.01 90);">
+          <span class="w-1.5 h-1.5 rounded-full" style="background: oklch(0.7 0.14 155);"></span>
+          <span style="color: oklch(0.75 0.01 80);">Frankfurt &middot; Amsterdam &middot; Paris</span>
         </div>
       </div>
       {columns.map((col) => (
         <div>
-          <div class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3 mb-2.5">
+          <div class="text-[11px] font-semibold tracking-[0.04em] uppercase mb-3" style="color: oklch(0.6 0.01 80);">
             {col.title}
           </div>
-          <div class="flex flex-col gap-1.5">
+          <div class="flex flex-col gap-[7px]">
             {col.items.map((item) => (
               item.href === '#'
-                ? <span class="text-[12.5px] text-ink-2 cursor-default">{item.label}</span>
-                : <a href={item.href} class="text-[12.5px] text-ink-2 hover:text-ink transition-colors duration-150 no-underline">{item.label}</a>
+                ? <span class="text-[12.5px] cursor-default" style="color: oklch(0.55 0.01 80);">{item.label}</span>
+                : <a href={item.href} class="text-[12.5px] no-underline transition-opacity duration-150 hover:opacity-100" style="color: oklch(0.75 0.01 80);">{item.label}</a>
             ))}
           </div>
         </div>
       ))}
     </div>
-    <div class="pt-5 border-t border-line flex items-center gap-3.5 text-[11px] text-ink-3 flex-wrap">
-      <span>&copy; 2026 Initlabs B.V.</span>
+    <div class="pt-6 flex items-center gap-4 text-[11.5px] flex-wrap" style="border-top: 1px solid oklch(0.3 0.01 90); color: oklch(0.6 0.01 80);">
+      <span>&copy; 2026 Initlabs B.V. &middot; Wijchen, Netherlands</span>
       <span>&middot;</span>
-      <RegionBadge />
-      <span class="ml-auto flex items-center gap-2.5">
-        <span>Status</span>
-        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10.5px] font-mono bg-[oklch(0.95_0.05_155)] border border-[oklch(0.85_0.1_155)] text-[oklch(0.35_0.12_155)]">
-          <span class="w-1.5 h-1.5 rounded-full bg-green"></span>
-          All systems
-        </span>
-      </span>
+      <a href="/status" class="inline-flex items-center gap-1.5 no-underline transition-opacity hover:opacity-80" style="color: oklch(0.6 0.01 80);">
+        <span class="w-1.5 h-1.5 rounded-full" style="background: oklch(0.7 0.14 155);"></span>
+        All systems operational
+      </a>
+      <span class="ml-auto" style="color: oklch(0.55 0.01 80);">Designed and built in the EU.</span>
     </div>
   </div>
 </footer>

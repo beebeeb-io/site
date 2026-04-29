@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_blocks_comparison_tables",
+  "info": { "displayName": "Comparison Table", "icon": "table" },
+  "attributes": {
+    "label": { "type": "string" },
+    "title": { "type": "string", "required": true },
+    "columns": { "type": "json" },
+    "rows": { "type": "json" },
+    "footnote": { "type": "string" }
+  }
+}

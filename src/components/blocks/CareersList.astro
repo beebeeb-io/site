@@ -1,0 +1,47 @@
+---
+interface Props {
+  intro?: string;
+  roles?: { title: string; location: string; type: string }[];
+  facts?: { label: string; value: string }[];
+  [key: string]: unknown;
+}
+
+const { intro, roles = [], facts = [] } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper">
+  <div class="max-w-[900px] mx-auto">
+    {intro && <p class="text-base text-ink-2 leading-relaxed max-w-[600px] mb-10 bb-fade-up">{intro}</p>}
+
+    {facts.length > 0 && (
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12" data-stagger>
+        {facts.map((f) => (
+          <div class="p-4 border border-line rounded-lg text-center bb-fade-up">
+            <div class="text-xl font-bold text-amber-deep">{f.value}</div>
+            <div class="text-[11px] text-ink-3 mt-1">{f.label}</div>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {roles.length > 0 ? (
+      <div class="space-y-3 bb-fade-up">
+        <h3 class="text-lg font-semibold mb-4">Open positions</h3>
+        {roles.map((role) => (
+          <div class="flex items-center justify-between p-5 border border-line rounded-lg bg-paper bb-lift">
+            <div>
+              <div class="text-[14px] font-semibold">{role.title}</div>
+              <div class="text-[12px] text-ink-3">{role.location} &middot; {role.type}</div>
+            </div>
+            <a href="/contact" class="btn btn-outline btn-sm">Apply</a>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="text-center p-10 border border-line rounded-lg bg-paper-2 bb-fade-up">
+        <p class="text-ink-2 mb-2">No open positions right now.</p>
+        <p class="text-[13px] text-ink-3">Send us a note at hello@beebeeb.io if you'd like to be considered for future roles.</p>
+      </div>
+    )}
+  </div>
+</section>

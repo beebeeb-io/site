@@ -1,0 +1,28 @@
+---
+interface Props {
+  title?: string;
+  promises?: { title: string; body: string }[];
+  [key: string]: unknown;
+}
+
+const { title, promises = [] } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper-2 border-t border-line">
+  <div class="max-w-[800px] mx-auto">
+    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-10 bb-fade-up">{title}</h2>}
+    <div class="space-y-6" data-stagger>
+      {promises.map((p, i) => (
+        <div class="flex gap-5 bb-fade-up">
+          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-1">
+            <span class="font-mono text-xs font-bold text-amber-deep">{i + 1}</span>
+          </div>
+          <div>
+            <h3 class="text-[16px] font-semibold mb-1">{p.title}</h3>
+            <p class="text-[13.5px] text-ink-2 leading-relaxed">{p.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

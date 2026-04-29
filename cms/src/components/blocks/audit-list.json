@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_blocks_audit_lists",
+  "info": { "displayName": "Audit List", "icon": "check" },
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "audits": { "type": "json" },
+    "cta_buttons": { "type": "json" }
+  }
+}

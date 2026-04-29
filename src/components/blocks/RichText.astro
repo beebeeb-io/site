@@ -1,0 +1,14 @@
+---
+interface Props {
+  body?: string;
+  [key: string]: unknown;
+}
+
+const { body } = Astro.props;
+---
+
+{body && (
+  <section class="px-8 py-12 bg-paper">
+    <div class="max-w-[760px] mx-auto prose text-ink-2 leading-relaxed bb-fade-up" set:html={body} />
+  </section>
+)}

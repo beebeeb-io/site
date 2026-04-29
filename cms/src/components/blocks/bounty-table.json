@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_blocks_bounty_tables",
+  "info": { "displayName": "Bounty Table", "icon": "trophy" },
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "tiers": { "type": "json" },
+    "rules": { "type": "richtext" }
+  }
+}

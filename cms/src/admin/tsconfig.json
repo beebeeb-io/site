@@ -1,0 +1,4 @@
+{
+  "extends": "@strapi/admin/tsconfig",
+  "include": ["./**/*.ts", "./**/*.tsx"]
+}

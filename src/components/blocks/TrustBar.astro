@@ -1,0 +1,35 @@
+---
+interface Props {
+  items?: any;
+  [key: string]: unknown;
+}
+
+const { items } = Astro.props;
+
+const defaultItems = {
+  label: 'Built on EU infrastructure',
+  providers: ['Hetzner · Germany', 'Leaseweb · Netherlands'],
+  chips: ['GDPR', 'NIS2', 'DORA', 'ISO 27001 — in progress'],
+};
+
+const data = items || defaultItems;
+---
+
+<section class="px-8 py-7 border-t border-b border-line bg-paper-2">
+  <div class="flex items-center gap-7 flex-wrap justify-center max-w-[1100px] mx-auto">
+    <span class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3">{data.label}</span>
+    {data.providers?.map((p: string) => (
+      <span class="font-mono text-xs text-ink-2 font-medium">{p}</span>
+    ))}
+    {data.chips && (
+      <Fragment>
+        <span class="text-line-2">&middot;</span>
+        <div class="flex gap-2.5">
+          {data.chips.map((chip: string) => (
+            <span class="inline-flex px-2.5 py-1 bg-paper border border-line rounded-md font-mono text-[10.5px] text-ink-3">{chip}</span>
+          ))}
+        </div>
+      </Fragment>
+    )}
+  </div>
+</section>

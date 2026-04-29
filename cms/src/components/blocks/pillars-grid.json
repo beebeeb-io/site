@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_pillars_grids",
+  "info": { "displayName": "Pillars Grid", "icon": "grid" },
+  "attributes": {
+    "label": { "type": "string" },
+    "title": { "type": "string", "required": true },
+    "pillars": { "type": "component", "repeatable": true, "component": "shared.pillar-item" }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "collectionName": "components_blocks_trust_bars",
+  "info": { "displayName": "Trust Bar", "icon": "shield" },
+  "attributes": {
+    "items": { "type": "json" }
+  }
+}

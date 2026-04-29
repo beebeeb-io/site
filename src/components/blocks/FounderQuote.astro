@@ -1,0 +1,36 @@
+---
+interface Props {
+  label?: string;
+  quote?: string;
+  author_name?: string;
+  author_title?: string;
+  author_initials?: string;
+  [key: string]: unknown;
+}
+
+const { label, quote, author_name, author_title, author_initials } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper">
+  <div class="max-w-[780px] mx-auto text-center">
+    {label && <div class="section-label bb-fade-up">{label}</div>}
+    {quote && (
+      <blockquote class="text-[22px] leading-relaxed text-ink-2 tracking-[-0.015em] italic mb-7 bb-fade-up bb-delay-1">
+        "{quote}"
+      </blockquote>
+    )}
+    <div class="flex gap-4 justify-center items-center bb-fade-up bb-delay-2">
+      <div class="flex gap-2.5 items-center">
+        {author_initials && (
+          <div class="w-9 h-9 rounded-full bg-amber font-bold text-xs flex items-center justify-center">{author_initials}</div>
+        )}
+        <div class="text-left">
+          {author_name && <div class="text-[13px] font-semibold">{author_name}</div>}
+          {author_title && <div class="text-[11px] text-ink-3">{author_title}</div>}
+        </div>
+      </div>
+      <div class="w-px h-6 bg-line-2"></div>
+      <span class="font-mono text-[11px] text-ink-3">beebeeb.io</span>
+    </div>
+  </div>
+</section>

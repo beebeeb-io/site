@@ -1,0 +1,8 @@
+{
+  "collectionName": "components_blocks_promises_lists",
+  "info": { "displayName": "Promises List", "icon": "bulletList" },
+  "attributes": {
+    "title": { "type": "string" },
+    "promises": { "type": "json" }
+  }
+}

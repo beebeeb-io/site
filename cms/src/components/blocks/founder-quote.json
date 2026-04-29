@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_blocks_founder_quotes",
+  "info": { "displayName": "Founder Quote", "icon": "quote" },
+  "attributes": {
+    "label": { "type": "string" },
+    "quote": { "type": "text", "required": true },
+    "author_name": { "type": "string" },
+    "author_title": { "type": "string" },
+    "author_initials": { "type": "string" }
+  }
+}

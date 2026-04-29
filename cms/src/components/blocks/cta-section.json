@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_blocks_cta_sections",
+  "info": { "displayName": "CTA Section", "icon": "cursor" },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "title_highlight": { "type": "string" },
+    "description": { "type": "text" },
+    "cta_primary_label": { "type": "string" },
+    "cta_primary_href": { "type": "string" },
+    "cta_secondary_label": { "type": "string" },
+    "cta_secondary_href": { "type": "string" },
+    "dark_bg": { "type": "boolean", "default": false }
+  }
+}

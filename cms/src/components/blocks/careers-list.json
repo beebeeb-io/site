@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_careers_lists",
+  "info": { "displayName": "Careers List", "icon": "briefcase" },
+  "attributes": {
+    "intro": { "type": "text" },
+    "roles": { "type": "json" },
+    "facts": { "type": "json" }
+  }
+}

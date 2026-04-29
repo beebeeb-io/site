@@ -1,0 +1,26 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  categories?: { icon?: string; title: string; description?: string; link_count?: number }[];
+  [key: string]: unknown;
+}
+
+const { title, description, categories = [] } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper">
+  <div class="max-w-[1000px] mx-auto">
+    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-3 bb-fade-up">{title}</h2>}
+    {description && <p class="text-sm text-ink-2 text-center max-w-[500px] mx-auto mb-10 bb-fade-up bb-delay-1">{description}</p>}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" data-stagger>
+      {categories.map((cat) => (
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up bb-lift cursor-pointer">
+          <h3 class="text-[16px] font-semibold mb-2">{cat.title}</h3>
+          {cat.description && <p class="text-[12.5px] text-ink-2 leading-relaxed mb-3">{cat.description}</p>}
+          {cat.link_count && <span class="font-mono text-[10px] text-ink-3">{cat.link_count} articles</span>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

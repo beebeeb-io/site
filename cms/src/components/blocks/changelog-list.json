@@ -1,0 +1,7 @@
+{
+  "collectionName": "components_blocks_changelog_lists",
+  "info": { "displayName": "Changelog List", "icon": "clock" },
+  "attributes": {
+    "title": { "type": "string" }
+  }
+}

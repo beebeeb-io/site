@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_about_stories",
+  "info": { "displayName": "About Story", "icon": "user" },
+  "attributes": {
+    "title": { "type": "string" },
+    "body": { "type": "richtext" },
+    "facts": { "type": "json" }
+  }
+}

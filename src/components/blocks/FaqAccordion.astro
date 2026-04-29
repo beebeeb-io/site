@@ -1,0 +1,35 @@
+---
+interface FaqItem {
+  question: string;
+  answer?: string;
+}
+
+interface Props {
+  label?: string;
+  title?: string;
+  items?: FaqItem[];
+  [key: string]: unknown;
+}
+
+const { label, title, items = [] } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper">
+  <div class="max-w-[760px] mx-auto">
+    {label && <div class="section-label text-center bb-fade-up">{label}</div>}
+    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-10 bb-fade-up bb-delay-1">{title}</h2>}
+    <div class="bb-fade-up bb-delay-2">
+      {items.map((item) => (
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>{item.question}</span>
+            <span class="faq-icon"></span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" set:html={item.answer || ''} />
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,8 @@
+{
+  "collectionName": "components_blocks_legal_texts",
+  "info": { "displayName": "Legal Text", "icon": "file" },
+  "attributes": {
+    "title": { "type": "string" },
+    "body": { "type": "richtext" }
+  }
+}

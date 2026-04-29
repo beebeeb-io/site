@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_primitives_grids",
+  "info": { "displayName": "Primitives Grid", "icon": "code" },
+  "attributes": {
+    "title": { "type": "string" },
+    "subtitle": { "type": "text" },
+    "primitives": { "type": "json" }
+  }
+}

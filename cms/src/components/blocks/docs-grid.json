@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_docs_grids",
+  "info": { "displayName": "Docs Grid", "icon": "book" },
+  "attributes": {
+    "title": { "type": "string" },
+    "description": { "type": "text" },
+    "categories": { "type": "json" }
+  }
+}

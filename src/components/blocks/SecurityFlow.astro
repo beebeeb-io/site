@@ -1,0 +1,35 @@
+---
+interface Step {
+  icon?: string;
+  step_number?: string;
+  title: string;
+  description?: string;
+  connector_label?: string;
+}
+
+interface Props {
+  label?: string;
+  title?: string;
+  steps?: Step[];
+  [key: string]: unknown;
+}
+
+const { label, title, steps = [] } = Astro.props;
+---
+
+<section class="px-12 pt-12 pb-[72px] bg-paper">
+  <div class="border border-line rounded-xl bg-paper-2 p-10 bb-reveal-scale">
+    {label && <div class="section-label text-center mb-8">{label}</div>}
+    <div class="grid gap-4" style={`grid-template-columns: repeat(${steps.length}, 1fr)`}>
+      {steps.map((step, i) => (
+        <div class="text-center px-3 bb-fade-up" style={`transition-delay: ${i * 0.1}s`}>
+          <div class="w-16 h-16 rounded-2xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-3">
+            <span class="font-mono text-sm font-bold text-amber-deep">{step.step_number || String(i + 1).padStart(2, '0')}</span>
+          </div>
+          <div class="text-[13px] font-semibold mb-1">{step.title}</div>
+          {step.description && <div class="text-[11px] text-ink-3 leading-relaxed">{step.description}</div>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

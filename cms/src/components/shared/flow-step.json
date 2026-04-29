@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_shared_flow_steps",
+  "info": { "displayName": "Flow Step", "icon": "arrowRight" },
+  "attributes": {
+    "icon": { "type": "string" },
+    "step_number": { "type": "string" },
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "connector_label": { "type": "string" }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "collectionName": "components_blocks_threat_models",
+  "info": { "displayName": "Threat Model", "icon": "shield" },
+  "attributes": {
+    "title": { "type": "string" },
+    "items": { "type": "json" }
+  }
+}

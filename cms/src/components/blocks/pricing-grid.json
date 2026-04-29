@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_blocks_pricing_grids",
+  "info": { "displayName": "Pricing Grid", "icon": "priceTag" },
+  "attributes": {
+    "label": { "type": "string" },
+    "title": { "type": "string" },
+    "subtitle": { "type": "text" },
+    "plans": { "type": "component", "repeatable": true, "component": "shared.pricing-plan" },
+    "footnote": { "type": "string" }
+  }
+}

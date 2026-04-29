@@ -1,0 +1,14 @@
+{
+  "collectionName": "components_shared_pricing_plans",
+  "info": { "displayName": "Pricing Plan", "icon": "priceTag" },
+  "attributes": {
+    "name": { "type": "string", "required": true },
+    "price": { "type": "string" },
+    "period": { "type": "string", "default": "/mo" },
+    "description": { "type": "text" },
+    "features": { "type": "text" },
+    "cta_label": { "type": "string" },
+    "variant": { "type": "enumeration", "enum": ["default", "amber", "outline"], "default": "default" },
+    "popular": { "type": "boolean", "default": false }
+  }
+}

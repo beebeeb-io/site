@@ -1,0 +1,60 @@
+---
+interface Props {
+  label?: string;
+  title?: string;
+  columns?: { name: string; highlight?: boolean }[];
+  rows?: [string, ...string[]][];
+  footnote?: string;
+  [key: string]: unknown;
+}
+
+const { label, title, columns = [], rows = [], footnote } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper-2 border-t border-line">
+  <div class="max-w-[1000px] mx-auto">
+    {label && <div class="section-label text-center bb-fade-up">{label}</div>}
+    {title && <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-9 leading-tight bb-fade-up bb-delay-1">{title}</h2>}
+
+    <div class="border border-line rounded-xl bg-paper overflow-hidden bb-reveal-scale bb-delay-2">
+      <div class="grid gap-3.5 px-[22px] py-3.5 bg-paper border-b border-line" style={`grid-template-columns: 2fr repeat(${columns.length}, 1fr)`}>
+        <span></span>
+        {columns.map((col) => (
+          <div class="text-center">
+            {col.highlight ? (
+              <Fragment>
+                <span class="text-[15px] font-bold tracking-tight">beebeeb<span class="text-amber">.io</span></span>
+                <br /><span class="text-xs font-bold">{col.name}</span>
+              </Fragment>
+            ) : (
+              <span class="text-xs font-medium text-ink-3">{col.name}</span>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {rows.map((row, i) => (
+        <div class:list={['grid gap-3.5 px-[22px] py-[13px] items-center', i < rows.length - 1 ? 'border-b border-line' : '']} style={`grid-template-columns: 2fr repeat(${columns.length}, 1fr)`}>
+          <span class="text-[13px] text-ink-2">{row[0]}</span>
+          {row.slice(1).map((val: string) => (
+            <div class="text-center">
+              {val === 'y' ? (
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)]">
+                  <svg class="w-[11px] h-[11px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              ) : val === 'n' ? (
+                <span class="font-mono text-[11px] text-ink-4">&mdash;</span>
+              ) : (
+                <span class="font-mono text-[10.5px] text-ink-3 bg-paper-2 px-1.5 py-0.5 rounded">{val}</span>
+              )}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+
+    {footnote && (
+      <p class="text-[11px] text-ink-4 text-center mt-3.5 italic">{footnote}</p>
+    )}
+  </div>
+</section>

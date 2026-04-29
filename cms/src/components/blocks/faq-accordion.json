@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_faq_accordions",
+  "info": { "displayName": "FAQ Accordion", "icon": "question" },
+  "attributes": {
+    "label": { "type": "string" },
+    "title": { "type": "string" },
+    "items": { "type": "component", "repeatable": true, "component": "shared.faq-item" }
+  }
+}

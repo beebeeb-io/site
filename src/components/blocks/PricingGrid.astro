@@ -1,0 +1,71 @@
+---
+interface Plan {
+  name: string;
+  price?: string;
+  period?: string;
+  description?: string;
+  features?: string;
+  cta_label?: string;
+  variant?: 'default' | 'amber' | 'outline';
+  popular?: boolean;
+}
+
+interface Props {
+  label?: string;
+  title?: string;
+  subtitle?: string;
+  plans?: Plan[];
+  footnote?: string;
+  [key: string]: unknown;
+}
+
+const { label, title, subtitle, plans = [], footnote } = Astro.props;
+---
+
+<section class="px-8 py-20 bg-paper">
+  <div class="max-w-[1100px] mx-auto">
+    {label && <div class="section-label text-center bb-fade-up">{label}</div>}
+    {title && <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-3 leading-tight bb-fade-up bb-delay-1">{title}</h2>}
+    {subtitle && <p class="text-base text-ink-2 text-center max-w-[600px] mx-auto mb-12 bb-fade-up bb-delay-2">{subtitle}</p>}
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger>
+      {plans.map((plan) => {
+        const featureList = (plan.features || '').split('\n').filter(Boolean);
+        return (
+          <div class:list={[
+            'relative p-6 rounded-xl border bb-fade-up',
+            plan.variant === 'amber' ? 'border-amber bg-amber-bg' : 'border-line bg-paper',
+          ]}>
+            {plan.popular && (
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span class="px-3 py-1 bg-amber text-ink text-[10px] font-bold tracking-[0.06em] uppercase rounded-full">Most popular</span>
+              </div>
+            )}
+            <div class="text-[13px] font-semibold text-ink-3 uppercase tracking-[0.04em]">{plan.name}</div>
+            <div class="mt-2 mb-1">
+              <span class="text-[42px] font-bold tracking-[-0.03em]">&euro;{plan.price || '0'}</span>
+              <span class="text-sm text-ink-3 ml-1">{plan.period || '/mo'}</span>
+            </div>
+            {plan.description && <p class="text-[13px] text-ink-2 mb-5 leading-relaxed">{plan.description}</p>}
+            <ul class="space-y-2 mb-6">
+              {featureList.map((f: string) => (
+                <li class="flex items-start gap-2 text-[13px] text-ink-2">
+                  <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a href="/signup" class:list={[
+              'btn w-full justify-center',
+              plan.variant === 'amber' ? 'btn-amber btn-md' : 'btn-outline btn-md',
+            ]}>
+              {plan.cta_label || `Start with ${plan.name}`}
+            </a>
+          </div>
+        );
+      })}
+    </div>
+
+    {footnote && <p class="text-[11px] text-ink-4 text-center mt-6 italic">{footnote}</p>}
+  </div>
+</section>

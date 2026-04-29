@@ -1,0 +1,37 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  tiers?: { severity: string; reward: string; criteria: string }[];
+  rules?: string;
+  [key: string]: unknown;
+}
+
+const { title, description, tiers = [], rules } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper">
+  <div class="max-w-[900px] mx-auto">
+    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-3 bb-fade-up">{title}</h2>}
+    {description && <p class="text-sm text-ink-2 max-w-[600px] mb-8 bb-fade-up bb-delay-1">{description}</p>}
+
+    {tiers.length > 0 && (
+      <div class="border border-line rounded-xl overflow-hidden mb-10 bb-reveal-scale bb-delay-2">
+        <div class="grid grid-cols-3 gap-3.5 px-5 py-3 bg-paper-2 border-b border-line text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3">
+          <span>Severity</span><span>Reward</span><span>Criteria</span>
+        </div>
+        {tiers.map((t) => (
+          <div class="grid grid-cols-3 gap-3.5 px-5 py-3.5 border-b border-line last:border-b-0 text-[13px] text-ink-2">
+            <span class="font-medium text-ink">{t.severity}</span>
+            <span class="font-mono font-semibold text-amber-deep">{t.reward}</span>
+            <span>{t.criteria}</span>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {rules && (
+      <div class="prose prose-sm text-ink-2 leading-relaxed bb-fade-up" set:html={rules} />
+    )}
+  </div>
+</section>

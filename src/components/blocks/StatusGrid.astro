@@ -1,0 +1,43 @@
+---
+interface Props {
+  services?: { name: string; status: string }[];
+  incidents?: { date: string; title: string; resolved: boolean }[];
+  [key: string]: unknown;
+}
+
+const { services = [], incidents = [] } = Astro.props;
+---
+
+<section class="px-8 py-[72px] bg-paper">
+  <div class="max-w-[900px] mx-auto">
+    {services.length > 0 && (
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mb-12" data-stagger>
+        {services.map((s) => (
+          <div class="flex items-center gap-3 p-4 border border-line rounded-lg bb-fade-up">
+            <span class:list={[
+              'w-2.5 h-2.5 rounded-full',
+              s.status === 'operational' ? 'bg-green' : s.status === 'degraded' ? 'bg-amber' : 'bg-red',
+            ]}></span>
+            <span class="text-[13px] font-medium">{s.name}</span>
+            <span class="ml-auto font-mono text-[10px] text-ink-3 capitalize">{s.status}</span>
+          </div>
+        ))}
+      </div>
+    )}
+
+    {incidents.length > 0 && (
+      <div>
+        <h3 class="text-lg font-semibold mb-4 bb-fade-up">Recent incidents</h3>
+        <div class="space-y-3">
+          {incidents.map((inc) => (
+            <div class="flex items-center gap-3 p-4 border border-line rounded-lg bb-fade-up">
+              <span class:list={['w-2 h-2 rounded-full', inc.resolved ? 'bg-green' : 'bg-amber']}></span>
+              <span class="text-[13px]">{inc.title}</span>
+              <time class="ml-auto font-mono text-[10px] text-ink-3">{inc.date}</time>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>

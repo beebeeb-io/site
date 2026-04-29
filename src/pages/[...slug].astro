@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/base.astro';
+import BlockRenderer from '../components/blocks/BlockRenderer.astro';
+import { fetchPageBySlug } from '../lib/strapi';
+
+const { slug } = Astro.params;
+const pageSlug = slug || 'home';
+const url = new URL(Astro.request.url);
+const isPreview = url.searchParams.get('preview') === 'true';
+const page = await fetchPageBySlug(pageSlug, isPreview);
+
+if (!page) {
+  Astro.response.status = 404;
+  return Astro.rewrite('/404');
+}
+
+const blocks = page?.blocks || [];
+
+const faqBlock = blocks.find((b: any) => b.__component === 'blocks.faq-accordion');
+let faqJsonLd: Record<string, any> | undefined;
+if (faqBlock?.items?.length) {
+  faqJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqBlock.items.map((item: any) => ({
+      '@type': 'Question',
+      name: item.question || item.title,
+      acceptedAnswer: { '@type': 'Answer', text: (item.answer || '').replace(/<[^>]*>/g, '') },
+    })),
+  };
+}
+
+const extraJsonLd = faqJsonLd ? [faqJsonLd] : undefined;
+---
+<Base
+  title={page?.seo_title || page?.title || 'Beebeeb'}
+  description={page?.seo_description || 'End-to-end encrypted cloud storage. Made in Europe.'}
+  path={`/${pageSlug === 'home' ? '' : pageSlug}`}
+  jsonLd={extraJsonLd}
+>
+  <BlockRenderer blocks={blocks} />
+  {isPreview && (
+    <div style="position:fixed;bottom:20px;right:20px;background:var(--color-amber);color:var(--color-ink);padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;z-index:9999;">
+      PREVIEW MODE
+    </div>
+  )}
+</Base>

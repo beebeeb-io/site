@@ -1,0 +1,11 @@
+{
+  "collectionName": "components_shared_pillar_items",
+  "info": { "displayName": "Pillar Item", "icon": "apps" },
+  "attributes": {
+    "number": { "type": "string" },
+    "icon": { "type": "string" },
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text" },
+    "stat": { "type": "string" }
+  }
+}

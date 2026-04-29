@@ -1,0 +1,65 @@
+{
+  "kind": "singleType",
+  "collectionName": "globals",
+  "info": {
+    "singularName": "global",
+    "pluralName": "globals",
+    "displayName": "Global"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "site_name": {
+      "type": "string",
+      "default": "Beebeeb"
+    },
+    "company_name": {
+      "type": "string",
+      "default": "Initlabs B.V."
+    },
+    "kvk": {
+      "type": "string",
+      "default": "95157565"
+    },
+    "btw_id": {
+      "type": "string",
+      "default": "NL867023430B01"
+    },
+    "address": {
+      "type": "text",
+      "default": "Kelvinstraat 34A\n6601 HE Wijchen"
+    },
+    "email": {
+      "type": "string",
+      "default": "hello@beebeeb.io"
+    },
+    "navigation": {
+      "type": "json"
+    },
+    "footer_columns": {
+      "type": "json"
+    },
+    "site_mode": {
+      "type": "enumeration",
+      "enum": ["live", "coming-soon"],
+      "default": "live"
+    },
+    "coming_soon_title": {
+      "type": "string",
+      "default": "Something is brewing."
+    },
+    "coming_soon_subtitle": {
+      "type": "text",
+      "default": "Beebeeb is end-to-end encrypted cloud storage. Made in Europe, for people who want their files private by default. We're building it right now."
+    },
+    "coming_soon_cta_label": {
+      "type": "string",
+      "default": "Get notified at launch"
+    },
+    "coming_soon_cta_href": {
+      "type": "string",
+      "default": "mailto:hello@beebeeb.io?subject=Notify me when Beebeeb launches"
+    }
+  }
+}

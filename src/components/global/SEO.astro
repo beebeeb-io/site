@@ -1,0 +1,83 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  path?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  noindex?: boolean;
+  jsonLd?: Record<string, any> | Record<string, any>[];
+}
+
+const {
+  title,
+  description = 'End-to-end encrypted cloud storage. Made in Europe.',
+  path,
+  image,
+  type = 'website',
+  noindex,
+  jsonLd,
+} = Astro.props;
+
+const siteUrl = 'https://beebeeb.io';
+const canonicalUrl = path ? `${siteUrl}${path}` : new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = image || `${siteUrl}/og-image.png`;
+
+const orgSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Beebeeb',
+  legalName: 'Initlabs B.V.',
+  url: siteUrl,
+  description: 'End-to-end encrypted cloud storage. Made in Europe.',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Kelvinstraat 34A',
+    addressLocality: 'Wijchen',
+    postalCode: '6601 HE',
+    addressCountry: 'NL',
+  },
+};
+
+const breadcrumbs = Astro.url.pathname !== '/' ? {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl },
+    ...Astro.url.pathname.split('/').filter(Boolean).map((seg, i, arr) => ({
+      '@type': 'ListItem',
+      position: i + 2,
+      name: seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, ' '),
+      item: `${siteUrl}/${arr.slice(0, i + 1).join('/')}`,
+    })),
+  ],
+} : null;
+
+const allJsonLd = [
+  orgSchema,
+  ...(breadcrumbs ? [breadcrumbs] : []),
+  ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
+];
+---
+
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonicalUrl} />
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="Beebeeb" />
+<meta property="og:locale" content="en" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+
+{allJsonLd.map((ld) => (
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+))}

@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "changelog_entries",
+  "info": {
+    "singularName": "changelog-entry",
+    "pluralName": "changelog-entries",
+    "displayName": "Changelog Entry"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "date": {
+      "type": "date",
+      "required": true
+    },
+    "tags": {
+      "type": "json"
+    },
+    "body": {
+      "type": "richtext"
+    }
+  }
+}

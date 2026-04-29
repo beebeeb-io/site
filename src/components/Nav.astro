@@ -10,33 +10,55 @@ const { active } = Astro.props;
 
 const links = [
   { label: 'Product', href: '/' },
-  { label: 'For teams', href: '/' },
   { label: 'Security', href: '/security' },
   { label: 'Pricing', href: '/pricing' },
   { label: 'Open source', href: '/' },
 ];
 ---
 
-<nav class="flex items-center gap-6 px-8 py-4 border-b border-line bg-paper">
-  <a href="/" class="text-[15px] font-bold tracking-tight text-ink no-underline">
-    beebeeb<span class="text-amber">.io</span>
-  </a>
-  <div class="flex gap-5 ml-5">
-    {links.map((link) => (
-      <a
-        href={link.href}
-        class:list={[
-          'text-[13px] no-underline transition-colors duration-150',
-          link.label === active ? 'text-ink font-semibold' : 'text-ink-2 hover:text-ink',
-        ]}
-      >
-        {link.label}
+<nav class="navbar" id="navbar" transition:persist>
+  <div class="container">
+    <div class="flex items-center justify-between">
+      <a href="/" class="text-[15px] font-bold tracking-tight text-ink no-underline z-10">
+        beebeeb<span class="text-amber">.io</span>
       </a>
-    ))}
-  </div>
-  <div class="ml-auto flex items-center gap-2">
-    <RegionBadge />
-    <Button variant="ghost" size="sm">Sign in</Button>
-    <Button variant="amber" size="sm">Start free</Button>
+
+      <div class="nav-links flex gap-5 ml-8">
+        {links.map((link) => (
+          <a
+            href={link.href}
+            class:list={[
+              'text-[13px] no-underline transition-colors duration-150',
+              link.label === active ? 'text-ink font-semibold' : 'text-ink-2 hover:text-ink',
+            ]}
+          >
+            {link.label}
+          </a>
+        ))}
+      </div>
+
+      <div class="nav-cta-group ml-auto flex items-center gap-2">
+        <RegionBadge />
+        <a href="https://app.beebeeb.io/login" class="btn btn-ghost btn-sm">Sign in</a>
+        <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-sm">Start free</a>
+      </div>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </div>
 </nav>
+
+<div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+<div class="mobile-menu" id="mobileMenu">
+  {links.map((link) => (
+    <a href={link.href}>{link.label}</a>
+  ))}
+  <div class="mt-6 flex flex-col gap-3">
+    <a href="https://app.beebeeb.io/login" class="btn btn-outline btn-md w-full justify-center">Sign in</a>
+    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md w-full justify-center">Start free</a>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+{
+  "kind": "collectionType",
+  "collectionName": "pages",
+  "info": {
+    "singularName": "page",
+    "pluralName": "pages",
+    "displayName": "Page"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title",
+      "required": true
+    },
+    "seo_title": {
+      "type": "string"
+    },
+    "seo_description": {
+      "type": "text"
+    },
+    "blocks": {
+      "type": "dynamiczone",
+      "components": [
+        "blocks.hero-landing",
+        "blocks.hero-simple",
+        "blocks.trust-bar",
+        "blocks.pillars-grid",
+        "blocks.comparison-table",
+        "blocks.founder-quote",
+        "blocks.cta-section",
+        "blocks.pricing-grid",
+        "blocks.security-flow",
+        "blocks.primitives-grid",
+        "blocks.threat-model",
+        "blocks.audit-list",
+        "blocks.about-story",
+        "blocks.promises-list",
+        "blocks.legal-text",
+        "blocks.faq-accordion",
+        "blocks.rich-text",
+        "blocks.changelog-list",
+        "blocks.status-grid",
+        "blocks.docs-grid",
+        "blocks.careers-list",
+        "blocks.bounty-table"
+      ]
+    }
+  }
+}

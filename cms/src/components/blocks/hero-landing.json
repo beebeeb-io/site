@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_blocks_hero_landings",
+  "info": { "displayName": "Hero Landing", "icon": "star" },
+  "attributes": {
+    "title": { "type": "string", "required": true },
+    "title_highlight": { "type": "string" },
+    "subtitle": { "type": "text" },
+    "announcement": { "type": "string" },
+    "cta_primary_label": { "type": "string" },
+    "cta_primary_href": { "type": "string" },
+    "cta_secondary_label": { "type": "string" },
+    "cta_secondary_href": { "type": "string" },
+    "trust_badges": { "type": "json" }
+  }
+}
