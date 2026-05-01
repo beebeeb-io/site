@@ -1,0 +1,856 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "astro.config.mjs",
+      "file_type": "code",
+      "source_file": "astro.config.mjs",
+      "source_location": "L1",
+      "id": "astro_config_mjs",
+      "community": 8,
+      "norm_label": "astro.config.mjs"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L1",
+      "id": "cms_src_index_ts",
+      "community": 2,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "register()",
+      "file_type": "code",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L2",
+      "id": "src_index_register",
+      "community": 2,
+      "norm_label": "register()"
+    },
+    {
+      "label": "bootstrap()",
+      "file_type": "code",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L3",
+      "id": "src_index_bootstrap",
+      "community": 2,
+      "norm_label": "bootstrap()"
+    },
+    {
+      "label": "destroy()",
+      "file_type": "code",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L449",
+      "id": "src_index_destroy",
+      "community": 2,
+      "norm_label": "destroy()"
+    },
+    {
+      "label": "changelog-entry.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/changelog-entry/controllers/changelog-entry.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_changelog_entry_controllers_changelog_entry_ts",
+      "community": 9,
+      "norm_label": "changelog-entry.ts"
+    },
+    {
+      "label": "changelog-entry.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/changelog-entry/services/changelog-entry.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_changelog_entry_services_changelog_entry_ts",
+      "community": 10,
+      "norm_label": "changelog-entry.ts"
+    },
+    {
+      "label": "changelog-entry.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/changelog-entry/routes/changelog-entry.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_changelog_entry_routes_changelog_entry_ts",
+      "community": 11,
+      "norm_label": "changelog-entry.ts"
+    },
+    {
+      "label": "global.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/global/controllers/global.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_global_controllers_global_ts",
+      "community": 12,
+      "norm_label": "global.ts"
+    },
+    {
+      "label": "global.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/global/services/global.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_global_services_global_ts",
+      "community": 13,
+      "norm_label": "global.ts"
+    },
+    {
+      "label": "global.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/global/routes/global.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_global_routes_global_ts",
+      "community": 14,
+      "norm_label": "global.ts"
+    },
+    {
+      "label": "page.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/page/controllers/page.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_page_controllers_page_ts",
+      "community": 15,
+      "norm_label": "page.ts"
+    },
+    {
+      "label": "page.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/page/services/page.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_page_services_page_ts",
+      "community": 16,
+      "norm_label": "page.ts"
+    },
+    {
+      "label": "page.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/page/routes/page.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_page_routes_page_ts",
+      "community": 17,
+      "norm_label": "page.ts"
+    },
+    {
+      "label": "middlewares.ts",
+      "file_type": "code",
+      "source_file": "cms/config/middlewares.ts",
+      "source_location": "L1",
+      "id": "cms_config_middlewares_ts",
+      "community": 18,
+      "norm_label": "middlewares.ts"
+    },
+    {
+      "label": "database.ts",
+      "file_type": "code",
+      "source_file": "cms/config/database.ts",
+      "source_location": "L1",
+      "id": "cms_config_database_ts",
+      "community": 4,
+      "norm_label": "database.ts"
+    },
+    {
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "cms/config/database.ts",
+      "source_location": "L4",
+      "id": "config_database_config",
+      "community": 4,
+      "norm_label": "config()"
+    },
+    {
+      "label": "api.ts",
+      "file_type": "code",
+      "source_file": "cms/config/api.ts",
+      "source_location": "L1",
+      "id": "cms_config_api_ts",
+      "community": 19,
+      "norm_label": "api.ts"
+    },
+    {
+      "label": "plugins.ts",
+      "file_type": "code",
+      "source_file": "cms/config/plugins.ts",
+      "source_location": "L1",
+      "id": "cms_config_plugins_ts",
+      "community": 5,
+      "norm_label": "plugins.ts"
+    },
+    {
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "cms/config/plugins.ts",
+      "source_location": "L3",
+      "id": "config_plugins_config",
+      "community": 5,
+      "norm_label": "config()"
+    },
+    {
+      "label": "admin.ts",
+      "file_type": "code",
+      "source_file": "cms/config/admin.ts",
+      "source_location": "L1",
+      "id": "cms_config_admin_ts",
+      "community": 6,
+      "norm_label": "admin.ts"
+    },
+    {
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "cms/config/admin.ts",
+      "source_location": "L3",
+      "id": "config_admin_config",
+      "community": 6,
+      "norm_label": "config()"
+    },
+    {
+      "label": "server.ts",
+      "file_type": "code",
+      "source_file": "cms/config/server.ts",
+      "source_location": "L1",
+      "id": "cms_config_server_ts",
+      "community": 7,
+      "norm_label": "server.ts"
+    },
+    {
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "cms/config/server.ts",
+      "source_location": "L3",
+      "id": "config_server_config",
+      "community": 7,
+      "norm_label": "config()"
+    },
+    {
+      "label": "main.js",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L1",
+      "id": "public_scripts_main_js",
+      "community": 0,
+      "norm_label": "main.js"
+    },
+    {
+      "label": "initScrollReveal()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L14",
+      "id": "scripts_main_initscrollreveal",
+      "community": 0,
+      "norm_label": "initscrollreveal()"
+    },
+    {
+      "label": "initCounters()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L45",
+      "id": "scripts_main_initcounters",
+      "community": 0,
+      "norm_label": "initcounters()"
+    },
+    {
+      "label": "animateCounter()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L70",
+      "id": "scripts_main_animatecounter",
+      "community": 0,
+      "norm_label": "animatecounter()"
+    },
+    {
+      "label": "initStagger()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L95",
+      "id": "scripts_main_initstagger",
+      "community": 0,
+      "norm_label": "initstagger()"
+    },
+    {
+      "label": "initFaqAccordion()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L107",
+      "id": "scripts_main_initfaqaccordion",
+      "community": 0,
+      "norm_label": "initfaqaccordion()"
+    },
+    {
+      "label": "initNavbar()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L123",
+      "id": "scripts_main_initnavbar",
+      "community": 0,
+      "norm_label": "initnavbar()"
+    },
+    {
+      "label": "initScrollProgress()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L138",
+      "id": "scripts_main_initscrollprogress",
+      "community": 0,
+      "norm_label": "initscrollprogress()"
+    },
+    {
+      "label": "initMobileMenu()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L157",
+      "id": "scripts_main_initmobilemenu",
+      "community": 0,
+      "norm_label": "initmobilemenu()"
+    },
+    {
+      "label": "initAll()",
+      "file_type": "code",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L193",
+      "id": "scripts_main_initall",
+      "community": 0,
+      "norm_label": "initall()"
+    },
+    {
+      "label": "types.ts",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L1",
+      "id": "src_lib_types_ts",
+      "community": 20,
+      "norm_label": "types.ts"
+    },
+    {
+      "label": "strapi.ts",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L1",
+      "id": "src_lib_strapi_ts",
+      "community": 1,
+      "norm_label": "strapi.ts"
+    },
+    {
+      "label": "getCached()",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L12",
+      "id": "lib_strapi_getcached",
+      "community": 1,
+      "norm_label": "getcached()"
+    },
+    {
+      "label": "setCache()",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L22",
+      "id": "lib_strapi_setcache",
+      "community": 1,
+      "norm_label": "setcache()"
+    },
+    {
+      "label": "fetchStrapi()",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L27",
+      "id": "lib_strapi_fetchstrapi",
+      "community": 1,
+      "norm_label": "fetchstrapi()"
+    },
+    {
+      "label": "strapiImage()",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L61",
+      "id": "lib_strapi_strapiimage",
+      "community": 1,
+      "norm_label": "strapiimage()"
+    },
+    {
+      "label": "fetchPageBySlug()",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L73",
+      "id": "lib_strapi_fetchpagebyslug",
+      "community": 1,
+      "norm_label": "fetchpagebyslug()"
+    },
+    {
+      "label": "fetchGlobal()",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L113",
+      "id": "lib_strapi_fetchglobal",
+      "community": 1,
+      "norm_label": "fetchglobal()"
+    },
+    {
+      "label": "fetchChangelogEntries()",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L125",
+      "id": "lib_strapi_fetchchangelogentries",
+      "community": 1,
+      "norm_label": "fetchchangelogentries()"
+    },
+    {
+      "label": "clearCache()",
+      "file_type": "code",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L138",
+      "id": "lib_strapi_clearcache",
+      "community": 3,
+      "norm_label": "clearcache()"
+    },
+    {
+      "label": "revalidate.ts",
+      "file_type": "code",
+      "source_file": "src/pages/api/revalidate.ts",
+      "source_location": "L1",
+      "id": "src_pages_api_revalidate_ts",
+      "community": 3,
+      "norm_label": "revalidate.ts"
+    },
+    {
+      "label": "POST()",
+      "file_type": "code",
+      "source_file": "src/pages/api/revalidate.ts",
+      "source_location": "L4",
+      "id": "api_revalidate_post",
+      "community": 3,
+      "norm_label": "post()"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_src": "cms_src_index_ts",
+      "_tgt": "src_index_register",
+      "source": "cms_src_index_ts",
+      "target": "src_index_register",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "cms_src_index_ts",
+      "_tgt": "src_index_bootstrap",
+      "source": "cms_src_index_ts",
+      "target": "src_index_bootstrap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L449",
+      "weight": 1.0,
+      "_src": "cms_src_index_ts",
+      "_tgt": "src_index_destroy",
+      "source": "cms_src_index_ts",
+      "target": "src_index_destroy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/config/database.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "cms_config_database_ts",
+      "_tgt": "config_database_config",
+      "source": "cms_config_database_ts",
+      "target": "config_database_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/config/plugins.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "cms_config_plugins_ts",
+      "_tgt": "config_plugins_config",
+      "source": "cms_config_plugins_ts",
+      "target": "config_plugins_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/config/admin.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "cms_config_admin_ts",
+      "_tgt": "config_admin_config",
+      "source": "cms_config_admin_ts",
+      "target": "config_admin_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/config/server.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "cms_config_server_ts",
+      "_tgt": "config_server_config",
+      "source": "cms_config_server_ts",
+      "target": "config_server_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_initscrollreveal",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_initscrollreveal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L45",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_initcounters",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_initcounters",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L70",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_animatecounter",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_animatecounter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_initstagger",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_initstagger",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L107",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_initfaqaccordion",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_initfaqaccordion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L123",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_initnavbar",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_initnavbar",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L138",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_initscrollprogress",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_initscrollprogress",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L157",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_initmobilemenu",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_initmobilemenu",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L193",
+      "weight": 1.0,
+      "_src": "public_scripts_main_js",
+      "_tgt": "scripts_main_initall",
+      "source": "public_scripts_main_js",
+      "target": "scripts_main_initall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L194",
+      "weight": 1.0,
+      "_src": "scripts_main_initall",
+      "_tgt": "scripts_main_initscrollreveal",
+      "source": "scripts_main_initscrollreveal",
+      "target": "scripts_main_initall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "scripts_main_initcounters",
+      "_tgt": "scripts_main_animatecounter",
+      "source": "scripts_main_initcounters",
+      "target": "scripts_main_animatecounter",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L195",
+      "weight": 1.0,
+      "_src": "scripts_main_initall",
+      "_tgt": "scripts_main_initcounters",
+      "source": "scripts_main_initcounters",
+      "target": "scripts_main_initall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L196",
+      "weight": 1.0,
+      "_src": "scripts_main_initall",
+      "_tgt": "scripts_main_initstagger",
+      "source": "scripts_main_initstagger",
+      "target": "scripts_main_initall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L197",
+      "weight": 1.0,
+      "_src": "scripts_main_initall",
+      "_tgt": "scripts_main_initfaqaccordion",
+      "source": "scripts_main_initfaqaccordion",
+      "target": "scripts_main_initall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L198",
+      "weight": 1.0,
+      "_src": "scripts_main_initall",
+      "_tgt": "scripts_main_initnavbar",
+      "source": "scripts_main_initnavbar",
+      "target": "scripts_main_initall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L199",
+      "weight": 1.0,
+      "_src": "scripts_main_initall",
+      "_tgt": "scripts_main_initscrollprogress",
+      "source": "scripts_main_initscrollprogress",
+      "target": "scripts_main_initall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "public/scripts/main.js",
+      "source_location": "L200",
+      "weight": 1.0,
+      "_src": "scripts_main_initall",
+      "_tgt": "scripts_main_initmobilemenu",
+      "source": "scripts_main_initmobilemenu",
+      "target": "scripts_main_initall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_src": "src_lib_strapi_ts",
+      "_tgt": "lib_strapi_getcached",
+      "source": "src_lib_strapi_ts",
+      "target": "lib_strapi_getcached",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_src": "src_lib_strapi_ts",
+      "_tgt": "lib_strapi_setcache",
+      "source": "src_lib_strapi_ts",
+      "target": "lib_strapi_setcache",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "_src": "src_lib_strapi_ts",
+      "_tgt": "lib_strapi_fetchstrapi",
+      "source": "src_lib_strapi_ts",
+      "target": "lib_strapi_fetchstrapi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L61",
+      "weight": 1.0,
+      "_src": "src_lib_strapi_ts",
+      "_tgt": "lib_strapi_strapiimage",
+      "source": "src_lib_strapi_ts",
+      "target": "lib_strapi_strapiimage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_src": "src_lib_strapi_ts",
+      "_tgt": "lib_strapi_fetchpagebyslug",
+      "source": "src_lib_strapi_ts",
+      "target": "lib_strapi_fetchpagebyslug",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L113",
+      "weight": 1.0,
+      "_src": "src_lib_strapi_ts",
+      "_tgt": "lib_strapi_fetchglobal",
+      "source": "src_lib_strapi_ts",
+      "target": "lib_strapi_fetchglobal",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_src": "src_lib_strapi_ts",
+      "_tgt": "lib_strapi_fetchchangelogentries",
+      "source": "src_lib_strapi_ts",
+      "target": "lib_strapi_fetchchangelogentries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L138",
+      "weight": 1.0,
+      "_src": "src_lib_strapi_ts",
+      "_tgt": "lib_strapi_clearcache",
+      "source": "src_lib_strapi_ts",
+      "target": "lib_strapi_clearcache",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_src": "lib_strapi_fetchstrapi",
+      "_tgt": "lib_strapi_getcached",
+      "source": "lib_strapi_getcached",
+      "target": "lib_strapi_fetchstrapi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "src/lib/strapi.ts",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_src": "lib_strapi_fetchstrapi",
+      "_tgt": "lib_strapi_setcache",
+      "source": "lib_strapi_setcache",
+      "target": "lib_strapi_fetchstrapi",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "src/pages/api/revalidate.ts",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "api_revalidate_post",
+      "_tgt": "lib_strapi_clearcache",
+      "source": "lib_strapi_clearcache",
+      "target": "api_revalidate_post"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/pages/api/revalidate.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "src_pages_api_revalidate_ts",
+      "_tgt": "api_revalidate_post",
+      "source": "src_pages_api_revalidate_ts",
+      "target": "api_revalidate_post",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}
