@@ -1,0 +1,830 @@
+---
+import Base from '../layouts/base.astro';
+import CtaSection from '../components/blocks/CtaSection.astro';
+---
+
+<Base
+  title="Security — Beebeeb"
+  description="How Beebeeb encrypts your files: AES-256-GCM, HKDF key derivation, OPAQUE authentication, X25519 key exchange. Zero-knowledge by architecture. EU-only infrastructure."
+  path="/security"
+>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 pt-[72px] pb-16 text-center relative" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 85%);">
+    <div class="section-label bb-fade-up">Zero-knowledge architecture</div>
+    <h1 class="text-[56px] leading-[1.05] font-bold tracking-[-0.03em] mt-3.5 max-w-[900px] mx-auto bb-fade-up bb-delay-1">
+      What we can see: <span class="text-amber-deep">nothing.</span>
+    </h1>
+    <p class="text-base text-ink-2 mt-[22px] max-w-[640px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+      Beebeeb is zero-knowledge by architecture, not by promise. Your files are encrypted on your device before they leave it. We never see your data, your filenames, or your keys. Even under a court order, we have nothing useful to hand over.
+    </p>
+    <div class="flex gap-3 justify-center mt-8 flex-wrap bb-fade-up bb-delay-3">
+      <span class="inline-flex px-3 py-1.5 bg-paper border border-line rounded-md font-mono text-[11px] text-ink-3">AES-256-GCM</span>
+      <span class="inline-flex px-3 py-1.5 bg-paper border border-line rounded-md font-mono text-[11px] text-ink-3">HKDF-SHA256</span>
+      <span class="inline-flex px-3 py-1.5 bg-paper border border-line rounded-md font-mono text-[11px] text-ink-3">OPAQUE PAKE</span>
+      <span class="inline-flex px-3 py-1.5 bg-paper border border-line rounded-md font-mono text-[11px] text-ink-3">X25519</span>
+      <span class="inline-flex px-3 py-1.5 bg-paper border border-line rounded-md font-mono text-[11px] text-ink-3">Argon2id</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ENCRYPTION — How files are encrypted
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper border-t border-line">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="section-label bb-fade-up">File encryption</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up bb-delay-1">
+        Every file. Every chunk. Individually encrypted.
+      </h2>
+      <p class="text-base text-ink-2 max-w-[680px] mb-12 leading-relaxed bb-fade-up bb-delay-2">
+        When you upload a file, it never leaves your device as plaintext. The encryption pipeline runs entirely in your browser (via WebAssembly) or natively on desktop and mobile.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10" data-stagger>
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mb-4">
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </div>
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Cipher</div>
+          <div class="text-lg font-bold tracking-tight mb-2">AES-256-GCM</div>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            Authenticated encryption with associated data. Each chunk gets a unique nonce. Tamper detection is built into the cipher -- if a single bit is modified, decryption fails.
+          </p>
+        </div>
+
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mb-4">
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Key derivation</div>
+          <div class="text-lg font-bold tracking-tight mb-2">HKDF-SHA256</div>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            Every file gets its own encryption key, derived from your master key using HKDF with a unique salt. Compromising one file key reveals nothing about your master key or other file keys.
+          </p>
+        </div>
+
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mb-4">
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Filename encryption</div>
+          <div class="text-lg font-bold tracking-tight mb-2">AES-SIV</div>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            Filenames and folder names are encrypted separately with AES-SIV. The server sees only opaque identifiers. Your directory structure is invisible to us.
+          </p>
+        </div>
+      </div>
+
+      <!-- Encryption flow -->
+      <div class="border border-line rounded-xl bg-paper-2 p-8 bb-reveal-scale">
+        <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-5">Encryption pipeline</div>
+        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-0">
+          <div class="flex-1 text-center px-3">
+            <div class="w-14 h-14 rounded-xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-3">
+              <svg class="w-6 h-6 text-ink-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div class="text-[13px] font-semibold mb-1">Your file</div>
+            <div class="text-[11px] text-ink-3">Plaintext on device</div>
+          </div>
+
+          <svg class="w-8 h-5 text-ink-3 shrink-0 hidden md:block" viewBox="0 0 32 20"><path d="M0 10h28M24 5l4 5-4 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg class="w-5 h-8 text-ink-3 shrink-0 md:hidden" viewBox="0 0 20 32"><path d="M10 0v28M5 24l5 4 5-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+
+          <div class="flex-1 text-center px-3">
+            <div class="w-14 h-14 rounded-xl bg-amber-bg border border-[oklch(0.86_0.07_90)] mx-auto flex items-center justify-center shadow-1 mb-3">
+              <svg class="w-6 h-6 text-amber-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div class="text-[13px] font-semibold mb-1">Encrypt + chunk</div>
+            <div class="text-[11px] text-ink-3">AES-256-GCM per chunk</div>
+          </div>
+
+          <svg class="w-8 h-5 text-ink-3 shrink-0 hidden md:block" viewBox="0 0 32 20"><path d="M0 10h28M24 5l4 5-4 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg class="w-5 h-8 text-ink-3 shrink-0 md:hidden" viewBox="0 0 20 32"><path d="M10 0v28M5 24l5 4 5-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+
+          <div class="flex-1 text-center px-3">
+            <div class="w-14 h-14 rounded-xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-3">
+              <svg class="w-6 h-6 text-ink-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            </div>
+            <div class="text-[13px] font-semibold mb-1">Upload ciphertext</div>
+            <div class="text-[11px] text-ink-3">Only encrypted blobs</div>
+          </div>
+
+          <svg class="w-8 h-5 text-ink-3 shrink-0 hidden md:block" viewBox="0 0 32 20"><path d="M0 10h28M24 5l4 5-4 5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+          <svg class="w-5 h-8 text-ink-3 shrink-0 md:hidden" viewBox="0 0 20 32"><path d="M10 0v28M5 24l5 4 5-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+
+          <div class="flex-1 text-center px-3">
+            <div class="w-14 h-14 rounded-xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-3">
+              <div class="flex gap-1">
+                {['FRA', 'AMS'].map(r => (
+                  <span class="font-mono text-[8px] text-ink-3 font-semibold">{r}</span>
+                ))}
+              </div>
+            </div>
+            <div class="text-[13px] font-semibold mb-1">Stored in EU</div>
+            <div class="text-[11px] text-ink-3">Frankfurt + Amsterdam</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       KEY HIERARCHY
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper-2 border-t border-line">
+    <div class="max-w-[900px] mx-auto">
+      <div class="section-label text-center bb-fade-up">Key hierarchy</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-4 leading-tight bb-fade-up bb-delay-1">
+        One password. Millions of keys.
+      </h2>
+      <p class="text-base text-ink-2 text-center max-w-[620px] mx-auto mb-14 bb-fade-up bb-delay-2">
+        Your password is the root of everything. It never leaves your device. From it, we derive a hierarchy of keys -- each with a single purpose, each isolated from the others.
+      </p>
+
+      <!-- Key hierarchy diagram -->
+      <div class="key-hierarchy bb-reveal-scale bb-delay-2">
+        <!-- Level 0: Password -->
+        <div class="flex justify-center mb-2">
+          <div class="key-node key-node--root">
+            <div class="key-node__icon">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <div>
+              <div class="key-node__label">Your password</div>
+              <div class="key-node__sub">Never sent to server. Not even as a hash.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector -->
+        <div class="flex justify-center">
+          <div class="key-connector">
+            <div class="key-connector__line"></div>
+            <div class="key-connector__badge">Argon2id</div>
+            <div class="key-connector__line"></div>
+          </div>
+        </div>
+
+        <!-- Level 1: Master key -->
+        <div class="flex justify-center mb-2">
+          <div class="key-node key-node--master">
+            <div class="key-node__icon key-node__icon--amber">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            </div>
+            <div>
+              <div class="key-node__label">Master key</div>
+              <div class="key-node__sub">256-bit. Lives only in device memory. Zeroed after use.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Connector: fan-out -->
+        <div class="flex justify-center">
+          <div class="key-connector">
+            <div class="key-connector__line"></div>
+            <div class="key-connector__badge">HKDF-SHA256</div>
+            <div class="key-connector__line"></div>
+          </div>
+        </div>
+
+        <!-- Level 2: Derived keys -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div class="key-node key-node--leaf">
+            <div class="key-node__icon key-node__icon--small">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            </div>
+            <div>
+              <div class="key-node__label text-[13px]">File keys</div>
+              <div class="key-node__sub">Unique per file. Derived with file-specific salt.</div>
+            </div>
+          </div>
+
+          <div class="key-node key-node--leaf">
+            <div class="key-node__icon key-node__icon--small">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div>
+              <div class="key-node__label text-[13px]">Folder keys</div>
+              <div class="key-node__sub">Wraps file keys within a folder. Shared via X25519.</div>
+            </div>
+          </div>
+
+          <div class="key-node key-node--leaf">
+            <div class="key-node__icon key-node__icon--small">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div>
+              <div class="key-node__label text-[13px]">Identity keys</div>
+              <div class="key-node__sub">X25519 keypair for receiving shared folders.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Properties -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-10">
+        <div class="flex gap-3 p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="w-7 h-7 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)] flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="text-[13px] font-semibold mb-0.5">Forward secrecy</div>
+            <div class="text-[12px] text-ink-2 leading-relaxed">Compromising one file key does not reveal other file keys or the master key.</div>
+          </div>
+        </div>
+        <div class="flex gap-3 p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="w-7 h-7 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)] flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="text-[13px] font-semibold mb-0.5">Zero key storage</div>
+            <div class="text-[12px] text-ink-2 leading-relaxed">Your master key is never stored anywhere -- not on disk, not on server. It exists only in memory, and is zeroed after use.</div>
+          </div>
+        </div>
+        <div class="flex gap-3 p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="w-7 h-7 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)] flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="text-[13px] font-semibold mb-0.5">Memory safety</div>
+            <div class="text-[12px] text-ink-2 leading-relaxed">The crypto engine is written in Rust. Key material is zeroized from memory using the <code class="font-mono text-[11px]">zeroize</code> crate.</div>
+          </div>
+        </div>
+        <div class="flex gap-3 p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="w-7 h-7 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)] flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <div class="text-[13px] font-semibold mb-0.5">No password transmission</div>
+            <div class="text-[12px] text-ink-2 leading-relaxed">OPAQUE ensures your password is never sent to the server in any form -- not plaintext, not hashed, not derived.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       AUTHENTICATION — OPAQUE
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper border-t border-line">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="section-label bb-fade-up">Authentication</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up bb-delay-1">
+        Your password never leaves your device.
+      </h2>
+      <p class="text-base text-ink-2 max-w-[680px] mb-12 leading-relaxed bb-fade-up bb-delay-2">
+        Most services hash your password and send the hash to a server. If that server is breached, the hash can be cracked. We use OPAQUE -- a Password-Authenticated Key Exchange protocol that proves you know the password without ever transmitting it.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="border border-line rounded-xl bg-paper-2 p-6 bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-4">Traditional login</div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 rounded-full bg-paper-3 text-ink-3 flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <span class="text-[13px] text-ink-2">Password hashed client-side</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 rounded-full bg-paper-3 text-ink-3 flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <span class="text-[13px] text-ink-2">Hash sent to server for verification</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 rounded-full bg-paper-3 text-ink-3 flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+              </div>
+              <span class="text-[13px] text-ink-2">Server stores hash -- crackable if breached</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="border border-[oklch(0.86_0.07_90)] rounded-xl bg-amber-bg p-6 bb-fade-up">
+          <div class="font-mono text-[10px] text-amber-deep uppercase tracking-[0.06em] mb-4">Beebeeb with OPAQUE</div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)] flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="text-[13px] text-ink">Password stays on device entirely</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)] flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="text-[13px] text-ink">Zero-knowledge proof of knowledge</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-6 h-6 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)] flex items-center justify-center shrink-0">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <span class="text-[13px] text-ink">Server breach reveals nothing usable</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SHARING — X25519 key exchange
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper-2 border-t border-line">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="section-label bb-fade-up">Encrypted sharing</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up bb-delay-1">
+        Share without exposing keys to the server.
+      </h2>
+      <p class="text-base text-ink-2 max-w-[680px] mb-12 leading-relaxed bb-fade-up bb-delay-2">
+        When you share a folder with another user, the encryption key is wrapped specifically for their public key using X25519 Diffie-Hellman key exchange. The server transports the wrapped key but cannot unwrap it.
+      </p>
+
+      <!-- Sharing flow -->
+      <div class="border border-line rounded-xl bg-paper p-8 bb-reveal-scale">
+        <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-6">Key exchange flow</div>
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+          <!-- Alice -->
+          <div class="text-center">
+            <div class="w-12 h-12 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] mx-auto flex items-center justify-center mb-2">
+              <span class="font-mono text-[11px] font-bold text-amber-deep">You</span>
+            </div>
+            <div class="text-[12px] font-semibold">Sender</div>
+            <div class="text-[10px] text-ink-3">Has folder key</div>
+          </div>
+
+          <!-- Step 1 -->
+          <div class="text-center">
+            <div class="w-10 h-10 rounded-lg bg-paper-2 border border-line mx-auto flex items-center justify-center mb-2">
+              <span class="font-mono text-[10px] font-bold text-ink-3">01</span>
+            </div>
+            <div class="text-[11px] text-ink-2 leading-tight">Fetch recipient's<br/>X25519 public key</div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="text-center">
+            <div class="w-10 h-10 rounded-lg bg-amber-bg border border-[oklch(0.86_0.07_90)] mx-auto flex items-center justify-center mb-2">
+              <span class="font-mono text-[10px] font-bold text-amber-deep">02</span>
+            </div>
+            <div class="text-[11px] text-ink-2 leading-tight">Wrap folder key<br/>for recipient</div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="text-center">
+            <div class="w-10 h-10 rounded-lg bg-paper-2 border border-line mx-auto flex items-center justify-center mb-2">
+              <span class="font-mono text-[10px] font-bold text-ink-3">03</span>
+            </div>
+            <div class="text-[11px] text-ink-2 leading-tight">Server stores<br/>wrapped key blob</div>
+          </div>
+
+          <!-- Bob -->
+          <div class="text-center">
+            <div class="w-12 h-12 rounded-full bg-paper-2 border border-line mx-auto flex items-center justify-center mb-2">
+              <svg class="w-5 h-5 text-ink-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="text-[12px] font-semibold">Recipient</div>
+            <div class="text-[10px] text-ink-3">Unwraps with secret key</div>
+          </div>
+        </div>
+
+        <div class="mt-6 p-3 bg-paper-2 border border-line rounded-md">
+          <div class="text-[12px] text-ink-2 leading-relaxed">
+            The server never sees the folder key in plaintext. It stores a ciphertext blob that only the recipient's X25519 secret key can unwrap. If the server is compromised, the attacker gets encrypted blobs they cannot decrypt.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       INFRASTRUCTURE — EU-only
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper border-t border-line">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="section-label bb-fade-up">Infrastructure</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up bb-delay-1">
+        EU-only. Named providers. No middlemen.
+      </h2>
+      <p class="text-base text-ink-2 max-w-[680px] mb-12 leading-relaxed bb-fade-up bb-delay-2">
+        Your encrypted data is stored exclusively in the European Union. We name our providers because transparency matters more than marketing ambiguity.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8" data-stagger>
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <span class="font-mono text-[11px] font-bold">FRA</span>
+            </div>
+            <div>
+              <div class="text-[15px] font-bold mb-1">Frankfurt, Germany</div>
+              <div class="text-[13px] text-ink-2 leading-relaxed">Hetzner. Tier III datacenter. German data protection law (BDSG) applies in addition to GDPR.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <span class="font-mono text-[11px] font-bold">AMS</span>
+            </div>
+            <div>
+              <div class="text-[15px] font-bold mb-1">Amsterdam, Netherlands</div>
+              <div class="text-[13px] text-ink-2 leading-relaxed">Leaseweb. Dutch jurisdiction. Same country as Initlabs B.V., the company that operates Beebeeb.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Cloud Act</div>
+          <div class="text-[13px] font-semibold text-ink mb-1">Not applicable</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">No US parent company, no US subprocessors, no US jurisdiction. The Cloud Act does not reach us.</div>
+        </div>
+        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Operator</div>
+          <div class="text-[13px] font-semibold text-ink mb-1">Initlabs B.V.</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">KvK 95157565. Wijchen, Netherlands. A Dutch company governed by Dutch and EU law.</div>
+        </div>
+        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Data transfers</div>
+          <div class="text-[13px] font-semibold text-ink mb-1">None outside EU</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">No CDN in the US, no analytics in the US, no error tracking in the US. Your data stays in the EU.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       SUBPOENA
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-ink text-paper border-t border-line relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 50% 50%, oklch(0.82 0.17 84 / 0.5) 1.5px, transparent 1.8px); background-size: 24px 24px;"></div>
+    <div class="relative max-w-[900px] mx-auto">
+      <div class="text-[11px] font-semibold tracking-[0.04em] uppercase text-amber mb-2.5 bb-fade-up">What happens if we're subpoenaed</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-6 leading-tight bb-fade-up bb-delay-1">
+        We hand over encrypted blobs.<br/>
+        <span class="text-amber">They're useless without your key.</span>
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bb-fade-up bb-delay-2">
+        <div>
+          <p class="text-[14px] text-[oklch(0.78_0.01_80)] leading-[1.7] mb-4">
+            If a court orders us to produce user data, we comply with the law. But here is what we can hand over:
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2.5">
+              <span class="inline-flex px-2 py-0.5 bg-[oklch(0.3_0.01_70)] border border-[oklch(0.35_0.01_70)] rounded font-mono text-[10px] text-amber shrink-0 mt-0.5">has</span>
+              <span class="text-[13px] text-[oklch(0.78_0.01_80)]">Email address used for account registration</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="inline-flex px-2 py-0.5 bg-[oklch(0.3_0.01_70)] border border-[oklch(0.35_0.01_70)] rounded font-mono text-[10px] text-amber shrink-0 mt-0.5">has</span>
+              <span class="text-[13px] text-[oklch(0.78_0.01_80)]">Encrypted blobs (ciphertext that looks like random bytes)</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="inline-flex px-2 py-0.5 bg-[oklch(0.3_0.01_70)] border border-[oklch(0.35_0.01_70)] rounded font-mono text-[10px] text-amber shrink-0 mt-0.5">has</span>
+              <span class="text-[13px] text-[oklch(0.78_0.01_80)]">Timestamps and storage usage metrics</span>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="text-[14px] text-[oklch(0.78_0.01_80)] leading-[1.7] mb-4">
+            And what we cannot hand over, because we do not have it:
+          </p>
+          <ul class="space-y-2">
+            <li class="flex items-start gap-2.5">
+              <span class="inline-flex px-2 py-0.5 bg-[oklch(0.25_0.02_25)] border border-[oklch(0.35_0.03_25)] rounded font-mono text-[10px] text-red shrink-0 mt-0.5">none</span>
+              <span class="text-[13px] text-[oklch(0.78_0.01_80)]">File contents, filenames, or folder structure</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="inline-flex px-2 py-0.5 bg-[oklch(0.25_0.02_25)] border border-[oklch(0.35_0.03_25)] rounded font-mono text-[10px] text-red shrink-0 mt-0.5">none</span>
+              <span class="text-[13px] text-[oklch(0.78_0.01_80)]">Encryption keys, passwords, or recovery phrases</span>
+            </li>
+            <li class="flex items-start gap-2.5">
+              <span class="inline-flex px-2 py-0.5 bg-[oklch(0.25_0.02_25)] border border-[oklch(0.35_0.03_25)] rounded font-mono text-[10px] text-red shrink-0 mt-0.5">none</span>
+              <span class="text-[13px] text-[oklch(0.78_0.01_80)]">Any way to decrypt the blobs we store</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-[13px] text-[oklch(0.58_0.01_80)] mt-8 bb-fade-up bb-delay-3">
+        This is not a policy decision. It is an architectural constraint. We cannot give what we do not have.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       OPEN SOURCE
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper border-t border-line">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="section-label bb-fade-up">Open source</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up bb-delay-1">
+        Don't trust us. Read the code.
+      </h2>
+      <p class="text-base text-ink-2 max-w-[680px] mb-12 leading-relaxed bb-fade-up bb-delay-2">
+        All client applications are open source. The crypto engine, the web app, the mobile apps, and the CLI -- you can read every line of code that touches your data.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" data-stagger>
+        <a href="https://github.com/beebeeb-io/core" class="group p-5 border border-line rounded-lg bg-paper bb-fade-up bb-lift" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-center gap-2.5 mb-2">
+            <span class="font-mono text-[12px] font-semibold text-amber-deep">core</span>
+            <span class="px-1.5 py-0.5 bg-paper-2 border border-line rounded text-[9px] text-ink-3 font-mono">Rust</span>
+          </div>
+          <div class="text-[13px] text-ink-2 leading-relaxed">Crypto engine, types, sync primitives. Compiles to WASM for web, native for everything else.</div>
+        </a>
+
+        <a href="https://github.com/beebeeb-io/web" class="group p-5 border border-line rounded-lg bg-paper bb-fade-up bb-lift" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-center gap-2.5 mb-2">
+            <span class="font-mono text-[12px] font-semibold text-amber-deep">web</span>
+            <span class="px-1.5 py-0.5 bg-paper-2 border border-line rounded text-[9px] text-ink-3 font-mono">React + WASM</span>
+          </div>
+          <div class="text-[13px] text-ink-2 leading-relaxed">Browser-based drive application. All encryption happens via the WASM core.</div>
+        </a>
+
+        <a href="https://github.com/beebeeb-io/cli" class="group p-5 border border-line rounded-lg bg-paper bb-fade-up bb-lift" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-center gap-2.5 mb-2">
+            <span class="font-mono text-[12px] font-semibold text-amber-deep">cli</span>
+            <span class="px-1.5 py-0.5 bg-paper-2 border border-line rounded text-[9px] text-ink-3 font-mono">Rust</span>
+          </div>
+          <div class="text-[13px] text-ink-2 leading-relaxed">Command-line tool for encrypted file operations. Scriptable, cron-friendly.</div>
+        </a>
+
+        <a href="https://github.com/beebeeb-io/mobile" class="group p-5 border border-line rounded-lg bg-paper bb-fade-up bb-lift" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-center gap-2.5 mb-2">
+            <span class="font-mono text-[12px] font-semibold text-amber-deep">mobile</span>
+            <span class="px-1.5 py-0.5 bg-paper-2 border border-line rounded text-[9px] text-ink-3 font-mono">React Native</span>
+          </div>
+          <div class="text-[13px] text-ink-2 leading-relaxed">iOS and Android apps. Native crypto bindings via UniFFI.</div>
+        </a>
+
+        <a href="https://github.com/beebeeb-io/desktop" class="group p-5 border border-line rounded-lg bg-paper bb-fade-up bb-lift" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-center gap-2.5 mb-2">
+            <span class="font-mono text-[12px] font-semibold text-amber-deep">desktop</span>
+            <span class="px-1.5 py-0.5 bg-paper-2 border border-line rounded text-[9px] text-ink-3 font-mono">Native</span>
+          </div>
+          <div class="text-[13px] text-ink-2 leading-relaxed">Desktop sync for macOS, Windows, Linux. Selective sync, conflict-free.</div>
+        </a>
+
+        <a href="https://github.com/beebeeb-io/site" class="group p-5 border border-line rounded-lg bg-paper bb-fade-up bb-lift" target="_blank" rel="noopener noreferrer">
+          <div class="flex items-center gap-2.5 mb-2">
+            <span class="font-mono text-[12px] font-semibold text-amber-deep">site</span>
+            <span class="px-1.5 py-0.5 bg-paper-2 border border-line rounded text-[9px] text-ink-3 font-mono">Astro</span>
+          </div>
+          <div class="text-[13px] text-ink-2 leading-relaxed">This website. Also open source. Because why not.</div>
+        </a>
+      </div>
+
+      <div class="text-center mt-8 bb-fade-up">
+        <a href="https://github.com/beebeeb-io" class="btn btn-outline btn-md" target="_blank" rel="noopener noreferrer">
+          View all repositories on GitHub
+          <svg class="w-[13px] h-[13px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       BUG BOUNTY
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper-2 border-t border-line">
+    <div class="max-w-[900px] mx-auto">
+      <div class="section-label bb-fade-up">Responsible disclosure</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up bb-delay-1">
+        Found something? Tell us.
+      </h2>
+      <p class="text-base text-ink-2 max-w-[680px] mb-10 leading-relaxed bb-fade-up bb-delay-2">
+        We take security vulnerabilities seriously. If you discover a vulnerability in Beebeeb, we want to hear about it and fix it before it causes harm.
+      </p>
+
+      <div class="border border-line rounded-xl overflow-hidden mb-8 bb-reveal-scale bb-delay-2">
+        <div class="grid grid-cols-3 gap-3.5 px-5 py-3 bg-paper border-b border-line text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3">
+          <span>Severity</span><span>Reward</span><span>Examples</span>
+        </div>
+        <div class="grid grid-cols-3 gap-3.5 px-5 py-3.5 border-b border-line text-[13px] text-ink-2 bg-paper">
+          <span class="font-medium text-ink">Critical</span>
+          <span class="font-mono font-semibold text-amber-deep">Up to &euro;5,000</span>
+          <span>Key leakage, auth bypass, RCE</span>
+        </div>
+        <div class="grid grid-cols-3 gap-3.5 px-5 py-3.5 border-b border-line text-[13px] text-ink-2 bg-paper">
+          <span class="font-medium text-ink">High</span>
+          <span class="font-mono font-semibold text-amber-deep">Up to &euro;2,000</span>
+          <span>Privilege escalation, data exposure</span>
+        </div>
+        <div class="grid grid-cols-3 gap-3.5 px-5 py-3.5 border-b border-line text-[13px] text-ink-2 bg-paper">
+          <span class="font-medium text-ink">Medium</span>
+          <span class="font-mono font-semibold text-amber-deep">Up to &euro;500</span>
+          <span>XSS, CSRF, information disclosure</span>
+        </div>
+        <div class="grid grid-cols-3 gap-3.5 px-5 py-3.5 text-[13px] text-ink-2 bg-paper">
+          <span class="font-medium text-ink">Low</span>
+          <span class="font-mono font-semibold text-amber-deep">Up to &euro;100</span>
+          <span>Minor misconfigurations, hardening</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="text-[14px] font-semibold mb-2">How to report</div>
+          <p class="text-[13px] text-ink-2 leading-relaxed mb-3">
+            Email your findings to <a href="mailto:security@beebeeb.io" class="font-mono text-amber-deep underline underline-offset-4 decoration-line hover:text-ink transition-colors">security@beebeeb.io</a>. Include steps to reproduce, impact assessment, and any proof of concept.
+          </p>
+          <p class="text-[12px] text-ink-3">We respond within 48 hours. Always.</p>
+        </div>
+
+        <div class="p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="text-[14px] font-semibold mb-2">Our commitment</div>
+          <ul class="space-y-1.5">
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              No legal action against good-faith researchers
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Public acknowledgment (if you want it)
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              90-day coordinated disclosure window
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       COMPLIANCE
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper border-t border-line">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="section-label bb-fade-up">Compliance</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up bb-delay-1">
+        GDPR by design. Working toward ISO 27001.
+      </h2>
+      <p class="text-base text-ink-2 max-w-[680px] mb-12 leading-relaxed bb-fade-up bb-delay-2">
+        We do not bolt on compliance after the fact. Our architecture was designed from the ground up to meet the strongest data protection requirements in the world.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4" data-stagger>
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="inline-flex px-2.5 py-1 bg-amber-bg border border-[oklch(0.86_0.07_90)] rounded-md font-mono text-[11px] text-amber-deep font-semibold mb-3">GDPR</div>
+          <div class="text-[15px] font-bold mb-2">Data protection by design</div>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            Zero-knowledge encryption means minimal data processing. We cannot access personal data stored in files because we cannot decrypt them. Data minimization is not a policy -- it is a technical fact.
+          </p>
+        </div>
+
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3 font-semibold mb-3">ISO 27001</div>
+          <div class="text-[15px] font-bold mb-2">In progress</div>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            We are working toward ISO 27001 certification for our information security management system. This covers our operational practices, access controls, incident response, and vendor management.
+          </p>
+        </div>
+
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3 font-semibold mb-3">AUDIT</div>
+          <div class="text-[15px] font-bold mb-2">Independent code audits</div>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            Our crypto implementation will undergo third-party security audits before public launch. Results will be published in full. No redactions, no summaries -- the complete report.
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-8 p-5 border border-dashed border-line-2 rounded-lg bg-paper-2 bb-fade-up">
+        <div class="flex items-start gap-3">
+          <div class="w-8 h-8 rounded-full bg-amber-bg text-amber-deep flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="text-[14px] font-semibold mb-1">We will publish a warrant canary.</div>
+            <p class="text-[13px] text-ink-2 leading-relaxed">
+              A signed statement, updated quarterly, confirming that Initlabs B.V. has not received any secret court orders, national security letters, or gag orders. If the canary stops updating, you know something changed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CTA
+       ═══════════════════════════════════════════════════════════ -->
+  <CtaSection
+    title="Privacy you can verify,"
+    title_highlight="not just believe."
+    description="Read the code. Check the architecture. Then decide. Start with 5 GB free, no credit card required."
+    cta_primary_label="Get started free"
+    cta_primary_href="https://app.beebeeb.io/signup"
+    cta_secondary_label="View source on GitHub"
+    cta_secondary_href="https://github.com/beebeeb-io"
+    dark_bg={true}
+  />
+</Base>
+
+<style>
+  /* ============================================================
+     KEY HIERARCHY DIAGRAM
+     ============================================================ */
+  .key-hierarchy {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .key-node {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 20px;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-paper);
+  }
+
+  .key-node--root {
+    border-color: var(--color-line-2);
+    background: var(--color-paper);
+    max-width: 420px;
+  }
+
+  .key-node--master {
+    border-color: oklch(0.86 0.07 90);
+    background: var(--color-amber-bg);
+    max-width: 420px;
+  }
+
+  .key-node--leaf {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .key-node__icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--color-paper-2);
+    border: 1px solid var(--color-line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--color-ink-2);
+  }
+
+  .key-node__icon--amber {
+    background: var(--color-amber-bg);
+    border-color: oklch(0.86 0.07 90);
+    color: var(--color-amber-deep);
+  }
+
+  .key-node__icon--small {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+  }
+
+  .key-node__label {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .key-node__sub {
+    font-size: 12px;
+    color: var(--color-ink-2);
+    line-height: 1.5;
+    margin-top: 2px;
+  }
+
+  .key-connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    padding: 4px 0;
+  }
+
+  .key-connector__line {
+    width: 1px;
+    height: 16px;
+    background: var(--color-line-2);
+  }
+
+  .key-connector__badge {
+    display: inline-flex;
+    padding: 3px 10px;
+    background: var(--color-ink);
+    color: var(--color-amber);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    border-radius: 4px;
+  }
+</style>
