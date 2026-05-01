@@ -1,0 +1,190 @@
+---
+import Base from '../layouts/base.astro';
+
+const API_URL = import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io';
+---
+
+<Base
+  title="Roadmap — Beebeeb"
+  description="Vote for the apps you want backup guides for. Built in the open."
+  path="/roadmap"
+>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 pt-[72px] pb-16 text-center relative" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 85%);">
+    <div class="section-label bb-fade-up">Community roadmap</div>
+    <h1 class="text-[48px] leading-[1.05] font-bold tracking-[-0.03em] mt-3.5 max-w-[800px] mx-auto bb-fade-up bb-delay-1">
+      What should we support next?
+    </h1>
+    <p class="text-base text-ink-2 mt-[22px] max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+      Vote for the apps you want backup guides for. The most-requested apps get built first.
+      Submit an app we haven't listed yet.
+    </p>
+    <p class="mt-4 text-[13px] text-ink-3 bb-fade-up bb-delay-3">
+      Built in the open &mdash; decisions made by the community.
+    </p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ROADMAP LIST
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-16 bg-paper">
+    <div class="max-w-[720px] mx-auto">
+
+      <!-- List -->
+      <div id="roadmap-list" class="space-y-3">
+        <div class="text-ink-3 text-sm">Loading...</div>
+      </div>
+
+      <!-- Submit form -->
+      <div class="mt-14 pt-10 border-t border-line">
+        <h2 class="text-xl font-bold tracking-[-0.02em] mb-2">Don't see your app?</h2>
+        <p class="text-[13.5px] text-ink-2 mb-6">Submit it and others can vote for it.</p>
+        <form id="submit-form" class="flex gap-3 items-start flex-wrap">
+          <input
+            id="app-name-input"
+            type="text"
+            placeholder="App name (e.g. Signal, Notion, Obsidian)"
+            maxlength="100"
+            class="flex-1 min-w-0 px-4 py-2.5 rounded-lg border border-line bg-paper text-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-amber/50 focus:border-amber-deep transition-all"
+          />
+          <button
+            type="submit"
+            class="px-5 py-2.5 rounded-lg bg-amber text-[oklch(0.25_0.05_84)] font-semibold text-sm hover:bg-amber-deep transition-colors shrink-0"
+          >
+            Submit
+          </button>
+        </form>
+        <p id="submit-status" class="mt-3 text-sm hidden"></p>
+      </div>
+
+    </div>
+  </section>
+
+</Base>
+
+<script define:vars={{ API_URL }}>
+  const ENDPOINT = `${API_URL}/api/v1/feedback/app-requests`;
+
+  // Track which apps the user has voted for this session
+  const voted = new Set(JSON.parse(sessionStorage.getItem('bb_voted') || '[]'));
+
+  function saveVoted() {
+    sessionStorage.setItem('bb_voted', JSON.stringify([...voted]));
+  }
+
+  async function loadList() {
+    const list = document.getElementById('roadmap-list');
+    try {
+      const res = await fetch(ENDPOINT);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const { items } = await res.json();
+      renderList(items);
+    } catch (e) {
+      list.innerHTML = '<div class="text-ink-3 text-sm">Could not load the roadmap right now.</div>';
+    }
+  }
+
+  function renderList(items) {
+    const list = document.getElementById('roadmap-list');
+    if (!items || items.length === 0) {
+      list.innerHTML = '<div class="text-ink-3 text-sm">No requests yet. Be the first to submit one below.</div>';
+      return;
+    }
+
+    list.innerHTML = items.map((item, i) => {
+      const hasVoted = voted.has(item.app_name);
+      return `
+        <div class="flex items-center gap-4 p-4 rounded-lg border border-line bg-paper hover:bg-paper-2 transition-colors group" data-app="${item.app_name}">
+          <span class="text-[13px] font-mono text-ink-3 w-6 text-right shrink-0">${i + 1}</span>
+          <span class="flex-1 font-medium text-[15px] tracking-[-0.01em]">${escapeHtml(item.app_name)}</span>
+          <span class="vote-count text-[13px] font-mono text-ink-2 shrink-0">${item.votes}</span>
+          <button
+            class="vote-btn shrink-0 px-3 py-1.5 rounded-md border text-[12px] font-semibold transition-all ${hasVoted ? 'bg-amber-bg border-[oklch(0.86_0.07_90)] text-amber-deep cursor-default' : 'border-line text-ink-2 hover:border-amber-deep hover:text-amber-deep hover:bg-amber-bg'}"
+            data-app="${item.app_name}"
+            ${hasVoted ? 'disabled' : ''}
+          >${hasVoted ? 'Voted' : 'Vote'}</button>
+        </div>
+      `;
+    }).join('');
+
+    list.querySelectorAll('.vote-btn:not([disabled])').forEach(btn => {
+      btn.addEventListener('click', () => handleVote(btn));
+    });
+  }
+
+  async function handleVote(btn) {
+    const appName = btn.dataset.app;
+    btn.disabled = true;
+    btn.textContent = '...';
+
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ app_name: appName }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      voted.add(appName);
+      saveVoted();
+
+      const row = btn.closest('[data-app]');
+      const countEl = row.querySelector('.vote-count');
+      countEl.textContent = parseInt(countEl.textContent, 10) + 1;
+
+      btn.textContent = 'Voted';
+      btn.classList.remove('border-line', 'text-ink-2', 'hover:border-amber-deep', 'hover:text-amber-deep', 'hover:bg-amber-bg');
+      btn.classList.add('bg-amber-bg', 'border-[oklch(0.86_0.07_90)]', 'text-amber-deep', 'cursor-default');
+    } catch (e) {
+      btn.disabled = false;
+      btn.textContent = 'Vote';
+    }
+  }
+
+  document.getElementById('submit-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const input = document.getElementById('app-name-input');
+    const status = document.getElementById('submit-status');
+    const appName = input.value.trim();
+    if (!appName) return;
+
+    const submitBtn = e.target.querySelector('button[type=submit]');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ app_name: appName }),
+      });
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || `HTTP ${res.status}`);
+      }
+
+      voted.add(appName);
+      saveVoted();
+
+      input.value = '';
+      status.textContent = `"${appName}" added. Thanks for your input.`;
+      status.className = 'mt-3 text-sm text-ink-2';
+      await loadList();
+    } catch (err) {
+      status.textContent = err.message || 'Something went wrong. Try again.';
+      status.className = 'mt-3 text-sm text-red-600';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit';
+    }
+  });
+
+  function escapeHtml(str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  loadList();
+</script>
