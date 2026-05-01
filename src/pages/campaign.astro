@@ -1,0 +1,491 @@
+---
+import Base from '../layouts/base.astro';
+
+/* ── Helper ── */
+function fmtEur(n: number) {
+  return n.toLocaleString('nl-NL');
+}
+
+/* ── Tier data (precomputed to avoid <= in template) ── */
+const tiersRaw = [
+  { p: 39,    n: 'Early Bee',         tb: '1 TB',   dur: '1 year',  retail: 48,    b: 412, cap: null, left: null,  tag: null,           hot: false, star: false, apiary: false },
+  { p: 69,    n: 'Founding Hoarder',  tb: '2 TB',   dur: '1 year',  retail: 96,    b: 487, cap: 500,  left: 13,    tag: 'POPULAR',      hot: true,  star: false, apiary: false },
+  { p: 149,   n: 'Founding Hoarder+', tb: '4 TB',   dur: '1 year',  retail: 192,   b: 64,  cap: 200,  left: 136,   tag: 'BEST €/TB', hot: false, star: true,  apiary: false },
+  { p: 299,   n: 'Drone',             tb: '8 TB',   dur: '1 year',  retail: 384,   b: 612, cap: 1000, left: 388,   tag: null,           hot: false, star: false, apiary: false },
+  { p: 599,   n: 'Queen',             tb: '20 TB',  dur: '1 year',  retail: 958,   b: 78,  cap: 100,  left: 22,    tag: '78% CLAIMED',  hot: false, star: false, apiary: false },
+  { p: 1499,  n: 'Hive',              tb: '50 TB',  dur: '1 year',  retail: 2394,  b: 19,  cap: 50,   left: 31,    tag: null,           hot: false, star: false, apiary: false },
+  { p: 14990, n: 'Apiary',            tb: '100 TB', dur: '5 years', retail: 23940, b: 4,   cap: 25,   left: 21,    tag: 'PATRON',       hot: false, star: false, apiary: true  },
+];
+
+const LOW_STOCK_THRESHOLD = 30;
+
+const tiers = tiersRaw.map(t => {
+  const saves = t.retail - t.p;
+  const pctOff = Math.round((saves / t.retail) * 100);
+  const lowStock = t.left !== null && t.left < LOW_STOCK_THRESHOLD + 1;
+  const claimedPct = (t.left !== null && t.cap !== null) ? (100 - (t.left / t.cap * 100)) : 0;
+  const borderColor = t.hot ? 'border-amber-deep' : t.star ? 'border-[oklch(0.55_0.12_155)]' : t.apiary ? 'border-[oklch(0.55_0.14_60)]' : 'border-line';
+  const shadow = t.hot ? 'shadow-[0_0_0_3px_oklch(0.94_0.06_90_/_0.5)]' : t.apiary ? 'shadow-[0_0_0_3px_oklch(0.92_0.06_70_/_0.5)]' : '';
+  const bg = t.apiary ? 'bg-[oklch(0.97_0.02_80)]' : 'bg-paper';
+  const savesStr = fmtEur(saves);
+  const priceStr = fmtEur(t.p);
+  const retailStr = fmtEur(t.retail);
+  return { ...t, saves, pctOff, lowStock, claimedPct, borderColor, shadow, bg, savesStr, priceStr, retailStr };
+});
+
+/* ── Stretch goals ── */
+const stretches = [
+  { at: '€250k', label: 'Hardware key (YubiKey + Solo) integration', highlight: false, gift: false, cap: false },
+  { at: '€350k', label: 'Self-hosted Beebeeb — open the server source', highlight: false, gift: false, cap: false },
+  { at: '€450k', label: 'Tor hidden service onion endpoint', highlight: false, gift: false, cap: false },
+  { at: '€500k', label: 'Base goal hit — campaign succeeds', highlight: true, gift: false, cap: false },
+  { at: '€650k', label: 'Encrypted collaborative docs (real-time)', highlight: false, gift: false, cap: false },
+  { at: '€750k', label: 'BONUS — every backer gets +20% storage. Forever.', highlight: false, gift: true, cap: false },
+  { at: '€800k', label: 'A second EU region: Lisbon (4-region redundancy)', highlight: false, gift: false, cap: false },
+  { at: '€1M',   label: 'BONUS — every backer gets +50% storage (stacks with €750k = +70% total).', highlight: false, gift: true, cap: false },
+  { at: '€1.2M', label: 'Bug bounty program · €100k pool', highlight: false, gift: false, cap: false },
+  { at: '20 PB-yrs',  label: 'Storage cap reached — new pledges close even if revenue is open. Cost-discipline, not vibes.', highlight: false, gift: false, cap: true },
+];
+
+/* ── Features ── */
+const features = [
+  { k: 'Web · Drive', v: 'Browser app. Drag, drop, share. Encrypted on your device with WebCrypto.' },
+  { k: 'iOS + Android',    v: 'Native apps. Photo backup. Biometric unlock. Open source.' },
+  { k: 'Desktop sync',     v: 'macOS, Windows, Linux. Selective sync. Conflict-free.' },
+  { k: 'bb CLI + SDK',     v: 'For the engineers. rclone backend. Cron-friendly. Scriptable.' },
+  { k: 'Sharing',          v: 'Per-link keys. Password gates. Expiring URLs. Recipients never need an account.' },
+  { k: 'Team console',     v: 'Admin, audit log, DPA, SSO/SAML. For when your hobby turns into a business.' },
+];
+
+/* ── Schedule ── */
+const schedule = [
+  { d: 'Q3 2026', e: 'Campaign closes. Backers receive recovery phrases + first credentials.' },
+  { d: 'Q4 2026', e: 'Closed beta opens. Backers test all three regions.' },
+  { d: 'Q1 2027', e: 'Public 1.0 — desktop apps, mobile apps, full CLI, all stretch goals delivered.' },
+  { d: 'Ongoing', e: 'Quarterly transparency reports. Annual third-party audit. Warrant canary.' },
+];
+
+/* ── FAQ ── */
+const faqs = [
+  { q: 'What if you don\'t hit €500k?', a: 'All-or-nothing. Every backer is refunded by Kickstarter. We go back to weekends and try again.' },
+  { q: 'What if you hit it but disappear?', a: 'We\'ve open-sourced the clients (already on GitHub). The architecture is documented. Worst case, the community can fork. But we\'re not going anywhere — we live here.' },
+  { q: 'Can you hand over my files to a government?', a: 'No. We don\'t have the keys. We can hand over encrypted blobs, but they look like random bytes. We publish a warrant canary.' },
+  { q: 'Why not use Proton Drive / Mega / Tresorit?', a: 'They\'re great. They also do not all do real zero-knowledge, are not all EU-jurisdiction, and most are not open source. We wanted all three.' },
+  { q: 'Is my pledge a subscription?', a: 'No — your KS pledge is a one-time prepaid term (1 year for most tiers, 5 years for the Apiary patron tier). After that, we auto-renew at standard retail (€7.99 per 2 TB / month, billed yearly) with your locked-in 20% backer discount, valid for life — never expires. We email you 30 days before each renewal. Cancel any time, in two clicks. No surprise charges.' },
+  { q: 'What does our retail price actually save me vs. iCloud / Drive / Dropbox?', a: 'Apple iCloud+ 2 TB = €10.99/mo. Google One 2 TB = €9.99/mo. Dropbox Plus 2 TB = €11.99/mo. Beebeeb retail 2 TB = €7.99/mo — cheaper than all of them, with zero-knowledge encryption and EU jurisdiction. With your 20% lifetime backer discount it\'s €6.39/mo. Founding Hoarder pledge: €5.75/mo for the first year, then €6.39/mo for life.' },
+];
+
+/* ── Activity feed (simulated) ── */
+const activity = [
+  { name: 'Markus R.', city: 'Berlin', tier: 'Founding Hoarder', ago: '2 min ago' },
+  { name: 'Sofia L.',  city: 'Stockholm', tier: 'Queen', ago: '4 min ago' },
+  { name: 'Jan W.',    city: 'Amsterdam', tier: 'Early Bee', ago: '7 min ago' },
+  { name: 'Emma K.',   city: 'Helsinki', tier: 'Founding Hoarder+', ago: '11 min ago' },
+  { name: 'Luca P.',   city: 'Milan', tier: 'Drone', ago: '14 min ago' },
+];
+
+/* ── Social proof ── */
+const proofs = [
+  '"Finally someone doing ZK right in the EU."',
+  '"Backed. Exactly what I\'ve been looking for."',
+  '"The architecture doc alone is worth reading."',
+];
+
+const shares = ['X', 'Reddit', 'HN', 'Mastodon', 'Email'];
+
+/* fmtEur is defined in the tier computation above */
+---
+
+<Base
+  title="Beebeeb Kickstarter Campaign — Zero-knowledge cloud storage"
+  description="Back Beebeeb on Kickstarter. Zero-knowledge encrypted cloud storage, built in the EU by Guus & Bram. Help us ship 1.0."
+  path="/campaign"
+  noindex={true}
+>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       NAV STRIP
+       ══════════════════════════════════════════════════════════════ -->
+  <div class="border-b border-line bg-paper-2">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-8 py-3 flex items-center">
+      <svg class="w-[14px] h-[14px] text-amber" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2l2.09 6.26L21 9.27l-5 4.87L17.18 21 12 17.77 6.82 21 8 14.14l-5-4.87 6.91-1.01z"/>
+      </svg>
+      <span class="ml-3 text-xs text-ink-3">/ kickstarter campaign &middot; live preview</span>
+      <span class="flex-1"></span>
+      <span class="px-2.5 py-1 bg-amber text-ink text-[10px] font-bold tracking-[0.04em] uppercase rounded-md font-mono">DAY 03 OF 30</span>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════
+       MAIN 2-COL LAYOUT
+       ══════════════════════════════════════════════════════════════ -->
+  <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[1.6fr_1fr]">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         LEFT: Pitch + Story
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="px-6 lg:px-9 py-8 lg:border-r border-line">
+
+      <!-- Pitch video placeholder -->
+      <div class="relative h-[320px] lg:h-[380px] bg-paper-3 rounded-xl overflow-hidden mb-5 border border-line">
+        <div class="absolute inset-0 flex items-center justify-center flex-col gap-3">
+          <div class="w-16 h-16 rounded-full bg-paper shadow-3 flex items-center justify-center border border-line-2">
+            <div class="w-0 h-0 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[18px] border-l-ink ml-1"></div>
+          </div>
+          <span class="font-mono text-[11px] text-ink-3">[ pitch video &middot; 02:14 &middot; Guus & Bram + the architecture ]</span>
+        </div>
+        <div class="absolute bottom-3 left-3 px-2 py-1 rounded font-mono text-[10px] text-paper" style="background: oklch(0.18 0.01 70 / 0.85);">2:14</div>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-[28px] lg:text-[36px] leading-[1.08] tracking-[-0.03em] font-bold mb-3">
+        Beebeeb &mdash; zero-knowledge cloud storage,<br />
+        <span class="text-amber-deep">built in the EU &mdash; by Guus & Bram.</span>
+      </h1>
+      <p class="text-[15px] text-ink-2 leading-relaxed mb-6">
+        We're not pitching another "secure" cloud with marketing-speak. We've built the storage we wanted to use ourselves: files encrypted on your device before they leave it, sharded across three EU datacenters, recoverable only with a key we never see. No US Cloud Act. No surveillance. No master password sitting on someone's server. Help us ship 1.0.
+      </p>
+
+      <!-- ── 01 Why we're doing this ── -->
+      <div class="mb-8">
+        <div class="flex items-center gap-2.5 mb-3">
+          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">01</span>
+          <span class="text-[19px] font-semibold tracking-[-0.015em]">Why we're doing this</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+        <p class="text-[14px] text-ink-2 leading-[1.65] mb-3">
+          Hi &mdash; we're <strong>Guus & Bram Langelaar</strong>, two brothers from the Netherlands. This isn't our first build together. <strong>I was 8, Bram was 13</strong>, and he sat me down at the kitchen table and walked me through assembling our first PC &mdash; thermal paste, IDE cables, the whole rite of passage. Everything I know about how machines work started there.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-[1.65] mb-3">
+          Twenty years on, we're still building together &mdash; but with day jobs that fit. <strong>Bram</strong> runs <em>Datablocks</em>, the Netherlands' #1 reseller of factory-recertified enterprise drives &mdash; he knows storage hardware better than anyone we've met, and he's why every byte of Beebeeb sits on a 28TB He-sealed Seagate that would otherwise have been e-waste. <strong>I'm Guus</strong> &mdash; software engineer to the bone, tech-enthusiast, and the one who actually loves writing the systems code at 2am. I do the cryptography, the sharding, the clients. Bram does the iron, the unit economics, and the customer conversations.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-[1.65] mb-3">
+          The big US-based Drive solutions still have backdoors &mdash; for governments, for ad targeting, for "trust & safety" scanning of your private files. We don't. We <em>cannot</em>. Even the EU-branded clouds don't do real zero-knowledge &mdash; they hold a key. That's the only honest answer: if a provider <em>can</em> read your files, eventually someone makes them.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-[1.65]">
+          We're on Kickstarter because we don't want VC money &mdash; VCs want growth, we want a product that lasts. &euro;500k gets us a year of full-time work, three EU regions live, audited clients, and a real launch. Same two brothers, same kitchen table, bigger build.
+        </p>
+      </div>
+
+      <!-- ── 02 What you actually get ── -->
+      <div class="mb-8">
+        <div class="flex items-center gap-2.5 mb-3">
+          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">02</span>
+          <span class="text-[19px] font-semibold tracking-[-0.015em]">What you actually get</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          {features.map(f => (
+            <div class="p-3.5 bg-paper-2 border border-line rounded-md">
+              <div class="text-[13px] font-semibold mb-1">{f.k}</div>
+              <div class="text-[12.5px] text-ink-2 leading-[1.5]">{f.v}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- ── 03 Architecture ── -->
+      <div class="mb-8">
+        <div class="flex items-center gap-2.5 mb-3">
+          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">03</span>
+          <span class="text-[19px] font-semibold tracking-[-0.015em]">The architecture (in one diagram)</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+        <!-- Architecture diagram placeholder -->
+        <div class="border border-line rounded-lg bg-paper p-2 mb-2.5">
+          <div class="h-[260px] lg:h-[320px] rounded-md bg-paper-2 flex items-center justify-center">
+            <div class="text-center">
+              <div class="flex justify-center gap-4 mb-4">
+                <div class="w-14 h-14 rounded-xl bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center">
+                  <svg class="w-6 h-6 text-amber-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div class="flex flex-col items-center gap-1.5">
+                  <svg class="w-6 h-3 text-ink-3" viewBox="0 0 24 12"><path d="M0 6h20M16 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                </div>
+                <div class="flex gap-2">
+                  {['FRA', 'AMS', 'STO'].map(r => (
+                    <div class="w-11 h-14 rounded-lg border border-line bg-paper-3 flex items-center justify-center">
+                      <span class="font-mono text-[9px] text-ink-3 font-semibold">{r}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div class="font-mono text-[11px] text-ink-3">device-side encryption &rarr; 3-of-5 erasure coding &rarr; 3 EU regions</div>
+            </div>
+          </div>
+        </div>
+        <p class="text-[12.5px] text-ink-3 leading-[1.55]">
+          Files are encrypted on-device with a key derived from your recovery phrase. Encrypted blobs are split into shards (3-of-5 erasure coding) and distributed to Frankfurt, Amsterdam, and Stockholm. We never see plaintext. We never see your key. If we got a court order tomorrow, the answer would be: nothing to hand over.
+        </p>
+      </div>
+
+      <!-- ── 04 Stretch goals ── -->
+      <div class="mb-8">
+        <div class="flex items-center gap-2.5 mb-3">
+          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">04</span>
+          <span class="text-[19px] font-semibold tracking-[-0.015em]">Stretch goals</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+        <div class="flex flex-col gap-1.5">
+          {stretches.map(s => {
+            const bg = s.highlight ? 'bg-amber-bg' : s.gift ? 'bg-[oklch(0.96_0.04_145)]' : s.cap ? 'bg-[oklch(0.96_0.02_80)]' : 'bg-paper';
+            const border = s.highlight ? 'border-[oklch(0.86_0.07_90)]' : s.gift ? 'border-[oklch(0.78_0.13_145)]' : s.cap ? 'border-ink-3' : 'border-line';
+            const amtColor = s.highlight ? 'text-amber-deep' : s.gift ? 'text-[oklch(0.42_0.13_155)]' : s.cap ? 'text-ink' : 'text-ink-2';
+            const labelWeight = (s.gift || s.cap) ? 'font-semibold' : 'font-normal';
+            return (
+              <div class={`flex items-center gap-3.5 px-3.5 py-2.5 ${bg} border ${border} rounded-md`}>
+                <span class={`font-mono text-xs font-bold ${amtColor} min-w-[80px]`}>{s.at}</span>
+                <span class={`text-[13px] text-ink ${labelWeight}`}>{s.label}</span>
+                {s.highlight && <span class="ml-auto px-2 py-0.5 bg-amber text-ink text-[9px] font-bold tracking-[0.04em] uppercase rounded-sm whitespace-nowrap">BASE GOAL</span>}
+                {s.gift && <span class="ml-auto px-2 py-0.5 bg-[oklch(0.72_0.16_155)] text-paper text-[9px] font-bold tracking-[0.04em] uppercase rounded-sm whitespace-nowrap">FREE FOR ALL BACKERS</span>}
+                {s.cap && <span class="ml-auto px-2 py-0.5 bg-ink text-paper text-[9px] font-bold tracking-[0.04em] uppercase rounded-sm whitespace-nowrap">HARD CAP</span>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      <!-- ── 05 Schedule ── -->
+      <div class="mb-8">
+        <div class="flex items-center gap-2.5 mb-3">
+          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">05</span>
+          <span class="text-[19px] font-semibold tracking-[-0.015em]">Schedule</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+        <div class="border border-line rounded-lg bg-paper overflow-hidden">
+          {schedule.map((row, i) => (
+            <div class={`grid grid-cols-[120px_1fr] gap-4 px-4 py-3 ${i < schedule.length - 1 ? 'border-b border-line' : ''}`}>
+              <span class="font-mono text-xs text-ink-3">{row.d}</span>
+              <span class="text-[13px] text-ink-2">{row.e}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- ── 06 FAQ ── -->
+      <div class="mb-8">
+        <div class="flex items-center gap-2.5 mb-3">
+          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">06</span>
+          <span class="text-[19px] font-semibold tracking-[-0.015em]">FAQ</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+        <div>
+          {faqs.map(item => (
+            <div class="py-3.5 border-b border-line">
+              <div class="text-[13.5px] font-semibold mb-1.5">{item.q}</div>
+              <div class="text-[13px] text-ink-2 leading-[1.55]">{item.a}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- ── 07 Risks & challenges ── -->
+      <div class="mb-8">
+        <div class="flex items-center gap-2.5 mb-3">
+          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">07</span>
+          <span class="text-[19px] font-semibold tracking-[-0.015em]">Risks & challenges</span>
+          <span class="flex-1 h-px bg-line"></span>
+        </div>
+        <p class="text-[13.5px] text-ink-2 leading-[1.65] mb-2.5">
+          We're realistic. The biggest risk is <strong>not the tech</strong> &mdash; the encrypted-storage tech is already running in our basement. The biggest risk is <strong>support load</strong> if we sign up 20,000 people and only two of us answer email. That's why higher tiers are capped, and why we're prioritizing async docs, devlog transparency, and a community Matrix room over a 24/7 support team we can't staff yet.
+        </p>
+        <p class="text-[13.5px] text-ink-2 leading-[1.65]">
+          Second risk: regulatory. We're EU-only on purpose. We won't take US business until we have a US-shaped legal entity, which is not in scope for v1.
+        </p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         RIGHT: Pledge Sidebar
+         ═══════════════════════════════════════════════════════════ -->
+    <div class="px-6 lg:px-7 py-8 bg-paper-2">
+      <div class="lg:sticky lg:top-0 lg:max-h-screen lg:overflow-y-auto lg:pb-8">
+
+        <!-- Funding stats -->
+        <div class="tabular-nums text-[36px] font-bold tracking-[-0.02em] text-ink">&euro;127,840</div>
+        <div class="text-xs text-ink-3">pledged of &euro;500,000 goal</div>
+
+        <!-- Progress bar -->
+        <div class="mt-2.5 mb-3.5 h-1.5 bg-paper-3 rounded-full overflow-hidden">
+          <div class="h-full rounded-full" style="width: 25.5%; background: linear-gradient(90deg, var(--color-amber), var(--color-amber-deep));"></div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="grid grid-cols-3 gap-2.5 mb-4">
+          <div>
+            <div class="tabular-nums text-lg font-bold text-ink">1,284</div>
+            <div class="text-[11px] text-ink-3">backers</div>
+          </div>
+          <div>
+            <div class="tabular-nums text-lg font-bold text-ink">27</div>
+            <div class="text-[11px] text-ink-3">days to go</div>
+          </div>
+          <div>
+            <div class="tabular-nums text-lg font-bold text-ink">25%</div>
+            <div class="text-[11px] text-ink-3">funded</div>
+          </div>
+        </div>
+
+        <!-- CTAs -->
+        <a href="#tiers" class="btn btn-amber btn-md w-full justify-center font-semibold mb-2 no-underline">Back this project</a>
+        <a href="#remind" class="btn btn-outline btn-md w-full justify-center no-underline">
+          <svg class="w-[13px] h-[13px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          Remind me
+        </a>
+
+        <!-- Urgency bar -->
+        <div class="mt-4 p-3 bg-paper border border-line rounded-md">
+          <div class="flex items-center gap-2 mb-1.5">
+            <div class="w-2 h-2 rounded-full bg-green animate-pulse"></div>
+            <span class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em]">Live</span>
+          </div>
+          <div class="text-[12px] text-ink-2 leading-[1.5]">
+            <strong class="text-ink">18 people</strong> backed in the last hour. Founding Hoarder tier has <strong class="text-amber-deep">13 spots left</strong>.
+          </div>
+        </div>
+
+        <div class="my-5 h-px bg-line"></div>
+
+        <!-- Live activity feed -->
+        <div class="mb-4">
+          <div class="text-[10.5px] font-semibold text-ink-3 uppercase tracking-[0.04em] mb-2">Recent backers</div>
+          <div class="flex flex-col gap-1.5">
+            {activity.map(a => (
+              <div class="flex items-center gap-2.5 py-1.5">
+                <div class="w-6 h-6 rounded-full bg-paper-3 border border-line flex items-center justify-center">
+                  <span class="text-[9px] font-bold text-ink-3">{a.name.split(' ').map(w => w[0]).join('')}</span>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="text-[11.5px] text-ink truncate"><strong>{a.name}</strong> &middot; {a.city}</div>
+                  <div class="text-[10px] text-ink-3">{a.tier}</div>
+                </div>
+                <span class="text-[10px] text-ink-3 whitespace-nowrap">{a.ago}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Storage allocation meter -->
+        <div class="mb-4 p-3 bg-paper border border-line rounded-md">
+          <div class="flex items-baseline gap-1.5 mb-1.5">
+            <span class="text-[10.5px] font-semibold text-ink-2 uppercase tracking-[0.04em]">STORAGE ALLOCATED</span>
+            <span class="flex-1"></span>
+            <span class="font-mono text-[11.5px] font-bold text-ink">11.4</span>
+            <span class="font-mono text-[10.5px] text-ink-3">/ 20 PB-years</span>
+          </div>
+          <div class="relative h-2 bg-paper-2 rounded overflow-hidden">
+            <div class="h-full rounded" style="width: 57%; background: linear-gradient(90deg, var(--color-amber), var(--color-amber-deep));"></div>
+            <div class="absolute right-0 -top-0.5 w-px h-3 bg-ink-3"></div>
+          </div>
+          <div class="mt-2 text-[11px] text-ink-2 leading-[1.5]">
+            We commit a <strong class="text-ink">hard ceiling of 20 PB-years</strong> across the campaign &mdash; that's 60 PB physically (3x redundancy across Amsterdam / Frankfurt / Stockholm). Once allocated, tiers close even before their cap. We don't over-promise storage we can't buy and rack.
+          </div>
+        </div>
+
+        <!-- Tier heading -->
+        <div id="tiers" class="flex items-center gap-1.5 mb-2">
+          <span class="text-[10.5px] font-semibold text-ink-3 uppercase tracking-[0.04em]">SELECT A TIER</span>
+          <span class="flex-1"></span>
+          <span class="font-mono text-[9.5px] text-ink-3">retail = &euro;7.99 / 2 TB / mo</span>
+        </div>
+
+        <!-- Tiers -->
+        <div class="flex flex-col gap-2.5">
+          {tiers.map(t => (
+              <div class={`relative p-3 ${t.bg} border ${t.borderColor} rounded-md ${t.shadow}`}>
+                <div class="flex items-baseline gap-1.5 mb-1">
+                  <span class="font-bold text-[15px]">&euro;{t.priceStr}</span>
+                  <span class="font-mono text-[10px] text-ink-3 line-through">&euro;{t.retailStr}</span>
+                  <span class="flex-1"></span>
+                  {t.tag && (
+                    <span class={`px-1.5 py-0.5 text-[9px] font-bold tracking-[0.04em] uppercase rounded-sm ${t.star ? 'bg-[oklch(0.72_0.16_155)] text-paper' : 'bg-amber text-ink'}`}>{t.tag}</span>
+                  )}
+                </div>
+                <div class="text-[13px] font-semibold mb-0.5">{t.n}</div>
+                <div class="text-[11.5px] text-ink-2 mb-1.5">
+                  <strong>{t.tb}</strong> &middot; {t.dur}
+                </div>
+                <div class="inline-block px-1.5 py-0.5 rounded-sm font-mono text-[10px] font-bold tracking-[0.02em] mb-1.5" style="background: oklch(0.95 0.05 145); color: oklch(0.42 0.13 155);">
+                  SAVE &euro;{t.savesStr} &middot; {t.pctOff}% OFF
+                </div>
+                {t.apiary && (
+                  <div class="mt-1 mb-1.5 p-2.5 bg-ink text-paper rounded text-[11px] leading-[1.55]">
+                    <div class="font-mono text-[9.5px] text-amber tracking-[0.06em] mb-1">EVERYTHING IN HIVE, PLUS</div>
+                    <div>Hall-of-Founders page on beebeeb.io (your name + photo + bio) &middot; named-contact priority support (direct line to Guus & Bram, not a queue) &middot; yearly studio visit in Amsterdam (coffee + roadmap preview) &middot; 1hr/yr co-design call with Guus & Bram &middot; 90-day early access to every new feature &middot; custom subdomain (yourname.beebeeb.io) &middot; gold engraved hex tile + signed launch print (numbered /25) &middot; signed DPA &middot; 25 seats &middot; admin console &middot; 100 TB pooled across 60 months &middot; 20% lifetime renewal discount.</div>
+                  </div>
+                )}
+                <div class="flex items-center gap-1.5">
+                  <span class="font-mono text-[10.5px] text-ink-3">{t.b} backers</span>
+                  {t.left !== null && (
+                    <span class={`font-mono text-[10px] ml-auto ${t.lowStock ? 'text-amber-deep font-semibold' : 'text-ink-3'}`}>
+                      {t.lowStock ? '⚠ ' : ''}{t.left} of {t.cap} left
+                    </span>
+                  )}
+                </div>
+                {t.left !== null && t.cap !== null && (
+                  <div class="mt-1.5 h-[3px] bg-paper-2 rounded-sm overflow-hidden">
+                    <div
+                      class={`h-full transition-[width] duration-500 ${t.lowStock ? 'bg-amber-deep' : 'bg-ink-2'}`}
+                      style={`width: ${t.claimedPct}%;`}
+                    ></div>
+                  </div>
+                )}
+              </div>
+          ))}
+        </div>
+
+        <!-- Renewal note -->
+        <div class="mt-2.5 p-2.5 bg-paper border border-dashed border-line-2 rounded-md text-[11px] text-ink-2 leading-[1.5]">
+          <strong class="text-ink">After your prepaid term:</strong> auto-renew at standard retail (&euro;7.99 per 2 TB / month, billed yearly). Your <strong>20% backer discount stays for life</strong> &mdash; simple, generous, never expires. We email you 30 days before each renewal. Cancel any time, in two clicks.
+        </div>
+
+        <div class="my-5 h-px bg-line"></div>
+
+        <!-- Social proof -->
+        <div class="mb-4">
+          <div class="flex flex-col gap-2">
+            {proofs.map(p => (
+              <div class="text-[12px] text-ink-2 italic leading-[1.5] pl-3 border-l-2 border-amber">{p}</div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Share buttons -->
+        <div class="text-[10.5px] font-semibold text-ink-3 uppercase tracking-[0.04em] mb-2">SHARE</div>
+        <div class="flex gap-1.5 flex-wrap">
+          {shares.map(s => (
+            <a href="#" class="btn btn-outline btn-sm no-underline text-[12px]">{s}</a>
+          ))}
+        </div>
+
+        <div class="my-5 h-px bg-line"></div>
+
+        <!-- All-or-nothing notice -->
+        <div class="p-3 bg-amber-bg border border-[oklch(0.86_0.07_90)] rounded-md">
+          <div class="text-[10.5px] font-semibold text-amber-deep uppercase tracking-[0.04em]">ALL-OR-NOTHING</div>
+          <div class="text-xs text-ink-2 mt-1 leading-[1.5]">
+            Your card is only charged if we hit &euro;500k. Otherwise: full refund, no questions, no hard feelings.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</Base>
+
+<style>
+  /* Hide scroll progress on campaign page — it's a standalone mock */
+  .bb-scroll-progress { display: none; }
+
+  /* Pulse animation for live indicator */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+</style>
