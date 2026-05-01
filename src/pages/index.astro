@@ -1,0 +1,427 @@
+---
+import Base from '../layouts/base.astro';
+import HeroLanding from '../components/blocks/HeroLanding.astro';
+import TrustBar from '../components/blocks/TrustBar.astro';
+import CtaSection from '../components/blocks/CtaSection.astro';
+---
+
+<Base
+  title="Beebeeb — End-to-end encrypted cloud storage"
+  description="Your files are encrypted on your device before they leave it. Stored on EU soil. Open source. Zero-knowledge by architecture, not by promise."
+  path="/"
+>
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════ -->
+  <HeroLanding
+    title="Your files. Your keys."
+    title_highlight="Your rules."
+    subtitle="Everything you store is encrypted on your device before it leaves. We never see your files, your filenames, or your keys. Built in Europe, open source, and independently auditable."
+    cta_primary_label="Get started free"
+    cta_primary_href="https://app.beebeeb.io/signup"
+    cta_secondary_label="How it works"
+    cta_secondary_href="/security"
+    trust_badges={['Zero-knowledge encryption', 'EU-only infrastructure', 'Open source']}
+  />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TRUST BAR
+       ═══════════════════════════════════════════════════════════ -->
+  <TrustBar items={{
+    label: 'Built on EU infrastructure',
+    providers: ['Hetzner, Germany', 'Leaseweb, Netherlands'],
+    chips: ['GDPR', 'NIS2', 'DORA'],
+  }} />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FEATURES GRID — 6 capabilities
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="section-label text-center bb-fade-up">What you get</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-14 leading-tight bb-fade-up bb-delay-1">
+        Privacy without compromise
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-[18px]" data-stagger>
+
+        <!-- Zero-knowledge encryption -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Zero-knowledge encryption</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                AES-256-GCM encryption happens on your device. Your keys never leave your browser. We cannot read your files, even if compelled.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">AES-256-GCM + HKDF</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- EU-only storage -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">EU-only storage</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                Your encrypted data is stored in Frankfurt and Amsterdam. Hetzner and Leaseweb datacenters. No US cloud providers. No data transfers outside the EU.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">Hetzner, Germany</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Version history -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Version history</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                Every file change is saved. Restore previous versions at any time. Encrypted at rest, just like the current version. No silent overwrites.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">30-day history</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Folder sharing -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Folder sharing</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                Share folders with other Beebeeb users. Encryption keys are exchanged directly between devices. The server never handles plaintext keys.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">X25519 key exchange</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multi-platform -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Multi-platform</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                Web, desktop, mobile, and CLI. Same encryption everywhere. The crypto engine is a single Rust codebase compiled to WASM for web and native for everything else.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">Rust + WASM core</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Open source -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Open source</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                Client code is public on GitHub. Read the crypto implementation. Verify our claims. Don't take our word for it -- check the code.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">github.com/beebeeb-io</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HOW IT WORKS — 3 steps
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper-2 border-t border-line">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="section-label text-center bb-fade-up">How it works</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-4 leading-tight bb-fade-up bb-delay-1">
+        Three steps. Zero exposure.
+      </h2>
+      <p class="text-base text-ink-2 text-center max-w-[600px] mx-auto mb-14 bb-fade-up bb-delay-2">
+        Encryption and decryption happen entirely in your browser. The server stores ciphertext it cannot read.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Step 1 -->
+        <div class="text-center bb-fade-up">
+          <div class="w-16 h-16 rounded-2xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-5">
+            <span class="font-mono text-sm font-bold text-amber-deep">01</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-[-0.02em] mb-2">Sign up</h3>
+          <p class="text-[13.5px] text-ink-2 leading-relaxed max-w-[280px] mx-auto">
+            Create an account with OPAQUE password authentication. Your password is never sent to our server -- not even as a hash.
+          </p>
+          <div class="mt-4 flex justify-center">
+            <span class="inline-flex px-2.5 py-1 bg-paper border border-line rounded-md font-mono text-[10.5px] text-ink-3">OPAQUE PAKE</span>
+          </div>
+        </div>
+
+        <!-- Connector -->
+        <div class="hidden md:flex items-start justify-center pt-8 absolute-connector" style="display: none;">
+          <svg class="w-12 h-6 text-line-2" viewBox="0 0 48 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M0 12h48M42 6l6 6-6 6"/></svg>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="text-center bb-fade-up bb-delay-2">
+          <div class="w-16 h-16 rounded-2xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-5">
+            <span class="font-mono text-sm font-bold text-amber-deep">02</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-[-0.02em] mb-2">Upload</h3>
+          <p class="text-[13.5px] text-ink-2 leading-relaxed max-w-[280px] mx-auto">
+            Files are encrypted on your device with AES-256-GCM before upload. Each file gets a unique key derived via HKDF. Only ciphertext reaches our servers.
+          </p>
+          <div class="mt-4 flex justify-center">
+            <span class="inline-flex px-2.5 py-1 bg-paper border border-line rounded-md font-mono text-[10.5px] text-ink-3">AES-256-GCM</span>
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="text-center bb-fade-up bb-delay-4">
+          <div class="w-16 h-16 rounded-2xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-5">
+            <span class="font-mono text-sm font-bold text-amber-deep">03</span>
+          </div>
+          <h3 class="text-lg font-bold tracking-[-0.02em] mb-2">Share</h3>
+          <p class="text-[13.5px] text-ink-2 leading-relaxed max-w-[280px] mx-auto">
+            When you share a folder, encryption keys are exchanged between devices using X25519. The server facilitates the transfer but cannot read the keys.
+          </p>
+          <div class="mt-4 flex justify-center">
+            <span class="inline-flex px-2.5 py-1 bg-paper border border-line rounded-md font-mono text-[10.5px] text-ink-3">X25519 key exchange</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       TRUST SECTION — "What we can see: nothing."
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper border-t border-line">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="section-label text-center bb-fade-up">Zero knowledge</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-4 leading-tight bb-fade-up bb-delay-1">
+        What we can see: nothing.
+      </h2>
+      <p class="text-base text-ink-2 text-center max-w-[620px] mx-auto mb-14 bb-fade-up bb-delay-2">
+        Zero-knowledge means exactly that. We cannot read your files, your filenames, your folder structure, or your metadata. Even under a court order, we have nothing to hand over but ciphertext.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12" data-stagger>
+        <div class="p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">File encryption</div>
+          <div class="text-lg font-bold tracking-tight mb-1">AES-256-GCM</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">Authenticated encryption with unique nonce per chunk. Tamper detection built in.</div>
+        </div>
+        <div class="p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Key derivation</div>
+          <div class="text-lg font-bold tracking-tight mb-1">HKDF-SHA256</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">Per-file keys derived from your master key. Compromising one file key reveals nothing about others.</div>
+        </div>
+        <div class="p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Authentication</div>
+          <div class="text-lg font-bold tracking-tight mb-1">OPAQUE</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">Password-authenticated key exchange. Your password never leaves your device. Not even as a hash.</div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4" data-stagger>
+        <div class="p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Key exchange</div>
+          <div class="text-lg font-bold tracking-tight mb-1">X25519</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">Elliptic curve Diffie-Hellman for sharing keys between devices. The server facilitates but cannot read.</div>
+        </div>
+        <div class="p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Filename encryption</div>
+          <div class="text-lg font-bold tracking-tight mb-1">AES-SIV</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">Filenames and folder names are encrypted separately. The server sees only opaque identifiers.</div>
+        </div>
+        <div class="p-5 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Key storage</div>
+          <div class="text-lg font-bold tracking-tight mb-1">Wrapped keys</div>
+          <div class="text-[12px] text-ink-2 leading-relaxed">Your master key wraps all other keys. The master key itself is derived from your password and never stored.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PRICING TEASER
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper-2 border-t border-line">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="section-label text-center bb-fade-up">Plans</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-3 leading-tight bb-fade-up bb-delay-1">
+        Simple pricing. No surprises.
+      </h2>
+      <p class="text-base text-ink-2 text-center max-w-[600px] mx-auto mb-12 bb-fade-up bb-delay-2">
+        Start free with 5 GB. Upgrade when you need more.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger>
+
+        <!-- Free -->
+        <div class="relative p-6 rounded-xl border border-line bg-paper bb-fade-up">
+          <div class="text-[13px] font-semibold text-ink-3 uppercase tracking-[0.04em]">Free</div>
+          <div class="mt-2 mb-1">
+            <span class="text-[42px] font-bold tracking-[-0.03em]">&euro;0</span>
+            <span class="text-sm text-ink-3 ml-1">/mo</span>
+          </div>
+          <p class="text-[13px] text-ink-2 mb-5 leading-relaxed">Try Beebeeb with no commitment. Full encryption, limited storage.</p>
+          <ul class="space-y-2 mb-6">
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              5 GB storage
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              End-to-end encryption
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Web + mobile apps
+            </li>
+          </ul>
+          <a href="https://app.beebeeb.io/signup" class="btn btn-outline btn-md w-full justify-center">Start free</a>
+        </div>
+
+        <!-- Personal -->
+        <div class="relative p-6 rounded-xl border border-amber bg-amber-bg bb-fade-up">
+          <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+            <span class="px-3 py-1 bg-amber text-ink text-[10px] font-bold tracking-[0.06em] uppercase rounded-full">Most popular</span>
+          </div>
+          <div class="text-[13px] font-semibold text-ink-3 uppercase tracking-[0.04em]">Personal</div>
+          <div class="mt-2 mb-1">
+            <span class="text-[42px] font-bold tracking-[-0.03em]">&euro;5</span>
+            <span class="text-sm text-ink-3 ml-1">/mo</span>
+          </div>
+          <p class="text-[13px] text-ink-2 mb-5 leading-relaxed">For people who want real privacy for their personal files.</p>
+          <ul class="space-y-2 mb-6">
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              200 GB storage
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Version history (30 days)
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              All platforms
+            </li>
+          </ul>
+          <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md w-full justify-center">Get Personal</a>
+        </div>
+
+        <!-- Team -->
+        <div class="relative p-6 rounded-xl border border-line bg-paper bb-fade-up">
+          <div class="text-[13px] font-semibold text-ink-3 uppercase tracking-[0.04em]">Team</div>
+          <div class="mt-2 mb-1">
+            <span class="text-[42px] font-bold tracking-[-0.03em]">&euro;12</span>
+            <span class="text-sm text-ink-3 ml-1">/user/mo</span>
+          </div>
+          <p class="text-[13px] text-ink-2 mb-5 leading-relaxed">For teams that need shared encrypted workspaces.</p>
+          <ul class="space-y-2 mb-6">
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              1 TB per user
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Team folders + sharing
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Admin console
+            </li>
+          </ul>
+          <a href="https://app.beebeeb.io/signup" class="btn btn-outline btn-md w-full justify-center">Start with Team</a>
+        </div>
+
+        <!-- Business -->
+        <div class="relative p-6 rounded-xl border border-line bg-paper bb-fade-up">
+          <div class="text-[13px] font-semibold text-ink-3 uppercase tracking-[0.04em]">Business</div>
+          <div class="mt-2 mb-1">
+            <span class="text-[42px] font-bold tracking-[-0.03em]">&euro;24</span>
+            <span class="text-sm text-ink-3 ml-1">/user/mo</span>
+          </div>
+          <p class="text-[13px] text-ink-2 mb-5 leading-relaxed">For organizations with compliance and audit requirements.</p>
+          <ul class="space-y-2 mb-6">
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Unlimited storage
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Audit logs + SAML SSO
+            </li>
+            <li class="flex items-start gap-2 text-[13px] text-ink-2">
+              <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              Priority support + SLA
+            </li>
+          </ul>
+          <a href="mailto:sales@beebeeb.io" class="btn btn-outline btn-md w-full justify-center">Contact sales</a>
+        </div>
+
+      </div>
+
+      <p class="text-[11px] text-ink-4 text-center mt-6 italic">All plans include EU-only storage, zero-knowledge encryption, and full platform access. Prices exclude VAT.</p>
+      <div class="text-center mt-6 bb-fade-up">
+        <a href="/pricing" class="text-sm text-ink-2 underline underline-offset-4 decoration-line hover:text-ink transition-colors">Compare all features</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOUNDER QUOTE
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-[72px] bg-paper border-t border-line">
+    <div class="max-w-[780px] mx-auto text-center">
+      <div class="section-label bb-fade-up">Why we built this</div>
+      <blockquote class="text-[22px] leading-relaxed text-ink-2 tracking-[-0.015em] italic mb-7 bb-fade-up bb-delay-1">
+        "I wanted a cloud I could trust with my family's photos and my company's contracts. That meant building one where even we, the operators, cannot access your data. Not 'choose not to' -- cannot."
+      </blockquote>
+      <div class="flex gap-4 justify-center items-center bb-fade-up bb-delay-2">
+        <div class="flex gap-2.5 items-center">
+          <div class="w-9 h-9 rounded-full bg-amber font-bold text-xs flex items-center justify-center">GL</div>
+          <div class="text-left">
+            <div class="text-[13px] font-semibold">Guus Langelaar</div>
+            <div class="text-[11px] text-ink-3">Co-founder, Initlabs B.V.</div>
+          </div>
+        </div>
+        <div class="w-px h-6 bg-line-2"></div>
+        <span class="font-mono text-[11px] text-ink-3">beebeeb.io</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FINAL CTA
+       ═══════════════════════════════════════════════════════════ -->
+  <CtaSection
+    title="Your files deserve better"
+    title_highlight="than someone else's server."
+    description="Start with 5 GB free. No credit card required. Encrypted from day one."
+    cta_primary_label="Get started free"
+    cta_primary_href="https://app.beebeeb.io/signup"
+    cta_secondary_label="Read the security docs"
+    cta_secondary_href="/security"
+    dark_bg={true}
+  />
+</Base>
