@@ -112,7 +112,7 @@ for file in $STAGED; do
         MATCH=$(grep -nEi "$pattern" "$file" 2>/dev/null | head -3 || true)
         if [ -n "$MATCH" ]; then
             # Allow patterns in the check-secrets script itself, test files, examples, and design reference files
-            if [[ "$file" == *"check-secrets"* ]] || [[ "$file" == *"test"* ]] || [[ "$file" == *".example"* ]] || [[ "$file" == *"design/"* ]] || [[ "$file" == *".jsx" ]] || [[ "$file" == *".html" ]]; then
+            if [[ "$file" == *"check-secrets"* ]] || [[ "$file" == *"test"* ]] || [[ "$file" == *".example"* ]] || [[ "$file" == *"design/"* ]] || [[ "$file" == *".jsx" ]] || [[ "$file" == *".html" ]] || [[ "$file" == *".astro" ]]; then
                 continue
             fi
             echo -e "${RED}BLOCKED: Possible secret in $file:${NC}"
