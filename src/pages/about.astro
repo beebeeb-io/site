@@ -1,0 +1,268 @@
+---
+import Base from '../layouts/base.astro';
+import HeroSimple from '../components/blocks/HeroSimple.astro';
+import CtaSection from '../components/blocks/CtaSection.astro';
+---
+
+<Base
+  title="About Beebeeb — Built by two brothers in Wijchen"
+  description="Beebeeb is built by Guus and Bram Langelaar in Wijchen, Netherlands. We believe your files should be private by default, not by policy."
+  path="/about"
+>
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════ -->
+  <HeroSimple
+    label="About us"
+    title="Built by two brothers<br />in Wijchen, Netherlands."
+    description="We started Beebeeb because we wanted a cloud we could actually trust. Not one that promises privacy in a terms-of-service document, but one where privacy is a mathematical guarantee."
+  />
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FOUNDERS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-[72px] bg-paper">
+    <div class="max-w-[900px] mx-auto">
+      <div class="section-label bb-fade-up">The founders</div>
+      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-10 bb-fade-up bb-delay-1">
+        Two people, one mission.
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-stagger>
+
+        <!-- Guus -->
+        <div class="p-7 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-amber font-bold text-sm flex items-center justify-center shrink-0">GL</div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-0.5">Guus Langelaar</h3>
+              <div class="text-[12px] text-ink-3 font-medium mb-3">CTO and co-founder</div>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed">
+                Builds the product. Writes the Rust crypto engine, the server, the web client, and the infrastructure. Previously built enterprise software at scale. Now building the cloud storage he actually wants to use.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bram -->
+        <div class="p-7 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-amber font-bold text-sm flex items-center justify-center shrink-0">BL</div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-0.5">Bram Langelaar</h3>
+              <div class="text-[12px] text-ink-3 font-medium mb-3">Co-founder</div>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed">
+                Runs <a href="https://datablocks.dev" class="text-ink underline underline-offset-4 decoration-line hover:text-amber-deep transition-colors">datablocks.dev</a>, specializing in recertified enterprise storage hardware. Handles the physical infrastructure side -- making sure our storage layer is reliable, cost-effective, and European.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       MISSION
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-[72px] bg-paper-2 border-t border-line">
+    <div class="max-w-[780px] mx-auto text-center">
+      <div class="section-label bb-fade-up">Our mission</div>
+      <blockquote class="text-[26px] leading-[1.35] font-bold tracking-[-0.02em] mb-6 bb-fade-up bb-delay-1">
+        We believe your files should be private by default, not by policy.
+      </blockquote>
+      <p class="text-[15px] text-ink-2 leading-relaxed max-w-[620px] mx-auto bb-fade-up bb-delay-2">
+        Most cloud providers can read your files. They choose not to, and they write that promise into their terms of service. But a promise is not a guarantee. Policies change. Companies get acquired. Governments issue subpoenas. We wanted something stronger: a system where even we, the operators, cannot access your data. Not "choose not to" -- cannot.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       WHY WE EXIST
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-[72px] bg-paper border-t border-line">
+    <div class="max-w-[900px] mx-auto">
+      <div class="section-label bb-fade-up">Why we exist</div>
+      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-4 bb-fade-up bb-delay-1">
+        Europe needs its own zero-knowledge cloud.
+      </h2>
+      <p class="text-[15px] text-ink-2 leading-relaxed max-w-[700px] mb-10 bb-fade-up bb-delay-2">
+        Right now, most Europeans store their files on servers controlled by US companies, subject to US law, under US jurisdiction. Even when those servers sit in the EU, the data is still accessible to organizations governed by the CLOUD Act. We think that is a problem worth solving.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" data-stagger>
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-2">The status quo</div>
+          <p class="text-[13.5px] text-ink-2 leading-relaxed">
+            Your files are stored in plaintext on someone else's server. The provider can read them, scan them, and hand them over. Your privacy depends entirely on their goodwill and their jurisdiction's laws.
+          </p>
+        </div>
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-amber-deep uppercase tracking-[0.06em] mb-2">What we do differently</div>
+          <p class="text-[13.5px] text-ink-2 leading-relaxed">
+            Your files are encrypted on your device before they leave it. We store ciphertext we cannot decrypt. Even if someone breaks into our servers or a court orders us to hand over data, all they get is encrypted noise.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HOW WE'RE DIFFERENT
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-[72px] bg-paper-2 border-t border-line">
+    <div class="max-w-[900px] mx-auto">
+      <div class="section-label bb-fade-up">How we are different</div>
+      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-10 bb-fade-up bb-delay-1">
+        Built on principles, not funding rounds.
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" data-stagger>
+
+        <div class="flex gap-5 bb-fade-up">
+          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-0.5">
+            <span class="font-mono text-xs font-bold text-amber-deep">1</span>
+          </div>
+          <div>
+            <h3 class="text-[16px] font-semibold mb-1">Bootstrapped</h3>
+            <p class="text-[13.5px] text-ink-2 leading-relaxed">
+              No venture capital, no growth-at-all-costs pressure. We answer to our users, not to investors. The business model is simple: you pay for storage, we keep the lights on.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-5 bb-fade-up">
+          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-0.5">
+            <span class="font-mono text-xs font-bold text-amber-deep">2</span>
+          </div>
+          <div>
+            <h3 class="text-[16px] font-semibold mb-1">Open-source clients</h3>
+            <p class="text-[13.5px] text-ink-2 leading-relaxed">
+              Our web app, mobile app, desktop app, and CLI are all open source. You can read the encryption code, audit it, or build your own client. Don't trust us -- verify.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-5 bb-fade-up">
+          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-0.5">
+            <span class="font-mono text-xs font-bold text-amber-deep">3</span>
+          </div>
+          <div>
+            <h3 class="text-[16px] font-semibold mb-1">Honest pricing</h3>
+            <p class="text-[13.5px] text-ink-2 leading-relaxed">
+              No hidden fees, no surprise charges, no dark patterns to trick you into a higher tier. The price on the page is the price you pay. We publish our pricing publicly and we do not negotiate.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-5 bb-fade-up">
+          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-0.5">
+            <span class="font-mono text-xs font-bold text-amber-deep">4</span>
+          </div>
+          <div>
+            <h3 class="text-[16px] font-semibold mb-1">EU-only infrastructure</h3>
+            <p class="text-[13.5px] text-ink-2 leading-relaxed">
+              Stored in Frankfurt. Hetzner. Your data never crosses an ocean and never touches a server operated by a non-EU company. GDPR, NIS2, and DORA compliant by architecture.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       VALUES
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-[72px] bg-paper border-t border-line">
+    <div class="max-w-[900px] mx-auto">
+      <div class="section-label text-center bb-fade-up">What we stand for</div>
+      <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-10 bb-fade-up bb-delay-1">
+        Four commitments we will not break.
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger>
+        <div class="p-5 border border-line rounded-lg bg-paper text-center bb-fade-up">
+          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mx-auto mb-3">
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="text-[14px] font-bold mb-1.5">Zero-knowledge always</h3>
+          <p class="text-[12px] text-ink-2 leading-relaxed">We cannot read your data. Not by choice -- by design. This is non-negotiable.</p>
+        </div>
+
+        <div class="p-5 border border-line rounded-lg bg-paper text-center bb-fade-up">
+          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mx-auto mb-3">
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <h3 class="text-[14px] font-bold mb-1.5">EU sovereignty</h3>
+          <p class="text-[12px] text-ink-2 leading-relaxed">EU company, EU servers, EU law. No US cloud providers. No CLOUD Act exposure.</p>
+        </div>
+
+        <div class="p-5 border border-line rounded-lg bg-paper text-center bb-fade-up">
+          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mx-auto mb-3">
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+          </div>
+          <h3 class="text-[14px] font-bold mb-1.5">Open source</h3>
+          <p class="text-[12px] text-ink-2 leading-relaxed">All client code is public. Read it, audit it, build on it. Trust is earned, not declared.</p>
+        </div>
+
+        <div class="p-5 border border-line rounded-lg bg-paper text-center bb-fade-up">
+          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mx-auto mb-3">
+            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <h3 class="text-[14px] font-bold mb-1.5">Honest pricing</h3>
+          <p class="text-[12px] text-ink-2 leading-relaxed">Simple plans, public prices, no tricks. You pay for storage. That is it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       COMPANY DETAILS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-[72px] bg-paper-2 border-t border-line">
+    <div class="max-w-[900px] mx-auto">
+      <div class="section-label bb-fade-up">Company details</div>
+      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-8 bb-fade-up bb-delay-1">
+        Initlabs B.V.
+      </h2>
+
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bb-fade-up bb-delay-2" data-stagger>
+        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Registration</div>
+          <div class="text-[14px] font-semibold">KvK 95157565</div>
+        </div>
+        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Location</div>
+          <div class="text-[14px] font-semibold">Wijchen, Netherlands</div>
+        </div>
+        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Founded</div>
+          <div class="text-[14px] font-semibold">2025</div>
+        </div>
+        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Funding</div>
+          <div class="text-[14px] font-semibold">Bootstrapped</div>
+        </div>
+      </div>
+
+      <p class="text-[13px] text-ink-3 mt-6 bb-fade-up bb-delay-3">
+        Initlabs B.V. is a Dutch limited liability company registered at the Chamber of Commerce in the Netherlands. We operate Beebeeb as our primary product.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       FINAL CTA
+       ═══════════════════════════════════════════════════════════ -->
+  <CtaSection
+    title="We built the cloud we wanted."
+    title_highlight="Now it is yours."
+    description="Start with 5 GB free. No credit card required. Encrypted from day one."
+    cta_primary_label="Get started free"
+    cta_primary_href="https://app.beebeeb.io/signup"
+    cta_secondary_label="How the encryption works"
+    cta_secondary_href="/security"
+    dark_bg={true}
+  />
+</Base>
