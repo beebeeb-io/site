@@ -1,7 +1,7 @@
-# Graph Report - site  (2026-05-01)
+# Graph Report - site  (2026-05-02)
 
 ## Corpus Check
-- 21 files · ~5,252 words
+- 21 files · ~5,288 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -27,8 +27,8 @@
 10. `initMobileMenu()` - 2 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `POST()` --calls--> `clearCache()`  [INFERRED]
-  src/pages/api/revalidate.ts → src/lib/strapi.ts
+- `clearCache()` --calls--> `POST()`  [INFERRED]
+  src/lib/strapi.ts → src/pages/api/revalidate.ts
 
 ## Communities
 

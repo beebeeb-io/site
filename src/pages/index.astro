@@ -29,7 +29,7 @@ import CtaSection from '../components/blocks/CtaSection.astro';
        ═══════════════════════════════════════════════════════════ -->
   <TrustBar items={{
     label: 'Built on EU infrastructure',
-    providers: ['Hetzner, Germany', 'Leaseweb, Netherlands'],
+    providers: ['Hetzner, Falkenstein', 'Leaseweb, Amsterdam'],
     chips: ['GDPR', 'NIS2', 'DORA'],
   }} />
 
@@ -60,18 +60,50 @@ import CtaSection from '../components/blocks/CtaSection.astro';
           </div>
         </div>
 
-        <!-- EU-only storage -->
+        <!-- Real-time sync -->
         <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
-              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-9-9"/><polyline points="21 3 21 9 15 9"/></svg>
             </div>
             <div class="flex-1">
-              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">EU-only storage</h3>
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Real-time sync</h3>
               <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
-                Your encrypted data is stored in Frankfurt and Amsterdam. Hetzner and Leaseweb datacenters. No US cloud providers. No data transfers outside the EU.
+                Edit on your laptop, see it on your phone before you've put it down. CRDT-based merging means concurrent edits never clobber each other -- no lost work, no silent overwrites.
               </p>
-              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">Hetzner, Germany</span>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">CRDT over SSE</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Constellation peer transfer -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/><path d="M12 12 5 5M12 12l7-7M12 12l-7 7M12 12l7 7"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Constellation peer transfer</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                Cross-platform AirDrop. Send a file from iPhone to a Windows laptop with no account on the receiving end. End-to-end encrypted, authenticated by a short code you read aloud.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">SAS-authenticated</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visible encryption -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">See your encryption</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                Most providers ask you to take encryption on faith. We show it: a three-stage upload pipeline, a "Prove it" panel that exposes the ciphertext, and trust details for every shared link.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">Verifiable, not vibes</span>
             </div>
           </div>
         </div>
@@ -85,25 +117,41 @@ import CtaSection from '../components/blocks/CtaSection.astro';
             <div class="flex-1">
               <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Version history</h3>
               <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
-                Every file change is saved. Restore previous versions at any time. Encrypted at rest, just like the current version. No silent overwrites.
+                Every file change is saved as a new encrypted version. Roll back individual files, recover from ransomware, or just undo a bad save. We never silently overwrite.
               </p>
               <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">30-day history</span>
             </div>
           </div>
         </div>
 
-        <!-- Folder sharing -->
+        <!-- Sharing with revocation -->
         <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
               <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <div class="flex-1">
-              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Folder sharing</h3>
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Sharing you can revoke</h3>
               <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
-                Share folders with other Beebeeb users. Encryption keys are exchanged directly between devices. The server never handles plaintext keys.
+                Share with another Beebeeb user, or send a public link. Revoke a share and the keys are destroyed -- not just access-controlled. Anything they hadn't already downloaded becomes ciphertext they can't read.
               </p>
-              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">X25519 key exchange</span>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">X25519 + key destruction</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- EU-only storage -->
+        <div class="p-7 border border-line rounded-lg bg-paper relative overflow-hidden bb-fade-up bb-lift">
+          <div class="flex items-start gap-4">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">EU-only storage</h3>
+              <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
+                Stored in Falkenstein and Amsterdam. Hetzner and Leaseweb. No US cloud providers, no US subprocessors, no data transfers outside the EU.
+              </p>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">Falkenstein. Hetzner.</span>
             </div>
           </div>
         </div>
@@ -115,11 +163,11 @@ import CtaSection from '../components/blocks/CtaSection.astro';
               <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
             </div>
             <div class="flex-1">
-              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Multi-platform</h3>
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Everywhere you work</h3>
               <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
-                Web, desktop, mobile, and CLI. Same encryption everywhere. The crypto engine is a single Rust codebase compiled to WASM for web and native for everything else.
+                Web, iOS, Android, native desktop (macOS, Windows, Linux), and a scriptable CLI. Same Rust crypto engine across the lot -- compiled to WASM for the browser, native everywhere else.
               </p>
-              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">Rust + WASM core</span>
+              <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">web · iOS · Android · desktop · bb sync</span>
             </div>
           </div>
         </div>
@@ -131,9 +179,9 @@ import CtaSection from '../components/blocks/CtaSection.astro';
               <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
             </div>
             <div class="flex-1">
-              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Open source</h3>
+              <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Open source clients</h3>
               <p class="text-[13.5px] text-ink-2 leading-relaxed mb-3.5">
-                Client code is public on GitHub. Read the crypto implementation. Verify our claims. Don't take our word for it -- check the code.
+                Every line of code that touches your data is on GitHub. Read the crypto, audit the protocols, build it yourself. Don't take our word for it.
               </p>
               <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">github.com/beebeeb-io</span>
             </div>

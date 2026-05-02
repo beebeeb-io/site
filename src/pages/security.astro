@@ -5,7 +5,7 @@ import CtaSection from '../components/blocks/CtaSection.astro';
 
 <Base
   title="Security — Beebeeb"
-  description="How Beebeeb encrypts your files: AES-256-GCM, HKDF key derivation, OPAQUE authentication, X25519 key exchange. Zero-knowledge by architecture. EU-only infrastructure."
+  description="How Beebeeb encrypts your files: AES-256-GCM, HKDF, OPAQUE, X25519. Plus tamper-evident audit log, cryptographic share revocation, compromised-password rejection, step-up re-auth, and SAS-verified peer transfers. Zero-knowledge by architecture. EU-only infrastructure."
   path="/security"
 >
 
@@ -117,13 +117,13 @@ import CtaSection from '../components/blocks/CtaSection.astro';
           <div class="flex-1 text-center px-3">
             <div class="w-14 h-14 rounded-xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-3">
               <div class="flex gap-1">
-                {['FRA', 'AMS'].map(r => (
+                {['FSN', 'AMS'].map(r => (
                   <span class="font-mono text-[8px] text-ink-3 font-semibold">{r}</span>
                 ))}
               </div>
             </div>
             <div class="text-[13px] font-semibold mb-1">Stored in EU</div>
-            <div class="text-[11px] text-ink-3">Frankfurt + Amsterdam</div>
+            <div class="text-[11px] text-ink-3">Falkenstein + Amsterdam</div>
           </div>
         </div>
       </div>
@@ -400,6 +400,120 @@ import CtaSection from '../components/blocks/CtaSection.astro';
   </section>
 
   <!-- ═══════════════════════════════════════════════════════════
+       DEFENSE IN DEPTH — Operational security
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper border-t border-line">
+    <div class="max-w-[1000px] mx-auto">
+      <div class="section-label bb-fade-up">Defense in depth</div>
+      <h2 class="text-[40px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up bb-delay-1">
+        Encryption is the floor, not the ceiling.
+      </h2>
+      <p class="text-base text-ink-2 max-w-[680px] mb-12 leading-relaxed bb-fade-up bb-delay-2">
+        Strong cryptography stops a server breach from leaking your files. It does not, on its own, stop a stolen credential, an unrevoked share, or a tampered server log. Here is what we do about each of those.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4" data-stagger>
+
+        <!-- Hash-chained audit log -->
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="flex items-start gap-4 mb-3">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <div>
+              <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Tamper-evident audit log</div>
+              <div class="text-lg font-bold tracking-tight">Hash-chained, verifiable</div>
+            </div>
+          </div>
+          <p class="text-[13px] text-ink-2 leading-relaxed mb-3">
+            Every account event -- login, share, revocation, deletion -- is appended to a hash-chained log. Each entry includes the SHA-256 of the previous one, so removing or rewriting an event breaks the chain.
+          </p>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            You can verify the chain yourself at <code class="font-mono text-[11px] text-amber-deep">/audit/verify</code>. If we silently dropped an event, the endpoint would tell you.
+          </p>
+        </div>
+
+        <!-- Per-share revocation -->
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="flex items-start gap-4 mb-3">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </div>
+            <div>
+              <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Per-share revocation</div>
+              <div class="text-lg font-bold tracking-tight">Revoke = destroy the key</div>
+            </div>
+          </div>
+          <p class="text-[13px] text-ink-2 leading-relaxed mb-3">
+            Most "revoke share" buttons just flip a database flag. Ours destroys the wrapped key on the server. Without that wrapping, the recipient's device cannot derive the file key for any chunk it had not already downloaded.
+          </p>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            Each share gets its own key. Revoking one share never affects the others.
+          </p>
+        </div>
+
+        <!-- Compromised password rejection -->
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="flex items-start gap-4 mb-3">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Compromised password check</div>
+              <div class="text-lg font-bold tracking-tight">HIBP at signup</div>
+            </div>
+          </div>
+          <p class="text-[13px] text-ink-2 leading-relaxed mb-3">
+            We can't recover this password, so you cannot use one that's already been leaked. At signup we check the first five characters of your password's SHA-1 against Have I Been Pwned's k-anonymity range API.
+          </p>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            Your full password never leaves your device. If a hash matches a known breach, signup is blocked until you choose another.
+          </p>
+        </div>
+
+        <!-- Step-up re-auth -->
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
+          <div class="flex items-start gap-4 mb-3">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Step-up re-auth</div>
+              <div class="text-lg font-bold tracking-tight">Password again before destruction</div>
+            </div>
+          </div>
+          <p class="text-[13px] text-ink-2 leading-relaxed mb-3">
+            A grabbed session cookie shouldn't be enough to delete an account or wipe a folder. Destructive operations -- account deletion, bulk delete, share revocation, recovery-key rotation -- require a fresh OPAQUE re-authentication.
+          </p>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            The step-up is bound to the operation, time-limited, and logged in the audit chain.
+          </p>
+        </div>
+
+        <!-- SAS-authenticated transfers -->
+        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up md:col-span-2">
+          <div class="flex items-start gap-4 mb-3">
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
+              <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            </div>
+            <div>
+              <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Constellation peer transfers</div>
+              <div class="text-lg font-bold tracking-tight">SAS-authenticated, end-to-end</div>
+            </div>
+          </div>
+          <p class="text-[13px] text-ink-2 leading-relaxed mb-3">
+            Constellation is our cross-platform peer transfer -- send from a phone to a stranger's laptop, no account needed on the receiving end. The two devices perform an X25519 key exchange and display a Short Authenticated String: a four-word code that both sides read aloud or compare on screen.
+          </p>
+          <p class="text-[13px] text-ink-2 leading-relaxed">
+            If a man-in-the-middle has intercepted the exchange, the codes won't match. The file itself is encrypted end-to-end with the negotiated key; our relay sees only ciphertext and never holds the file at rest.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
        INFRASTRUCTURE — EU-only
        ═══════════════════════════════════════════════════════════ -->
   <section class="px-8 py-20 bg-paper border-t border-line">
@@ -416,10 +530,10 @@ import CtaSection from '../components/blocks/CtaSection.astro';
         <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
           <div class="flex items-start gap-4">
             <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0">
-              <span class="font-mono text-[11px] font-bold">FRA</span>
+              <span class="font-mono text-[11px] font-bold">FSN</span>
             </div>
             <div>
-              <div class="text-[15px] font-bold mb-1">Frankfurt, Germany</div>
+              <div class="text-[15px] font-bold mb-1">Falkenstein, Germany</div>
               <div class="text-[13px] text-ink-2 leading-relaxed">Hetzner. Tier III datacenter. German data protection law (BDSG) applies in addition to GDPR.</div>
             </div>
           </div>

@@ -13,213 +13,6 @@
       "norm_label": "astro.config.mjs"
     },
     {
-      "label": "index.ts",
-      "file_type": "code",
-      "source_file": "cms/src/index.ts",
-      "source_location": "L1",
-      "id": "cms_src_index_ts",
-      "community": 2,
-      "norm_label": "index.ts"
-    },
-    {
-      "label": "register()",
-      "file_type": "code",
-      "source_file": "cms/src/index.ts",
-      "source_location": "L2",
-      "id": "src_index_register",
-      "community": 2,
-      "norm_label": "register()"
-    },
-    {
-      "label": "bootstrap()",
-      "file_type": "code",
-      "source_file": "cms/src/index.ts",
-      "source_location": "L3",
-      "id": "src_index_bootstrap",
-      "community": 2,
-      "norm_label": "bootstrap()"
-    },
-    {
-      "label": "destroy()",
-      "file_type": "code",
-      "source_file": "cms/src/index.ts",
-      "source_location": "L449",
-      "id": "src_index_destroy",
-      "community": 2,
-      "norm_label": "destroy()"
-    },
-    {
-      "label": "changelog-entry.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/changelog-entry/controllers/changelog-entry.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_changelog_entry_controllers_changelog_entry_ts",
-      "community": 9,
-      "norm_label": "changelog-entry.ts"
-    },
-    {
-      "label": "changelog-entry.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/changelog-entry/services/changelog-entry.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_changelog_entry_services_changelog_entry_ts",
-      "community": 10,
-      "norm_label": "changelog-entry.ts"
-    },
-    {
-      "label": "changelog-entry.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/changelog-entry/routes/changelog-entry.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_changelog_entry_routes_changelog_entry_ts",
-      "community": 11,
-      "norm_label": "changelog-entry.ts"
-    },
-    {
-      "label": "global.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/global/controllers/global.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_global_controllers_global_ts",
-      "community": 12,
-      "norm_label": "global.ts"
-    },
-    {
-      "label": "global.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/global/services/global.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_global_services_global_ts",
-      "community": 13,
-      "norm_label": "global.ts"
-    },
-    {
-      "label": "global.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/global/routes/global.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_global_routes_global_ts",
-      "community": 14,
-      "norm_label": "global.ts"
-    },
-    {
-      "label": "page.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/page/controllers/page.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_page_controllers_page_ts",
-      "community": 15,
-      "norm_label": "page.ts"
-    },
-    {
-      "label": "page.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/page/services/page.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_page_services_page_ts",
-      "community": 16,
-      "norm_label": "page.ts"
-    },
-    {
-      "label": "page.ts",
-      "file_type": "code",
-      "source_file": "cms/src/api/page/routes/page.ts",
-      "source_location": "L1",
-      "id": "cms_src_api_page_routes_page_ts",
-      "community": 17,
-      "norm_label": "page.ts"
-    },
-    {
-      "label": "middlewares.ts",
-      "file_type": "code",
-      "source_file": "cms/config/middlewares.ts",
-      "source_location": "L1",
-      "id": "cms_config_middlewares_ts",
-      "community": 18,
-      "norm_label": "middlewares.ts"
-    },
-    {
-      "label": "database.ts",
-      "file_type": "code",
-      "source_file": "cms/config/database.ts",
-      "source_location": "L1",
-      "id": "cms_config_database_ts",
-      "community": 4,
-      "norm_label": "database.ts"
-    },
-    {
-      "label": "config()",
-      "file_type": "code",
-      "source_file": "cms/config/database.ts",
-      "source_location": "L4",
-      "id": "config_database_config",
-      "community": 4,
-      "norm_label": "config()"
-    },
-    {
-      "label": "api.ts",
-      "file_type": "code",
-      "source_file": "cms/config/api.ts",
-      "source_location": "L1",
-      "id": "cms_config_api_ts",
-      "community": 19,
-      "norm_label": "api.ts"
-    },
-    {
-      "label": "plugins.ts",
-      "file_type": "code",
-      "source_file": "cms/config/plugins.ts",
-      "source_location": "L1",
-      "id": "cms_config_plugins_ts",
-      "community": 5,
-      "norm_label": "plugins.ts"
-    },
-    {
-      "label": "config()",
-      "file_type": "code",
-      "source_file": "cms/config/plugins.ts",
-      "source_location": "L3",
-      "id": "config_plugins_config",
-      "community": 5,
-      "norm_label": "config()"
-    },
-    {
-      "label": "admin.ts",
-      "file_type": "code",
-      "source_file": "cms/config/admin.ts",
-      "source_location": "L1",
-      "id": "cms_config_admin_ts",
-      "community": 6,
-      "norm_label": "admin.ts"
-    },
-    {
-      "label": "config()",
-      "file_type": "code",
-      "source_file": "cms/config/admin.ts",
-      "source_location": "L3",
-      "id": "config_admin_config",
-      "community": 6,
-      "norm_label": "config()"
-    },
-    {
-      "label": "server.ts",
-      "file_type": "code",
-      "source_file": "cms/config/server.ts",
-      "source_location": "L1",
-      "id": "cms_config_server_ts",
-      "community": 7,
-      "norm_label": "server.ts"
-    },
-    {
-      "label": "config()",
-      "file_type": "code",
-      "source_file": "cms/config/server.ts",
-      "source_location": "L3",
-      "id": "config_server_config",
-      "community": 7,
-      "norm_label": "config()"
-    },
-    {
       "label": "main.js",
       "file_type": "code",
       "source_file": "public/scripts/main.js",
@@ -310,13 +103,211 @@
       "norm_label": "initall()"
     },
     {
-      "label": "types.ts",
+      "label": "admin.ts",
       "file_type": "code",
-      "source_file": "src/lib/types.ts",
+      "source_file": "cms/config/admin.ts",
       "source_location": "L1",
-      "id": "src_lib_types_ts",
-      "community": 20,
-      "norm_label": "types.ts"
+      "id": "cms_config_admin_ts",
+      "community": 4,
+      "norm_label": "admin.ts"
+    },
+    {
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "cms/config/admin.ts",
+      "source_location": "L3",
+      "id": "config_admin_config",
+      "community": 4,
+      "norm_label": "config()"
+    },
+    {
+      "label": "api.ts",
+      "file_type": "code",
+      "source_file": "cms/config/api.ts",
+      "source_location": "L1",
+      "id": "cms_config_api_ts",
+      "community": 9,
+      "norm_label": "api.ts"
+    },
+    {
+      "label": "middlewares.ts",
+      "file_type": "code",
+      "source_file": "cms/config/middlewares.ts",
+      "source_location": "L1",
+      "id": "cms_config_middlewares_ts",
+      "community": 10,
+      "norm_label": "middlewares.ts"
+    },
+    {
+      "label": "database.ts",
+      "file_type": "code",
+      "source_file": "cms/config/database.ts",
+      "source_location": "L1",
+      "id": "cms_config_database_ts",
+      "community": 5,
+      "norm_label": "database.ts"
+    },
+    {
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "cms/config/database.ts",
+      "source_location": "L4",
+      "id": "config_database_config",
+      "community": 5,
+      "norm_label": "config()"
+    },
+    {
+      "label": "server.ts",
+      "file_type": "code",
+      "source_file": "cms/config/server.ts",
+      "source_location": "L1",
+      "id": "cms_config_server_ts",
+      "community": 6,
+      "norm_label": "server.ts"
+    },
+    {
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "cms/config/server.ts",
+      "source_location": "L3",
+      "id": "config_server_config",
+      "community": 6,
+      "norm_label": "config()"
+    },
+    {
+      "label": "plugins.ts",
+      "file_type": "code",
+      "source_file": "cms/config/plugins.ts",
+      "source_location": "L1",
+      "id": "cms_config_plugins_ts",
+      "community": 7,
+      "norm_label": "plugins.ts"
+    },
+    {
+      "label": "config()",
+      "file_type": "code",
+      "source_file": "cms/config/plugins.ts",
+      "source_location": "L3",
+      "id": "config_plugins_config",
+      "community": 7,
+      "norm_label": "config()"
+    },
+    {
+      "label": "index.ts",
+      "file_type": "code",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L1",
+      "id": "cms_src_index_ts",
+      "community": 2,
+      "norm_label": "index.ts"
+    },
+    {
+      "label": "register()",
+      "file_type": "code",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L2",
+      "id": "src_index_register",
+      "community": 2,
+      "norm_label": "register()"
+    },
+    {
+      "label": "bootstrap()",
+      "file_type": "code",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L3",
+      "id": "src_index_bootstrap",
+      "community": 2,
+      "norm_label": "bootstrap()"
+    },
+    {
+      "label": "destroy()",
+      "file_type": "code",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L449",
+      "id": "src_index_destroy",
+      "community": 2,
+      "norm_label": "destroy()"
+    },
+    {
+      "label": "page.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/page/controllers/page.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_page_controllers_page_ts",
+      "community": 11,
+      "norm_label": "page.ts"
+    },
+    {
+      "label": "page.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/page/routes/page.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_page_routes_page_ts",
+      "community": 12,
+      "norm_label": "page.ts"
+    },
+    {
+      "label": "page.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/page/services/page.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_page_services_page_ts",
+      "community": 13,
+      "norm_label": "page.ts"
+    },
+    {
+      "label": "changelog-entry.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/changelog-entry/controllers/changelog-entry.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_changelog_entry_controllers_changelog_entry_ts",
+      "community": 14,
+      "norm_label": "changelog-entry.ts"
+    },
+    {
+      "label": "changelog-entry.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/changelog-entry/routes/changelog-entry.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_changelog_entry_routes_changelog_entry_ts",
+      "community": 15,
+      "norm_label": "changelog-entry.ts"
+    },
+    {
+      "label": "changelog-entry.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/changelog-entry/services/changelog-entry.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_changelog_entry_services_changelog_entry_ts",
+      "community": 16,
+      "norm_label": "changelog-entry.ts"
+    },
+    {
+      "label": "global.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/global/controllers/global.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_global_controllers_global_ts",
+      "community": 17,
+      "norm_label": "global.ts"
+    },
+    {
+      "label": "global.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/global/routes/global.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_global_routes_global_ts",
+      "community": 18,
+      "norm_label": "global.ts"
+    },
+    {
+      "label": "global.ts",
+      "file_type": "code",
+      "source_file": "cms/src/api/global/services/global.ts",
+      "source_location": "L1",
+      "id": "cms_src_api_global_services_global_ts",
+      "community": 19,
+      "norm_label": "global.ts"
     },
     {
       "label": "strapi.ts",
@@ -400,6 +391,15 @@
       "norm_label": "clearcache()"
     },
     {
+      "label": "types.ts",
+      "file_type": "code",
+      "source_file": "src/lib/types.ts",
+      "source_location": "L1",
+      "id": "src_lib_types_ts",
+      "community": 20,
+      "norm_label": "types.ts"
+    },
+    {
       "label": "revalidate.ts",
       "file_type": "code",
       "source_file": "src/pages/api/revalidate.ts",
@@ -419,90 +419,6 @@
     }
   ],
   "links": [
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "cms/src/index.ts",
-      "source_location": "L2",
-      "weight": 1.0,
-      "_src": "cms_src_index_ts",
-      "_tgt": "src_index_register",
-      "source": "cms_src_index_ts",
-      "target": "src_index_register",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "cms/src/index.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_src": "cms_src_index_ts",
-      "_tgt": "src_index_bootstrap",
-      "source": "cms_src_index_ts",
-      "target": "src_index_bootstrap",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "cms/src/index.ts",
-      "source_location": "L449",
-      "weight": 1.0,
-      "_src": "cms_src_index_ts",
-      "_tgt": "src_index_destroy",
-      "source": "cms_src_index_ts",
-      "target": "src_index_destroy",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "cms/config/database.ts",
-      "source_location": "L4",
-      "weight": 1.0,
-      "_src": "cms_config_database_ts",
-      "_tgt": "config_database_config",
-      "source": "cms_config_database_ts",
-      "target": "config_database_config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "cms/config/plugins.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_src": "cms_config_plugins_ts",
-      "_tgt": "config_plugins_config",
-      "source": "cms_config_plugins_ts",
-      "target": "config_plugins_config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "cms/config/admin.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_src": "cms_config_admin_ts",
-      "_tgt": "config_admin_config",
-      "source": "cms_config_admin_ts",
-      "target": "config_admin_config",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "cms/config/server.ts",
-      "source_location": "L3",
-      "weight": 1.0,
-      "_src": "cms_config_server_ts",
-      "_tgt": "config_server_config",
-      "source": "cms_config_server_ts",
-      "target": "config_server_config",
-      "confidence_score": 1.0
-    },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
@@ -710,6 +626,90 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "cms/config/admin.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "cms_config_admin_ts",
+      "_tgt": "config_admin_config",
+      "source": "cms_config_admin_ts",
+      "target": "config_admin_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/config/database.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "cms_config_database_ts",
+      "_tgt": "config_database_config",
+      "source": "cms_config_database_ts",
+      "target": "config_database_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/config/server.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "cms_config_server_ts",
+      "_tgt": "config_server_config",
+      "source": "cms_config_server_ts",
+      "target": "config_server_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/config/plugins.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "cms_config_plugins_ts",
+      "_tgt": "config_plugins_config",
+      "source": "cms_config_plugins_ts",
+      "target": "config_plugins_config",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L2",
+      "weight": 1.0,
+      "_src": "cms_src_index_ts",
+      "_tgt": "src_index_register",
+      "source": "cms_src_index_ts",
+      "target": "src_index_register",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "cms_src_index_ts",
+      "_tgt": "src_index_bootstrap",
+      "source": "cms_src_index_ts",
+      "target": "src_index_bootstrap",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "cms/src/index.ts",
+      "source_location": "L449",
+      "weight": 1.0,
+      "_src": "cms_src_index_ts",
+      "_tgt": "src_index_destroy",
+      "source": "cms_src_index_ts",
+      "target": "src_index_destroy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "src/lib/strapi.ts",
       "source_location": "L12",
       "weight": 1.0,
@@ -834,8 +834,8 @@
       "source_file": "src/pages/api/revalidate.ts",
       "source_location": "L17",
       "weight": 1.0,
-      "_src": "api_revalidate_post",
-      "_tgt": "lib_strapi_clearcache",
+      "_src": "lib_strapi_clearcache",
+      "_tgt": "api_revalidate_post",
       "source": "lib_strapi_clearcache",
       "target": "api_revalidate_post"
     },
