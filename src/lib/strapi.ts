@@ -122,6 +122,21 @@ export async function fetchGlobal() {
   }
 }
 
+export async function listPageSlugs(): Promise<string[]> {
+  try {
+    const { data } = await fetchStrapi<any[]>('pages', {
+      'fields[0]': 'slug',
+      'pagination[pageSize]': '100',
+    });
+    return (data || [])
+      .map((p: any) => p?.slug)
+      .filter((s: unknown): s is string => typeof s === 'string' && s.length > 0);
+  } catch (e) {
+    console.warn('[strapi] listPageSlugs failed — building zero CMS pages:', (e as Error).message);
+    return [];
+  }
+}
+
 export async function fetchChangelogEntries() {
   try {
     const { data } = await fetchStrapi<any[]>('changelog-entries', {

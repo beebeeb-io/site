@@ -1,18 +1,21 @@
 ---
 import Base from '../layouts/base.astro';
 import BlockRenderer from '../components/blocks/BlockRenderer.astro';
-import { fetchPageBySlug } from '../lib/strapi';
+import { fetchPageBySlug, listPageSlugs } from '../lib/strapi';
 
+export async function getStaticPaths() {
+  const slugs = await listPageSlugs();
+  const entries = await Promise.all(
+    slugs.map(async (slug) => ({ slug, page: await fetchPageBySlug(slug, false) })),
+  );
+  return entries
+    .filter((entry) => entry.page !== null)
+    .map(({ slug, page }) => ({ params: { slug }, props: { page } }));
+}
+
+const { page } = Astro.props as { page: any };
 const { slug } = Astro.params;
 const pageSlug = slug || 'home';
-const url = new URL(Astro.request.url);
-const isPreview = url.searchParams.get('preview') === 'true';
-const page = await fetchPageBySlug(pageSlug, isPreview);
-
-if (!page) {
-  Astro.response.status = 404;
-  return Astro.rewrite('/404');
-}
 
 const blocks = page?.blocks || [];
 
@@ -39,9 +42,4 @@ const extraJsonLd = faqJsonLd ? [faqJsonLd] : undefined;
   jsonLd={extraJsonLd}
 >
   <BlockRenderer blocks={blocks} />
-  {isPreview && (
-    <div style="position:fixed;bottom:20px;right:20px;background:var(--color-amber);color:var(--color-ink);padding:8px 16px;border-radius:8px;font-size:12px;font-weight:600;z-index:9999;">
-      PREVIEW MODE
-    </div>
-  )}
 </Base>
