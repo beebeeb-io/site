@@ -1404,8 +1404,10 @@ const launchDate = '2026-09-01T12:00:00Z';
     var emailInput = document.getElementById('emailInput');
     var feedback = document.getElementById('submitFeedback');
 
+    var API_URL = import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io';
+
     if (submitBtn && emailInput) {
-      submitBtn.addEventListener('click', function() {
+      submitBtn.addEventListener('click', async function() {
         var email = emailInput.value.trim();
         if (!email || !email.includes('@') || !email.includes('.')) {
           feedback.textContent = 'Please enter a valid email address.';
@@ -1414,33 +1416,33 @@ const launchDate = '2026-09-01T12:00:00Z';
           return;
         }
 
-        // Store in localStorage as a simple waitlist mechanism
-        var waitlist = [];
-        try {
-          waitlist = JSON.parse(localStorage.getItem('bb-waitlist') || '[]');
-        } catch (e) { /* ignore */ }
-
-        if (waitlist.indexOf(email) === -1) {
-          waitlist.push(email);
-          localStorage.setItem('bb-waitlist', JSON.stringify(waitlist));
-        }
-
-        // POST to placeholder endpoint (will 404 for now, that's fine)
-        try {
-          fetch('/api/waitlist', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, ts: new Date().toISOString() }),
-          }).catch(function() { /* endpoint doesn't exist yet */ });
-        } catch (e) { /* ignore */ }
-
-        feedback.textContent = 'You are on the list. One email when we launch.';
-        feedback.style.display = 'block';
-        feedback.style.color = 'var(--amber)';
-        emailInput.value = '';
-        submitBtn.textContent = 'Reserved';
+        var originalLabel = submitBtn.textContent;
         submitBtn.disabled = true;
         submitBtn.style.opacity = '0.7';
+        submitBtn.textContent = 'Reserving…';
+
+        try {
+          var res = await fetch(API_URL + '/api/v1/waitlist', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, source: 'coming-soon' }),
+          });
+
+          if (!res.ok) throw new Error('http ' + res.status);
+
+          feedback.textContent = "You're on the list. We'll email you when we launch.";
+          feedback.style.display = 'block';
+          feedback.style.color = 'var(--amber)';
+          emailInput.value = '';
+          submitBtn.textContent = 'Reserved';
+        } catch (err) {
+          feedback.textContent = 'Something went wrong. Try again.';
+          feedback.style.display = 'block';
+          feedback.style.color = 'oklch(0.62 0.21 25)';
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = '';
+          submitBtn.textContent = originalLabel;
+        }
       });
 
       // Submit on Enter key
