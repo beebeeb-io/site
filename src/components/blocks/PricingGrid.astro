@@ -1,6 +1,7 @@
 ---
 interface Plan {
   name: string;
+  slug?: string;
   price?: string;
   period?: string;
   description?: string;
@@ -55,10 +56,13 @@ const { label, title, subtitle, plans = [], footnote } = Astro.props;
                 </li>
               ))}
             </ul>
-            <a href="/signup" class:list={[
-              'btn w-full justify-center',
-              plan.variant === 'amber' ? 'btn-amber btn-md' : 'btn-outline btn-md',
-            ]}>
+            <a
+              href={`https://app.beebeeb.io/signup${plan.slug ? `?plan=${plan.slug}` : ''}`}
+              class:list={[
+                'btn w-full justify-center',
+                plan.variant === 'amber' ? 'btn-amber btn-md' : 'btn-outline btn-md',
+              ]}
+            >
               {plan.cta_label || `Start with ${plan.name}`}
             </a>
           </div>
