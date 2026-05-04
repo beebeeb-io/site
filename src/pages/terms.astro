@@ -1,0 +1,115 @@
+---
+import Base from '../layouts/base.astro';
+import LegalText from '../components/blocks/LegalText.astro';
+
+const body = `
+<p class="text-[13px] text-ink-3">Last updated: 4 May 2026 &middot; Effective: 4 May 2026</p>
+
+<h2>1. Agreement</h2>
+<p>
+  By creating an account or using Beebeeb you agree to these Terms of Service
+  ("Terms"). The service is provided by <strong>Initlabs B.V.</strong>,
+  Kelvinstraat 34A, 6601 HE Wijchen, Netherlands (KvK 95157565).
+</p>
+
+<h2>2. The service</h2>
+<p>
+  Beebeeb provides end-to-end encrypted cloud storage. Your files are
+  encrypted on your device before upload using keys derived from your
+  password. We cannot access your file content, names, or metadata beyond
+  what is described in our <a href="/privacy">Privacy Policy</a>.
+</p>
+<p>
+  We aim for high availability but do not guarantee uninterrupted access.
+  We publish real-time status at
+  <a href="/status">beebeeb.io/status</a>.
+</p>
+
+<h2>3. Your account</h2>
+<ul>
+  <li>You must be 16 or older to use Beebeeb (GDPR minimum age, Netherlands).</li>
+  <li>You are responsible for keeping your credentials secure. We cannot recover
+  your encryption key if lost — use the backup phrase shown during onboarding.</li>
+  <li>One account per person for Free and Personal plans.</li>
+</ul>
+
+<h2>4. Acceptable use</h2>
+<p>You may not use Beebeeb to:</p>
+<ul>
+  <li>Store, transmit, or share content that is illegal under Netherlands or EU law.</li>
+  <li>Distribute malware, ransomware, or other malicious software.</li>
+  <li>Attempt to circumvent our security measures or access other users' data.</li>
+  <li>Abuse free resources (e.g. creating multiple Free accounts to avoid storage limits).</li>
+  <li>Use our service for automated bulk storage without a commercial agreement.</li>
+</ul>
+<p>
+  Violations may result in immediate account suspension. We will attempt to
+  notify you before taking action unless doing so creates a security risk.
+</p>
+
+<h2>5. Your content</h2>
+<p>
+  You retain full ownership of all files you store in Beebeeb. Our zero-knowledge
+  architecture means we cannot view your content. We do not claim any licence
+  over your files beyond the technical rights necessary to store and retrieve
+  them on your behalf.
+</p>
+
+<h2>6. Payment and refunds</h2>
+<p>
+  Paid plans are billed monthly or annually in advance. Prices are shown in EUR
+  inclusive of applicable VAT. Refunds for unused periods are at our discretion;
+  we aim to handle all requests fairly. Payment is processed by Stripe.
+</p>
+
+<h2>7. Service modifications and termination</h2>
+<p>
+  We reserve the right to modify or discontinue the service with 90 days' notice
+  for material changes that affect existing paid subscribers, or 30 days for all
+  other users. In the event of discontinuation we will provide a data export tool
+  for at least 60 days.
+</p>
+<p>
+  You may delete your account at any time from account settings. Deletion is
+  permanent and irreversible within 30 days.
+</p>
+
+<h2>8. Liability</h2>
+<p>
+  To the extent permitted by applicable law, Initlabs B.V. is not liable for
+  indirect, consequential, or special damages arising from use of the service.
+  Our total liability is limited to the fees you paid in the 12 months before
+  the claim arose.
+</p>
+<p>
+  Nothing in these Terms limits our liability for death or personal injury caused
+  by our negligence, fraud, or any other liability that cannot be excluded by law.
+</p>
+
+<h2>9. Governing law and disputes</h2>
+<p>
+  These Terms are governed by Netherlands law. Disputes that cannot be resolved
+  amicably will be submitted to the exclusive jurisdiction of the competent court
+  in Arnhem, Netherlands.
+</p>
+
+<h2>10. Contact</h2>
+<p>
+  For questions about these Terms, contact us at
+  <a href="mailto:hello@beebeeb.io">hello@beebeeb.io</a>.
+</p>
+`;
+---
+
+<Base
+  title="Terms of Service — Beebeeb"
+  description="Beebeeb terms of service: acceptable use, account rules, liability, and governing law."
+  path="/terms"
+>
+  <!-- Draft banner -->
+  <div class="bg-amber-bg border-b border-amber/40 px-8 py-3 text-center text-[13px]" style="color: var(--color-amber-deep);">
+    <strong>DRAFT</strong> — Under legal review. Not yet in effect.
+  </div>
+
+  <LegalText title="Terms of Service" body={body} />
+</Base>

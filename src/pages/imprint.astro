@@ -1,0 +1,58 @@
+---
+import Base from '../layouts/base.astro';
+import LegalText from '../components/blocks/LegalText.astro';
+
+const body = `
+<p>
+  Information according to § 5 TMG (Germany) and Article 3:15d of the Dutch
+  Civil Code (Netherlands). Dutch law governs this website.
+</p>
+
+<h2>Company</h2>
+<p>
+  <strong>Initlabs B.V.</strong><br />
+  Kelvinstraat 34A<br />
+  6601 HE Wijchen<br />
+  Netherlands
+</p>
+
+<h2>Registration</h2>
+<p>
+  Chamber of Commerce (KvK): <strong>95157565</strong><br />
+  VAT number (BTW): <strong>NL867023430B01</strong>
+</p>
+
+<h2>Director</h2>
+<p>
+  Guus Langelaar
+</p>
+
+<h2>Contact</h2>
+<p>
+  E-mail: <a href="mailto:hello@beebeeb.io">hello@beebeeb.io</a>
+</p>
+
+<h2>Supervisory authority</h2>
+<p>
+  Autoriteit Persoonsgegevens (Dutch Data Protection Authority)<br />
+  Hoge Nieuwstraat 8, 2514 EL The Hague, Netherlands<br />
+  <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener">autoriteitpersoonsgegevens.nl</a>
+</p>
+
+<h2>Dispute resolution</h2>
+<p>
+  We are not obligated to participate in dispute resolution before a consumer
+  arbitration board, nor do we choose to do so voluntarily.
+  For complaints about our data processing, you may contact the Autoriteit
+  Persoonsgegevens using the link above.
+</p>
+`;
+---
+
+<Base
+  title="Imprint — Beebeeb"
+  description="Legal notice and company information for Initlabs B.V., operator of Beebeeb."
+  path="/imprint"
+>
+  <LegalText title="Imprint" body={body} />
+</Base>
