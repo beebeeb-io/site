@@ -1,0 +1,88 @@
+---
+import Base from '../layouts/base.astro';
+
+// Canary dates — updated every Monday at 09:00 CET.
+// To update: change lastUpdated to today's date and nextDue to next Monday.
+const lastUpdated  = '2026-05-04';
+const nextDue      = '2026-05-11';
+---
+
+<Base
+  title="Warrant Canary — Beebeeb"
+  description="Beebeeb warrant canary. Updated every Monday. If this page is not updated by the stated date, users should assume the canary is no longer valid."
+  path="/warrant-canary"
+  noindex={true}
+>
+  <div class="px-8 py-20 max-w-[680px] mx-auto">
+
+    <div class="mb-10">
+      <div class="section-label mb-4">Legal &amp; trust</div>
+      <h1 class="text-[40px] font-bold tracking-[-0.025em] leading-tight mb-4">
+        Warrant Canary
+      </h1>
+      <div class="flex flex-wrap gap-6 text-[13px]" style="color: var(--color-ink-3);">
+        <span>
+          Last updated:
+          <span class="font-semibold" style="color: var(--color-ink);">{lastUpdated}</span>
+        </span>
+        <span>
+          Next update due:
+          <span class="font-semibold" style="color: var(--color-ink);">{nextDue}</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="prose-bb">
+      <p>
+        As of the date above, Initlabs B.V. (operator of Beebeeb):
+      </p>
+
+      <ol>
+        <li>Has not received any National Security Letters or FISA orders.</li>
+        <li>Has not received any gag orders or secret court orders.</li>
+        <li>Has not been required to modify our systems to allow access or monitoring.</li>
+        <li>Has not placed any backdoors in our software or handed over encryption keys.</li>
+      </ol>
+
+      <p>
+        This canary is updated every Monday at 09:00 CET. If this page is not updated
+        by the stated date, users should assume the canary is no longer valid.
+      </p>
+
+      <p class="signature">
+        Signed: Guus Langelaar, Director, Initlabs B.V.
+      </p>
+    </div>
+
+  </div>
+</Base>
+
+<style>
+  .prose-bb {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--color-ink-2);
+  }
+  .prose-bb p {
+    margin-bottom: 1.25rem;
+  }
+  .prose-bb ol {
+    list-style: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .prose-bb li {
+    color: var(--color-ink-2);
+  }
+  .prose-bb .signature {
+    margin-top: 2rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--color-line);
+    font-size: 13px;
+    color: var(--color-ink-3);
+    font-style: italic;
+  }
+</style>
