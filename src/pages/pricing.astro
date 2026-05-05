@@ -11,7 +11,8 @@ const plans = [
     slug: 'free',
     monthly: { price: '0', note: '/mo' },
     annual:  { price: '0', note: '/mo' },
-    description: 'Try Beebeeb with no commitment. Full encryption, limited storage.',
+    description: 'Try Beebeeb with no commitment. Full E2E encryption, 5 GB storage.',
+    perTb: null,
     features: [
       '5 GB storage',
       'End-to-end encryption',
@@ -21,15 +22,17 @@ const plans = [
     cta: { label: 'Start free', href: 'https://app.beebeeb.io/signup?plan=free' },
     variant: 'outline' as const,
     popular: false,
+    badge: null as string | null,
   },
   {
     name: 'Personal',
     slug: 'personal',
-    monthly: { price: '5', note: '/mo' },
-    annual:  { price: '4', note: '/mo', billed: 'billed €48/year' },
+    monthly: { price: '8.99', note: '/mo' },
+    annual:  { price: '7.19', note: '/mo', billed: 'billed €86.30/year' },
     description: 'For people who want real privacy for their personal files.',
+    perTb: '€8.99/TB',
     features: [
-      '200 GB storage',
+      '1 TB storage',
       'Version history (30 days)',
       'All platforms',
       'Unlimited share links',
@@ -38,47 +41,52 @@ const plans = [
     cta: { label: 'Get Personal', href: 'https://app.beebeeb.io/signup?plan=personal' },
     variant: 'amber' as const,
     popular: true,
+    badge: null as string | null,
   },
   {
-    name: 'Team',
-    slug: 'team',
-    monthly: { price: '12', note: '/user/mo' },
-    annual:  { price: '10', note: '/user/mo', billed: 'billed €120/user/year' },
-    description: 'For teams that need shared encrypted workspaces.',
+    name: 'Pro',
+    slug: 'pro',
+    monthly: { price: '39.95', note: '/mo' },
+    annual:  { price: '31.96', note: '/mo', billed: 'billed €383.52/year' },
+    description: 'For power users, creators, and developers with serious storage needs.',
+    perTb: '€7.99/TB',
     features: [
-      '1 TB per user',
-      'Team folders + sharing',
-      'Admin console',
-      'Version history (1 year)',
-      'SSO ready',
+      '5 TB storage',
+      'Unlimited version history',
+      'Desktop sync + CLI',
+      'Shared folders',
+      'Priority support',
     ],
-    cta: { label: 'Start with Team', href: 'https://app.beebeeb.io/signup?plan=team' },
+    cta: { label: 'Get Pro', href: 'https://app.beebeeb.io/signup?plan=pro' },
     variant: 'outline' as const,
     popular: false,
+    badge: null as string | null,
   },
   {
-    name: 'Business',
-    slug: 'business',
-    monthly: { price: '24', note: '/user/mo' },
-    annual:  { price: '19', note: '/user/mo', billed: 'billed €228/user/year' },
-    description: 'For organisations with compliance and audit requirements.',
+    name: 'Data Hoarder',
+    slug: 'data_hoarder',
+    monthly: { price: '139.80', note: '/mo' },
+    annual:  { price: '111.84', note: '/mo', billed: 'billed €1,342.08/year' },
+    description: 'For archivists, backup addicts, and anyone who needs 20 TB on a budget.',
+    perTb: '€6.99/TB',
     features: [
-      'Unlimited storage',
-      'Audit logs + SAML SSO',
-      'Priority support + SLA',
+      '20 TB storage',
+      'Lowest per-TB price',
+      'Unlimited version history',
+      'Dedicated support channel',
       'Custom retention policies',
-      'DPA included',
     ],
-    cta: { label: 'Contact sales', href: 'mailto:sales@beebeeb.io' },
+    cta: { label: 'Get Data Hoarder', href: 'https://app.beebeeb.io/signup?plan=data_hoarder' },
     variant: 'outline' as const,
     popular: false,
+    badge: 'Best value' as string | null,
   },
 ];
 ---
 
 <Base
   title="Pricing — Beebeeb"
-  description="Beebeeb pricing: Free (5 GB), Personal (€4/mo), Team (€10/user/mo), Business (€19/user/mo). End-to-end encrypted cloud, EU infrastructure. Annual billing saves 20%."
+  description="Beebeeb pricing: Free (5 GB), Personal €8.99/mo (1 TB), Pro €39.95/mo (5 TB), Data Hoarder €139.80/mo (20 TB). End-to-end encrypted cloud, EU infrastructure. Annual billing saves 20%."
   path="/pricing"
 >
 
@@ -138,6 +146,13 @@ const plans = [
                 </span>
               </div>
             )}
+            {plan.badge && !plan.popular && (
+              <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+                <span class="px-3 py-1 bg-paper border border-line-2 text-ink-2 text-[10px] font-bold tracking-[0.06em] uppercase rounded-full shadow-sm">
+                  {plan.badge}
+                </span>
+              </div>
+            )}
 
             <div class="text-[13px] font-semibold text-ink-3 uppercase tracking-[0.04em]">
               {plan.name}
@@ -158,6 +173,9 @@ const plans = [
               )}
             </div>
 
+            {plan.perTb && (
+              <div class="text-[11px] font-mono text-ink-4 -mt-0.5 mb-1">{plan.perTb}</div>
+            )}
             <p class="text-[13px] text-ink-2 mb-5 leading-relaxed">{plan.description}</p>
 
             <ul class="space-y-2 mb-6">
