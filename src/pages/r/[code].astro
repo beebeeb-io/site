@@ -1,0 +1,178 @@
+---
+/**
+ * Referral landing page — /r/<code>
+ *
+ * Captures the referral code from the URL, shows a 2-second branded splash,
+ * then redirects to the Beebeeb signup page with:
+ *   ?ref=referral&code=<code>
+ *
+ * The signup page picks up these params and stores them in localStorage.
+ * The onboarding flow then passes referral_code to the server on registration.
+ *
+ * This page is server-rendered (no static params needed since code is dynamic).
+ */
+
+const { code } = Astro.params;
+
+// Basic validation — reject obviously invalid codes silently
+const safeCode = /^[a-zA-Z0-9_-]{4,32}$/.test(code ?? '') ? code : '';
+const signupUrl = safeCode
+  ? `https://app.beebeeb.io/signup?ref=referral&code=${encodeURIComponent(safeCode)}`
+  : 'https://app.beebeeb.io/signup';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>You're invited to Beebeeb</title>
+  <meta name="description" content="Someone thinks you'd like Beebeeb — end-to-end encrypted cloud storage. Sign up and you both get +10 GB free." />
+  <!-- Prevent indexing — referral pages shouldn't rank -->
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Auto-redirect after 2 seconds -->
+  <meta http-equiv="refresh" content={`2;url=${signupUrl}`} />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+      background: oklch(0.985 0.004 85);
+      color: oklch(0.18 0.01 70);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: oklch(0.18 0.01 70);
+      margin-bottom: 24px;
+    }
+    .logo .dot { color: oklch(0.66 0.15 72); }
+
+    .card {
+      background: white;
+      border: 1px solid oklch(0.90 0.008 82);
+      border-radius: 16px;
+      padding: 36px 40px;
+      max-width: 400px;
+      width: 100%;
+      box-shadow: 0 4px 24px oklch(0.18 0.01 70 / 0.06);
+    }
+
+    .icon {
+      width: 56px;
+      height: 56px;
+      background: oklch(0.96 0.04 88);
+      border: 1px solid oklch(0.86 0.07 90);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 28px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: oklch(0.18 0.01 70);
+    }
+
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: oklch(0.38 0.01 72);
+      margin-bottom: 12px;
+    }
+
+    .bonus {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: oklch(0.96 0.04 88);
+      border: 1px solid oklch(0.82 0.17 84);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: oklch(0.50 0.13 68);
+      margin-bottom: 24px;
+    }
+
+    .cta {
+      display: inline-block;
+      background: oklch(0.82 0.17 84);
+      color: oklch(0.18 0.01 70);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: filter 0.15s;
+      width: 100%;
+    }
+    .cta:hover { filter: brightness(1.05); }
+
+    .redirect-note {
+      font-size: 11px;
+      color: oklch(0.68 0.008 80);
+      margin-top: 16px;
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid oklch(0.82 0.17 84 / 0.3);
+      border-top-color: oklch(0.66 0.15 72);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div class="logo">beebeeb<span class="dot">.</span>io</div>
+
+  <div class="card">
+    <div class="icon">🎁</div>
+
+    <h1>You've been invited</h1>
+    <p>
+      A friend thinks you'd like Beebeeb — end-to-end encrypted cloud storage
+      where your files are encrypted on your device before they leave it.
+    </p>
+
+    <div class="bonus">
+      +10 GB free when you sign up
+    </div>
+
+    <a href={signupUrl} class="cta">Create your account →</a>
+
+    <p class="redirect-note">
+      <span class="spinner" aria-hidden="true"></span>
+      Redirecting in 2 seconds…
+    </p>
+  </div>
+
+  <script define:vars={{ signupUrl }}>
+    // Belt-and-suspenders redirect in case meta refresh is blocked
+    setTimeout(() => { window.location.href = signupUrl; }, 2000);
+  </script>
+</body>
+</html>
