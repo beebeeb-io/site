@@ -1,0 +1,138 @@
+---
+import Base from '../../layouts/base.astro';
+
+const FEATURES = [
+  { label: 'End-to-end encryption',       bb: { val: true,  note: 'Files + filenames + metadata' }, them: { val: true,  note: 'Files + metadata' } },
+  { label: 'Zero-knowledge architecture', bb: { val: true,  note: null },                           them: { val: false, note: 'Metadata visible to Tresorit' } },
+  { label: 'Open source',                 bb: { val: true,  note: 'Client + encryption library' },  them: { val: false, note: 'Closed source' } },
+  { label: 'EU jurisdiction',             bb: { val: true,  note: 'Netherlands · no Cloud Act' },   them: { val: true,  note: 'Switzerland + Ireland · no Cloud Act' } },
+  { label: 'CLI & WebDAV',                bb: { val: true,  note: null },                           them: { val: false, note: 'No official CLI or WebDAV' } },
+  { label: 'Linux client',                bb: { val: true,  note: 'Web + CLI' },                    them: { val: 'partial', note: 'Web only (no desktop)' } },
+  { label: 'OPAQUE passwordless auth',    bb: { val: true,  note: 'Password never sent to server'}, them: { val: false, note: 'SRP or standard auth' } },
+  { label: 'Free tier',                   bb: { val: true,  note: '5 GB' },                         them: { val: true,  note: '5 GB' } },
+  { label: 'Personal plan price',         bb: { val: 'note', note: '€4/mo (200 GB, annual)' },      them: { val: 'note', note: '~€12/mo (5 GB, annual)' } },
+  { label: 'Self-hosting',                bb: { val: 'partial', note: 'Planned' },                  them: { val: false, note: 'No' } },
+];
+---
+
+<Base
+  title="Beebeeb vs Tresorit — Encrypted Cloud Storage Comparison"
+  description="Compare Beebeeb and Tresorit on zero-knowledge architecture, open source, EU jurisdiction, CLI support, and pricing. An honest, factual comparison."
+  path="/vs/tresorit"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Beebeeb vs Tresorit',
+    description: 'A feature-by-feature comparison of Beebeeb and Tresorit encrypted cloud storage.',
+    url: 'https://beebeeb.io/vs/tresorit',
+  }}
+>
+  <!-- ── Hero ──────────────────────────────────────────────────────────── -->
+  <section class="px-8 pt-[72px] pb-14 text-center" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 80%);">
+    <div class="section-label bb-fade-up">Comparison</div>
+    <h1 class="text-[44px] sm:text-[52px] leading-[1.07] font-bold tracking-[-0.03em] mt-3 max-w-[720px] mx-auto bb-fade-up bb-delay-1">
+      Beebeeb <span class="text-ink-3">vs</span> Tresorit
+    </h1>
+    <p class="text-base text-ink-2 mt-5 max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+      Both are encrypted cloud storage services with EU operations. The key differences: open-source architecture, CLI tooling, and price.
+    </p>
+    <div class="flex gap-3 justify-center mt-8 flex-wrap bb-fade-up bb-delay-3">
+      <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md">Try Beebeeb free →</a>
+      <a href="/pricing" class="btn btn-outline btn-md">See pricing</a>
+    </div>
+  </section>
+
+  <!-- ── Comparison table ──────────────────────────────────────────────── -->
+  <section class="px-8 py-16 bg-paper border-t border-line">
+    <div class="max-w-[860px] mx-auto">
+      <div class="section-label mb-6 bb-fade-up">Feature comparison</div>
+      <div class="rounded-xl border border-line overflow-hidden bb-fade-up bb-delay-1">
+        <!-- Header -->
+        <div class="grid grid-cols-[2fr_1fr_1fr] bg-paper-2 border-b border-line">
+          <div class="px-5 py-3 text-[11px] font-semibold uppercase tracking-widest text-ink-3">Feature</div>
+          <div class="px-5 py-3 text-[12px] font-bold text-ink border-l border-line text-center">Beebeeb</div>
+          <div class="px-5 py-3 text-[12px] font-medium text-ink-3 border-l border-line text-center">Tresorit</div>
+        </div>
+        {FEATURES.map((f) => (
+          <div class="grid grid-cols-[2fr_1fr_1fr] border-b border-line last:border-b-0 hover:bg-paper-2/50">
+            <div class="px-5 py-3.5 text-[13px] text-ink-2">{f.label}</div>
+            <div class="px-5 py-3.5 border-l border-line text-center">
+              {f.bb.val === true && (
+                <span>
+                  <span class="text-green font-semibold text-[13px]">✓</span>
+                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                </span>
+              )}
+              {f.bb.val === false && <span class="text-[13px]" style="color: var(--color-red);">✗</span>}
+              {f.bb.val === 'partial' && (
+                <span>
+                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
+                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                </span>
+              )}
+              {f.bb.val === 'note' && <span class="text-[12px] text-ink font-medium">{f.bb.note}</span>}
+            </div>
+            <div class="px-5 py-3.5 border-l border-line text-center">
+              {f.them.val === true && (
+                <span>
+                  <span class="text-green font-semibold text-[13px]">✓</span>
+                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === false && (
+                <span>
+                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
+                  {f.them.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === 'partial' && (
+                <span>
+                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
+                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === 'note' && <span class="text-[12px] text-ink-2">{f.them.note}</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-[11px] text-ink-4 mt-3">Prices and features reflect public information as of May 2026. Always verify current pricing on each vendor's website.</p>
+    </div>
+  </section>
+
+  <!-- ── Prose sections ─────────────────────────────────────────────────── -->
+  <section class="px-8 py-14 border-t border-line">
+    <div class="max-w-[720px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="bb-fade-up">
+        <h2 class="text-[20px] font-bold tracking-tight mb-4">What Tresorit does well</h2>
+        <p class="text-[14px] text-ink-2 leading-relaxed">
+          Tresorit has been building encrypted cloud storage since 2011 and has a strong enterprise track record. Their compliance story is solid — HIPAA, GDPR, and ISO 27001 certifications are well-documented, and they've built proper admin controls for large teams.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          Swiss jurisdiction means no EU GDPR complexity for some use cases, and their desktop sync clients on Windows and macOS are mature and reliable. Their focus on regulated industries (law, healthcare, finance) shows in the product's polish.
+        </p>
+      </div>
+      <div class="bb-fade-up bb-delay-1">
+        <h2 class="text-[20px] font-bold tracking-tight mb-4">Where Beebeeb is different</h2>
+        <p class="text-[14px] text-ink-2 leading-relaxed">
+          Beebeeb is open source on the client side — you can read the encryption code, compile it yourself, and verify our claims. Tresorit is closed source. For users who want independent auditability, this matters.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          The CLI and WebDAV support is a significant difference for developers and power users. Tresorit has no official CLI. Beebeeb's <code class="font-mono text-[12px] bg-paper-2 border border-line px-1 rounded">bb</code> tool supports push/pull, sync, scripted backups, and a WebDAV mount that works with any app.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          The price gap is substantial: Tresorit's personal plan runs around €12/month for 5 GB. Beebeeb's Personal plan is €4/month for 200 GB.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────────────────────── -->
+  <section class="px-8 py-14 border-t border-line text-center bg-paper-2">
+    <h2 class="text-[28px] font-bold tracking-tight mb-3">Start with 5 GB free</h2>
+    <p class="text-[14px] text-ink-2 mb-6 max-w-[420px] mx-auto">
+      No credit card. Full encryption from day one. EU infrastructure, open source.
+    </p>
+    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-lg">Try Beebeeb free →</a>
+  </section>
+</Base>

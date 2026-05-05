@@ -1,0 +1,147 @@
+---
+import Base from '../../layouts/base.astro';
+
+const FEATURES = [
+  { label: 'End-to-end encryption',       bb: { val: true,  note: 'Files + filenames + metadata' }, them: { val: true,  note: 'Files + filenames' } },
+  { label: 'Zero-knowledge architecture', bb: { val: true,  note: null },                           them: { val: 'partial', note: 'Files yes; some account metadata no' } },
+  { label: 'Open source',                 bb: { val: true,  note: 'Client + encryption library' },  them: { val: 'partial', note: 'Mobile + web clients (server closed)' } },
+  { label: 'EU jurisdiction',             bb: { val: true,  note: 'Netherlands · no Cloud Act' },   them: { val: true,  note: 'Switzerland · no Cloud Act' } },
+  { label: 'CLI & WebDAV',                bb: { val: true,  note: null },                           them: { val: false, note: 'No official CLI or WebDAV' } },
+  { label: 'Linux client',                bb: { val: true,  note: 'Web + CLI' },                    them: { val: 'partial', note: 'Web only (no native desktop)' } },
+  { label: 'OPAQUE passwordless auth',    bb: { val: true,  note: 'Password never sent to server'}, them: { val: 'partial', note: 'SRP used for Proton auth' } },
+  { label: 'Integrated productivity suite', bb: { val: false, note: 'Storage-only product' },       them: { val: true,  note: 'Mail, VPN, Calendar, Pass' } },
+  { label: 'Free tier',                   bb: { val: true,  note: '5 GB' },                         them: { val: true,  note: '1 GB (Drive), 500 MB (Mail)' } },
+  { label: 'Personal plan price',         bb: { val: 'note', note: '€4/mo (200 GB, annual)' },      them: { val: 'note', note: '€4/mo (200 GB, annual — bundle)' } },
+  { label: 'Storage-only plan',           bb: { val: true,  note: 'Drive-only plans available' },   them: { val: false, note: 'Requires full Proton bundle' } },
+];
+---
+
+<Base
+  title="Beebeeb vs Proton Drive — Encrypted Cloud Storage Comparison"
+  description="Compare Beebeeb and Proton Drive on zero-knowledge, open source, CLI support, WebDAV, and value. An honest, factual comparison for privacy-conscious users."
+  path="/vs/proton-drive"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Beebeeb vs Proton Drive',
+    description: 'A feature-by-feature comparison of Beebeeb and Proton Drive encrypted cloud storage.',
+    url: 'https://beebeeb.io/vs/proton-drive',
+  }}
+>
+  <!-- ── Hero ──────────────────────────────────────────────────────────── -->
+  <section class="px-8 pt-[72px] pb-14 text-center" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 80%);">
+    <div class="section-label bb-fade-up">Comparison</div>
+    <h1 class="text-[44px] sm:text-[52px] leading-[1.07] font-bold tracking-[-0.03em] mt-3 max-w-[720px] mx-auto bb-fade-up bb-delay-1">
+      Beebeeb <span class="text-ink-3">vs</span> Proton Drive
+    </h1>
+    <p class="text-base text-ink-2 mt-5 max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+      Both are privacy-first, EU-operated, and encrypted. The main difference: Proton Drive is part of a privacy suite; Beebeeb is a storage product built for developers and power users.
+    </p>
+    <div class="flex gap-3 justify-center mt-8 flex-wrap bb-fade-up bb-delay-3">
+      <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md">Try Beebeeb free →</a>
+      <a href="/pricing" class="btn btn-outline btn-md">See pricing</a>
+    </div>
+  </section>
+
+  <!-- ── Comparison table ──────────────────────────────────────────────── -->
+  <section class="px-8 py-16 bg-paper border-t border-line">
+    <div class="max-w-[860px] mx-auto">
+      <div class="section-label mb-6 bb-fade-up">Feature comparison</div>
+      <div class="rounded-xl border border-line overflow-hidden bb-fade-up bb-delay-1">
+        <!-- Header -->
+        <div class="grid grid-cols-[2fr_1fr_1fr] bg-paper-2 border-b border-line">
+          <div class="px-5 py-3 text-[11px] font-semibold uppercase tracking-widest text-ink-3">Feature</div>
+          <div class="px-5 py-3 text-[12px] font-bold text-ink border-l border-line text-center">Beebeeb</div>
+          <div class="px-5 py-3 text-[12px] font-medium text-ink-3 border-l border-line text-center">Proton Drive</div>
+        </div>
+        {FEATURES.map((f) => (
+          <div class="grid grid-cols-[2fr_1fr_1fr] border-b border-line last:border-b-0 hover:bg-paper-2/50">
+            <div class="px-5 py-3.5 text-[13px] text-ink-2">{f.label}</div>
+            <div class="px-5 py-3.5 border-l border-line text-center">
+              {f.bb.val === true && (
+                <span>
+                  <span class="text-green font-semibold text-[13px]">✓</span>
+                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                </span>
+              )}
+              {f.bb.val === false && (
+                <span>
+                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
+                  {f.bb.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.bb.note}</span>}
+                </span>
+              )}
+              {f.bb.val === 'partial' && (
+                <span>
+                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
+                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                </span>
+              )}
+              {f.bb.val === 'note' && <span class="text-[12px] text-ink font-medium">{f.bb.note}</span>}
+            </div>
+            <div class="px-5 py-3.5 border-l border-line text-center">
+              {f.them.val === true && (
+                <span>
+                  <span class="text-green font-semibold text-[13px]">✓</span>
+                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === false && (
+                <span>
+                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
+                  {f.them.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === 'partial' && (
+                <span>
+                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
+                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === 'note' && <span class="text-[12px] text-ink-2">{f.them.note}</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-[11px] text-ink-4 mt-3">Prices and features reflect public information as of May 2026. Always verify current pricing on each vendor's website.</p>
+    </div>
+  </section>
+
+  <!-- ── Prose sections ─────────────────────────────────────────────────── -->
+  <section class="px-8 py-14 border-t border-line">
+    <div class="max-w-[720px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="bb-fade-up">
+        <h2 class="text-[20px] font-bold tracking-tight mb-4">What Proton Drive does well</h2>
+        <p class="text-[14px] text-ink-2 leading-relaxed">
+          Proton has built one of the strongest privacy ecosystems in the industry. If you want encrypted email, a VPN, a password manager, and a calendar all from one provider with a consistent privacy philosophy, Proton's bundle is compelling.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          Their mobile apps are polished, their threat model is well-documented, and they have a track record of resisting government requests (their transparency reports are public). Swiss jurisdiction provides genuine legal protections.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          Proton Drive's client-side code is open source, so the encryption implementation is publicly auditable — a meaningful commitment for a privacy product.
+        </p>
+      </div>
+      <div class="bb-fade-up bb-delay-1">
+        <h2 class="text-[20px] font-bold tracking-tight mb-4">Where Beebeeb is different</h2>
+        <p class="text-[14px] text-ink-2 leading-relaxed">
+          Beebeeb is storage-first. We don't sell you a suite — we build one product and build it well. If you already have email and a VPN you like, you don't need to switch everything to get good encrypted storage.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          The CLI is the most concrete difference for developers. Proton Drive has no <code class="font-mono text-[12px] bg-paper-2 border border-line px-1 rounded">bb push</code> equivalent, no WebDAV mount, no scripted sync. If your workflow involves terminals, CI pipelines, or backup scripts, Beebeeb is the better fit.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          At similar price points, Beebeeb is available as a storage-only subscription. Proton Drive at €4/month requires the full Proton bundle — you're paying for services you may not need.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────────────────────── -->
+  <section class="px-8 py-14 border-t border-line text-center bg-paper-2">
+    <h2 class="text-[28px] font-bold tracking-tight mb-3">Start with 5 GB free</h2>
+    <p class="text-[14px] text-ink-2 mb-6 max-w-[420px] mx-auto">
+      No credit card. Full encryption from day one. EU infrastructure, open source.
+    </p>
+    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-lg">Try Beebeeb free →</a>
+  </section>
+</Base>

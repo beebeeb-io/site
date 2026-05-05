@@ -1,0 +1,188 @@
+---
+import Base from '../../layouts/base.astro';
+
+const FEATURES = [
+  { label: 'End-to-end encryption',       bb: { val: true,  note: 'All files + metadata' },        them: { val: 'partial', note: 'iCloud Advanced only; not default' } },
+  { label: 'Zero-knowledge architecture', bb: { val: true,  note: null },                           them: { val: false, note: 'Apple holds decryption keys by default' } },
+  { label: 'Open source',                 bb: { val: true,  note: 'Client + encryption library' },  them: { val: false, note: 'Closed source' } },
+  { label: 'EU jurisdiction',             bb: { val: true,  note: 'Netherlands · no Cloud Act' },   them: { val: false, note: 'US company · Cloud Act applies' } },
+  { label: 'Works on Windows',            bb: { val: true,  note: 'Web + CLI' },                    them: { val: 'partial', note: 'iCloud for Windows (limited)' } },
+  { label: 'Works on Linux',              bb: { val: true,  note: 'Web + CLI' },                    them: { val: false, note: 'No official Linux support' } },
+  { label: 'CLI & WebDAV',                bb: { val: true,  note: null },                           them: { val: false, note: 'No CLI or WebDAV' } },
+  { label: 'Share links (no account req.)', bb: { val: true, note: null },                          them: { val: 'partial', note: 'Limited — recipients may need Apple ID' } },
+  { label: 'Free tier',                   bb: { val: true,  note: '5 GB' },                         them: { val: true,  note: '5 GB (shared with Mail, backups)' } },
+  { label: 'Storage plan price',          bb: { val: 'note', note: '€4/mo (200 GB, annual)' },      them: { val: 'note', note: '€0.99/mo (50 GB) · €2.99/mo (200 GB)' } },
+  { label: 'macOS/iOS deep integration',  bb: { val: false, note: 'Web app; no OS Finder sync' },   them: { val: true,  note: 'Native macOS/iOS sync, Photos, iMessage' } },
+];
+---
+
+<Base
+  title="Beebeeb vs iCloud — Private Encrypted Cloud Storage Comparison"
+  description="Compare Beebeeb and iCloud on encryption, jurisdiction, open source, and CLI support. iCloud is convenient; Beebeeb is private. Here's the honest difference."
+  path="/vs/icloud"
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: 'Beebeeb vs iCloud',
+    description: 'A feature-by-feature comparison of Beebeeb and Apple iCloud cloud storage.',
+    url: 'https://beebeeb.io/vs/icloud',
+  }}
+>
+  <!-- ── Hero ──────────────────────────────────────────────────────────── -->
+  <section class="px-8 pt-[72px] pb-14 text-center" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 80%);">
+    <div class="section-label bb-fade-up">Comparison</div>
+    <h1 class="text-[44px] sm:text-[52px] leading-[1.07] font-bold tracking-[-0.03em] mt-3 max-w-[720px] mx-auto bb-fade-up bb-delay-1">
+      Beebeeb <span class="text-ink-3">vs</span> iCloud
+    </h1>
+    <p class="text-base text-ink-2 mt-5 max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+      iCloud is the most convenient cloud storage for Apple users. Beebeeb is the most private. They are not the same thing, and this page is honest about the trade-offs.
+    </p>
+    <div class="flex gap-3 justify-center mt-8 flex-wrap bb-fade-up bb-delay-3">
+      <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md">Try Beebeeb free →</a>
+      <a href="/pricing" class="btn btn-outline btn-md">See pricing</a>
+    </div>
+  </section>
+
+  <!-- ── Key callout: encryption model ─────────────────────────────────── -->
+  <section class="px-8 py-10 bg-amber-bg border-t border-b border-amber/30">
+    <div class="max-w-[860px] mx-auto">
+      <div class="flex gap-4 items-start">
+        <svg class="w-5 h-5 mt-0.5 shrink-0 text-amber-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+        <div>
+          <div class="text-[14px] font-semibold text-ink mb-1">iCloud's encryption model</div>
+          <p class="text-[13px] text-ink-2 leading-relaxed max-w-[660px]">
+            By default, Apple holds the encryption keys for iCloud. This means Apple can read your data, respond to law enforcement requests, and is subject to the US Cloud Act for data stored anywhere in the world. <strong>iCloud Advanced Data Protection</strong> (opt-in, requires all devices on iOS 16.2+) adds end-to-end encryption for most iCloud data, but Apple still holds keys for some services (Mail, Contacts, Calendar, iCloud Backup).
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Comparison table ──────────────────────────────────────────────── -->
+  <section class="px-8 py-16 bg-paper">
+    <div class="max-w-[860px] mx-auto">
+      <div class="section-label mb-6 bb-fade-up">Feature comparison</div>
+      <div class="rounded-xl border border-line overflow-hidden bb-fade-up bb-delay-1">
+        <!-- Header -->
+        <div class="grid grid-cols-[2fr_1fr_1fr] bg-paper-2 border-b border-line">
+          <div class="px-5 py-3 text-[11px] font-semibold uppercase tracking-widest text-ink-3">Feature</div>
+          <div class="px-5 py-3 text-[12px] font-bold text-ink border-l border-line text-center">Beebeeb</div>
+          <div class="px-5 py-3 text-[12px] font-medium text-ink-3 border-l border-line text-center">iCloud</div>
+        </div>
+        {FEATURES.map((f) => (
+          <div class="grid grid-cols-[2fr_1fr_1fr] border-b border-line last:border-b-0 hover:bg-paper-2/50">
+            <div class="px-5 py-3.5 text-[13px] text-ink-2">{f.label}</div>
+            <div class="px-5 py-3.5 border-l border-line text-center">
+              {f.bb.val === true && (
+                <span>
+                  <span class="text-green font-semibold text-[13px]">✓</span>
+                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                </span>
+              )}
+              {f.bb.val === false && (
+                <span>
+                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
+                  {f.bb.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.bb.note}</span>}
+                </span>
+              )}
+              {f.bb.val === 'partial' && (
+                <span>
+                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
+                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                </span>
+              )}
+              {f.bb.val === 'note' && <span class="text-[12px] text-ink font-medium">{f.bb.note}</span>}
+            </div>
+            <div class="px-5 py-3.5 border-l border-line text-center">
+              {f.them.val === true && (
+                <span>
+                  <span class="text-green font-semibold text-[13px]">✓</span>
+                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === false && (
+                <span>
+                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
+                  {f.them.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === 'partial' && (
+                <span>
+                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
+                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                </span>
+              )}
+              {f.them.val === 'note' && <span class="text-[12px] text-ink-2">{f.them.note}</span>}
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="text-[11px] text-ink-4 mt-3">Prices and features reflect public information as of May 2026. Always verify current pricing on each vendor's website.</p>
+    </div>
+  </section>
+
+  <!-- ── Prose sections ─────────────────────────────────────────────────── -->
+  <section class="px-8 py-14 border-t border-line">
+    <div class="max-w-[720px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+      <div class="bb-fade-up">
+        <h2 class="text-[20px] font-bold tracking-tight mb-4">What iCloud does well</h2>
+        <p class="text-[14px] text-ink-2 leading-relaxed">
+          iCloud is the most deeply integrated cloud storage for Apple hardware. If you live in the Apple ecosystem — Mac, iPhone, iPad — iCloud is everywhere: Photos auto-sync, app documents appear seamlessly in Finder, iMessage continuity depends on it, and the 5 GB free tier comes with your Apple ID.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          The price is also genuinely low: €0.99/month for 50 GB and €2.99/month for 200 GB. For users who aren't dealing with sensitive documents and just want their camera roll backed up, iCloud is hard to beat on convenience and price.
+        </p>
+      </div>
+      <div class="bb-fade-up bb-delay-1">
+        <h2 class="text-[20px] font-bold tracking-tight mb-4">Where Beebeeb is different</h2>
+        <p class="text-[14px] text-ink-2 leading-relaxed">
+          The fundamental difference is the encryption model. iCloud (even with Advanced Data Protection enabled) is operated by a US company subject to US law. Apple has complied with US government data requests — this is documented in their transparency reports. If that matters to you, iCloud is not a viable option.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          Beebeeb is zero-knowledge by architecture: your files are encrypted on your device before they leave. We are physically and legally incapable of accessing your data. We hold ciphertext. No key escrow, no back door, no Advanced Protection toggle required — it's the only mode we have.
+        </p>
+        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+          For non-Apple users: iCloud has limited Windows support and no Linux support. Beebeeb works on every platform via the web app and CLI.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Who should use which ───────────────────────────────────────────── -->
+  <section class="px-8 py-12 border-t border-line bg-paper-2">
+    <div class="max-w-[720px] mx-auto">
+      <h2 class="text-[18px] font-bold tracking-tight mb-6 bb-fade-up">Who should use which</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="rounded-xl border border-line bg-paper p-5 bb-fade-up">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-3 mb-3">iCloud is a better fit if…</div>
+          <ul class="space-y-2 text-[13px] text-ink-2">
+            <li class="flex gap-2"><span class="text-green shrink-0">→</span> You are all-in on Apple hardware</li>
+            <li class="flex gap-2"><span class="text-green shrink-0">→</span> You want seamless macOS/iOS sync</li>
+            <li class="flex gap-2"><span class="text-green shrink-0">→</span> Your data doesn't require strict privacy</li>
+            <li class="flex gap-2"><span class="text-green shrink-0">→</span> You want the cheapest possible storage</li>
+          </ul>
+        </div>
+        <div class="rounded-xl border border-amber/30 bg-amber-bg p-5 bb-fade-up bb-delay-1">
+          <div class="text-[11px] font-semibold uppercase tracking-wider text-amber-deep mb-3">Beebeeb is a better fit if…</div>
+          <ul class="space-y-2 text-[13px] text-ink-2">
+            <li class="flex gap-2"><span class="text-amber-deep shrink-0">→</span> You need genuine zero-knowledge encryption</li>
+            <li class="flex gap-2"><span class="text-amber-deep shrink-0">→</span> You use Linux or cross-platform workflows</li>
+            <li class="flex gap-2"><span class="text-amber-deep shrink-0">→</span> You need CLI / scripted access</li>
+            <li class="flex gap-2"><span class="text-amber-deep shrink-0">→</span> EU jurisdiction matters for compliance</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CTA ────────────────────────────────────────────────────────────── -->
+  <section class="px-8 py-14 border-t border-line text-center">
+    <h2 class="text-[28px] font-bold tracking-tight mb-3">Start with 5 GB free</h2>
+    <p class="text-[14px] text-ink-2 mb-6 max-w-[420px] mx-auto">
+      No credit card. Full encryption from day one. EU infrastructure, open source.
+    </p>
+    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-lg">Try Beebeeb free →</a>
+  </section>
+</Base>
