@@ -1,0 +1,236 @@
+---
+import Base from '../layouts/base.astro';
+import CtaSection from '../components/blocks/CtaSection.astro';
+
+// Platform download links
+// Placeholders marked with '#' will be updated when builds are published.
+const platforms = [
+  {
+    id: 'web',
+    name: 'Web',
+    subtitle: 'No install needed',
+    description: 'Open your vault in any modern browser. Nothing to install — works on Chrome, Firefox, Safari, and Edge.',
+    href: 'https://app.beebeeb.io',
+    cta: 'Open web app',
+    primary: true,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  },
+  {
+    id: 'ios',
+    name: 'iOS',
+    subtitle: 'iPhone and iPad',
+    description: 'Auto-photo backup, Files.app integration, Face ID vault lock, and offline access. Requires iOS 16 or later.',
+    href: '#',
+    cta: 'App Store — coming soon',
+    primary: false,
+    icon: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>`,
+  },
+  {
+    id: 'android',
+    name: 'Android',
+    subtitle: 'Phone and tablet',
+    description: 'Encrypted photo backup in the background, share-sheet integration, and biometric unlock. Requires Android 10 or later.',
+    href: '#',
+    cta: 'Google Play — coming soon',
+    primary: false,
+    icon: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7"><path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-5.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48A5.84 5.84 0 0 0 12 1.5c-.96 0-1.86.23-2.66.63L7.85.65c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31A5.983 5.983 0 0 0 6 7h12c0-1.99-.97-3.75-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z"/></svg>`,
+  },
+  {
+    id: 'macos',
+    name: 'macOS',
+    subtitle: 'Native desktop app',
+    description: 'Finder integration, menubar quick-upload, selective sync, and background file watching. macOS 12 Monterey or later.',
+    href: 'https://github.com/beebeeb-io/desktop/releases/latest',
+    cta: 'Download for macOS',
+    primary: false,
+    icon: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>`,
+  },
+  {
+    id: 'windows',
+    name: 'Windows',
+    subtitle: 'Sync client',
+    description: 'Explorer integration, system-tray sync status, and selective folder sync. Windows 10 (64-bit) or later.',
+    href: 'https://github.com/beebeeb-io/desktop/releases/latest',
+    cta: 'Download for Windows',
+    primary: false,
+    icon: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/></svg>`,
+  },
+  {
+    id: 'linux',
+    name: 'Linux',
+    subtitle: 'AppImage — any distro',
+    description: 'Single portable binary, no root required, runs on any distribution. x86_64 and arm64 builds available.',
+    href: 'https://github.com/beebeeb-io/desktop/releases/latest',
+    cta: 'Download AppImage',
+    primary: false,
+    icon: `<svg viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7"><path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.39-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.4 1.294-.87.124.096.246.196.383.288.372.235.744.402 1.132.503.45.126.821.19 1.109.14l.064-.016c.325-.078.64-.218.953-.352.76-.322 1.509-.688 1.541-1.35.013-.45-.162-.944-.436-1.554-.055-.114-.12-.238-.19-.368.37-.04.733-.116 1.09-.284.303-.14.581-.327.842-.587.284-.281.479-.622.589-.982.113-.378.12-.793.012-1.159-.203-.73-.663-1.21-1.252-1.558a5.272 5.272 0 00-1.458-.49l-.116-.023c.053-.177.087-.361.087-.554 0-.65-.348-1.23-.872-1.574l-.014-.009a3.226 3.226 0 00-.67-.295l-.01-.003a2.9 2.9 0 00-.8-.119c-.162 0-.322.013-.48.038l-.01.001-.021.005c-.15.027-.3.069-.444.128l-.008.003a2.498 2.498 0 00-.437.246l-.013.009a2.45 2.45 0 00-.364.329l-.007.008a2.44 2.44 0 00-.283.438l-.004.008a2.353 2.353 0 00-.166.559l-.001.009a2.403 2.403 0 00-.007.47l.001.007c.012.16.036.317.075.47l.004.017a2.62 2.62 0 00.16.44l.008.017c.072.147.16.285.259.412l.011.013-.025.016a3.71 3.71 0 00-.49.381l-.011.01c-.145.138-.28.29-.401.454l-.009.013a3.65 3.65 0 00-.302.54l-.006.014a3.595 3.595 0 00-.177.613l-.003.013a3.616 3.616 0 00-.04.649l.001.01c.01.215.038.428.083.636l.004.017c.046.2.11.393.19.577l.006.015c.083.185.183.358.296.518l.009.013c.115.16.244.305.385.436l.011.01c.143.13.298.244.463.34l.012.007c.166.096.342.175.524.235l.013.004c.183.061.37.102.56.121h.012c.19.02.38.02.57.002l.013-.002c.19-.02.376-.06.556-.117l.013-.004c.18-.058.353-.133.517-.226l.013-.007c.164-.093.318-.2.46-.322l.012-.01c.14-.122.267-.257.38-.402l.01-.013c.112-.146.21-.303.29-.468l.007-.015c.078-.166.14-.34.184-.518l.004-.017c.043-.18.067-.362.073-.547l.001-.01a3.64 3.64 0 00-.043-.648l-.003-.013a3.617 3.617 0 00-.18-.606l-.006-.015a3.638 3.638 0 00-.304-.533l-.009-.013a3.668 3.668 0 00-.403-.448l-.011-.01a3.72 3.72 0 00-.492-.374l-.025-.016.011-.013c.1-.127.186-.265.257-.411l.008-.017c.072-.152.13-.312.17-.476l.004-.017c.04-.163.063-.33.075-.5l.001-.007c.01-.16.007-.318-.007-.476l-.001-.009a2.42 2.42 0 00-.167-.558l-.004-.008a2.44 2.44 0 00-.282-.437l-.007-.008a2.455 2.455 0 00-.362-.328l-.013-.009a2.5 2.5 0 00-.435-.247l-.008-.003a2.514 2.514 0 00-.443-.128l-.021-.005-.01-.001a2.905 2.905 0 00-.48-.039z"/></svg>`,
+  },
+  {
+    id: 'cli',
+    name: 'CLI',
+    subtitle: 'Command-line interface',
+    description: 'Full access to your vault from the terminal. Scriptable, pipeable, and WebDAV-mountable. One binary, no runtime.',
+    href: 'https://docs.beebeeb.io/cli/install',
+    cta: 'CLI docs',
+    primary: false,
+    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-7 h-7"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>`,
+  },
+];
+---
+
+<Base
+  title="Download — Beebeeb"
+  description="Get Beebeeb on every device. Web, iOS, Android, macOS, Windows, Linux, and CLI. One account, all platforms, end-to-end encrypted."
+  path="/download"
+>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 pt-[72px] pb-16 text-center relative" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 85%);">
+    <div class="section-label bb-fade-up">All platforms</div>
+    <h1 class="text-[54px] leading-[1.05] font-bold tracking-[-0.03em] mt-3.5 max-w-[760px] mx-auto bb-fade-up bb-delay-1">
+      Get Beebeeb on <span class="text-amber-deep">every device.</span>
+    </h1>
+    <p class="text-base text-ink-2 mt-[22px] max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+      One account. All platforms. Your encrypted files, always available — web, mobile, desktop, and terminal.
+    </p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       PLATFORM CARDS
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-paper border-t border-line">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5" data-stagger>
+        {platforms.map((p) => (
+          <div class="flex flex-col p-6 border border-line rounded-xl bg-paper hover:border-line-2 transition-colors bb-fade-up bb-lift">
+            {/* Icon */}
+            <div class="w-12 h-12 rounded-[12px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mb-5 shrink-0"
+                 set:html={p.icon} />
+
+            {/* Text */}
+            <div class="flex-1">
+              <div class="flex items-baseline gap-2 mb-1">
+                <h2 class="text-[17px] font-bold tracking-[-0.02em]">{p.name}</h2>
+                <span class="text-[12px] text-ink-3">{p.subtitle}</span>
+              </div>
+              <p class="text-[13px] text-ink-2 leading-relaxed mb-5">{p.description}</p>
+            </div>
+
+            {/* CTA — real <a> tag */}
+            <a
+              href={p.href}
+              class:list={[
+                'inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-[13px] font-semibold no-underline transition-all',
+                p.primary
+                  ? 'bg-amber text-ink hover:brightness-105'
+                  : p.href === '#'
+                    ? 'bg-paper-2 text-ink-3 border border-line cursor-default pointer-events-none'
+                    : 'bg-paper-2 text-ink border border-line hover:border-line-2 hover:bg-paper-3',
+              ]}
+              {...(p.href !== '#' && !p.href.startsWith('https://app') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+            >
+              {/* Download icon for file downloads */}
+              {p.href !== '#' && p.href !== 'https://app.beebeeb.io' && p.id !== 'cli' && (
+                <svg class="w-[14px] h-[14px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+              )}
+              {p.cta}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       CLI DETAIL
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-20 bg-ink text-paper border-t border-line relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.06]" style="background-image: radial-gradient(circle at 50% 50%, oklch(0.82 0.17 84 / 0.5) 1.5px, transparent 1.8px); background-size: 24px 24px;"></div>
+    <div class="relative max-w-[860px] mx-auto">
+      <div class="section-label text-center" style="color: oklch(0.82 0.17 84 / 0.7)">Command line</div>
+      <h2 class="text-[38px] font-bold tracking-[-0.025em] text-center mb-4 leading-tight bb-fade-up">
+        Power users, this one's for you.
+      </h2>
+      <p class="text-base text-paper/70 text-center max-w-[540px] mx-auto mb-10 leading-relaxed bb-fade-up bb-delay-1">
+        The <code class="font-mono text-amber text-[15px]">bb</code> CLI gives you full programmatic access to your vault. Scriptable, pipeable, and mountable as a WebDAV drive.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10 bb-fade-up bb-delay-2">
+        {[
+          { label: 'Homebrew (macOS / Linux)', cmd: 'brew install beebeeb-io/tap/bb' },
+          { label: 'Cargo (Rust)', cmd: 'cargo install bb-cli' },
+          { label: 'Direct download', cmd: 'github.com/beebeeb-io/cli/releases' },
+        ].map(({ label, cmd }) => (
+          <div class="rounded-lg border border-paper/10 bg-paper/5 overflow-hidden">
+            <div class="px-4 py-2 border-b border-paper/10">
+              <span class="text-[11px] font-mono text-paper/40 uppercase tracking-wider">{label}</span>
+            </div>
+            <div class="px-4 py-3">
+              <code class="font-mono text-[13px] text-amber break-all">{cmd}</code>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="bb-fade-up">
+          <h3 class="text-[16px] font-bold mb-3">Common commands</h3>
+          <div class="space-y-2">
+            {[
+              ['bb upload ./report.pdf', 'Encrypt and upload a file'],
+              ['bb ls', 'List files in your vault'],
+              ['bb download file-id ./local/', 'Download and decrypt'],
+              ['bb share file-id --expires 7d', 'Create a 7-day share link'],
+              ['bb mount ~/beebeeb', 'Mount as a local drive (WebDAV)'],
+            ].map(([cmd, desc]) => (
+              <div class="flex items-start gap-3">
+                <code class="font-mono text-[12px] text-amber shrink-0 mt-0.5">{cmd}</code>
+                <span class="text-[12px] text-paper/50"># {desc}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div class="bb-fade-up bb-delay-1">
+          <h3 class="text-[16px] font-bold mb-3">WebDAV mount</h3>
+          <p class="text-[13px] text-paper/60 leading-relaxed mb-3">
+            Mount your Beebeeb vault as a WebDAV drive. Every read decrypts locally. Every write encrypts before upload. Works with Finder, Windows Explorer, and any WebDAV client.
+          </p>
+          <code class="block font-mono text-[12px] text-amber bg-paper/5 border border-paper/10 rounded-md px-3 py-2">bb mount ~/beebeeb --webdav-port 8081</code>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center bb-fade-up">
+        <a href="https://docs.beebeeb.io/cli/install" target="_blank" rel="noopener noreferrer"
+           class="inline-flex items-center gap-2 px-5 py-2.5 bg-amber text-ink rounded-lg text-[13px] font-semibold no-underline hover:brightness-105 transition-all">
+          Full CLI documentation
+          <svg class="w-[13px] h-[13px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       ALL PLATFORMS / SYNC EXPLANATION
+       ═══════════════════════════════════════════════════════════ -->
+  <section class="px-8 py-16 bg-paper-2 border-t border-line">
+    <div class="max-w-[760px] mx-auto text-center">
+      <h2 class="text-[32px] font-bold tracking-[-0.025em] mb-4 leading-tight bb-fade-up">
+        All platforms. One account.
+      </h2>
+      <p class="text-[14px] text-ink-2 leading-relaxed mb-6 bb-fade-up bb-delay-1">
+        Sign in on any platform and your files are there, decrypted locally. Edits sync in real-time across every device. There is no "primary" device — your vault lives on our servers as ciphertext, and every client holds the key.
+      </p>
+      <div class="flex gap-3 justify-center flex-wrap bb-fade-up bb-delay-2">
+        <a href="https://app.beebeeb.io/signup" class="btn btn-amber">Get started free</a>
+        <a href="/features" class="btn btn-ghost">Explore features</a>
+      </div>
+    </div>
+  </section>
+
+</Base>
