@@ -1,0 +1,94 @@
+---
+export const prerender = true
+
+import { getCollection } from 'astro:content'
+import Base from '../../layouts/base.astro'
+
+const allPosts = await getCollection('blog')
+const posts = allPosts.sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+)
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+---
+
+<Base
+  title="Blog — Beebeeb"
+  description="Writing from the Beebeeb team on privacy, encryption, European infrastructure, and building software that respects your data."
+  path="/blog"
+>
+  <!-- Hero -->
+  <section class="px-8 pt-[72px] pb-14 text-center" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 80%);">
+    <div class="section-label bb-fade-up">From the team</div>
+    <h1 class="text-[48px] leading-[1.08] font-bold tracking-[-0.03em] mt-3.5 max-w-[700px] mx-auto bb-fade-up bb-delay-1">
+      Writing on privacy, encryption,<br class="hidden sm:block" />
+      and building in Europe.
+    </h1>
+    <p class="text-base text-ink-2 mt-5 max-w-[520px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+      Technical deep-dives, infrastructure decisions, and honest takes on what it means to build software that genuinely respects your data.
+    </p>
+    <div class="flex items-center justify-center gap-3 mt-6 bb-fade-up bb-delay-3">
+      <a
+        href="/blog/rss.xml"
+        class="inline-flex items-center gap-1.5 text-[12px] text-ink-3 hover:text-ink-2 transition-colors no-underline border border-line rounded-md px-3 py-1.5"
+      >
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/>
+        </svg>
+        RSS feed
+      </a>
+    </div>
+  </section>
+
+  <!-- Post grid -->
+  <section class="px-8 py-16 bg-paper border-t border-line">
+    <div class="max-w-[1100px] mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {posts.map((post, i) => (
+          <a
+            href={`/blog/${post.id}`}
+            class:list={[
+              'group block border border-line rounded-xl bg-paper p-6 no-underline transition-all duration-200 hover:border-amber-deep/40 hover:shadow-2 bb-fade-up',
+              i === 1 ? 'bb-delay-1' : i === 2 ? 'bb-delay-2' : '',
+            ]}
+          >
+            <!-- Date + reading time -->
+            <div class="flex items-center gap-2 mb-4">
+              <span class="text-[11px] font-mono text-ink-4">
+                {formatDate(post.data.date)}
+              </span>
+              <span class="text-ink-4">·</span>
+              <span class="text-[11px] font-mono text-ink-4">
+                {post.data.readingTime} min read
+              </span>
+            </div>
+
+            <!-- Title -->
+            <h2 class="text-[18px] font-bold tracking-[-0.01em] leading-snug text-ink mb-3 group-hover:text-amber-deep transition-colors">
+              {post.data.title}
+            </h2>
+
+            <!-- Excerpt -->
+            <p class="text-[13.5px] text-ink-3 leading-relaxed mb-5 line-clamp-3">
+              {post.data.excerpt}
+            </p>
+
+            <!-- Author -->
+            <div class="flex items-center gap-2 mt-auto pt-4 border-t border-line">
+              <div class="w-6 h-6 rounded-full bg-amber-bg text-amber-deep flex items-center justify-center text-[10px] font-bold shrink-0">
+                {post.data.author.charAt(0)}
+              </div>
+              <span class="text-[12px] text-ink-3">{post.data.author}</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,291 @@
+---
+export const prerender = true
+
+import { getCollection, render } from 'astro:content'
+import Base from '../../layouts/base.astro'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog')
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }))
+}
+
+const { post } = Astro.props
+const { Content } = await render(post)
+
+// Prev / next
+const allPosts = (await getCollection('blog')).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+)
+const idx = allPosts.findIndex((p) => p.id === post.id)
+const prevPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null
+const nextPost = idx > 0 ? allPosts[idx - 1] : null
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  })
+}
+
+const canonicalUrl = `https://beebeeb.io/blog/${post.id}`
+const shareText = encodeURIComponent(post.data.title + ' — ' + post.data.excerpt)
+const twitterUrl = `https://x.com/intent/post?text=${shareText}&url=${encodeURIComponent(canonicalUrl)}`
+const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURIComponent(canonicalUrl)}`
+---
+
+<Base
+  title={`${post.data.title} — Beebeeb Blog`}
+  description={post.data.excerpt}
+  path={`/blog/${post.id}`}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.data.title,
+    description: post.data.excerpt,
+    datePublished: post.data.date,
+    author: {
+      '@type': 'Person',
+      name: post.data.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Beebeeb',
+      url: 'https://beebeeb.io',
+    },
+    url: canonicalUrl,
+  }}
+>
+  <!-- Hero / header -->
+  <section class="px-8 pt-[72px] pb-12 border-b border-line" style="background: linear-gradient(180deg, var(--color-paper-2) 0%, var(--color-paper) 100%);">
+    <div class="max-w-[720px] mx-auto">
+      <a href="/blog" class="inline-flex items-center gap-1.5 text-[12px] text-ink-3 hover:text-ink-2 transition-colors no-underline mb-6 group">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-translate-x-0.5 transition-transform">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
+        All posts
+      </a>
+
+      <div class="flex items-center gap-2 mb-5">
+        <span class="text-[11px] font-mono text-ink-4">{formatDate(post.data.date)}</span>
+        <span class="text-ink-4">·</span>
+        <span class="text-[11px] font-mono text-ink-4">{post.data.readingTime} min read</span>
+      </div>
+
+      <h1 class="text-[40px] sm:text-[48px] leading-[1.06] font-bold tracking-[-0.025em] text-ink mb-5">
+        {post.data.title}
+      </h1>
+
+      <p class="text-[16px] text-ink-2 leading-relaxed mb-6">
+        {post.data.excerpt}
+      </p>
+
+      <div class="flex items-center gap-2.5">
+        <div class="w-8 h-8 rounded-full bg-amber-bg text-amber-deep flex items-center justify-center text-[12px] font-bold shrink-0">
+          {post.data.author.charAt(0)}
+        </div>
+        <div>
+          <div class="text-[13px] font-medium text-ink">{post.data.author}</div>
+          <div class="text-[11px] text-ink-4">Initlabs B.V. · Wijchen, Netherlands</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Post body -->
+  <article class="px-8 py-12">
+    <div class="max-w-[720px] mx-auto prose-blog">
+      <Content />
+    </div>
+  </article>
+
+  <!-- Share + prev/next -->
+  <section class="px-8 py-10 border-t border-line bg-paper-2">
+    <div class="max-w-[720px] mx-auto">
+      <!-- Share row -->
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-10 pb-10 border-b border-line">
+        <span class="text-[13px] font-medium text-ink-2 shrink-0">Share this post</span>
+        <div class="flex items-center gap-2 flex-wrap">
+          <button
+            id="copyLinkBtn"
+            data-url={canonicalUrl}
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-line rounded-md text-[12px] text-ink-2 hover:border-amber-deep/40 hover:text-ink transition-colors cursor-pointer bg-paper"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span id="copyLinkLabel">Copy link</span>
+          </button>
+          <a
+            href={twitterUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-line rounded-md text-[12px] text-ink-2 hover:border-amber-deep/40 hover:text-ink transition-colors no-underline bg-paper"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.261 5.635 5.902-5.635zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            Post on X
+          </a>
+          <a
+            href={mastodonUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-line rounded-md text-[12px] text-ink-2 hover:border-amber-deep/40 hover:text-ink transition-colors no-underline bg-paper"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M21.327 8.566c0-4.339-2.843-5.61-2.843-5.61-1.433-.658-3.894-.935-6.451-.956h-.063c-2.557.021-5.016.298-6.45.956 0 0-2.843 1.272-2.843 5.61 0 .993-.019 2.181.012 3.441.103 4.243.778 8.425 4.701 9.463 1.809.479 3.362.579 4.612.510 2.268-.126 3.542-.809 3.542-.809l-.075-1.646s-1.621.511-3.441.449c-1.804-.062-3.707-.194-3.999-2.409a4.523 4.523 0 0 1-.04-.621s1.77.433 4.014.536c1.372.063 2.658-.08 3.965-.236 2.506-.299 4.688-1.843 4.962-3.254.434-2.223.398-5.424.398-5.424zm-3.353 5.59h-2.081V9.057c0-1.075-.452-1.62-1.357-1.62-1.001 0-1.502.647-1.502 1.927v2.791h-2.069V9.364c0-1.28-.501-1.927-1.502-1.927-.905 0-1.357.545-1.357 1.62v5.099H6.026V8.903c0-1.074.273-1.927.823-2.558.568-.631 1.313-.955 2.236-.955 1.089 0 1.902.418 2.405 1.256l.519.87.519-.87c.503-.838 1.316-1.256 2.405-1.256.923 0 1.668.324 2.236.955.55.631.823 1.484.823 2.558v5.253z"/></svg>
+            Mastodon
+          </a>
+        </div>
+      </div>
+
+      <!-- Prev / Next -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {prevPost && (
+          <a href={`/blog/${prevPost.id}`} class="group block border border-line rounded-xl p-5 no-underline hover:border-amber-deep/40 hover:shadow-1 transition-all bg-paper">
+            <div class="text-[10px] font-mono text-ink-4 uppercase tracking-wider mb-2 flex items-center gap-1">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+              Previous
+            </div>
+            <div class="text-[14px] font-semibold text-ink group-hover:text-amber-deep transition-colors leading-snug">
+              {prevPost.data.title}
+            </div>
+          </a>
+        )}
+        {nextPost && (
+          <a href={`/blog/${nextPost.id}`} class:list={['group block border border-line rounded-xl p-5 no-underline hover:border-amber-deep/40 hover:shadow-1 transition-all bg-paper', !prevPost && 'sm:col-start-2']}>
+            <div class="text-[10px] font-mono text-ink-4 uppercase tracking-wider mb-2 flex items-center justify-end gap-1">
+              Next
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="text-[14px] font-semibold text-ink group-hover:text-amber-deep transition-colors leading-snug text-right">
+              {nextPost.data.title}
+            </div>
+          </a>
+        )}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<!-- Copy link script -->
+<script>
+  const btn = document.getElementById('copyLinkBtn')
+  const label = document.getElementById('copyLinkLabel')
+  if (btn && label) {
+    btn.addEventListener('click', async () => {
+      const url = btn.getAttribute('data-url') ?? window.location.href
+      try {
+        await navigator.clipboard.writeText(url)
+        label.textContent = 'Copied!'
+        setTimeout(() => { label.textContent = 'Copy link' }, 2000)
+      } catch {
+        // clipboard unavailable
+      }
+    })
+  }
+</script>
+
+<style>
+/* ── Prose typography for blog post body ── */
+.prose-blog {
+  color: var(--color-ink-2);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.prose-blog h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-ink);
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.25;
+}
+
+.prose-blog h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-ink);
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-blog p {
+  margin-bottom: 1.25rem;
+}
+
+.prose-blog strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.prose-blog em {
+  color: var(--color-ink);
+  font-style: italic;
+}
+
+.prose-blog code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  background: var(--color-paper-2);
+  border: 1px solid var(--color-line);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  color: var(--color-ink);
+}
+
+.prose-blog ul {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 1.25rem;
+}
+
+.prose-blog ul li {
+  padding-left: 1.25rem;
+  position: relative;
+  margin-bottom: 0.4rem;
+}
+
+.prose-blog ul li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--color-amber-deep);
+  font-weight: 600;
+}
+
+.prose-blog ol {
+  list-style: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose-blog ol li {
+  margin-bottom: 0.4rem;
+}
+
+.prose-blog blockquote {
+  border-left: 3px solid var(--color-amber-deep);
+  margin-left: 0;
+  padding-left: 1.25rem;
+  color: var(--color-ink-2);
+  font-style: italic;
+}
+
+.prose-blog a {
+  color: var(--color-amber-deep);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.prose-blog a:hover {
+  color: var(--color-ink);
+}
+
+.prose-blog hr {
+  border: none;
+  border-top: 1px solid var(--color-line);
+  margin: 2.5rem 0;
+}
+</style>
