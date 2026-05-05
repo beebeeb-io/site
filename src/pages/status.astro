@@ -1,0 +1,319 @@
+---
+/**
+ * Public status page — /status
+ *
+ * Static Astro shell with a small client-side <script> that fetches
+ * GET /api/v1/status and GET /api/v1/status/incidents from the Beebeeb API,
+ * renders the component grid and incident timeline, and polls every 60 seconds.
+ *
+ * If the API is unreachable, the page itself IS the outage indicator.
+ */
+import Base from '../layouts/base.astro';
+
+const API_BASE = 'https://api.beebeeb.io';
+---
+
+<Base
+  title="Status — Beebeeb"
+  description="Live status for the Beebeeb API, database, storage, and other services."
+  path="/status"
+>
+  <!-- ── Page header ──────────────────────────────────────────────────── -->
+  <section class="px-8 pt-[72px] pb-10 border-b border-line" id="status-hero">
+    <div class="max-w-[860px] mx-auto">
+      <!-- Overall status banner — replaced by JS once data loads -->
+      <div id="overall-banner" class="flex items-center gap-3 p-4 rounded-xl border mb-8"
+           style="background: var(--color-paper-2); border-color: var(--color-line);">
+        <span id="overall-dot" class="w-3 h-3 rounded-full shrink-0 animate-pulse"
+              style="background: var(--color-ink-4);"></span>
+        <span id="overall-label" class="text-base font-semibold text-ink-3">
+          Loading status…
+        </span>
+        <span id="overall-updated" class="ml-auto text-[11px] font-mono text-ink-4"></span>
+      </div>
+
+      <div class="flex items-baseline justify-between mb-4">
+        <h2 class="text-[13px] font-semibold uppercase tracking-widest text-ink-3">Components</h2>
+        <span id="refresh-label" class="text-[11px] font-mono text-ink-4">Auto-refresh in 60s</span>
+      </div>
+
+      <!-- Component grid — rendered by JS -->
+      <div id="component-grid"
+           class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-10">
+        {/* Loading skeleton */}
+        {[...Array(5)].map((_, i) => (
+          <div class="rounded-xl border border-line bg-paper-2 p-4 h-[72px] animate-pulse" key={i} />
+        ))}
+      </div>
+
+      <!-- Incident history -->
+      <div class="flex items-baseline justify-between mb-4">
+        <h2 class="text-[13px] font-semibold uppercase tracking-widest text-ink-3">Recent incidents</h2>
+      </div>
+      <div id="incident-list">
+        <div class="text-[13px] text-ink-4 py-4 animate-pulse">Loading…</div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<!-- ── Client-side status engine ─────────────────────────────────────────── -->
+<script define:vars={{ API_BASE }}>
+  // ── Constants ──────────────────────────────────────────────────────────
+  const POLL_MS = 60_000
+
+  const STATUS_CONFIG = {
+    operational: {
+      dot: 'oklch(0.55 0.12 155)',
+      bg: 'oklch(0.97 0.015 155)',
+      border: 'oklch(0.88 0.05 155)',
+      label: 'All systems operational',
+    },
+    degraded: {
+      dot: 'oklch(0.66 0.15 72)',
+      bg: 'oklch(0.96 0.04 88)',
+      border: 'oklch(0.82 0.17 84)',
+      label: 'Partial degradation',
+    },
+    outage: {
+      dot: 'oklch(0.62 0.21 25)',
+      bg: 'oklch(0.97 0.02 25)',
+      border: 'oklch(0.85 0.1 25)',
+      label: 'Service outage',
+    },
+    unknown: {
+      dot: 'oklch(0.68 0.008 80)',
+      bg: 'var(--color-paper-2)',
+      border: 'var(--color-line)',
+      label: 'Unable to reach Beebeeb servers',
+    },
+  }
+
+  const COMPONENT_LABELS = {
+    api: 'API',
+    database: 'Database',
+    storage: 'Object Storage',
+    websocket: 'WebSocket',
+    email: 'Email',
+  }
+
+  const SEVERITY_COLORS = {
+    critical: { bg: '#fef2f2', color: '#dc2626', border: '#fecaca', label: 'Critical' },
+    major:    { bg: '#fff7ed', color: '#c2410c', border: '#fed7aa', label: 'Major' },
+    minor:    { bg: 'oklch(0.96 0.04 88)', color: 'oklch(0.50 0.13 68)', border: 'oklch(0.82 0.17 84)', label: 'Minor' },
+    maintenance: { bg: 'var(--color-paper-2)', color: 'var(--color-ink-3)', border: 'var(--color-line)', label: 'Maintenance' },
+  }
+
+  const INCIDENT_STATUS_LABELS = {
+    investigating: '🔍 Investigating',
+    identified: '🔎 Identified',
+    monitoring: '👀 Monitoring',
+    resolved: '✓ Resolved',
+  }
+
+  // ── Helpers ────────────────────────────────────────────────────────────
+
+  function dotColor(status) {
+    if (status === 'operational') return 'oklch(0.55 0.12 155)'
+    if (status === 'degraded') return 'oklch(0.66 0.15 72)'
+    if (status === 'outage' || status === 'down') return 'oklch(0.62 0.21 25)'
+    return 'oklch(0.68 0.008 80)'
+  }
+
+  function componentDetail(name, comp) {
+    if (!comp) return ''
+    if (name === 'api' && comp.latency_ms != null) return `${comp.latency_ms} ms`
+    if (name === 'database' && comp.latency_ms != null) return `${comp.latency_ms} ms`
+    if (name === 'storage' && comp.pool_count != null) return `${comp.pool_count} pool${comp.pool_count !== 1 ? 's' : ''}`
+    if (name === 'websocket' && comp.connections != null) return `${comp.connections} conn`
+    return ''
+  }
+
+  function formatTime(iso) {
+    if (!iso) return '—'
+    const d = new Date(iso)
+    const now = new Date()
+    const diff = now - d
+    if (diff < 60_000) return 'Just now'
+    if (diff < 3_600_000) return `${Math.floor(diff / 60_000)}m ago`
+    if (diff < 86_400_000) return `${Math.floor(diff / 3_600_000)}h ago`
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  }
+
+  function formatAbsTime(iso) {
+    if (!iso) return '—'
+    return new Date(iso).toLocaleString('en-GB', {
+      day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+    })
+  }
+
+  // ── Render functions ───────────────────────────────────────────────────
+
+  function renderBanner(overallStatus, updatedAt) {
+    const cfg = STATUS_CONFIG[overallStatus] ?? STATUS_CONFIG.unknown
+    const banner = document.getElementById('overall-banner')
+    const dot = document.getElementById('overall-dot')
+    const label = document.getElementById('overall-label')
+    const updated = document.getElementById('overall-updated')
+
+    if (banner) {
+      banner.style.background = cfg.bg
+      banner.style.borderColor = cfg.border
+    }
+    if (dot) {
+      dot.style.background = cfg.dot
+      dot.classList.remove('animate-pulse')
+    }
+    if (label) {
+      label.textContent = cfg.label
+      label.style.color = 'var(--color-ink)'
+    }
+    if (updated && updatedAt) {
+      updated.textContent = `Updated ${formatTime(updatedAt)}`
+    }
+  }
+
+  function renderComponents(components) {
+    const grid = document.getElementById('component-grid')
+    if (!grid) return
+
+    const entries = Object.entries(COMPONENT_LABELS)
+    grid.innerHTML = entries.map(([key, displayName]) => {
+      const comp = components?.[key]
+      const status = comp?.status ?? 'unknown'
+      const detail = componentDetail(key, comp)
+      const color = dotColor(status)
+      const statusLabel = status.charAt(0).toUpperCase() + status.slice(1)
+
+      return `
+        <div class="rounded-xl border border-line bg-paper p-4 flex items-center gap-3">
+          <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background: ${color};"></span>
+          <div class="flex-1 min-w-0">
+            <div class="text-[13px] font-medium text-ink">${displayName}</div>
+            <div class="text-[11px] text-ink-3 mt-0.5">${statusLabel}${detail ? ` · ${detail}` : ''}</div>
+          </div>
+        </div>`
+    }).join('')
+  }
+
+  function renderIncidents(incidents) {
+    const list = document.getElementById('incident-list')
+    if (!list) return
+
+    if (!incidents || incidents.length === 0) {
+      list.innerHTML = `
+        <div class="rounded-xl border border-line bg-paper-2 px-5 py-8 text-center">
+          <div class="text-[13px] text-ink-3">No incidents in the past 90 days.</div>
+        </div>`
+      return
+    }
+
+    list.innerHTML = `
+      <div class="rounded-xl border border-line overflow-hidden divide-y divide-line">
+        ${incidents.map((inc) => {
+          const sev = SEVERITY_COLORS[inc.severity] ?? SEVERITY_COLORS.minor
+          const statusLabel = INCIDENT_STATUS_LABELS[inc.status] ?? inc.status
+          const isOpen = inc.status !== 'resolved'
+          return `
+            <div class="px-5 py-4 bg-paper${isOpen ? ' bg-amber-bg/30' : ''}">
+              <div class="flex items-start gap-3">
+                <span class="inline-block mt-0.5 shrink-0 text-[10px] font-semibold px-1.5 py-0.5 rounded border"
+                      style="background: ${sev.bg}; color: ${sev.color}; border-color: ${sev.border};">
+                  ${sev.label}
+                </span>
+                <div class="flex-1 min-w-0">
+                  <div class="text-[13.5px] font-semibold text-ink leading-snug">${escHtml(inc.title)}</div>
+                  <div class="flex items-center gap-2 mt-1 flex-wrap">
+                    <span class="text-[11.5px] text-ink-3">${statusLabel}</span>
+                    <span class="text-ink-4">·</span>
+                    <span class="font-mono text-[10.5px] text-ink-4" title="${inc.started_at}">
+                      Started ${formatAbsTime(inc.started_at)}
+                    </span>
+                    ${inc.resolved_at ? `
+                      <span class="text-ink-4">·</span>
+                      <span class="font-mono text-[10.5px] text-ink-4" title="${inc.resolved_at}">
+                        Resolved ${formatAbsTime(inc.resolved_at)}
+                      </span>` : ''}
+                  </div>
+                  ${inc.message ? `<p class="text-[12px] text-ink-3 mt-2 leading-relaxed">${escHtml(inc.message)}</p>` : ''}
+                </div>
+              </div>
+            </div>`
+        }).join('')}
+      </div>`
+  }
+
+  function renderError() {
+    renderBanner('unknown', null)
+    const grid = document.getElementById('component-grid')
+    if (grid) grid.innerHTML = `
+      <div class="col-span-full text-center py-6 text-[13px] text-ink-3">
+        Component status unavailable — check back shortly.
+      </div>`
+    const list = document.getElementById('incident-list')
+    if (list) list.innerHTML = `
+      <div class="text-[13px] text-ink-4 py-4">
+        Incident history unavailable while the API is unreachable.
+      </div>`
+  }
+
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+  }
+
+  // ── Fetch and render ───────────────────────────────────────────────────
+
+  async function refresh() {
+    try {
+      const [statusRes, incRes] = await Promise.allSettled([
+        fetch(`${API_BASE}/api/v1/status`, { cache: 'no-store' }),
+        fetch(`${API_BASE}/api/v1/status/incidents`, { cache: 'no-store' }),
+      ])
+
+      // Status data
+      if (statusRes.status === 'fulfilled' && statusRes.value.ok) {
+        const data = await statusRes.value.json()
+        renderBanner(data.status ?? 'unknown', data.updated_at ?? new Date().toISOString())
+        renderComponents(data.components)
+      } else if (statusRes.status === 'rejected' || statusRes.value?.status === 404) {
+        // API not yet deployed or unreachable — show unknown state
+        renderBanner('unknown', null)
+        renderComponents(null)
+      } else {
+        renderBanner('unknown', null)
+        renderComponents(null)
+      }
+
+      // Incident data
+      if (incRes.status === 'fulfilled' && incRes.value.ok) {
+        const data = await incRes.value.json()
+        renderIncidents(data.incidents ?? [])
+      } else {
+        renderIncidents([])
+      }
+    } catch {
+      renderError()
+    }
+  }
+
+  // ── Countdown refresh label ────────────────────────────────────────────
+
+  let countdown = POLL_MS / 1000
+  function tickCountdown() {
+    countdown -= 1
+    const el = document.getElementById('refresh-label')
+    if (el) el.textContent = countdown > 0 ? `Auto-refresh in ${countdown}s` : 'Refreshing…'
+    if (countdown <= 0) {
+      countdown = POLL_MS / 1000
+      refresh()
+    }
+  }
+
+  // ── Boot ───────────────────────────────────────────────────────────────
+  refresh()
+  setInterval(tickCountdown, 1_000)
+</script>
