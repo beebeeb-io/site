@@ -5,6 +5,7 @@ import { phaseConfig } from '../lib/phase';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import WaitlistModalTrigger from '../components/WaitlistModalTrigger.astro';
+import PlatformIcon from '../components/PlatformIcon.astro';
 import SecFinalCTA from '../components/sections/SecFinalCTA.astro';
 import '../styles/landing.css';
 
@@ -260,7 +261,7 @@ const bizComing = !cfg.bizLive ? [
             <div style="display: flex; gap: 10px; flex-wrap: wrap;">
               {livePlatforms.map(p => (
                 <div class="bb-platform">
-                  <span class="platform-glyph" aria-hidden="true">{p.key === 'web' ? '◎' : p.key === 'cli' ? '⌘' : '◦'}</span>
+                  <span class="platform-glyph" aria-hidden="true"><PlatformIcon name={p.key} /></span>
                   <span>{p.label}</span>
                 </div>
               ))}
@@ -276,7 +277,7 @@ const bizComing = !cfg.bizLive ? [
               <div style={`display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: ${bizComing.length ? '14px' : '0'};`}>
                 {comingPlatforms.map(p => (
                   <div class="bb-platform coming">
-                    <span class="platform-glyph" aria-hidden="true">{p.key === 'rclone' ? '✳' : '◦'}</span>
+                    <span class="platform-glyph" aria-hidden="true"><PlatformIcon name={p.key} /></span>
                     <span>{p.label}</span>
                   </div>
                 ))}
@@ -432,9 +433,20 @@ const bizComing = !cfg.bizLive ? [
 
 <style>
   .platform-glyph {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    align-items: center;
+    justify-content: center;
     color: var(--ink-2);
-    font-size: 14px;
+    flex: 0 0 auto;
     line-height: 1;
+  }
+
+  .platform-glyph :global(svg) {
+    width: 14px;
+    height: 14px;
+    display: block;
   }
 
   .bb-platform.coming .platform-glyph {

@@ -1,5 +1,6 @@
 ---
 import type { PhaseConfig } from '../../lib/phase';
+import PlatformIcon from '../PlatformIcon.astro';
 
 const { cfg } = Astro.props as { cfg: PhaseConfig };
 
@@ -38,7 +39,7 @@ const soon = platforms.filter((item) => !item[2]);
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
           {live.map(([key, label]) => (
             <div class="bb-platform">
-              <span class="platform-glyph" aria-hidden="true">{key === 'web' ? '◎' : key === 'cli' ? '⌘' : '◦'}</span>
+              <span class="platform-glyph" aria-hidden="true"><PlatformIcon name={key} /></span>
               <span>{label}</span>
             </div>
           ))}
@@ -52,7 +53,7 @@ const soon = platforms.filter((item) => !item[2]);
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
           {soon.map(([key, label]) => (
             <div class="bb-platform coming">
-              <span class="platform-glyph" aria-hidden="true">{key === 'rclone' ? '✳' : '◦'}</span>
+              <span class="platform-glyph" aria-hidden="true"><PlatformIcon name={key} /></span>
               <span>{label}</span>
             </div>
           ))}
@@ -105,9 +106,20 @@ const soon = platforms.filter((item) => !item[2]);
 
 <style>
   .platform-glyph {
+    display: inline-flex;
+    width: 14px;
+    height: 14px;
+    align-items: center;
+    justify-content: center;
     color: var(--ink-2);
-    font-size: 14px;
+    flex: 0 0 auto;
     line-height: 1;
+  }
+
+  .platform-glyph :global(svg) {
+    width: 14px;
+    height: 14px;
+    display: block;
   }
 
   .bb-platform.coming .platform-glyph {
