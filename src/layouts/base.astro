@@ -22,6 +22,7 @@ interface Props {
   path?: string;
   noindex?: boolean;
   jsonLd?: Record<string, any> | Record<string, any>[];
+  chrome?: boolean;
 }
 
 const {
@@ -30,6 +31,7 @@ const {
   path,
   noindex,
   jsonLd,
+  chrome = true,
 } = Astro.props;
 
 const globalData = await fetchGlobal();
@@ -62,15 +64,17 @@ const siteMode = globalData?.site_mode || 'live';
   <body class="min-h-screen">
     <div class="bb-scroll-progress" transition:persist></div>
 
-    <Nav />
+    {chrome && <Nav />}
 
-    <main class="pt-16" transition:animate="fade">
+    <main transition:animate="fade">
       <slot />
     </main>
 
-    <div transition:persist="footer">
-      <Footer />
-    </div>
+    {chrome && (
+      <div transition:persist="footer">
+        <Footer />
+      </div>
+    )}
 
     <script is:inline src="/scripts/main.js"></script>
     <script is:inline>

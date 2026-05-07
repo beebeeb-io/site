@@ -1,0 +1,168 @@
+---
+interface Props {
+  source: string;
+  plan?: string;
+}
+
+const { source, plan } = Astro.props;
+const formId = `waitlist-${source}`;
+---
+
+<form id={formId} class="bb-waitlist-form">
+  <input type="email" placeholder="your@email.com" required maxlength="320" />
+  <button type="submit" class="bb-cta amber">Join the waitlist</button>
+  <p class="status" aria-live="polite"></p>
+</form>
+
+<script define:vars={{ source, plan }}>
+  const form = document.getElementById('waitlist-' + source);
+
+  if (form && !form.dataset.bound) {
+    form.dataset.bound = 'true';
+
+    const input = form.querySelector('input[type="email"]');
+    const button = form.querySelector('button[type="submit"]');
+    const status = form.querySelector('.status');
+
+    function setStatus(message, state) {
+      status.textContent = message;
+      status.dataset.state = state || '';
+    }
+
+    function validEmail(value) {
+      return value.length <= 320 && value.includes('@') && value.includes('.');
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const email = input.value.trim();
+      if (!validEmail(email)) {
+        setStatus('Enter a valid email address.', 'error');
+        input.focus();
+        return;
+      }
+
+      const payload = { email, source };
+      if (plan) payload.plan = plan;
+
+      button.disabled = true;
+      setStatus('', '');
+
+      try {
+        const response = await fetch('https://api.beebeeb.io/api/v1/waitlist', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) {
+          let message = 'Could not join the waitlist. Please try again.';
+          const contentType = response.headers.get('content-type') || '';
+          if (contentType.includes('application/json')) {
+            const body = await response.json();
+            message = body.message || body.error || message;
+          } else {
+            const text = await response.text();
+            if (text) message = text;
+          }
+          throw new Error(message);
+        }
+
+        form.reset();
+        setStatus("You're on the list ✓", 'success');
+      } catch (error) {
+        setStatus(error instanceof Error ? error.message : 'Could not join the waitlist. Please try again.', 'error');
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .bb-waitlist-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: flex-start;
+    max-width: 560px;
+  }
+
+  .bb-waitlist-form input {
+    flex: 1 1 230px;
+    min-width: 0;
+    height: 48px;
+    padding: 0 14px;
+    border: 1px solid var(--line-2, var(--color-line-2));
+    border-radius: 8px;
+    background: var(--paper, var(--color-paper));
+    color: var(--ink, var(--color-ink));
+    font: inherit;
+    outline: none;
+    transition:
+      border-color 150ms ease,
+      box-shadow 150ms ease;
+  }
+
+  .bb-waitlist-form input:focus {
+    border-color: var(--amber-deep, var(--color-amber-deep));
+    box-shadow: 0 0 0 3px oklch(0.82 0.17 84 / 0.18);
+  }
+
+  .bb-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 18px;
+    border: 1px solid var(--amber-deep, var(--color-amber-deep));
+    border-radius: 8px;
+    background: var(--amber, var(--color-amber));
+    color: var(--ink, var(--color-ink));
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-decoration: none;
+    transition:
+      background 150ms ease,
+      opacity 150ms ease,
+      transform 150ms ease;
+  }
+
+  .bb-cta:hover:not(:disabled) {
+    background: oklch(0.79 0.17 82);
+    transform: translateY(-1px);
+  }
+
+  .bb-cta:disabled {
+    cursor: wait;
+    opacity: 0.62;
+  }
+
+  .status {
+    flex-basis: 100%;
+    min-height: 1.4em;
+    margin: 0;
+    color: var(--ink-3, var(--color-ink-3));
+    font-size: 12.5px;
+  }
+
+  .status[data-state='success'] {
+    color: var(--green, var(--color-green));
+  }
+
+  .status[data-state='error'] {
+    color: var(--red, var(--color-red));
+  }
+
+  @media (max-width: 520px) {
+    .bb-waitlist-form,
+    .bb-waitlist-form input,
+    .bb-waitlist-form button {
+      width: 100%;
+    }
+  }
+</style>

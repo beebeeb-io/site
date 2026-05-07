@@ -1,0 +1,93 @@
+---
+const items = [
+  'National security letters',
+  'Gag orders preventing us from disclosing requests',
+  'Requests to insert vulnerabilities, backdoors, or weaken our cryptography',
+  'Requests to surveil specific users without a valid EU legal basis',
+];
+---
+
+<section id="warrant-canary" class="security-section paper" data-security-section>
+  <div class="security-container-narrow">
+    <div class="canary-head">
+      <div class="bb-eyebrow">Warrant canary</div>
+      <h2 class="bb-display-l">A statement that says<br />nothing has changed.</h2>
+    </div>
+
+    <article class="canary-card">
+      <p><strong>As of 06 May 2026</strong>, Beebeeb has not received any:</p>
+      <ul>
+        {items.map((item) => (
+          <li>
+            <svg class="security-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="fineprint">
+        This statement is updated quarterly. If it disappears, or if a quarter
+        passes without an update, draw the appropriate inference.
+      </p>
+    </article>
+  </div>
+</section>
+
+<style>
+  .canary-head {
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .canary-head .bb-eyebrow {
+    display: inline-flex;
+    justify-content: center;
+    margin: 0 auto 18px;
+  }
+
+  .canary-head h2 {
+    margin: 0;
+    font-size: clamp(28px, 3vw, 42px);
+  }
+
+  .canary-card {
+    padding: 36px;
+    border: 1px solid var(--ink);
+    border-radius: 12px;
+    background: var(--paper);
+  }
+
+  .canary-card p {
+    margin: 0 0 18px;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .canary-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 0 0 22px;
+    padding: 0;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.55;
+    list-style: none;
+  }
+
+  .canary-card li {
+    display: flex;
+    gap: 12px;
+  }
+
+  .canary-card .fineprint {
+    margin: 0;
+    padding-top: 18px;
+    border-top: 1px dashed var(--line-2);
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.65;
+  }
+</style>

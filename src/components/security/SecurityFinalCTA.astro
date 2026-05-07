@@ -1,0 +1,111 @@
+---
+---
+
+<section id="changelog" class="security-section alt final" data-security-section>
+  <div class="security-container-narrow">
+    <div class="change-head">
+      <div class="bb-eyebrow">Security changelog</div>
+      <h2 class="bb-display-l">What changed, when, and why.</h2>
+      <p>
+        We log every security-relevant change here: cryptographic primitive upgrades,
+        key-rotation events, post-mortems, and resolved disclosures.
+      </p>
+    </div>
+
+    <article class="empty-change">
+      <div class="clock">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      </div>
+      <h3>Nothing to report yet.</h3>
+      <p>
+        When entries appear here, they will list the change, the date, the
+        affected components, and the reasoning. This page exists so that
+        changes are public, dated, and auditable.
+      </p>
+    </article>
+
+    <p class="rss">
+      Subscribe via RSS at <span>beebeeb.io/security.rss</span> — coming soon.
+    </p>
+  </div>
+</section>
+
+<style>
+  .change-head {
+    margin-bottom: 40px;
+  }
+
+  .change-head .bb-eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .change-head h2 {
+    margin: 0 0 18px;
+    font-size: clamp(28px, 3vw, 42px);
+  }
+
+  .change-head p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 15px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .empty-change {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 40px 32px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--paper);
+    text-align: center;
+  }
+
+  .clock {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    border: 1px dashed var(--line-2);
+    border-radius: 999px;
+    background: var(--paper-2);
+    color: var(--ink-3);
+  }
+
+  .clock svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .empty-change h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 14.5px;
+    font-weight: 600;
+  }
+
+  .empty-change p {
+    max-width: 460px;
+    margin: 0;
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .rss {
+    margin: 24px 0 0;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  .rss span {
+    color: var(--ink-2);
+  }
+</style>

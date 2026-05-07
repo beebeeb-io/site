@@ -1,0 +1,223 @@
+---
+const cards = [
+  {
+    t: 'Your 12-word phrase',
+    tag: 'on paper, ideally',
+    d: 'A BIP39 mnemonic generated on your device at signup. This is the seed your master key is derived from — not a separate “recovery” mechanism. We never see it. Without this phrase, your master key cannot be regenerated.',
+    k: 'word1 word2 ... word12',
+  },
+  {
+    t: 'Your master key',
+    tag: 'derived, on device',
+    d: 'Deterministically derived from your 12-word phrase. Encrypts every file you ever store. Lives only on devices you’ve unlocked. Never transmitted in the clear.',
+    k: 'derive_key(mnemonic) → 256-bit key',
+  },
+  {
+    t: 'Your password',
+    tag: 'in your head',
+    d: 'Encrypts your master key at rest on each device. After inactivity (default 30 min) we wipe the unlocked key from memory and re-prompt for the password. Easy to change — the master key stays the same.',
+    k: 'argon2id(password, salt) → wrap-key',
+  },
+];
+
+const loss = [
+  ['Just the password', 'You use the 12-word phrase to re-derive your master key on a new device and set a new password. No data lost.', 'recoverable'],
+  ['Just the 12-word phrase', 'Your data stays accessible on devices already unlocked. But: you cannot add new devices, and if you ever forget the password, recovery becomes impossible. Generate and back up a new phrase immediately from settings.', 'partial'],
+  ['Both', 'Your data is permanently inaccessible. We cannot help. By design — the alternative is a backdoor we could be forced to use.', 'gone'],
+];
+---
+
+<section id="keys" class="security-section alt" data-security-section>
+  <div class="security-container">
+    <div class="security-kicker">
+      <div class="bb-eyebrow">Keys, password, recovery</div>
+      <h2 class="bb-display-l">Three things on your device.<br />Only one of them is ours to lose.</h2>
+      <p>Read this section before you sign up. The recovery phrase is not optional.</p>
+    </div>
+
+    <div class="security-grid-3 key-cards">
+      {cards.map((card) => (
+        <article class="security-card key-card">
+          <div class="key-card-head">
+            <h3>{card.t}</h3>
+            <span class="t-mono">{card.tag}</span>
+          </div>
+          <p>{card.d}</p>
+          <code>{card.k}</code>
+        </article>
+      ))}
+    </div>
+
+    <div class="loss-panel">
+      <div class="t-label">What happens if you lose …</div>
+      <div class="loss-grid">
+        {loss.map(([title, body, kind]) => (
+          <article>
+            <div class:list={['loss-status', kind]}>
+              <span></span>
+              {kind === 'gone' ? 'Permanent loss' : kind === 'partial' ? 'Act fast' : 'Recoverable'}
+            </div>
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .key-cards {
+    margin-bottom: 40px;
+  }
+
+  .key-card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 28px 26px;
+  }
+
+  .key-card-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .key-card h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .key-card-head span {
+    color: var(--ink-3);
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .key-card p {
+    flex: 1;
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 13.5px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .key-card code {
+    display: block;
+    overflow: hidden;
+    margin-top: 4px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    background: var(--ink);
+    color: oklch(0.95 0.005 80);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .loss-panel {
+    padding: 28px 32px;
+    border: 1px solid var(--ink);
+    border-radius: 10px;
+    background: var(--paper);
+  }
+
+  .loss-panel > .t-label {
+    margin-bottom: 16px;
+    color: var(--ink);
+  }
+
+  .loss-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .loss-grid article {
+    padding: 4px 22px;
+    border-right: 1px solid var(--line);
+  }
+
+  .loss-grid article:last-child {
+    border-right: 0;
+  }
+
+  .loss-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .loss-status span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+  }
+
+  .loss-status.recoverable {
+    color: oklch(0.42 0.1 155);
+  }
+
+  .loss-status.recoverable span {
+    background: oklch(0.55 0.15 150);
+  }
+
+  .loss-status.partial {
+    color: oklch(0.5 0.13 70);
+  }
+
+  .loss-status.partial span {
+    background: oklch(0.6 0.15 75);
+  }
+
+  .loss-status.gone {
+    color: var(--amber-deep);
+  }
+
+  .loss-status.gone span {
+    background: var(--amber-deep);
+  }
+
+  .loss-grid h3 {
+    margin: 0 0 6px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .loss-grid p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .loss-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .loss-grid article {
+      padding: 18px 0;
+      border-right: 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .loss-grid article:last-child {
+      border-bottom: 0;
+    }
+  }
+</style>

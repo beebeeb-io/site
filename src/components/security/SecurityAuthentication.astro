@@ -1,0 +1,128 @@
+---
+const protects = [
+  ['Server breach', 'An attacker who steals our database gets ciphertext. The keys to decrypt it never touch our servers.'],
+  ['Insider access at Beebeeb', 'No engineer, founder, or admin at Beebeeb can read your files. We don’t have the keys either.'],
+  ['Subpoena / legal compulsion', 'When legally compelled, we hand over what we have: ciphertext + metadata (size, timestamps, owner). Nothing decryptable.'],
+  ['Network observers', 'TLS 1.3 protects the connection; the payload is already encrypted client-side anyway.'],
+  ['Lost or stolen device', 'Your master key is encrypted at rest by your password and wiped from memory after inactivity. A thief gets nothing without the password.'],
+  ['Our hosting provider', 'Even if our hosting provider were fully compromised, they would see only ciphertext, the same as us.'],
+];
+
+const cantProtect = [
+  ['Compromised device', 'If malware on your device steals your password and reads your files while they are decrypted in memory, that is outside our model. We protect you against the cloud, not against your own machine.'],
+  ['Lost password and lost recovery phrase', 'There is no backdoor. Both lost = data permanently inaccessible. This is the price of the guarantee.'],
+  ['Coerced password disclosure', 'If someone with a court order or a wrench compels you to type your password, we can’t help. The encryption is end-to-end; you are one of the ends.'],
+  ['Weak passwords', 'Argon2id slows down brute-force, but a six-character password is still a six-character password. Use a passphrase.'],
+  ['Sharing decisions', 'If you share a file with someone, they can read it and re-share its decrypted contents however they want. Nothing in cryptography fixes that.'],
+  ['Side-channel attacks on your hardware', 'Speculative execution exploits, evil-maid attacks, hardware keyloggers — we cannot defend against the device you are using.'],
+];
+---
+
+<section id="threat-model" class="security-section alt" data-security-section>
+  <div class="security-container">
+    <div class="security-kicker">
+      <div class="bb-eyebrow">Threat model</div>
+      <h2 class="bb-display-l">What we protect against,<br />and what we don’t.</h2>
+      <p>Every product has limits. We’d rather you know ours than discover them.</p>
+    </div>
+
+    <div class="security-grid-2">
+      <article class="threat-panel">
+        <header class="protects">
+          <svg viewBox="0 0 24 24" fill="none" stroke="oklch(0.42 0.12 155)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg>
+          <span>We protect against</span>
+        </header>
+        {protects.map(([title, body]) => (
+          <div class="threat-row">
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </div>
+        ))}
+      </article>
+
+      <article class="threat-panel">
+        <header class="cannot">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber-deep)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+          <span>We cannot protect against</span>
+        </header>
+        {cantProtect.map(([title, body]) => (
+          <div class="threat-row">
+            <h3>{title}</h3>
+            <p>{body}</p>
+          </div>
+        ))}
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .threat-panel {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+  }
+
+  .threat-panel header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .threat-panel header.protects {
+    background: oklch(0.97 0.04 150);
+  }
+
+  .threat-panel header.cannot {
+    background: oklch(0.97 0.03 50);
+  }
+
+  .threat-panel svg {
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+  }
+
+  .threat-panel header span {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .protects span {
+    color: oklch(0.32 0.1 155);
+  }
+
+  .cannot span {
+    color: var(--amber-deep);
+  }
+
+  .threat-row {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .threat-row:last-child {
+    border-bottom: 0;
+  }
+
+  .threat-row h3 {
+    margin: 0 0 4px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .threat-row p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 13px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+</style>

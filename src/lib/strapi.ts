@@ -139,4 +139,23 @@ export function clearCache(): void {
   cache.clear();
 }
 
+let _phaseCache: { value: 1 | 2 | 3 | 4; expires: number } | null = null;
+
+export async function getLaunchPhase(): Promise<1 | 2 | 3 | 4> {
+  const now = Date.now();
+  if (_phaseCache && now < _phaseCache.expires) return _phaseCache.value;
+  try {
+    const { data } = await fetchStrapi<{ phase?: string }>('launch-phase', {}, false);
+    const phase = parseInt(data?.phase ?? '1', 10) as 1 | 2 | 3 | 4;
+    _phaseCache = { value: phase, expires: now + 60_000 };
+    return phase;
+  } catch {
+    return _phaseCache?.value ?? 1;
+  }
+}
+
+export function invalidateLaunchPhaseCache(): void {
+  _phaseCache = null;
+}
+
 export { STRAPI_URL };

@@ -1,0 +1,214 @@
+---
+import type { PhaseConfig } from '../lib/phase';
+import EncDemo from './EncDemo.astro';
+import WaitlistForm from './WaitlistForm.astro';
+
+interface Props {
+  cfg: PhaseConfig;
+}
+
+const { cfg } = Astro.props as Props;
+const phaseOne = cfg.phase === 1;
+const primaryCTA = phaseOne ? 'Join the waitlist' : 'Get started free';
+const primaryHref = phaseOne ? '#waitlist' : cfg.primaryHref;
+const caption = phaseOne ? cfg.ctaCaption : '5 GB free. No credit card required.';
+const trust = [
+  ['Zero-knowledge', 'we cannot read your files'],
+  ['EU-only', 'EU law, no US Cloud Act'],
+  ['Open source', 'every client is auditable'],
+  ['Encrypted on device', 'before bytes leave you'],
+];
+---
+
+<section class="hero-launch">
+  <div class="hero-wash" aria-hidden="true"></div>
+  <div class="bb-honeycomb-soft hero-pattern" aria-hidden="true"></div>
+
+  <div class="bb-container hero-grid">
+    <div class="hero-copy">
+      <div class="bb-eyebrow">Why we exist</div>
+      <h1 class="bb-display-xl">Your files<br />belong to you.</h1>
+      <p>
+        Privacy isn't a feature you find in a settings menu. It's the starting position.
+        Everything we build follows from that.
+      </p>
+      <div class="hero-actions">
+        <a href={primaryHref} class="bb-cta amber">
+          {primaryCTA}
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#how" class="bb-cta ghost">How it works</a>
+      </div>
+      <div class="hero-caption">{caption}</div>
+      {cfg.phase >= 3 && <div class="hero-native-note">Native desktop and mobile clients are available in this phase.</div>}
+    </div>
+
+    <div class="hero-demo">
+      <div class="live-label">
+        <span></span>
+        Live demonstration
+      </div>
+      <EncDemo height={400} />
+      <div class="crypto-row">
+        {['AES-256-GCM', 'Key on device', 'Password never sent'].map((chip) => (
+          <div class="bb-crypto"><span class="dot"></span>{chip}</div>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  {phaseOne && (
+    <div class="hero-waitlist">
+      <WaitlistForm source="hero" />
+    </div>
+  )}
+
+  <div class="hero-trust">
+    {trust.map(([label, value], index) => (
+      <div class="bb-trust-item" style={index < trust.length - 1 ? 'border-right: 1px solid var(--color-line)' : ''}>
+        <span class="label">{label}</span>
+        <span class="value">{value}</span>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .hero-launch {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-paper);
+  }
+
+  .hero-wash {
+    position: absolute;
+    top: -200px;
+    right: -300px;
+    width: 800px;
+    height: 700px;
+    border-radius: 999px;
+    background: radial-gradient(circle, oklch(0.94 0.06 88 / 0.42), transparent 65%);
+    filter: blur(80px);
+    pointer-events: none;
+  }
+
+  .hero-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.5;
+    mask-image: radial-gradient(circle at 75% 30%, black 5%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 72px;
+    align-items: center;
+    padding-top: 88px;
+    padding-bottom: 80px;
+  }
+
+  .hero-copy p {
+    max-width: 520px;
+    margin: 22px 0 32px;
+    color: var(--color-ink-2);
+    font-size: 18px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+
+  .hero-caption,
+  .hero-native-note {
+    color: var(--color-ink-3);
+    font-size: 12.5px;
+  }
+
+  .hero-native-note {
+    margin-top: 8px;
+    color: var(--color-amber-deep);
+    font-weight: 600;
+  }
+
+  .hero-demo {
+    position: relative;
+  }
+
+  .live-label {
+    position: absolute;
+    top: -28px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-ink-3);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .live-label span {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--color-amber-deep);
+    box-shadow: 0 0 8px var(--color-amber);
+  }
+
+  .crypto-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .hero-waitlist {
+    position: relative;
+    padding: 0 32px 54px;
+  }
+
+  .hero-trust {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--color-line);
+    border-bottom: 1px solid var(--color-line);
+    background: var(--color-paper);
+  }
+
+  .hero-trust .bb-trust-item {
+    flex: 1 1 0;
+  }
+
+  .value {
+    color: var(--color-ink-2);
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 56px;
+      padding-top: 72px;
+      padding-bottom: 64px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-trust .bb-trust-item {
+      border-right: 0 !important;
+      border-bottom: 1px solid var(--color-line);
+    }
+  }
+</style>

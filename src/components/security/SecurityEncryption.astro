@@ -1,0 +1,160 @@
+---
+const rows = [
+  {
+    name: 'AES-256-GCM',
+    role: 'Symmetric encryption',
+    why: 'Authenticated encryption — protects confidentiality and integrity in one primitive. The standard choice; fastest path with hardware acceleration.',
+    protects: 'Server breach, in-transit observation',
+  },
+  {
+    name: 'HKDF-SHA256',
+    role: 'Key derivation (per file)',
+    why: 'Derives a unique 256-bit per-file key from your master key, so a compromise of one file’s key reveals no others.',
+    protects: 'Cross-file leakage if a single file’s key were ever exposed',
+  },
+  {
+    name: 'Argon2id',
+    role: 'Password → master-key encryption',
+    why: 'Memory-hard KDF. Even a determined attacker with your encrypted master key needs expensive hardware to brute-force the password.',
+    protects: 'Offline brute-force of stolen device data',
+  },
+  {
+    name: 'OPAQUE PAKE',
+    role: 'Authentication',
+    why: 'Password-Authenticated Key Exchange. You authenticate to us without ever sending the password — we receive a proof, not the secret.',
+    protects: 'Server-side password leaks, MITM attempts',
+  },
+  {
+    name: 'X25519',
+    role: 'Per-recipient share encryption',
+    why: 'When you share a file with another Beebeeb user, we re-encrypt the file key to their public key. They decrypt with their private key locally.',
+    protects: 'Server-side access to shared content',
+  },
+  {
+    name: 'BIP39',
+    role: 'Master-key seed',
+    why: 'A 12-word phrase generated locally at signup. Your master key is deterministically derived from it. The phrase, not the key, is what you back up — lose it and the master key cannot be regenerated.',
+    protects: 'Account recovery on password loss; portability across devices',
+  },
+  {
+    name: 'TLS 1.3',
+    role: 'Transport',
+    why: 'Belt-and-braces. All client-server traffic is over TLS 1.3, even though the file payload is already encrypted before it gets there.',
+    protects: 'Network observers, downgrade attacks',
+  },
+];
+---
+
+<section id="stack" class="security-section paper" data-security-section>
+  <div class="security-container">
+    <div class="security-kicker">
+      <div class="bb-eyebrow">The crypto stack</div>
+      <h2 class="bb-display-l">Every primitive, named.</h2>
+      <p>
+        No proprietary cryptography. No undisclosed algorithms. Standard primitives,
+        chosen for known properties, used in standard ways.
+      </p>
+    </div>
+
+    <div class="stack-table">
+      <div class="stack-head">
+        <div>Primitive</div>
+        <div>Role</div>
+        <div>Why this choice</div>
+        <div>Protects against</div>
+      </div>
+      {rows.map((row, i) => (
+        <div class="stack-row">
+          <div class="primitive"><span class="crypto-chip">{row.name}</span></div>
+          <div class="role">{row.role}</div>
+          <div>{row.why}</div>
+          <div>{row.protects}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack-table {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+  }
+
+  .stack-head,
+  .stack-row {
+    display: grid;
+    grid-template-columns: 180px 1fr 1.4fr 1fr;
+  }
+
+  .stack-head {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+
+  .stack-head div {
+    padding: 14px 18px;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .stack-row {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .stack-row:last-child {
+    border-bottom: 0;
+  }
+
+  .stack-row > div {
+    padding: 20px 18px;
+    color: var(--ink-2);
+    font-size: 13px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .stack-row .primitive {
+    border-right: 1px solid var(--line);
+    background: oklch(0.985 0.01 88);
+  }
+
+  .stack-row .role {
+    color: var(--ink);
+    font-size: 13.5px;
+    font-weight: 500;
+  }
+
+  @media (max-width: 900px) {
+    .stack-table,
+    .stack-head,
+    .stack-row {
+      display: block;
+    }
+
+    .stack-head {
+      display: none;
+    }
+
+    .stack-row {
+      padding: 18px;
+    }
+
+    .stack-row > div,
+    .stack-row .primitive {
+      padding: 0;
+      border-right: 0;
+      background: transparent;
+    }
+
+    .stack-row > div + div {
+      margin-top: 10px;
+    }
+  }
+</style>

@@ -1,0 +1,464 @@
+---
+interface Props {
+  height?: number;
+}
+
+const { height = 320 } = Astro.props;
+const demoId = `enc-demo-${Math.random().toString(36).slice(2)}`;
+const plaintext = [
+  'Q3 strategy - board copy',
+  '',
+  'Headcount targets: 14 ENG, 4 SEC, 2 PM.',
+  'Burn target: EUR 312k/mo by August.',
+  'Customers: 1,840 paid · 12,400 free tier.',
+  '',
+  'Confidential - do not distribute.',
+];
+---
+
+<div id={demoId} class="bb-enc-demo" data-bb-enc-demo style={`height: ${height}px`}>
+  <div class="bb-enc-chrome">
+    <span class="bb-enc-dot red"></span>
+    <span class="bb-enc-dot amber"></span>
+    <span class="bb-enc-dot green"></span>
+    <span class="bb-enc-path">~/work/strategy.md</span>
+    <span class="bb-enc-meta" data-enc-meta>362 B · plaintext</span>
+  </div>
+
+  <div class="bb-enc-body">
+    <div class="bb-enc-pane">
+      <div class="bb-enc-label">on your device</div>
+      <div class="enc-demo">
+        {plaintext.map((line) => (
+          <div class="pln" data-plain-line>{line || '\u00A0'}</div>
+        ))}
+      </div>
+    </div>
+
+    <div class="bb-enc-lock">
+      <div class="bb-enc-lock-icon" data-enc-lock>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="4" y="11" width="16" height="10" rx="2"></rect>
+          <path d="M8 11V7a4 4 0 0 1 8 0v4"></path>
+        </svg>
+      </div>
+      <div>AES-256-GCM</div>
+    </div>
+
+    <div class="bb-enc-pane bb-enc-cipher">
+      <div class="bb-enc-label">what we store</div>
+      <div class="enc-demo" data-cipher-lines>
+        <div data-cipher-line></div>
+        <div data-cipher-line></div>
+        <div data-cipher-line></div>
+        <div data-cipher-line></div>
+        <div data-cipher-line></div>
+        <div data-cipher-line></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bb-enc-status">
+    <span class="bb-enc-led" data-enc-led></span>
+    <span data-enc-status>Reading file...</span>
+  </div>
+</div>
+
+<script>
+  const HEX_CHARS = '0123456789abcdef';
+
+  function rng(seed) {
+    let s = seed;
+    return () => {
+      s = (s * 9301 + 49297) % 233280;
+      return s / 233280;
+    };
+  }
+
+  function hexFor(rand, len) {
+    let out = '';
+    for (let i = 0; i < len; i += 1) {
+      out += HEX_CHARS[Math.floor(rand() * 16)];
+    }
+    return out;
+  }
+
+  function makeCipherLines() {
+    const rand = rng(42);
+    return [
+      hexFor(rand, 64),
+      hexFor(rand, 64),
+      hexFor(rand, 64),
+      hexFor(rand, 64),
+      hexFor(rand, 64),
+      hexFor(rand, 32) + '  // 16-byte tag',
+    ];
+  }
+
+  function setCipherLine(element, line, visibleLen, showCaret) {
+    element.replaceChildren();
+
+    const commentStart = line.indexOf('//');
+    const hasComment = commentStart > -1;
+    const cipherText = hasComment ? line.slice(0, commentStart) : line;
+
+    const cipherSpan = document.createElement('span');
+    cipherSpan.className = 'cph';
+    cipherSpan.textContent = cipherText.slice(0, Math.min(visibleLen, cipherText.length));
+    element.append(cipherSpan);
+
+    if (hasComment && visibleLen >= commentStart) {
+      const commentSpan = document.createElement('span');
+      commentSpan.className = 'ws';
+      commentSpan.textContent = line.slice(commentStart);
+      element.append(commentSpan);
+    }
+
+    if (showCaret) {
+      const caret = document.createElement('span');
+      caret.className = 'bb-caret';
+      element.append(caret);
+    }
+  }
+
+  function initEncDemo(root) {
+    if (!root || root.dataset.initialized === 'true') return;
+    root.dataset.initialized = 'true';
+
+    const plainLines = Array.from(root.querySelectorAll('[data-plain-line]'));
+    const cipherElements = Array.from(root.querySelectorAll('[data-cipher-line]'));
+    const meta = root.querySelector('[data-enc-meta]');
+    const status = root.querySelector('[data-enc-status]');
+    const led = root.querySelector('[data-enc-led]');
+    const lock = root.querySelector('[data-enc-lock]');
+    const cipherLines = makeCipherLines();
+    let stage = 0;
+    let progress = 0;
+    let raf = 0;
+    const timeouts = [];
+
+    function render() {
+      if (!root.isConnected) {
+        cleanup();
+        return;
+      }
+
+      meta.textContent =
+        stage === 0
+          ? '362 B · plaintext'
+          : stage === 1
+            ? 'encrypting · ' + Math.round(progress * 100) + '%'
+            : '378 B · AES-256-GCM';
+
+      root.dataset.stage = String(stage);
+      led.dataset.stage = String(stage);
+      lock.dataset.stage = String(stage);
+      status.textContent =
+        stage === 0
+          ? 'Reading file...'
+          : stage === 1
+            ? 'Deriving your key locally · encrypting on device...'
+            : 'Stored. Key never leaves your device.';
+
+      plainLines.forEach((line) => {
+        const opacity = stage === 0 ? 1 : stage === 1 ? Math.max(0.15, 1 - progress * 1.4) : 0.15;
+        line.style.opacity = String(opacity);
+      });
+
+      cipherElements.forEach((element, index) => {
+        const line = cipherLines[index];
+        const reveal =
+          stage === 0
+            ? 0
+            : stage === 1
+              ? Math.max(0, Math.min(1, progress * 1.5 - index * 0.1))
+              : 1;
+        const visibleLen = Math.floor(line.length * reveal);
+        const showCaret = stage === 1 && index === Math.floor(progress * cipherElements.length);
+        setCipherLine(element, line, visibleLen, showCaret);
+      });
+    }
+
+    function cleanup() {
+      timeouts.forEach(window.clearTimeout);
+      if (raf) window.cancelAnimationFrame(raf);
+      root.dataset.initialized = 'false';
+    }
+
+    function cycle() {
+      stage = 0;
+      progress = 0;
+      render();
+
+      timeouts.push(window.setTimeout(() => {
+        stage = 1;
+        const start = performance.now();
+
+        function tick(now) {
+          progress = Math.min(1, (now - start) / 1700);
+          render();
+
+          if (progress < 1) {
+            raf = window.requestAnimationFrame(tick);
+          } else {
+            stage = 2;
+            render();
+            timeouts.push(window.setTimeout(cycle, 3000));
+          }
+        }
+
+        raf = window.requestAnimationFrame(tick);
+      }, 2400));
+    }
+
+    root.__bbEncCleanup = cleanup;
+    cycle();
+  }
+
+  function initAllEncDemos() {
+    document.querySelectorAll('[data-bb-enc-demo]').forEach(initEncDemo);
+  }
+
+  document.addEventListener('astro:before-swap', () => {
+    document.querySelectorAll('[data-bb-enc-demo]').forEach((root) => {
+      if (typeof root.__bbEncCleanup === 'function') root.__bbEncCleanup();
+    });
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initAllEncDemos, { once: true });
+  } else {
+    initAllEncDemos();
+  }
+  document.addEventListener('astro:page-load', initAllEncDemos);
+</script>
+
+<style>
+  .bb-enc-demo {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid oklch(0.3 0.014 70);
+    border-radius: 12px;
+    background: oklch(0.16 0.014 70);
+    color: oklch(0.94 0.01 85);
+    box-shadow:
+      0 30px 60px -25px oklch(0.12 0.01 70 / 0.55),
+      0 8px 20px -10px oklch(0.12 0.01 70 / 0.5);
+    font-family: var(--font-mono);
+  }
+
+  .bb-enc-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid oklch(0.3 0.014 70);
+    background: oklch(0.2 0.012 70);
+  }
+
+  .bb-enc-dot {
+    width: 10px;
+    height: 10px;
+    flex: none;
+    border-radius: 999px;
+  }
+
+  .bb-enc-dot.red {
+    background: #ff5f57;
+  }
+
+  .bb-enc-dot.amber {
+    background: #febc2e;
+  }
+
+  .bb-enc-dot.green {
+    background: #28c840;
+  }
+
+  .bb-enc-path {
+    margin-left: 12px;
+    color: oklch(0.72 0.014 82);
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .bb-enc-meta {
+    margin-left: auto;
+    color: oklch(0.62 0.012 82);
+    font-size: 10.5px;
+    white-space: nowrap;
+  }
+
+  .bb-enc-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 64px minmax(0, 1fr);
+    flex: 1;
+    min-height: 0;
+  }
+
+  .bb-enc-pane {
+    position: relative;
+    min-width: 0;
+    overflow: hidden;
+    padding: 16px 18px;
+  }
+
+  .bb-enc-cipher {
+    background: oklch(0.19 0.018 78);
+  }
+
+  .bb-enc-label {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    color: oklch(0.58 0.012 82);
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .bb-enc-lock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-inline: 1px dashed oklch(0.34 0.014 70);
+    background: oklch(0.18 0.012 70);
+    color: oklch(0.68 0.012 82);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  .bb-enc-lock-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid oklch(0.42 0.016 72);
+    border-radius: 999px;
+    background: oklch(0.2 0.012 70);
+    color: oklch(0.86 0.14 84);
+    transition:
+      background 300ms ease,
+      border-color 300ms ease,
+      color 300ms ease;
+  }
+
+  .bb-enc-lock-icon[data-stage='1'] {
+    border-color: var(--amber, var(--color-amber));
+    background: var(--amber, var(--color-amber));
+    color: var(--ink, var(--color-ink));
+  }
+
+  .bb-enc-lock-icon[data-stage='2'] {
+    border-color: var(--amber, var(--color-amber));
+    background: oklch(0.12 0.012 70);
+    color: var(--amber, var(--color-amber));
+  }
+
+  .bb-enc-lock-icon svg {
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .enc-demo {
+    padding-top: 14px;
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+
+  .enc-demo > div {
+    min-height: 1.6em;
+    overflow: hidden;
+    white-space: pre;
+  }
+
+  .enc-demo .pln {
+    color: oklch(0.9 0.012 85);
+    transition: opacity 200ms linear;
+  }
+
+  .enc-demo .cph {
+    color: var(--amber, var(--color-amber));
+  }
+
+  .enc-demo .ws {
+    color: oklch(0.56 0.012 82);
+  }
+
+  .bb-enc-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 14px;
+    border-top: 1px solid oklch(0.3 0.014 70);
+    background: oklch(0.2 0.012 70);
+    color: oklch(0.7 0.014 82);
+    font-size: 10.5px;
+  }
+
+  .bb-enc-led {
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 999px;
+    background: oklch(0.62 0.012 82);
+    transition: background 200ms ease;
+  }
+
+  .bb-enc-led[data-stage='1'] {
+    background: var(--amber, var(--color-amber));
+  }
+
+  .bb-enc-led[data-stage='2'] {
+    background: var(--green, var(--color-green));
+  }
+
+  @keyframes blink {
+    0%,
+    49% {
+      opacity: 1;
+    }
+    50%,
+    100% {
+      opacity: 0;
+    }
+  }
+
+  .bb-caret {
+    display: inline-block;
+    width: 7px;
+    height: 1em;
+    margin-left: 1px;
+    animation: blink 1s steps(2, end) infinite;
+    background: var(--amber, var(--color-amber));
+    vertical-align: text-bottom;
+  }
+
+  @media (max-width: 760px) {
+    .bb-enc-demo {
+      min-height: 420px;
+    }
+
+    .bb-enc-body {
+      grid-template-columns: 1fr;
+    }
+
+    .bb-enc-lock {
+      min-height: 70px;
+      border-block: 1px dashed oklch(0.34 0.014 70);
+      border-inline: none;
+    }
+
+    .bb-enc-meta {
+      display: none;
+    }
+  }
+</style>

@@ -1,64 +1,242 @@
 ---
+import type { PhaseConfig } from '../lib/phase';
+import { phaseConfig } from '../lib/phase';
+
+interface Props {
+  cfg?: PhaseConfig;
+}
+
+const { cfg: providedCfg } = Astro.props;
+const cfg = providedCfg ?? phaseConfig();
+
+const appLinks = [
+  { label: 'Web app', href: 'https://app.beebeeb.io', live: cfg.webLive, external: true },
+  { label: 'CLI · curl install', href: 'https://github.com/beebeeb-io/cli', live: cfg.cliLive, external: true },
+  { label: 'macOS', href: 'https://github.com/beebeeb-io/desktop/releases', live: cfg.desktopLive, external: true },
+  { label: 'Windows', href: 'https://github.com/beebeeb-io/desktop/releases', live: cfg.desktopLive, external: true },
+  { label: 'Linux', href: 'https://github.com/beebeeb-io/desktop/releases', live: cfg.desktopLive, external: true },
+  { label: 'iOS', href: 'https://apps.apple.com/app/beebeeb', live: cfg.iosLive, external: true },
+  {
+    label: 'Android',
+    href: 'https://play.google.com/store/apps/details?id=io.beebeeb',
+    live: cfg.androidLive,
+    external: true,
+  },
+  {
+    label: 'rclone backend',
+    href: 'https://github.com/beebeeb-io/rclone-backend',
+    live: cfg.rcloneLive,
+    external: true,
+  },
+];
+
 const columns = [
-  { title: 'Security', items: [
-    { label: 'How it works', href: '/security' },
-    { label: 'System status', href: '/status' },
-    { label: 'Warrant canary', href: '/warrant-canary' },
-    { label: 'Bug bounty', href: '/bug-bounty' },
-  ]},
-  { title: 'Company', items: [
-    { label: 'About', href: '/about' },
-    { label: 'Careers', href: '/careers' },
-    { label: 'GitHub', href: 'https://github.com/beebeeb-io' },
-  ]},
-  { title: 'Legal', items: [
-    { label: 'Terms', href: '/terms' },
-    { label: 'Privacy', href: '/privacy' },
-    { label: 'DPA', href: '/dpa' },
-    { label: 'Sub-processors', href: '/sub-processors' },
-    { label: 'Imprint', href: '/imprint' },
-  ]},
+  { title: 'Get the apps', items: appLinks },
+  {
+    title: 'Security',
+    items: [
+      { label: 'How it works', href: '/#how' },
+      { label: 'Security', href: '/security' },
+      { label: 'GitHub', href: 'https://github.com/beebeeb-io', external: true },
+    ],
+  },
+  {
+    title: 'Plans',
+    items: [
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Compare plans', href: '/pricing' },
+    ],
+  },
+  {
+    title: 'Company',
+    items: [
+      { label: 'Contact', href: 'mailto:hello@beebeeb.io' },
+      { label: 'Privacy', href: '/privacy' },
+      { label: 'Terms', href: '/terms' },
+      { label: 'DPA', href: '/dpa' },
+    ],
+  },
 ];
 ---
 
-<footer class="bg-ink text-paper" style="padding: 48px 32px 32px;">
-  <div class="max-w-[1100px] mx-auto">
-    <div class="grid grid-cols-[2fr_1fr_1fr_1fr] gap-10 mb-10" style="grid-template-columns: 2fr 1fr 1fr 1fr;">
+<footer class="bb-launch-footer">
+  <div class="bb-footer-container">
+    <div class="bb-footer-grid">
       <div>
-        <a href="/" class="text-[15px] font-bold tracking-tight text-paper no-underline">
-          beebeeb<span class="text-amber">.io</span>
+        <a href="/" class="bb-footer-logo" aria-label="Beebeeb.io home">
+          <img src="/assets/beebeeb-logo.png" alt="beebeeb.io" />
         </a>
-        <div class="text-xs mt-3 leading-relaxed max-w-[260px]" style="color: oklch(0.75 0.01 80);">
-          End-to-end encrypted cloud, made in Europe. Zero-knowledge by architecture, not by promise.
-        </div>
-        <div class="mt-4 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px]" style="background: oklch(0.3 0.01 90); border: 1px solid oklch(0.35 0.01 90);">
-          <span class="w-1.5 h-1.5 rounded-full" style="background: oklch(0.7 0.14 155);"></span>
-          <span style="color: oklch(0.75 0.01 80);">Falkenstein &middot; Helsinki &middot; Ede</span>
-        </div>
+        <p class="bb-footer-tagline">
+          End-to-end encrypted cloud storage.<br />
+          Built in Europe, under EU law.
+        </p>
+        <div class="bb-footer-contact t-mono">hello@beebeeb.io</div>
       </div>
-      {columns.map((col) => (
+
+      {columns.map((column) => (
         <div>
-          <div class="text-[11px] font-semibold tracking-[0.04em] uppercase mb-3" style="color: oklch(0.6 0.01 80);">
-            {col.title}
-          </div>
-          <div class="flex flex-col gap-[7px]">
-            {col.items.map((item) => (
-              item.href === '#'
-                ? <span class="text-[12.5px] cursor-default" style="color: oklch(0.55 0.01 80);">{item.label}</span>
-                : <a href={item.href} class="text-[12.5px] no-underline transition-opacity duration-150 hover:opacity-100" style="color: oklch(0.75 0.01 80);">{item.label}</a>
+          <div class="t-label">{column.title}</div>
+          <div class="bb-footer-links">
+            {column.items.map((item) => (
+              'live' in item && !item.live ? (
+                <span class="bb-footer-muted">{item.label}</span>
+              ) : (
+                <a
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                >
+                  {item.label}
+                </a>
+              )
             ))}
           </div>
         </div>
       ))}
     </div>
-    <div class="pt-6 flex items-center gap-4 text-[11.5px] flex-wrap" style="border-top: 1px solid oklch(0.3 0.01 90); color: oklch(0.6 0.01 80);">
-      <span>&copy; 2026 Initlabs B.V. &middot; KvK 95157565 &middot; Wijchen, Netherlands</span>
-      <span>&middot;</span>
-      <a href="/status" class="inline-flex items-center gap-1.5 no-underline transition-opacity hover:opacity-80" style="color: oklch(0.6 0.01 80);">
-        <span class="w-1.5 h-1.5 rounded-full" style="background: oklch(0.7 0.14 155);"></span>
-        All systems operational
+
+    <div class="bb-footer-bottom">
+      <span>&copy; 2026 Beebeeb.io</span>
+      <span class="bb-footer-dot">&middot;</span>
+      <span class="t-mono">Stored in Europe</span>
+      <span class="bb-footer-dot">&middot;</span>
+      <span class="t-mono">Operated under EU law</span>
+      <span class="bb-footer-spacer"></span>
+      <a href="https://github.com/beebeeb-io" target="_blank" rel="noopener noreferrer">
+        GitHub
       </a>
-      <span class="ml-auto" style="color: oklch(0.55 0.01 80);">Designed and built in the EU.</span>
     </div>
   </div>
 </footer>
+
+<style>
+  .bb-launch-footer {
+    padding: 56px 32px 28px;
+    border-top: 1px solid var(--line, var(--color-line));
+    background: var(--paper-2, var(--color-paper-2));
+  }
+
+  .bb-footer-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .bb-footer-grid {
+    display: grid;
+    grid-template-columns: 1.6fr repeat(4, 1fr);
+    gap: 32px;
+    margin-bottom: 40px;
+  }
+
+  .bb-footer-logo {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .bb-footer-logo img {
+    width: auto;
+    height: 21px;
+  }
+
+  .bb-footer-tagline {
+    max-width: 280px;
+    margin: 14px 0 0;
+    color: var(--ink-3, var(--color-ink-3));
+    font-size: 12.5px;
+    line-height: 1.7;
+  }
+
+  .bb-footer-contact {
+    margin-top: 16px;
+    color: var(--ink-4, var(--color-ink-4));
+    font-size: 10.5px;
+  }
+
+  .t-mono {
+    font-family: var(--font-mono);
+  }
+
+  .t-label {
+    margin-bottom: 12px;
+    color: var(--ink-3, var(--color-ink-3));
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .bb-footer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .bb-footer-links a,
+  .bb-footer-muted {
+    color: var(--ink-2, var(--color-ink-2));
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .bb-footer-links a {
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .bb-footer-links a:hover {
+    color: var(--ink, var(--color-ink));
+  }
+
+  .bb-footer-muted {
+    color: var(--ink-4, var(--color-ink-4));
+    cursor: default;
+  }
+
+  .bb-footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line, var(--color-line));
+    color: var(--ink-3, var(--color-ink-3));
+    font-size: 11.5px;
+  }
+
+  .bb-footer-bottom a {
+    color: var(--ink-3, var(--color-ink-3));
+    text-decoration: none;
+  }
+
+  .bb-footer-bottom a:hover {
+    color: var(--ink, var(--color-ink));
+  }
+
+  .bb-footer-spacer {
+    flex: 1;
+    min-width: 12px;
+  }
+
+  @media (max-width: 900px) {
+    .bb-footer-grid {
+      grid-template-columns: 1.4fr 1fr 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .bb-launch-footer {
+      padding-inline: 20px;
+    }
+
+    .bb-footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bb-footer-dot,
+    .bb-footer-spacer {
+      display: none;
+    }
+  }
+</style>

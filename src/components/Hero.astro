@@ -1,0 +1,12 @@
+---
+import type { PhaseConfig } from '../lib/phase';
+import Hero1 from './Hero.phase1.astro';
+import Hero2 from './Hero.phase2.astro';
+import Hero3 from './Hero.phase3.astro';
+import Hero4 from './Hero.phase4.astro';
+const { cfg } = Astro.props as { cfg: PhaseConfig };
+---
+{cfg.phase === 1 && <Hero1 cfg={cfg} />}
+{cfg.phase === 2 && <Hero2 cfg={cfg} />}
+{cfg.phase === 3 && <Hero3 cfg={cfg} />}
+{cfg.phase === 4 && <Hero4 cfg={cfg} />}

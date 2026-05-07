@@ -1,0 +1,138 @@
+---
+import type { PhaseConfig } from '../../lib/phase';
+import signup from '../../assets/app-signup.png';
+import files from '../../assets/app-files.png';
+import share from '../../assets/app-share.png';
+
+const { cfg } = Astro.props as { cfg: PhaseConfig };
+
+const platforms = [
+  ['web', 'Web app', cfg.webLive],
+  ['cli', 'CLI', cfg.cliLive],
+  ['desktop', 'macOS', cfg.desktopLive],
+  ['desktop', 'Windows', cfg.desktopLive],
+  ['desktop', 'Linux', cfg.desktopLive],
+  ['ios', 'iOS', cfg.iosLive],
+  ['android', 'Android', cfg.androidLive],
+  ['rclone', 'rclone', cfg.rcloneLive],
+] as const;
+
+const live = platforms.filter((item) => item[2]);
+const soon = platforms.filter((item) => !item[2]);
+const screenshots = [
+  [signup, 'Beebeeb signup screen'],
+  [files, 'Beebeeb encrypted files screen'],
+  [share, 'Beebeeb sharing screen'],
+] as const;
+---
+
+<section id="product" class="bb-section-band alt">
+  <div class="bb-container">
+    <div class="product-heading">
+      <div class="bb-eyebrow">The product</div>
+      <h2 class="bb-display-l">Cloud storage. End-to-end encrypted.</h2>
+      <p>
+        Your files, encrypted on your device, stored on EU infrastructure. Start on the web
+        or the command line. More platforms are on the way.
+      </p>
+    </div>
+
+    <div class="screenshot-strip">
+      {screenshots.map(([image, alt]) => (
+        <div class="bb-browser-frame">
+          <div class="bb-browser-chrome"><span></span><span></span><span></span></div>
+          <img src={image.src} alt={alt} loading="lazy" />
+        </div>
+      ))}
+    </div>
+
+    {live.length > 0 && (
+      <div class="platform-group">
+        <div class="platform-label">
+          <span class="t-label">{cfg.availLabel}</span>
+          <span class="status-dot live"></span>
+        </div>
+        <div class="platform-list">
+          {live.map(([, label]) => (
+            <div class="bb-platform"><span class="dot live"></span>{label}</div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {soon.length > 0 && (
+      <div class="platform-group">
+        <div class="t-label">Coming soon</div>
+        <div class="platform-list">
+          {soon.map(([, label]) => (
+            <div class="bb-platform coming"><span class="dot"></span>{label}</div>
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .product-heading {
+    max-width: 720px;
+    margin-bottom: 48px;
+  }
+
+  h2 {
+    margin: 18px 0;
+  }
+
+  .product-heading p {
+    margin: 0;
+    color: var(--color-ink-2);
+    font-size: 17px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .screenshot-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 42px;
+  }
+
+  img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .platform-group + .platform-group {
+    margin-top: 30px;
+  }
+
+  .platform-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .platform-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .status-dot,
+  .bb-platform .dot.live {
+    width: 6px;
+    height: 6px;
+    border-radius: 999px;
+    background: var(--color-green);
+  }
+
+  @media (max-width: 900px) {
+    .screenshot-strip {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

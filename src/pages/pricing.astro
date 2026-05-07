@@ -1,272 +1,402 @@
 ---
 import Base from '../layouts/base.astro';
+import { getLaunchPhase } from '../lib/strapi';
+import { phaseConfig } from '../lib/phase';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import WaitlistForm from '../components/WaitlistForm.astro';
+import '../styles/landing.css';
 
-// ─── Plan data ────────────────────────────────────────────────────────────
-// Annual prices represent a 20 % discount billed as one yearly charge.
-// Prices in EUR, excluding VAT.
+const phase = await getLaunchPhase();
+const cfg = phaseConfig(phase);
 
-const plans = [
-  {
-    name: 'Free',
-    slug: 'free',
-    monthly: { price: '0', note: '/mo' },
-    annual:  { price: '0', note: '/mo' },
-    description: 'Try Beebeeb with no commitment. Full E2E encryption, 5 GB storage.',
-    perTb: null,
-    features: [
-      '5 GB storage',
-      'End-to-end encryption',
-      'Web + mobile apps',
-      'Up to 50 share links',
-    ],
-    cta: { label: 'Start free', href: 'https://app.beebeeb.io/signup?plan=free' },
-    variant: 'outline' as const,
-    popular: false,
-    badge: null as string | null,
-  },
-  {
-    name: 'Personal',
-    slug: 'personal',
-    monthly: { price: '8.99', note: '/mo' },
-    annual:  { price: '7.19', note: '/mo', billed: 'billed €86.30/year' },
-    description: 'For people who want real privacy for their personal files.',
-    perTb: '€8.99/TB',
-    features: [
-      '1 TB storage',
-      'Version history (30 days)',
-      'All platforms',
-      'Unlimited share links',
-      'Priority transfers',
-    ],
-    cta: { label: 'Get Personal', href: 'https://app.beebeeb.io/signup?plan=personal' },
-    variant: 'amber' as const,
-    popular: true,
-    badge: null as string | null,
-  },
-  {
-    name: 'Pro',
-    slug: 'pro',
-    monthly: { price: '39.95', note: '/mo' },
-    annual:  { price: '31.96', note: '/mo', billed: 'billed €383.52/year' },
-    description: 'For power users, creators, and developers with serious storage needs.',
-    perTb: '€7.99/TB',
-    features: [
-      '5 TB storage',
-      'Unlimited version history',
-      'Desktop sync + CLI',
-      'Shared folders',
-      'Priority support',
-    ],
-    cta: { label: 'Get Pro', href: 'https://app.beebeeb.io/signup?plan=pro' },
-    variant: 'outline' as const,
-    popular: false,
-    badge: null as string | null,
-  },
-  {
-    name: 'Data Hoarder',
-    slug: 'data_hoarder',
-    monthly: { price: '139.80', note: '/mo' },
-    annual:  { price: '111.84', note: '/mo', billed: 'billed €1,342.08/year' },
-    description: 'For archivists, backup addicts, and anyone who needs 20 TB on a budget.',
-    perTb: '€6.99/TB',
-    features: [
-      '20 TB storage',
-      'Lowest per-TB price',
-      'Unlimited version history',
-      'Dedicated support channel',
-      'Custom retention policies',
-    ],
-    cta: { label: 'Get Data Hoarder', href: 'https://app.beebeeb.io/signup?plan=data_hoarder' },
-    variant: 'outline' as const,
-    popular: false,
-    badge: 'Best value' as string | null,
-  },
+const fmtEUR = (n: number) => '€' + n.toFixed(2).replace('.', ',');
+
+// Annual = save 2 months (10/12)
+const basicMonthly = 10.99;
+const basicAnnual = +(basicMonthly * 10 / 12).toFixed(2);
+const proBaseMonthly = 54.95;
+const proBaseAnnual = +(proBaseMonthly * 10 / 12).toFixed(2);
+const bizBaseMonthly = 109.90;
+const bizBaseAnnual = +(bizBaseMonthly * 10 / 12).toFixed(2);
+
+const platforms = [
+  { key: 'web', label: 'Web app', live: cfg.webLive },
+  { key: 'cli', label: 'CLI', live: cfg.cliLive },
+  { key: 'macos', label: 'macOS', live: cfg.desktopLive },
+  { key: 'windows', label: 'Windows', live: cfg.desktopLive },
+  { key: 'linux', label: 'Linux', live: cfg.desktopLive },
+  { key: 'ios', label: 'iOS', live: cfg.iosLive },
+  { key: 'android', label: 'Android', live: cfg.androidLive },
+  { key: 'rclone', label: 'rclone', live: cfg.rcloneLive },
 ];
+const livePlatforms = platforms.filter(p => p.live);
+const comingPlatforms = platforms.filter(p => !p.live);
 ---
 
 <Base
   title="Pricing — Beebeeb"
-  description="Beebeeb pricing: Free (5 GB), Personal €8.99/mo (1 TB), Pro €39.95/mo (5 TB), Data Hoarder €139.80/mo (20 TB). End-to-end encrypted cloud, EU infrastructure. Annual billing saves 20%."
+  description="Simple pricing. Free (5 GB), Basic €10.99/mo (1 TB), Pro €54.95/mo (5 TB+), Business €109.90/mo (10 TB + teams). EU-only encrypted cloud storage."
   path="/pricing"
 >
+  <Nav active="pricing" {cfg} />
 
-  <!-- ── Hero ─────────────────────────────────────────────────────── -->
-  <section class="px-8 pt-[72px] pb-10 text-center">
-    <div class="section-label bb-fade-up">Plans &amp; pricing</div>
-    <h1 class="text-[48px] font-bold tracking-[-0.03em] mt-3 mb-3 leading-tight bb-fade-up bb-delay-1">
-      Simple pricing. No surprises.
-    </h1>
-    <p class="text-base text-ink-2 max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
-      Start free with 5 GB. Upgrade when you need more. All plans include
-      EU-only storage, zero-knowledge encryption, and full platform access.
-    </p>
-  </section>
-
-  <!-- ── Toggle ────────────────────────────────────────────────────── -->
-  <div class="flex justify-center mb-10 bb-fade-up bb-delay-3" aria-label="Billing period" role="group">
-    <div class="inline-flex items-center p-1 rounded-xl border border-line bg-paper-2 gap-1">
-      <button
-        id="toggle-monthly"
-        data-period="monthly"
-        aria-pressed="false"
-        class="bb-period-btn px-5 py-2 text-[13px] font-medium rounded-lg transition-all"
-      >
-        Monthly
-      </button>
-      <button
-        id="toggle-annual"
-        data-period="annual"
-        aria-pressed="true"
-        class="bb-period-btn px-5 py-2 text-[13px] font-medium rounded-lg transition-all flex items-center gap-2"
-      >
-        Annual
-        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide" style="background: oklch(0.88 0.08 155); color: oklch(0.35 0.1 155);">
-          Save 20%
-        </span>
-      </button>
+  <!-- Hero -->
+  <div style="padding: 72px 32px 32px; background: var(--paper); border-bottom: 1px solid var(--line); text-align: center;">
+    <div class="bb-container" style="padding: 0;">
+      <div class="bb-eyebrow" style="margin: 0 auto 18px; justify-content: center; display: inline-flex;">Pricing</div>
+      <h1 class="bb-display-l" style="margin: 0 0 16px;">Simple pricing.<br />No surprises.</h1>
+      <p style="font-size: 17px; color: var(--ink-2); max-width: 580px; margin: 0 auto 36px; line-height: 1.6;">
+        Storage you can&rsquo;t be reasoned out of trusting. All plans, EU-only,
+        end-to-end encrypted, full open source clients.
+      </p>
+      <div class="bb-segment" role="tablist" id="billing-toggle">
+        <button id="btn-monthly" class="on" aria-pressed="true">Monthly</button>
+        <button id="btn-annual" aria-pressed="false">
+          Annual <span class="save">SAVE 2 MONTHS</span>
+        </button>
+      </div>
     </div>
   </div>
 
-  <!-- ── Plan grid ──────────────────────────────────────────────────── -->
-  <section class="px-8 pb-20">
-    <div class="max-w-[1100px] mx-auto">
+  <!-- Plan cards -->
+  <div style="padding: 32px 32px 64px; background: var(--paper);">
+    <div class="bb-container" style="padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;">
 
-      <div id="bb-pricing-grid" data-period="annual" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-
-        {plans.map((plan) => (
-          <div class:list={[
-            'relative p-6 rounded-xl border',
-            plan.variant === 'amber' ? 'border-amber bg-amber-bg' : 'border-line bg-paper',
-          ]}>
-
-            {plan.popular && (
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span class="px-3 py-1 bg-amber text-ink text-[10px] font-bold tracking-[0.06em] uppercase rounded-full">
-                  Most popular
-                </span>
-              </div>
-            )}
-            {plan.badge && !plan.popular && (
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span class="px-3 py-1 bg-paper border border-line-2 text-ink-2 text-[10px] font-bold tracking-[0.06em] uppercase rounded-full shadow-sm">
-                  {plan.badge}
-                </span>
-              </div>
-            )}
-
-            <div class="text-[13px] font-semibold text-ink-3 uppercase tracking-[0.04em]">
-              {plan.name}
-            </div>
-
-            <!-- Monthly price (hidden when annual is active) -->
-            <div class="bb-price bb-price-monthly mt-2 mb-1">
-              <span class="text-[42px] font-bold tracking-[-0.03em]">&euro;{plan.monthly.price}</span>
-              <span class="text-sm text-ink-3 ml-1">{plan.monthly.note}</span>
-            </div>
-
-            <!-- Annual price (shown by default) -->
-            <div class="bb-price bb-price-annual mt-2 mb-1">
-              <span class="text-[42px] font-bold tracking-[-0.03em]">&euro;{plan.annual.price}</span>
-              <span class="text-sm text-ink-3 ml-1">{plan.annual.note}</span>
-              {plan.annual.billed && (
-                <div class="text-[11px] text-ink-4 mt-0.5">{plan.annual.billed}</div>
-              )}
-            </div>
-
-            {plan.perTb && (
-              <div class="text-[11px] font-mono text-ink-4 -mt-0.5 mb-1">{plan.perTb}</div>
-            )}
-            <p class="text-[13px] text-ink-2 mb-5 leading-relaxed">{plan.description}</p>
-
-            <ul class="space-y-2 mb-6">
-              {plan.features.map((f) => (
-                <li class="flex items-start gap-2 text-[13px] text-ink-2">
-                  <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12"/>
-                  </svg>
-                  {f}
-                </li>
-              ))}
-            </ul>
-
-            <a
-              href={plan.cta.href}
-              class:list={[
-                'btn w-full justify-center',
-                plan.variant === 'amber' ? 'btn-amber btn-md' : 'btn-outline btn-md',
-              ]}
-            >
-              {plan.cta.label}
-            </a>
+      <!-- Free -->
+      <div class="bb-plan">
+        <div>
+          <div class="t-label" style="margin-bottom: 10px;">Free</div>
+          <div style="font-size: 40px; font-weight: 600; letter-spacing: -0.025em; display: flex; align-items: baseline; gap: 4px;">
+            &euro;0<span style="font-size: 14px; color: var(--ink-3); font-weight: 400;">/mo</span>
           </div>
-        ))}
-
+          <div style="font-size: 12px; color: var(--ink-3); margin-top: 4px; height: 16px;">Always &euro;0</div>
+        </div>
+        <div style="font-size: 13.5px; line-height: 1.55; color: var(--ink-2); min-height: 38px;">
+          Try Beebeeb with no commitment.
+        </div>
+        <div style="padding: 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px;">
+          <div class="t-label" style="margin-bottom: 6px;">What you get</div>
+          <div style="font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); display: flex; flex-direction: column; gap: 3px;">
+            <span>5 GB storage</span>
+            <span>1 user</span>
+          </div>
+        </div>
+        {cfg.isLive ? (
+          <a href="https://app.beebeeb.io/signup?plan=free" class="bb-cta ghost"
+             target="_blank" rel="noopener noreferrer"
+             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+            {cfg.freeCTA}
+          </a>
+        ) : (
+          <div style="margin-top: auto;">
+            <WaitlistForm source="pricing" plan="free" />
+          </div>
+        )}
       </div>
 
-      <p class="text-[11px] text-ink-4 text-center mt-8 italic">
-        All plans include EU-only storage (Hetzner · Germany + Finland), zero-knowledge encryption,
-        and full platform access. Prices exclude VAT.
-      </p>
-    </div>
-  </section>
+      <!-- Basic -->
+      <div class:list={['bb-plan', cfg.isLive ? 'popular' : '']}>
+        {cfg.isLive && <div class="bb-plan-badge popular">Most popular</div>}
+        <div>
+          <div class="t-label" style="margin-bottom: 10px;">Basic</div>
+          <div style="font-size: 40px; font-weight: 600; letter-spacing: -0.025em; display: flex; align-items: baseline; gap: 4px;">
+            <span id="basic-price">&euro;{basicMonthly.toFixed(2).replace('.', ',')}</span>
+            <span style="font-size: 14px; color: var(--ink-3); font-weight: 400;">/mo</span>
+          </div>
+          <div id="basic-note" style="font-size: 12px; color: var(--ink-3); margin-top: 4px; height: 16px;">billed monthly</div>
+        </div>
+        <div style="font-size: 13.5px; line-height: 1.55; color: var(--ink-2); min-height: 38px;">
+          For people who want real privacy for their personal files.
+        </div>
+        <div style="padding: 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px;">
+          <div class="t-label" style="margin-bottom: 6px;">What you get</div>
+          <div style="font-family: var(--font-mono); font-size: 12.5px; color: var(--ink); display: flex; flex-direction: column; gap: 3px;">
+            <span>1 TB storage</span>
+            <span>1 user</span>
+          </div>
+        </div>
+        {cfg.isLive ? (
+          <a href="https://app.beebeeb.io/signup?plan=basic" class="bb-cta amber"
+             target="_blank" rel="noopener noreferrer"
+             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+            {cfg.basicCTA}
+          </a>
+        ) : (
+          <div style="margin-top: auto;">
+            <WaitlistForm source="pricing" plan="basic" />
+          </div>
+        )}
+      </div>
 
+      <!-- Pro -->
+      <div class="bb-plan">
+        <div>
+          <div class="t-label" style="margin-bottom: 10px;">Pro</div>
+          <div style="font-size: 40px; font-weight: 600; letter-spacing: -0.025em; display: flex; align-items: baseline; gap: 4px; min-height: 48px;" aria-live="polite">
+            <span id="pro-price">&euro;{proBaseMonthly.toFixed(2).replace('.', ',')}</span>
+            <span id="pro-unit" style="font-size: 14px; color: var(--ink-3); font-weight: 400;">/mo</span>
+          </div>
+          <div id="pro-note" style="font-size: 12px; color: var(--ink-3); margin-top: 4px; height: 16px;">billed monthly</div>
+        </div>
+        <div style="font-size: 13.5px; line-height: 1.55; color: var(--ink-2); min-height: 38px;">
+          For power users with serious storage needs.
+        </div>
+        <div style="padding: 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+            <span class="t-label">Storage</span>
+            <span id="pro-tb-label" style="font-family: var(--font-mono); font-size: 14px; font-weight: 600; color: var(--ink);">5 TB</span>
+          </div>
+          <input type="range" class="bb-slider" id="pro-slider"
+                 min="5" max="100" step="1" value="5"
+                 aria-label="Storage in TB" aria-valuemin="5" aria-valuemax="100"
+                 aria-valuenow="5" aria-valuetext="5 TB" />
+          <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 10px; color: var(--ink-4); margin-top: 2px;">
+            <span>5 TB</span><span>99 TB</span><span>100+</span>
+          </div>
+          <div style="font-size: 11.5px; color: var(--ink-3); margin-top: 8px; font-family: var(--font-mono);">
+            1 user &middot; &euro;10,99 / extra TB
+          </div>
+        </div>
+        <a id="pro-cta"
+           href={cfg.isLive ? 'https://app.beebeeb.io/signup?plan=pro' : '#waitlist'}
+           class:list={['bb-cta', cfg.isLive ? '' : 'ghost']}
+           style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+          {cfg.proCTA}
+        </a>
+      </div>
+
+      <!-- Business -->
+      <div class:list={['bb-plan', !cfg.bizLive ? 'coming' : '']}>
+        {cfg.bizBadge && <div class="bb-plan-badge coming">{cfg.bizBadge}</div>}
+        <div>
+          <div class="t-label" style="margin-bottom: 10px;">Business</div>
+          <div style={`font-size: 40px; font-weight: 600; letter-spacing: -0.025em; display: flex; align-items: baseline; gap: 4px; min-height: 48px; color: ${cfg.bizLive ? 'var(--ink)' : 'var(--ink-3)'};`} aria-live="polite">
+            <span id="biz-price">&euro;{bizBaseMonthly.toFixed(2).replace('.', ',')}</span>
+            <span id="biz-unit" style="font-size: 14px; color: var(--ink-3); font-weight: 400;">/mo</span>
+          </div>
+          <div id="biz-note" style="font-size: 12px; color: var(--ink-3); margin-top: 4px; height: 16px;">billed monthly</div>
+        </div>
+        <div style="font-size: 13.5px; line-height: 1.55; color: var(--ink-2); min-height: 38px;">
+          For teams. Shared workspaces, admin console, SLA.
+        </div>
+        <div style={`padding: 14px; background: var(--paper-2); border: 1px solid var(--line); border-radius: 8px; opacity: ${cfg.bizLive ? '1' : '0.85'};`}>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+            <span class="t-label">Storage</span>
+            <span id="biz-tb-label" style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--ink);">10 TB</span>
+          </div>
+          <input type="range" class="bb-slider" id="biz-tb-slider"
+                 min="10" max="100" step="1" value="10"
+                 disabled={!cfg.bizLive}
+                 aria-label="Business storage in TB" />
+          <div style="height: 10px;"></div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
+            <span class="t-label">Users</span>
+            <span id="biz-user-label" style="font-family: var(--font-mono); font-size: 13px; font-weight: 600; color: var(--ink);">3</span>
+          </div>
+          <input type="range" class="bb-slider" id="biz-user-slider"
+                 min="3" max="50" step="1" value="3"
+                 disabled={!cfg.bizLive}
+                 aria-label="Business team size" />
+          <div style="font-size: 11.5px; color: var(--ink-3); margin-top: 8px; font-family: var(--font-mono);">
+            &euro;10,99/extra TB &middot; &euro;4,99/extra user
+          </div>
+        </div>
+        {cfg.bizLive ? (
+          <a id="biz-cta" href="https://app.beebeeb.io/signup?plan=business" class="bb-cta amber"
+             target="_blank" rel="noopener noreferrer"
+             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+            {cfg.bizCTA}
+          </a>
+        ) : (
+          <div style="margin-top: auto;">
+            <WaitlistForm source="pricing" plan="business" />
+          </div>
+        )}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Features section -->
+  <div style="padding: 64px 32px; background: var(--paper-2); border-top: 1px solid var(--line);">
+    <div class="bb-container" style="padding: 0;">
+      <div class="t-label" style="margin-bottom: 12px; color: var(--ink-3);">All plans include</div>
+      <div style="background: var(--paper); border-radius: 12px; border: 1px solid var(--line); overflow: hidden;">
+
+        <!-- Guaranteed forever -->
+        <div style="padding: 24px; border-bottom: 1px solid var(--line);">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--amber-deep)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--amber-deep); font-weight: 600;">Guaranteed forever</span>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px 24px;">
+            {['End-to-end encryption (AES-256-GCM)', 'Zero-knowledge architecture',
+              'EU-only storage, under EU law', 'Same security on every plan',
+              'Version history', 'Share links with revocation', 'Open source clients'].map(f => (
+              <div style="display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--ink);">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                {f}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Available platforms -->
+        {livePlatforms.length > 0 && (
+          <div style={`padding: 22px 24px; border-bottom: ${comingPlatforms.length ? '1px solid var(--line)' : 'none'};`}>
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px;">
+              <span style={`width: 6px; height: 6px; border-radius: 999px; background: ${cfg.isLive ? 'var(--green)' : 'var(--amber)'};`}></span>
+              <span style={`font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: ${cfg.isLive ? 'oklch(0.4 0.1 155)' : 'var(--amber-deep)'}; font-weight: 600;`}>{cfg.availLabel}</span>
+            </div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              {livePlatforms.map(p => (
+                <div class="bb-platform"><span>{p.label}</span></div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <!-- Coming soon platforms -->
+        {comingPlatforms.length > 0 && (
+          <div style="padding: 22px 24px; background: var(--paper-2);">
+            <div class="t-label" style="margin-bottom: 14px; color: var(--ink-3);">Coming soon</div>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              {comingPlatforms.map(p => (
+                <div class="bb-platform coming"><span>{p.label}</span></div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div style="font-size: 11px; color: var(--ink-4); text-align: center; margin-top: 16px; font-style: italic;">
+        Stored in Europe &middot; Operated under EU law &mdash; no US Cloud Act exposure.
+        Prices include VAT for EU customers; VAT-exclusive outside the EU.
+      </div>
+    </div>
+  </div>
+
+  <Footer {cfg} />
 </Base>
 
-<!-- ── Toggle behaviour ──────────────────────────────────────────────────── -->
-<script>
-  (function () {
-    var grid  = document.getElementById('bb-pricing-grid');
-    var btns  = document.querySelectorAll('.bb-period-btn');
+<script define:vars={{
+  basicMonthly,
+  basicAnnual,
+  proBaseMonthly,
+  proBaseAnnual,
+  bizBaseMonthly,
+  bizBaseAnnual,
+  isLive: cfg.isLive,
+  bizLive: cfg.bizLive,
+  proCTA: cfg.proCTA,
+  bizCTA: cfg.bizCTA,
+}}>
+  let billing = 'monthly';
 
-    if (!grid || !btns.length) return;
+  function fmt(n) {
+    return '€' + n.toFixed(2).replace('.', ',');
+  }
 
-    function activate(period) {
-      grid.setAttribute('data-period', period);
-      btns.forEach(function (btn) {
-        var isActive = btn.getAttribute('data-period') === period;
-        btn.setAttribute('aria-pressed', String(isActive));
-      });
+  // Billing toggle
+  const btnMonthly = document.getElementById('btn-monthly');
+  const btnAnnual  = document.getElementById('btn-annual');
+  if (btnMonthly && btnAnnual) {
+    btnMonthly.addEventListener('click', () => { billing = 'monthly'; updateAll(); setToggle('monthly'); });
+    btnAnnual.addEventListener('click',  () => { billing = 'annual';  updateAll(); setToggle('annual');  });
+  }
+
+  function setToggle(active) {
+    btnMonthly?.classList.toggle('on', active === 'monthly');
+    btnAnnual?.classList.toggle('on', active === 'annual');
+    btnMonthly?.setAttribute('aria-pressed', String(active === 'monthly'));
+    btnAnnual?.setAttribute('aria-pressed', String(active === 'annual'));
+  }
+
+  // Basic
+  function updateBasic() {
+    const price = billing === 'annual' ? basicAnnual : basicMonthly;
+    const note  = billing === 'annual'
+      ? 'billed €' + (basicAnnual * 12).toFixed(2).replace('.', ',') + '/year'
+      : 'billed monthly';
+    const el = document.getElementById('basic-price');
+    const nl = document.getElementById('basic-note');
+    if (el) el.textContent = fmt(price);
+    if (nl) nl.textContent = note;
+  }
+
+  // Pro
+  const proSlider = document.getElementById('pro-slider');
+  function updatePro() {
+    const tb = parseInt(proSlider?.value ?? '5', 10);
+    const isQuote = tb >= 100;
+    const priceEl = document.getElementById('pro-price');
+    const unitEl  = document.getElementById('pro-unit');
+    const noteEl  = document.getElementById('pro-note');
+    const ctaEl   = document.getElementById('pro-cta');
+    const tbLabel = document.getElementById('pro-tb-label');
+    if (tbLabel) tbLabel.textContent = isQuote ? '100+ TB' : tb + ' TB';
+    if (proSlider) {
+      proSlider.setAttribute('aria-valuenow', String(tb));
+      proSlider.setAttribute('aria-valuetext', isQuote ? 'over 99 TB — get a quote' : tb + ' TB');
     }
+    if (isQuote) {
+      if (priceEl) priceEl.textContent = 'Get a quote';
+      if (unitEl)  unitEl.textContent = '';
+      if (noteEl)  noteEl.textContent = 'Beyond 99 TB';
+      if (ctaEl)   { ctaEl.textContent = 'Get a quote →'; ctaEl.href = 'mailto:sales@beebeeb.io'; ctaEl.className = 'bb-cta ghost'; }
+    } else {
+      const monthly = proBaseMonthly + Math.max(0, tb - 5) * 10.99;
+      const annual  = proBaseAnnual  + Math.max(0, tb - 5) * 10.99;
+      const price = billing === 'annual' ? annual : monthly;
+      const hasExtras = tb > 5;
+      if (priceEl) priceEl.textContent = fmt(price);
+      if (unitEl)  unitEl.textContent = '/mo';
+      if (noteEl)  noteEl.textContent = billing === 'annual'
+        ? (hasExtras ? 'Base annual · add-ons monthly' : 'billed €' + (proBaseAnnual * 12).toFixed(2).replace('.', ',') + '/year')
+        : 'billed monthly';
+      if (ctaEl && isLive) { ctaEl.textContent = proCTA; ctaEl.href = 'https://app.beebeeb.io/signup?plan=pro'; ctaEl.className = 'bb-cta'; }
+    }
+  }
+  if (proSlider) proSlider.addEventListener('input', updatePro);
 
-    btns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        activate(btn.getAttribute('data-period'));
-      });
-    });
+  // Business
+  const bizTbSlider   = document.getElementById('biz-tb-slider');
+  const bizUserSlider = document.getElementById('biz-user-slider');
+  function updateBiz() {
+    const tb    = parseInt(bizTbSlider?.value ?? '10', 10);
+    const users = parseInt(bizUserSlider?.value ?? '3', 10);
+    const isQuote = tb >= 100 || users >= 50;
+    const priceEl = document.getElementById('biz-price');
+    const unitEl  = document.getElementById('biz-unit');
+    const noteEl  = document.getElementById('biz-note');
+    const ctaEl   = document.getElementById('biz-cta');
+    if (document.getElementById('biz-tb-label'))   document.getElementById('biz-tb-label').textContent = tb >= 100 ? '100+ TB' : tb + ' TB';
+    if (document.getElementById('biz-user-label')) document.getElementById('biz-user-label').textContent = users >= 50 ? '50+' : String(users);
+    if (isQuote) {
+      if (priceEl) priceEl.textContent = 'Get a quote';
+      if (unitEl)  unitEl.textContent = '';
+      if (noteEl)  noteEl.textContent = 'Beyond 99 TB or 49 users';
+      if (ctaEl && bizLive) { ctaEl.textContent = 'Get a quote →'; ctaEl.href = 'mailto:sales@beebeeb.io'; ctaEl.className = 'bb-cta ghost'; }
+    } else {
+      const monthly = bizBaseMonthly + Math.max(0, tb - 10) * 10.99 + Math.max(0, users - 3) * 4.99;
+      const annual  = bizBaseAnnual  + Math.max(0, tb - 10) * 10.99 + Math.max(0, users - 3) * 4.99;
+      const hasExtras = tb > 10 || users > 3;
+      const price = billing === 'annual' ? annual : monthly;
+      if (priceEl) priceEl.textContent = fmt(price);
+      if (unitEl)  unitEl.textContent = '/mo';
+      if (noteEl)  noteEl.textContent = billing === 'annual'
+        ? (hasExtras ? 'Base annual · add-ons monthly' : 'billed €' + (bizBaseAnnual * 12).toFixed(2).replace('.', ',') + '/year')
+        : 'billed monthly';
+      if (ctaEl && bizLive) { ctaEl.textContent = bizCTA; ctaEl.href = 'https://app.beebeeb.io/signup?plan=business'; ctaEl.className = 'bb-cta amber'; }
+    }
+  }
+  if (bizTbSlider)   bizTbSlider.addEventListener('input', updateBiz);
+  if (bizUserSlider) bizUserSlider.addEventListener('input', updateBiz);
 
-    // Also re-apply on Astro client-side navigation
-    document.addEventListener('astro:after-swap', function () {
-      var savedGrid = document.getElementById('bb-pricing-grid');
-      var savedBtns = document.querySelectorAll('.bb-period-btn');
-      if (savedGrid && savedBtns.length) {
-        activate('annual'); // reset to default
-      }
-    });
-  })();
+  function updateAll() {
+    updateBasic();
+    updatePro();
+    if (bizLive) updateBiz();
+  }
 </script>
-
-<!-- ── Toggle styles ─────────────────────────────────────────────────────── -->
-<style>
-  /* Active toggle button */
-  .bb-period-btn[aria-pressed="true"] {
-    background: var(--color-paper);
-    color: var(--color-ink);
-    font-weight: 600;
-    box-shadow: var(--shadow-1);
-  }
-  .bb-period-btn[aria-pressed="false"] {
-    color: var(--color-ink-3);
-  }
-  .bb-period-btn[aria-pressed="false"]:hover {
-    color: var(--color-ink-2);
-  }
-
-  /* Price visibility */
-  #bb-pricing-grid[data-period="annual"]  .bb-price-monthly { display: none; }
-  #bb-pricing-grid[data-period="monthly"] .bb-price-annual  { display: none; }
-
-  /* Smooth price swap: fade on the price container */
-  .bb-price {
-    transition: opacity 0.15s ease;
-  }
-</style>

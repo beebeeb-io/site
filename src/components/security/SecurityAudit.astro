@@ -1,0 +1,167 @@
+---
+const helps = [
+  'A clear reproduction (proof-of-concept welcome)',
+  'The repo + commit SHA, if relevant',
+  'Your assessment of severity and impact',
+  'Whether you intend to disclose publicly, and when',
+];
+---
+
+<section id="audit" class="security-section paper" data-security-section>
+  <div class="security-container audit-grid">
+    <div>
+      <div class="bb-eyebrow">Responsible disclosure</div>
+      <h2 class="bb-display-l">Found something?<br />Tell us first.</h2>
+      <p class="lead">
+        If you’ve found a vulnerability in our clients, our protocol, or our
+        infrastructure, we want to hear about it before anyone else does.
+      </p>
+      <p>
+        We’ll acknowledge within <strong>48 hours</strong>
+        and aim to resolve high-severity issues within
+        <strong>14 days</strong>. We will credit you
+        publicly with your permission, on this page, when the fix ships.
+      </p>
+      <p class="fine">
+        We do not yet run a paid bug bounty. We are a small team and would rather
+        spend that money on shipping fixes than on programs we can’t honour.
+        If we change that, this paragraph will change with it.
+      </p>
+    </div>
+
+    <aside class="report-card">
+      <div class="t-label">How to report</div>
+      <div class="report-block">
+        <div>Email</div>
+        <a href="mailto:security@beebeeb.io">security@beebeeb.io</a>
+      </div>
+      <div class="report-block">
+        <div>PGP</div>
+        <p>We do not yet publish a PGP key. Coming soon.</p>
+      </div>
+      <div>
+        <div class="report-label">What helps us</div>
+        <ul>
+          {helps.map((item) => (
+            <li><span>→</span><span>{item}</span></li>
+          ))}
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .audit-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  .audit-grid .bb-eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .audit-grid h2 {
+    margin: 0 0 24px;
+  }
+
+  .audit-grid p {
+    margin: 0 0 18px;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .audit-grid .lead {
+    font-size: 15.5px;
+  }
+
+  .audit-grid strong {
+    color: var(--ink);
+  }
+
+  .audit-grid .fine {
+    margin-bottom: 0;
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .report-card {
+    padding: 32px;
+    border: 1px solid var(--ink);
+    border-radius: 12px;
+    background: var(--ink);
+    color: oklch(0.92 0.005 80);
+  }
+
+  .report-card .t-label {
+    margin-bottom: 14px;
+    color: var(--amber);
+  }
+
+  .report-block {
+    margin-bottom: 20px;
+  }
+
+  .report-block div,
+  .report-label {
+    margin-bottom: 4px;
+    color: oklch(0.6 0.01 70);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .report-label {
+    margin-bottom: 8px;
+  }
+
+  .report-block a {
+    color: var(--amber);
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .report-block p {
+    margin: 0;
+    color: oklch(0.78 0.01 80);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .report-card ul {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin: 0;
+    padding: 0;
+    color: oklch(0.78 0.01 80);
+    font-size: 12.5px;
+    line-height: 1.55;
+    list-style: none;
+  }
+
+  .report-card li {
+    display: flex;
+    gap: 10px;
+  }
+
+  .report-card li span:first-child {
+    color: var(--amber);
+  }
+
+  @media (max-width: 860px) {
+    .audit-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+</style>

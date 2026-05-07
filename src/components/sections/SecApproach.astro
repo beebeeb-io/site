@@ -1,0 +1,144 @@
+<section id="how" class="bb-section-band approach-section">
+  <div class="bb-container approach-grid">
+    <div>
+      <div class="bb-eyebrow">Our approach</div>
+      <h2 class="bb-display-l">We cannot read<br />your files.</h2>
+      <p>
+        Files are encrypted on your device with a master key only you hold. Your password
+        unlocks that master key locally - we receive the password to authenticate you,
+        but never your master key and never your 12-word recovery phrase.
+      </p>
+      <p class="point">Lose both, lose the data. No backdoor, no exceptions.</p>
+      <div class="approach-chips">
+        <div><strong>AES-256-GCM</strong><span>industry-standard encryption</span></div>
+        <div><strong>12 words</strong><span>your recovery key</span></div>
+        <div><strong>Open source</strong><span>audit it yourself</span></div>
+      </div>
+    </div>
+
+    <div class="approach-cards" aria-label="Encryption approach">
+      <div class="approach-card">
+        <span>01</span>
+        <h3>Key stays local</h3>
+        <p>Your master key is created and unlocked on your device.</p>
+      </div>
+      <div class="approach-card">
+        <span>02</span>
+        <h3>Files encrypt before upload</h3>
+        <p>Names, metadata, and file bytes become ciphertext first.</p>
+      </div>
+      <div class="approach-card dark">
+        <span>03</span>
+        <h3>Servers store opaque blobs</h3>
+        <p>What reaches Beebeeb is unreadable without keys we never receive.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .approach-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  h2 {
+    margin-top: 20px;
+    margin-bottom: 24px;
+  }
+
+  p {
+    max-width: 470px;
+    margin: 0 0 20px;
+    color: var(--color-ink-2);
+    font-size: 17px;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .point {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+
+  .approach-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  .approach-chips div {
+    padding: 10px 12px;
+    border: 1px solid var(--color-line-2);
+    border-radius: 8px;
+    background: var(--color-paper);
+  }
+
+  .approach-chips strong,
+  .approach-chips span {
+    display: block;
+    font-family: var(--font-mono);
+  }
+
+  .approach-chips strong {
+    color: var(--color-ink);
+    font-size: 12px;
+  }
+
+  .approach-chips span {
+    color: var(--color-ink-3);
+    font-size: 10.5px;
+  }
+
+  .approach-cards {
+    display: grid;
+    gap: 14px;
+  }
+
+  .approach-card {
+    padding: 24px;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-paper-2);
+    box-shadow: var(--shadow-1);
+  }
+
+  .approach-card span {
+    color: var(--color-amber-deep);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .approach-card h3 {
+    margin: 10px 0 8px;
+    font-size: 24px;
+  }
+
+  .approach-card p {
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .approach-card.dark {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .approach-card.dark h3 {
+    color: var(--color-paper);
+  }
+
+  .approach-card.dark p {
+    color: oklch(0.78 0.01 80);
+  }
+
+  @media (max-width: 840px) {
+    .approach-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

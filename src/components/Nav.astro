@@ -1,67 +1,262 @@
 ---
-import Button from './Button.astro';
-import RegionBadge from './RegionBadge.astro';
+import type { PhaseConfig } from '../lib/phase';
+import { phaseConfig } from '../lib/phase';
 
 interface Props {
   active?: string;
+  cfg?: PhaseConfig;
 }
 
-const { active } = Astro.props;
+const { active, cfg: providedCfg } = Astro.props;
+const cfg = providedCfg ?? phaseConfig();
+const pathname = Astro.url.pathname;
+const current =
+  active ??
+  (pathname.startsWith('/security')
+    ? 'security'
+    : pathname.startsWith('/pricing')
+      ? 'pricing'
+      : 'product');
 
 const links = [
-  { label: 'Product', href: '/' },
-  { label: 'Features', href: '/features' },
-  { label: 'Download', href: '/download' },
-  { label: 'Security', href: '/security' },
-  { label: 'Pricing', href: '/pricing' },
-  { label: 'Blog', href: '/blog' },
-  { label: 'Open source', href: '/' },
+  { label: 'Product', href: '/#product', id: 'product' },
+  { label: 'Security', href: '/security', id: 'security' },
+  { label: 'Pricing', href: '/pricing', id: 'pricing' },
+  {
+    label: 'Open source',
+    href: 'https://github.com/beebeeb-io',
+    id: 'oss',
+    external: true,
+  },
 ];
+
+const primaryHref = cfg.primaryHref || 'https://app.beebeeb.io/signup';
+const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the waitlist');
 ---
 
-<nav class="navbar" id="navbar" transition:persist>
-  <div class="container">
-    <div class="flex items-center justify-between">
-      <a href="/" class="text-[15px] font-bold tracking-tight text-ink no-underline z-10">
-        beebeeb<span class="text-amber">.io</span>
+<nav class="bb-launch-nav" id="navbar" transition:persist>
+  <a href="/" class="bb-nav-logo" aria-label="Beebeeb.io home">
+    <img src="/assets/beebeeb-logo.png" alt="beebeeb.io" />
+  </a>
+
+  <div class="bb-nav-links">
+    {links.map((link) => (
+      <a
+        href={link.href}
+        target={link.external ? '_blank' : undefined}
+        rel={link.external ? 'noopener noreferrer' : undefined}
+        class:list={['bb-nav-link', current === link.id && 'active']}
+      >
+        {link.label}
       </a>
-
-      <div class="nav-links flex gap-5 ml-8">
-        {links.map((link) => (
-          <a
-            href={link.href}
-            class:list={[
-              'text-[13px] no-underline transition-colors duration-150',
-              link.label === active ? 'text-ink font-semibold' : 'text-ink-2 hover:text-ink',
-            ]}
-          >
-            {link.label}
-          </a>
-        ))}
-      </div>
-
-      <div class="nav-cta-group ml-auto flex items-center gap-2">
-        <RegionBadge />
-        <a href="https://app.beebeeb.io/login" class="btn btn-ghost btn-sm">Sign in</a>
-        <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-sm">Start free</a>
-      </div>
-
-      <button class="menu-toggle" id="menuToggle" aria-label="Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </div>
+    ))}
   </div>
+
+  <div class="bb-nav-right">
+    <span class="t-mono bb-nav-region">Stored in Europe &middot; EU law</span>
+    {cfg.isLive ? (
+      <>
+        <a
+          href="https://app.beebeeb.io"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="bb-nav-signin"
+        >
+          Sign in
+        </a>
+        <a
+          href={primaryHref}
+          target={primaryHref.startsWith('http') ? '_blank' : undefined}
+          rel={primaryHref.startsWith('http') ? 'noopener noreferrer' : undefined}
+          class="bb-cta amber"
+        >
+          {primaryCTA}
+        </a>
+      </>
+    ) : (
+      <a href="#waitlist" class="bb-cta amber">Join the waitlist</a>
+    )}
+  </div>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Menu" type="button">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
 
 <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
 <div class="mobile-menu" id="mobileMenu">
   {links.map((link) => (
-    <a href={link.href}>{link.label}</a>
+    <a
+      href={link.href}
+      target={link.external ? '_blank' : undefined}
+      rel={link.external ? 'noopener noreferrer' : undefined}
+    >
+      {link.label}
+    </a>
   ))}
-  <div class="mt-6 flex flex-col gap-3">
-    <a href="https://app.beebeeb.io/login" class="btn btn-outline btn-md w-full justify-center">Sign in</a>
-    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md w-full justify-center">Start free</a>
+  <div class="bb-mobile-actions">
+    {cfg.isLive ? (
+      <>
+        <a href="https://app.beebeeb.io" target="_blank" rel="noopener noreferrer">Sign in</a>
+        <a
+          href={primaryHref}
+          target={primaryHref.startsWith('http') ? '_blank' : undefined}
+          rel={primaryHref.startsWith('http') ? 'noopener noreferrer' : undefined}
+          class="bb-mobile-primary"
+        >
+          {primaryCTA}
+        </a>
+      </>
+    ) : (
+      <a href="#waitlist" class="bb-mobile-primary">Join the waitlist</a>
+    )}
   </div>
 </div>
+
+<style>
+  .bb-launch-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    width: 100%;
+    padding: 14px 32px;
+    border-bottom: 1px solid var(--line, var(--color-line));
+    background: oklch(0.985 0.004 85 / 0.86);
+    backdrop-filter: blur(8px);
+  }
+
+  .bb-nav-logo {
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+  }
+
+  .bb-nav-logo img {
+    display: block;
+    width: auto;
+    height: 21px;
+  }
+
+  .bb-nav-links {
+    display: flex;
+    gap: 22px;
+    margin-left: 14px;
+  }
+
+  .bb-nav-link {
+    color: var(--ink-2, var(--color-ink-2));
+    font-size: 13.5px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 150ms ease;
+  }
+
+  .bb-nav-link:hover,
+  .bb-nav-link.active {
+    color: var(--ink, var(--color-ink));
+  }
+
+  .bb-nav-link.active {
+    font-weight: 600;
+  }
+
+  .bb-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+  }
+
+  .t-mono {
+    font-family: var(--font-mono);
+  }
+
+  .bb-nav-region {
+    color: var(--ink-3, var(--color-ink-3));
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+  }
+
+  .bb-nav-signin {
+    padding: 6px 10px;
+    color: var(--ink-2, var(--color-ink-2));
+    font-size: 13px;
+    text-decoration: none;
+  }
+
+  .bb-nav-signin:hover {
+    color: var(--ink, var(--color-ink));
+  }
+
+  .bb-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border: 1px solid var(--amber-deep, var(--color-amber-deep));
+    border-radius: 6px;
+    background: var(--amber, var(--color-amber));
+    color: var(--ink, var(--color-ink));
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.4) inset,
+      0 4px 12px -4px oklch(0.66 0.15 72 / 0.4);
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-decoration: none;
+    transition:
+      background 150ms ease,
+      box-shadow 150ms ease,
+      transform 150ms ease;
+  }
+
+  .bb-cta:hover {
+    background: oklch(0.79 0.17 82);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.5) inset,
+      0 8px 20px -6px oklch(0.66 0.15 72 / 0.5);
+    transform: translateY(-1px);
+  }
+
+  .menu-toggle {
+    display: none;
+  }
+
+  .bb-mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 24px;
+  }
+
+  .mobile-menu .bb-mobile-primary {
+    color: var(--ink, var(--color-ink));
+  }
+
+  @media (max-width: 840px) {
+    .bb-nav-links,
+    .bb-nav-right {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .bb-launch-nav {
+      padding-inline: 20px;
+    }
+  }
+</style>

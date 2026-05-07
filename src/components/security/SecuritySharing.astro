@@ -1,0 +1,150 @@
+---
+const flows = [
+  {
+    n: '01',
+    t: 'Public link',
+    sub: 'For when you want anyone with the link to access',
+    mech: 'Double-encrypted',
+    d: 'The file key is wrapped twice: once with a key only you control, then again with a server-side key. To download, the recipient must hit our server (which enforces rate limits and revocation) and then decrypt locally with the link fragment. The double layer means even a stolen link archive is useless without our server unwrap — and the rate limit means brute-force is not feasible against the inner layer.',
+    crypto: 'AES-256-GCM × 2 layers',
+  },
+  {
+    n: '02',
+    t: 'Email — recipient has an account',
+    sub: 'Direct, no friction',
+    mech: 'Re-encrypted to recipient’s public key',
+    d: 'Your client fetches the recipient’s X25519 public key, re-encrypts the file’s symmetric key for them, and uploads the wrapped key alongside the share record. They decrypt locally with their private key. We never see either side’s key material.',
+    crypto: 'X25519 + AES-256-GCM',
+  },
+  {
+    n: '03',
+    t: 'Email — recipient is new',
+    sub: 'Three-step approval flow',
+    mech: 'Sender approves on signup',
+    d: 'Recipient creates an account, which generates their X25519 keypair locally. They request access to the share. The sender’s client receives a notification, fetches the new recipient’s public key, re-encrypts the file key for them, and approves the share. Only then does the recipient’s client get a key it can use.',
+    crypto: 'Same as above + sender approval gate',
+  },
+];
+---
+
+<section id="sharing" class="security-section paper" data-security-section>
+  <div class="security-container">
+    <div class="security-kicker">
+      <div class="bb-eyebrow">Sharing</div>
+      <h2 class="bb-display-l">Three ways to share. None of them break the model.</h2>
+      <p>
+        Sharing is where most encrypted-storage products quietly punt. Here’s how
+        we keep the zero-knowledge guarantee intact across each flow.
+      </p>
+    </div>
+
+    <div class="sharing-list">
+      {flows.map((flow) => (
+        <article class="share-flow">
+          <div class="share-count">
+            <div class="bb-step-num">{flow.n} / 03</div>
+            <div class="t-mono">{flow.mech}</div>
+          </div>
+          <div class="share-body">
+            <h3>{flow.t}</h3>
+            <p class="sub">{flow.sub}</p>
+            <p>{flow.d}</p>
+          </div>
+          <div class="share-crypto">
+            <div class="t-label">Cryptography</div>
+            <span class="crypto-chip">{flow.crypto}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .sharing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .share-flow {
+    display: grid;
+    grid-template-columns: 120px 1fr 280px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+  }
+
+  .share-count {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 28px 24px;
+    border-right: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+
+  .share-count .t-mono {
+    color: var(--ink-3);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .share-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 28px;
+  }
+
+  .share-body h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+  }
+
+  .share-body p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 14px;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .share-body .sub {
+    margin-bottom: 6px;
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .share-crypto {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 28px 24px;
+    border-left: 1px solid var(--line);
+    background: oklch(0.985 0.01 88);
+  }
+
+  .share-crypto .t-label {
+    margin-bottom: 8px;
+    color: var(--amber-deep);
+  }
+
+  @media (max-width: 900px) {
+    .share-flow {
+      grid-template-columns: 1fr;
+    }
+
+    .share-count,
+    .share-crypto {
+      border: 0;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+</style>

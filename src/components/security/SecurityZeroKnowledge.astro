@@ -1,0 +1,219 @@
+---
+const steps = [
+  { side: 'device', n: '1', label: 'You sign in', detail: 'Your password authenticates you via OPAQUE PAKE. The password itself never leaves your device.' },
+  { side: 'device', n: '2', label: 'Master key unlocked', detail: 'Your master key lives on your device, encrypted at rest by your password. After inactivity, you re-enter it to unlock again.' },
+  { side: 'device', n: '3', label: 'Per-file key', detail: 'A unique 256-bit key is derived for this file via HKDF-SHA256 from your master key.' },
+  { side: 'device', n: '4', label: 'Encrypt with AES-256-GCM', detail: 'The file is encrypted on your device with a fresh random nonce. The result is ciphertext + an authentication tag.' },
+  { side: 'wire', n: '5', label: 'Ciphertext travels', detail: 'Only the encrypted bytes, the nonce, and the file’s wrapped key cross the network. TLS 1.3 protects the connection itself.' },
+  { side: 'server', n: '6', label: 'Server stores opaque blob', detail: 'We receive ciphertext we cannot decrypt. The filename is replaced with a hash. Metadata we keep: size, timestamp, owner.' },
+  { side: 'server', n: '7', label: 'Replicated within EU', detail: 'Stored in EU datacenters under EU law. No cross-border replication.' },
+  { side: 'device', n: '8', label: 'Acknowledgement', detail: 'Server returns a content hash. Your client verifies the upload. Done.' },
+];
+---
+
+<section id="journey" class="security-section alt" data-security-section>
+  <div class="security-container">
+    <div class="security-kicker">
+      <div class="bb-eyebrow">One file’s journey</div>
+      <h2 class="bb-display-l">Upload, in eight steps.</h2>
+      <p>
+        What happens between “drop file” and “file is stored”.
+        The file is encrypted before it leaves your device. Your password is
+        never sent anywhere — not even to us.
+      </p>
+    </div>
+
+    <div class="journey-panel">
+      <div class="journey-header">
+        <div>Your device</div>
+        <div>Wire</div>
+        <div>EU server</div>
+      </div>
+
+      {steps.map((step, i) => (
+        <div class="journey-row">
+          <div class:list={['journey-cell', step.side !== 'device' && 'muted']}>
+            {step.side === 'device' && (
+              <div class="step-cell">
+                <span class="step-dot">{step.n}</span>
+                <span>
+                  <strong>{step.label}</strong>
+                  <span>{step.detail}</span>
+                </span>
+              </div>
+            )}
+          </div>
+          <div class:list={['wire-cell', step.side === 'wire' && 'active']}>
+            {step.side === 'wire' ? (
+              <span>ciphertext</span>
+            ) : (
+              <i class:list={[step.side]}></i>
+            )}
+          </div>
+          <div class:list={['journey-cell', 'server-cell', step.side !== 'server' && 'muted']}>
+            {step.side === 'server' && (
+              <div class="step-cell">
+                <span class="step-dot">{step.n}</span>
+                <span>
+                  <strong>{step.label}</strong>
+                  <span>{step.detail}</span>
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .journey-panel {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+  }
+
+  .journey-header,
+  .journey-row {
+    display: grid;
+    grid-template-columns: 1fr 80px 1fr;
+  }
+
+  .journey-header {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+
+  .journey-header div {
+    padding: 14px 22px;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .journey-header div:nth-child(2) {
+    border-right: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .journey-row {
+    min-height: 80px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .journey-row:last-child {
+    border-bottom: 0;
+  }
+
+  .journey-cell {
+    padding: 20px 22px;
+  }
+
+  .journey-cell.muted {
+    padding: 0;
+    opacity: 0.25;
+  }
+
+  .server-cell:not(.muted) {
+    background: oklch(0.985 0.005 80);
+  }
+
+  .wire-cell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+
+  .wire-cell.active {
+    background: oklch(0.97 0.03 88);
+  }
+
+  .wire-cell span {
+    color: var(--amber-deep);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+  }
+
+  .wire-cell i {
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--line) 80%);
+  }
+
+  .wire-cell i.server {
+    background: linear-gradient(to left, transparent, var(--line) 80%);
+  }
+
+  .step-cell {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .step-dot {
+    display: inline-flex;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--ink);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .step-cell strong {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .step-cell span span {
+    display: block;
+    color: var(--ink-2);
+    font-size: 13px;
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 760px) {
+    .journey-header,
+    .journey-row {
+      grid-template-columns: 1fr;
+    }
+
+    .journey-header div:nth-child(2),
+    .wire-cell {
+      display: none;
+    }
+
+    .journey-header div:nth-child(3) {
+      border-top: 1px solid var(--line);
+    }
+
+    .journey-cell.muted {
+      display: none;
+    }
+  }
+</style>

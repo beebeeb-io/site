@@ -1,0 +1,18 @@
+{
+  "kind": "singleType",
+  "collectionName": "launch_phase",
+  "info": {
+    "singularName": "launch-phase",
+    "pluralName": "launch-phases",
+    "displayName": "Launch Phase"
+  },
+  "options": { "draftAndPublish": false },
+  "attributes": {
+    "phase": {
+      "type": "enumeration",
+      "enum": ["1", "2", "3", "4"],
+      "default": "1",
+      "required": true
+    }
+  }
+}

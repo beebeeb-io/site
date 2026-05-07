@@ -1,0 +1,139 @@
+<section class="bb-section-band alt">
+  <div class="bb-container problem-grid">
+    <div class="problem-sticky">
+      <div class="bb-eyebrow">The problem</div>
+      <h2 class="bb-display-l">
+        Access for data.<br />That's the deal<br />
+        <span>most clouds make.</span>
+      </h2>
+    </div>
+    <div>
+      <p class="lead">
+        Your files, your filenames, your patterns - traded for storage access. It doesn't
+        matter whether you're on a free plan or a paid one. The arrangement is the same.
+      </p>
+      <p class="strong">We think that's the wrong trade.</p>
+
+      <div class="comparison-strip">
+        <div class="comparison-side">
+          <div class="t-label">Most cloud providers see</div>
+          <div class="plain-list">
+            <div>tax-2025.pdf</div>
+            <div>passport-scan.jpg</div>
+            <div>family-photos/</div>
+            <div>medical-results.docx</div>
+          </div>
+        </div>
+        <div class="comparison-side encrypted">
+          <div class="t-label">Beebeeb sees</div>
+          <div class="hash-list">
+            <div>4f9e2a01b7c8a93f.enc</div>
+            <div>e22b1c0a749d83bf.enc</div>
+            <div>a09c4f7e2bd1880a.enc</div>
+            <div>7c12af0e9ba33e5d.enc</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .problem-sticky {
+    position: sticky;
+    top: 100px;
+  }
+
+  h2 {
+    margin-top: 18px;
+    font-size: clamp(32px, 3.5vw, 48px);
+  }
+
+  h2 span {
+    color: var(--color-amber-deep);
+  }
+
+  .lead {
+    margin: 0 0 28px;
+    color: var(--color-ink-2);
+    font-size: 18px;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .strong {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.45;
+  }
+
+  .comparison-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+    margin-top: 48px;
+    border: 1px solid var(--color-line);
+    border-radius: 10px;
+    background: var(--color-paper);
+  }
+
+  .comparison-side {
+    padding: 20px 22px;
+    border-right: 1px solid var(--color-line);
+  }
+
+  .comparison-side.encrypted {
+    border-right: 0;
+    background: oklch(0.99 0.01 88);
+  }
+
+  .comparison-side .t-label {
+    margin-bottom: 12px;
+  }
+
+  .encrypted .t-label {
+    color: var(--color-amber-deep);
+  }
+
+  .plain-list,
+  .hash-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    color: var(--color-ink);
+    font-size: 13.5px;
+  }
+
+  .hash-list {
+    color: var(--color-amber-deep);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    letter-spacing: -0.01em;
+  }
+
+  @media (max-width: 840px) {
+    .problem-grid,
+    .comparison-strip {
+      grid-template-columns: 1fr;
+    }
+
+    .problem-sticky {
+      position: static;
+    }
+
+    .comparison-side {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+  }
+</style>

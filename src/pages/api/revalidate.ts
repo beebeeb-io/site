@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { clearCache } from '../../lib/strapi';
+import { clearCache, invalidateLaunchPhaseCache } from '../../lib/strapi';
 
 export const POST: APIRoute = async ({ request }) => {
   const secret = (typeof process !== 'undefined' && process.env?.REVALIDATE_SECRET) || import.meta.env.REVALIDATE_SECRET;
@@ -15,6 +15,7 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   clearCache();
+  invalidateLaunchPhaseCache();
 
   return new Response(JSON.stringify({ revalidated: true, timestamp: Date.now() }), {
     status: 200,

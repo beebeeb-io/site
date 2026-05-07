@@ -1,0 +1,121 @@
+---
+interface Props {
+  showCanary?: boolean;
+}
+
+const { showCanary = false } = Astro.props;
+
+const sections = [
+  { id: 'overview', label: 'Overview' },
+  { id: 'journey', label: 'File journey' },
+  { id: 'stack', label: 'Crypto stack' },
+  { id: 'keys', label: 'Keys' },
+  { id: 'sharing', label: 'Sharing' },
+  { id: 'threat-model', label: 'Threat model' },
+  { id: 'infrastructure', label: 'Infrastructure' },
+  { id: 'legal', label: 'Legal' },
+  ...(showCanary ? [{ id: 'warrant-canary', label: 'Canary' }] : []),
+  { id: 'open-source', label: 'Open source' },
+  { id: 'audit', label: 'Disclosure' },
+  { id: 'changelog', label: 'Changelog' },
+];
+---
+
+<nav class="security-section-nav" aria-label="Security page sections">
+  <div class="security-container nav-scroll">
+    {sections.map((section) => (
+      <a href={`#${section.id}`} data-section-link={section.id}>
+        {section.label}
+      </a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  const nav = document.querySelector('.security-section-nav');
+  const links = Array.from(document.querySelectorAll('[data-section-link]'));
+  const sections = Array.from(document.querySelectorAll('[data-security-section]'));
+
+  function setActive(id) {
+    links.forEach((link) => {
+      link.toggleAttribute('aria-current', link.getAttribute('data-section-link') === id);
+    });
+  }
+
+  if (nav && links.length && sections.length) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible && visible.target.id) {
+          setActive(visible.target.id);
+        }
+      },
+      {
+        rootMargin: '-35% 0px -55% 0px',
+        threshold: [0.1, 0.25, 0.5, 0.75],
+      },
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    setActive(sections[0].id);
+  }
+</script>
+
+<style>
+  .security-section-nav {
+    position: sticky;
+    top: 64px;
+    z-index: 20;
+    border-bottom: 1px solid var(--line);
+    background: oklch(0.985 0.004 85 / 0.88);
+    backdrop-filter: blur(12px);
+  }
+
+  .nav-scroll {
+    display: flex;
+    gap: 18px;
+    overflow-x: auto;
+    padding: 12px 32px;
+    scrollbar-width: none;
+  }
+
+  .nav-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  a {
+    flex: 0 0 auto;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 150ms ease;
+  }
+
+  a:hover,
+  a[aria-current='true'] {
+    color: var(--ink);
+  }
+
+  a[aria-current='true'] {
+    text-decoration: underline;
+    text-decoration-color: var(--amber-deep);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 7px;
+  }
+
+  @media (max-width: 840px) {
+    .security-section-nav {
+      top: 50px;
+    }
+
+    .nav-scroll {
+      padding-inline: 20px;
+    }
+  }
+</style>

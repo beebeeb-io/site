@@ -1,0 +1,127 @@
+---
+const steps = [
+  {
+    n: '01',
+    title: 'Sign up',
+    body: 'Pick a password. We generate your master key on your device, encrypted by that password, plus a 12-word recovery phrase only you ever see.',
+    visual: 'Recovery phrase - 12 words',
+  },
+  {
+    n: '02',
+    title: 'Upload',
+    body: 'Drag, drop, done. Files are encrypted on your device before bytes leave you. We see opaque blobs; only you see your stuff.',
+    visual: 'tax-2025.pdf -> 4f9e2a01b7c8a93f.enc',
+  },
+  {
+    n: '03',
+    title: 'Share',
+    body: 'Share a link. The decryption key travels in the URL fragment - the part our server never sees. Revoke any link, any time.',
+    visual: 'app.beebeeb.io/s/k7Qx#a3f7c2e9b1d8',
+  },
+];
+---
+
+<section class="bb-section-band how-section">
+  <div class="bb-container">
+    <div class="how-heading">
+      <div class="bb-eyebrow">How it works</div>
+      <h2 class="bb-display-l">Three steps. No clever tricks.</h2>
+    </div>
+    <div class="step-grid">
+      {steps.map((step, index) => (
+        <article>
+          <div class="bb-step-num">{step.n} / 03</div>
+          <h3>{step.title}</h3>
+          <p>{step.body}</p>
+          <div class="mini-visual">
+            <span>{step.visual}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .how-heading {
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .how-heading .bb-eyebrow {
+    justify-content: center;
+  }
+
+  h2 {
+    margin-top: 18px;
+    font-size: clamp(32px, 3.4vw, 46px);
+  }
+
+  .step-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow: hidden;
+    border: 1px solid var(--color-line);
+    border-radius: 12px;
+    background: var(--color-paper);
+  }
+
+  article {
+    display: flex;
+    min-height: 290px;
+    flex-direction: column;
+    gap: 14px;
+    padding: 36px 32px;
+    border-right: 1px solid var(--color-line);
+  }
+
+  article:last-child {
+    border-right: 0;
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--color-ink);
+    font-size: 24px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-ink-2);
+    font-size: 14px;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .mini-visual {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    margin-top: auto;
+    padding: 12px;
+    border: 1px solid var(--color-line);
+    border-radius: 8px;
+    background: var(--color-paper-2);
+    color: var(--color-amber-deep);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    overflow: hidden;
+  }
+
+  .mini-visual span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 900px) {
+    .step-grid {
+      grid-template-columns: 1fr;
+    }
+
+    article {
+      border-right: 0;
+      border-bottom: 1px solid var(--color-line);
+    }
+  }
+</style>

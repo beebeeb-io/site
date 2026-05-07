@@ -1,0 +1,6 @@
+---
+import type { PhaseConfig } from '../lib/phase';
+import HeroBase from './HeroBase.astro';
+const { cfg } = Astro.props as { cfg: PhaseConfig };
+---
+<HeroBase cfg={cfg} />

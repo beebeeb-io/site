@@ -1,0 +1,175 @@
+---
+const rows = [
+  {
+    label: 'Today',
+    tag: 'In production',
+    tagColor: 'oklch(0.42 0.12 155)',
+    tagBg: 'oklch(0.97 0.04 150)',
+    title: 'Hosting provider in Germany',
+    body: 'All ciphertext currently lives in a hosting provider’s datacenters in Germany. German law applies. No data is replicated outside the EU.',
+  },
+  {
+    label: 'In testing',
+    tag: 'Not yet live',
+    tagColor: 'var(--amber-deep)',
+    tagBg: 'oklch(0.97 0.04 88)',
+    title: 'Beebeeb-operated EU storage',
+    body: 'We’re building our own storage fleet in EU datacenters. Because we value the trust customers place in us, we will only migrate to it after extensive redundancy testing and proven operational maturity. We will document the move when it happens.',
+  },
+  {
+    label: 'Jurisdiction',
+    title: 'EU law applies',
+    body: 'Beebeeb is established in the Netherlands. Our processing is governed by the GDPR and Dutch implementing law. We do not transfer personal data to non-adequate jurisdictions.',
+  },
+  {
+    label: 'Data we can see',
+    title: 'Metadata only',
+    body: 'Account email · billing details · file size · upload timestamp · owner · share recipients (when applicable). We see no filenames (those are hashed), no file contents, and no folder structure beyond what’s required to render your file list.',
+  },
+  {
+    label: 'Data we cannot see',
+    title: 'Files, filenames, keys',
+    body: 'File contents are AES-256-GCM ciphertext. Filenames are stored hashed. Your master key, your password, and your recovery phrase never reach us in any form.',
+  },
+];
+---
+
+<section id="infrastructure" class="security-section paper infra-section" data-security-section>
+  <div class="security-container infra-grid">
+    <div class="infra-copy">
+      <div class="bb-eyebrow">Infrastructure</div>
+      <h2 class="bb-display-l">EU only.<br />Today, and on purpose.</h2>
+      <p>
+        Where your encrypted data physically sits matters even when the data is
+        ciphertext. Jurisdiction determines who can compel us to do anything.
+      </p>
+    </div>
+
+    <div class="infra-rows">
+      {rows.map((row) => (
+        <article class="infra-row">
+          <div class="t-label">{row.label}</div>
+          <div>
+            {row.tag && (
+              <span class="infra-tag" style={`--tag-color: ${row.tagColor}; --tag-bg: ${row.tagBg};`}>
+                <i></i>
+                {row.tag}
+              </span>
+            )}
+            <h3>{row.title}</h3>
+            <p>{row.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .infra-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .infra-copy {
+    position: sticky;
+    top: 150px;
+  }
+
+  .infra-copy .bb-eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .infra-copy h2 {
+    margin: 0 0 24px;
+  }
+
+  .infra-copy p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 16px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  .infra-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .infra-row {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 20px;
+    align-items: start;
+    padding: 24px 26px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--paper);
+  }
+
+  .infra-row > .t-label {
+    padding-top: 4px;
+    color: var(--ink-3);
+  }
+
+  .infra-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: var(--tag-bg);
+    color: var(--tag-color);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .infra-tag i {
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: var(--tag-color);
+  }
+
+  .infra-row h3 {
+    margin: 0 0 6px;
+    color: var(--ink);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .infra-row p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 13.5px;
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 900px) {
+    .infra-grid {
+      grid-template-columns: 1fr;
+      gap: 42px;
+    }
+
+    .infra-copy {
+      position: static;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .infra-row {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  }
+</style>
