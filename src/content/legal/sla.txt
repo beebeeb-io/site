@@ -1,0 +1,131 @@
+
+
+Service Level Agreement beebeeb.io
+Version 1.0 – 7 May 2026
+This Service Level Agreement ("SLA") governs the availability and support of the Service as delivered by InitLabs B.V., trading under the name beebeeb.io (the "Provider" or "beebeeb.io"), to its business customers (the "Customer"). This SLA is an integral part of the Terms of Service and, where applicable, the Agreement entered into between the parties.
+This SLA applies in principle exclusively to customers with an active business subscription (Business or higher). For consumers and free accounts, the provisions of the Terms of Service apply.
+1. Definitions
+Availability: the percentage of time within a Monthly Period that the Service is accessible to the Customer and able to perform its core functions (uploading, downloading, synchronising encrypted Content).
+Out of Scope: see section 3.
+Scheduled Maintenance: a period announced in advance by beebeeb.io during which maintenance takes place. Time during Scheduled Maintenance does not count as Unavailability.
+Incident: a disruption reported by the Customer or detected by beebeeb.io in which the Service does not function or does not function fully.
+Monthly Period: a calendar month.
+Unavailability: any continuous period of five (5) minutes or more during which the core functions of the Service do not work for the Customer, other than for reasons Out of Scope.
+Service Window: Mon–Fri 09:00–18:00 CET, excluding Dutch public holidays.
+Service Credit: the financial compensation the Customer can claim for non-compliance with the SLA, in accordance with section 5.
+2. Availability target
+Subscription
+Availability target per Monthly Period
+Personal / consumer
+"Best effort" — no SLA
+Business
+99.5%
+Business Plus
+99.9%
+Enterprise
+99.95% (on request, with dedicated terms)
+Availability is measured via our internal monitoring (monitored from multiple geographically distributed endpoints within the EEA) and published at status.beebeeb.io.
+3. Out of Scope
+The following cases do not count as Unavailability:
+	•	Scheduled Maintenance, provided it is announced at least five (5) business days in advance via email or via status.beebeeb.io. Exceptionally urgent maintenance (for example critical security patches) is announced as soon as possible.
+	•	Emergency Maintenance to resolve an acute security issue, with announcement as soon as possible.
+	•	Force majeure as described in the Terms of Service.
+	•	Disruptions caused by the Customer or by third parties engaged by the Customer, including incorrect configuration on the Customer's side, incorrect use of APIs, or exceeding fair-use limits.
+	•	Disruptions in networks, ISPs or internet infrastructure outside beebeeb.io's sphere of influence.
+	•	Geographically limited outages of a Customer's service provider or a third party that do not indicate a general problem on our side.
+	•	Disruptions in payment processing by Stripe, to the extent these do not affect the operation of the cloud storage functionality itself.
+	•	Restrictions or suspensions on the basis of the AUP, this SLA or the Agreement.
+	•	DDoS attacks, to the extent these could not reasonably have been prevented by beebeeb.io.
+	•	Beta or preview functionalities designated as such.
+4. Calculating Availability
+Availability in a Monthly Period is calculated as:
+Availability (%) = ((Total minutes in Month − Out-of-Scope unavailable minutes − In-Scope unavailable minutes) / (Total minutes in Month − Out-of-Scope unavailable minutes)) × 100
+5. Service Credits
+If Availability in a Monthly Period is lower than the applicable target, the Customer may claim Service Credits according to the following schedule:
+Business (target 99.5%)
+Actual Availability
+Service Credit (% of monthly fee)
+≥ 99.0% and < 99.5%
+5%
+≥ 95.0% and < 99.0%
+10%
+≥ 90.0% and < 95.0%
+25%
+< 90.0%
+50%
+Business Plus (target 99.9%)
+Actual Availability
+Service Credit (% of monthly fee)
+≥ 99.5% and < 99.9%
+10%
+≥ 99.0% and < 99.5%
+15%
+≥ 95.0% and < 99.0%
+25%
+< 95.0%
+50%
+Enterprise (target 99.95%)
+Service Credits for Enterprise are agreed contractually in a separate agreement.
+6. Service Credit procedure
+	•	The Customer submits a Service Credit claim within thirty (30) days of the end of the relevant Monthly Period, via legal@beebeeb.io.
+	•	The claim contains at least: account identification, the Monthly Period concerned, and (if available) timestamps of observed Unavailability.
+	•	beebeeb.io assesses the claim within fourteen (14) business days.
+	•	If granted, the Service Credit is offset against the next invoice. Service Credits are not paid out in money and are not transferable to third parties.
+	•	The cumulative total of Service Credits per Monthly Period shall never exceed 50% of the monthly fee.
+	•	Service Credits are the sole and exclusive remedy of the Customer for SLA shortcomings, save for damage resulting from intent or wilful recklessness of the management of beebeeb.io.
+7. Support
+7.1 Support channels
+Type
+Channel
+General support
+support@beebeeb.io
+Status updates
+status.beebeeb.io
+Security incidents
+security@beebeeb.io
+Account and billing
+billing@beebeeb.io
+7.2 Response times
+Priority
+Definition
+Response time (Service Window)
+Target resolution time
+P1 – Critical
+Full Unavailability for multiple customers
+Immediate
+4 hours
+P2 – High
+Unavailability for the Customer or significant functional limitation
+1 hour
+1 business day
+P3 – Medium
+Functional limitation with workaround
+4 hours
+5 business days
+P4 – Low
+Question or cosmetic issue
+1 business day
+Best effort
+P1 and P2 incidents are handled 24/7 for Business Plus and Enterprise customers. For Business customers, these response times apply within the Service Window.
+7.3 Escalation
+If the Customer believes an Incident is not being handled adequately, the Customer can escalate to escalation@beebeeb.io. An escalation is reviewed by a senior staff member within 4 hours (Service Window).
+8. Security incidents and data breaches
+8.1 In case of a Personal Data Breach involving Personal Data of the Customer or its Data Subjects, Article 9 of the Data Processing Agreement applies. We inform the Customer without undue delay and in any event within 48 hours of discovery.
+8.2 For security advisories and vulnerabilities we follow a Coordinated Vulnerability Disclosure policy, described at beebeeb.io/security.
+9. Capacity, fair use and API limits
+9.1 The Service is delivered within the capacity and fair-use limits of the chosen subscription. Exceeding these may result in rate limiting or, in extreme cases, suspension.
+9.2 API rate limits are described at docs.beebeeb.io/rate-limits.
+9.3 The Customer is required to size its use to the chosen subscription and to scale up in time if more capacity is needed.
+10. Backup, retention and recovery
+10.1 beebeeb.io makes redundant, geographically distributed backups of encrypted Content within the EEA.
+10.2 In the event of data loss due to a cause attributable to beebeeb.io, we strive for recovery within twenty-four (24) hours (Recovery Time Objective, RTO) and with at most four (4) hours of data loss (Recovery Point Objective, RPO) for Business Plus and Enterprise.
+10.3 We do not guarantee recovery of content deleted by the Customer itself, other than within the trash / version functionality available in the Service.
+10.4 Recovery of files from lost or damaged key material is excluded by technical design (see Terms of Service Article 5).
+11. Term and changes
+11.1 This SLA applies for the duration of the Agreement.
+11.2 beebeeb.io may amend this SLA with a notice period of thirty (30) days. If the change is materially adverse to the Customer, the Customer has the right to terminate the Agreement with effect from the entry-into-force date of the change.
+12. Final provisions
+12.1 This SLA is governed exclusively by Dutch law. Disputes shall be submitted to the competent court in the district of Oost-Brabant, location 's-Hertogenbosch.
+12.2 In case of conflict between this SLA and the Terms of Service, this SLA shall prevail to the extent it concerns SLA obligations.
+
+— End of Service Level Agreement —

@@ -2,24 +2,264 @@
 interface Props {
   title?: string;
   body?: string;
+  text?: string;
+  description?: string;
+  sourceName?: string;
   [key: string]: unknown;
 }
 
-const { title, body } = Astro.props;
+const { title, body, text, description, sourceName } = Astro.props;
+
+function escapeHtml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function autolink(value: string) {
+  return value
+    .replace(
+      /\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})\b/gi,
+      '<a href="mailto:$1">$1</a>',
+    )
+    .replace(
+      /\b((?:https?:\/\/)?(?:www\.)?(?:beebeeb\.io|stripe\.com|autoriteitpersoonsgegevens\.nl)[^\s<]*)/gi,
+      (match) => {
+        const href = match.startsWith('http') ? match : `https://${match}`;
+        const external = href.startsWith('https://beebeeb.io') ? '' : ' target="_blank" rel="noopener noreferrer"';
+        return `<a href="${href}"${external}>${match}</a>`;
+      },
+    );
+}
+
+function renderInline(value: string) {
+  return autolink(escapeHtml(value)).replace(
+    /(\[[^\]]+\])/g,
+    '<span class="legal-placeholder">$1</span>',
+  );
+}
+
+function renderPlainText(value: string, heading?: string) {
+  const lines = value
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .split('\n')
+    .map((line) => line.replace(/\s+$/g, ''));
+
+  while (lines.length && !lines[0].trim()) lines.shift();
+
+  if (heading && lines.length) {
+    const first = lines[0].trim().toLowerCase().replace(/beebeeb\.io/g, '').trim();
+    const expected = heading.toLowerCase().replace(/beebeeb\.io/g, '').trim();
+    if (first === expected || first.startsWith(expected)) lines.shift();
+  }
+
+  let html = '';
+  let inList = false;
+  const closeList = () => {
+    if (inList) {
+      html += '</ul>';
+      inList = false;
+    }
+  };
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+    if (!trimmed) {
+      closeList();
+      continue;
+    }
+
+    if (trimmed.startsWith('•')) {
+      if (!inList) {
+        html += '<ul>';
+        inList = true;
+      }
+      html += `<li>${renderInline(trimmed.replace(/^•\s*/, ''))}</li>`;
+      continue;
+    }
+
+    closeList();
+
+    if (/^(article\s+\d+|annex\s+\d+|appendix\s+\d+)/i.test(trimmed)) {
+      html += `<h2>${renderInline(trimmed)}</h2>`;
+    } else if (/^\d+\.\d+\s+/.test(trimmed)) {
+      html += `<h3>${renderInline(trimmed)}</h3>`;
+    } else if (/^\d+\.\s+/.test(trimmed)) {
+      html += `<h2>${renderInline(trimmed)}</h2>`;
+    } else if (/^(whereas|have agreed as follows|the undersigned):?$/i.test(trimmed)) {
+      html += `<h2>${renderInline(trimmed)}</h2>`;
+    } else if (/^[A-Z][A-Z0-9 /&().-]{4,}:$/.test(trimmed)) {
+      html += `<h2>${renderInline(trimmed)}</h2>`;
+    } else {
+      html += `<p>${renderInline(trimmed)}</p>`;
+    }
+  }
+
+  closeList();
+  return html;
+}
+
+const rendered = text ? renderPlainText(text, title) : body;
+const hasPlaceholders = Boolean(text && /\[[^\]]+\]/.test(text));
 ---
 
-<section class="px-8 py-[72px] bg-paper">
-  <div class="max-w-[760px] mx-auto">
-    {title && <h1 class="text-[36px] font-bold tracking-[-0.02em] mb-8 bb-fade-up">{title}</h1>}
-    {body && (
-      <div class="prose prose-sm text-ink-2 leading-relaxed bb-fade-up bb-delay-1
-        [&_h2]:text-[22px] [&_h2]:font-bold [&_h2]:text-ink [&_h2]:mt-10 [&_h2]:mb-4
-        [&_h3]:text-[17px] [&_h3]:font-semibold [&_h3]:text-ink [&_h3]:mt-8 [&_h3]:mb-3
-        [&_p]:mb-4 [&_ul]:mb-4 [&_ul]:pl-5 [&_li]:mb-1.5
-        [&_a]:text-amber-deep [&_a]:underline [&_a]:underline-offset-2
-        [&_strong]:text-ink [&_strong]:font-semibold"
-        set:html={body}
-      />
+<section class="legal-shell">
+  <div class="legal-container">
+    <header class="legal-header bb-fade-up">
+      <div class="bb-eyebrow">Legal</div>
+      {title && <h1>{title}</h1>}
+      {description && <p>{description}</p>}
+      <div class="legal-meta">
+        <span>Initlabs B.V.</span>
+        {sourceName && <span>{sourceName}</span>}
+      </div>
+    </header>
+
+    {hasPlaceholders && (
+      <div class="legal-notice bb-fade-up bb-delay-1">
+        This imported legal source still contains operational placeholders that need confirmation before production publication.
+      </div>
     )}
+
+    {rendered && <article class="legal-content bb-fade-up bb-delay-1" set:html={rendered} />}
   </div>
 </section>
+
+<style>
+  .legal-shell {
+    padding: 76px 32px 96px;
+    background: var(--paper, var(--color-paper));
+  }
+
+  .legal-container {
+    width: 100%;
+    max-width: 880px;
+    margin: 0 auto;
+  }
+
+  .legal-header {
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--line, var(--color-line));
+  }
+
+  .legal-header .bb-eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .legal-header h1 {
+    max-width: 760px;
+    margin: 0;
+    color: var(--ink, var(--color-ink));
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.04;
+  }
+
+  .legal-header p {
+    max-width: 680px;
+    margin: 18px 0 0;
+    color: var(--ink-2, var(--color-ink-2));
+    font-size: 16px;
+    line-height: 1.65;
+  }
+
+  .legal-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+    color: var(--ink-3, var(--color-ink-3));
+    font-family: var(--font-mono);
+    font-size: 11px;
+  }
+
+  .legal-meta span {
+    padding: 6px 9px;
+    border: 1px solid var(--line, var(--color-line));
+    border-radius: 999px;
+    background: var(--paper-2, var(--color-paper-2));
+  }
+
+  .legal-notice {
+    margin-top: 22px;
+    padding: 14px 16px;
+    border: 1px solid oklch(0.82 0.13 84 / 0.45);
+    border-radius: 8px;
+    background: oklch(0.96 0.05 88 / 0.58);
+    color: var(--amber-deep, var(--color-amber-deep));
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .legal-content {
+    margin-top: 34px;
+    color: var(--ink-2, var(--color-ink-2));
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  .legal-content :global(h2) {
+    margin: 42px 0 14px;
+    padding-top: 6px;
+    color: var(--ink, var(--color-ink));
+    font-size: 22px;
+    font-weight: 650;
+    letter-spacing: -0.018em;
+    line-height: 1.2;
+  }
+
+  .legal-content :global(h3) {
+    margin: 28px 0 10px;
+    color: var(--ink, var(--color-ink));
+    font-size: 17px;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+  }
+
+  .legal-content :global(p) {
+    margin: 0 0 13px;
+  }
+
+  .legal-content :global(ul) {
+    margin: 0 0 18px;
+    padding-left: 22px;
+  }
+
+  .legal-content :global(li) {
+    margin-bottom: 7px;
+  }
+
+  .legal-content :global(a) {
+    color: var(--amber-deep, var(--color-amber-deep));
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .legal-content :global(strong) {
+    color: var(--ink, var(--color-ink));
+    font-weight: 650;
+  }
+
+  .legal-content :global(.legal-placeholder) {
+    display: inline-block;
+    padding: 0 4px;
+    border-radius: 4px;
+    background: oklch(0.94 0.06 88 / 0.72);
+    color: var(--amber-deep, var(--color-amber-deep));
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+  }
+
+  @media (max-width: 640px) {
+    .legal-shell {
+      padding: 56px 20px 72px;
+    }
+  }
+</style>

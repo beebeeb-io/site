@@ -1,0 +1,180 @@
+
+
+Data Processing Agreement
+(in accordance with Article 28 GDPR)
+Version 1.0 – 7 May 2026
+THE UNDERSIGNED:
+(1) [Customer name], with registered office at [address], registered with the Chamber of Commerce under number [KvK number], duly represented by [name representative], hereinafter referred to as: "Controller";
+and
+(2) InitLabs B.V., trading under the name beebeeb.io, with registered office at Kelvinstraat 34A, 6601 HE Wijchen, Netherlands, registered with the Chamber of Commerce under number 95157565, duly represented by [name representative], hereinafter referred to as: "Processor";
+Controller and Processor hereinafter collectively referred to as: "Parties" and individually as: "Party".
+WHEREAS:
+(a) The Parties have entered into an agreement under which the Processor makes the cloud storage service beebeeb.io available to the Controller (the "Main Agreement");
+(b) The Processor processes personal data on behalf of the Controller in performing the Main Agreement;
+(c) Pursuant to Article 28 GDPR, the Parties are required to record their arrangements regarding this processing in writing;
+(d) The Processor operates a Zero-Knowledge Architecture, whereby personal data contained in file content is encrypted on the Controller's device before being transmitted to the Processor's infrastructure, and the Processor therefore has no access to the content of these files;
+(e) The Parties wish to set out their arrangements in this Data Processing Agreement ("DPA").
+HAVE AGREED AS FOLLOWS:
+Article 1 – Definitions
+GDPR: Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 on the protection of natural persons with regard to the processing of personal data and on the free movement of such data (General Data Protection Regulation).
+Data Subject: an identified or identifiable natural person to whom Personal Data relates.
+Personal Data Breach: a breach of security leading to the accidental or unlawful destruction, loss, alteration, unauthorised disclosure of, or access to, Personal Data transmitted, stored or otherwise processed (Article 4(12) GDPR).
+Personal Data: any information relating to an identified or identifiable natural person, as defined in Article 4(1) GDPR, that is processed by the Processor on behalf of the Controller in the context of the Main Agreement.
+Sub-processor: a third party engaged by the Processor that processes Personal Data on behalf of the Controller.
+Processing: any operation or set of operations performed on Personal Data, as defined in Article 4(2) GDPR.
+Zero-Knowledge Architecture: the design principle whereby Personal Data forming part of the file content is encrypted on the Controller's device before transmission, and the Processor has no access to the cryptographic keys or the unencrypted content.
+Article 2 – Subject matter and duration
+2.1 This DPA governs the processing of Personal Data by the Processor on behalf of the Controller in the context of the Main Agreement.
+2.2 The subject matter, nature, purpose and duration of the Processing, the types of Personal Data and the categories of Data Subjects are set out in Annex 1.
+2.3 This DPA applies for the duration of the Main Agreement and terminates automatically upon termination thereof, without prejudice to the provisions intended by their nature to survive.
+2.4 In case of conflict between this DPA and the Main Agreement, this DPA shall prevail to the extent it concerns the processing of Personal Data.
+Article 3 – Instructions and purpose limitation
+3.1 The Processor processes Personal Data only on the basis of documented instructions from the Controller, including with regard to transfers to third countries or international organisations, unless required to do so by Union or Member State law. In such case, the Processor shall inform the Controller of that legal requirement before processing, unless that law prohibits such information on important grounds of public interest.
+3.2 The Main Agreement, this DPA and the normal use of the Service by the Controller serve as instructions within the meaning of Article 3.1.
+3.3 The Processor shall immediately inform the Controller if, in its opinion, an instruction infringes the GDPR or other Union or Member State data protection provisions.
+3.4 The Processor shall not use the Personal Data for its own purposes or those of third parties, except to the extent necessary for the provision, security and improvement of the Service and to the extent compatible with this DPA. For analysing the use of the Service, the Processor uses exclusively a self-managed, self-hosted Matomo installation within the EEA, on the basis of anonymised or aggregated data. No Personal Data of Data Subjects is shared with third parties in this context.
+Article 4 – Confidentiality
+4.1 The Processor ensures that persons under its authority who have access to Personal Data have committed themselves to confidentiality or are under an appropriate statutory obligation of confidentiality.
+4.2 The Processor restricts access to Personal Data to staff for whom such access is necessary for the performance of the work under the Main Agreement (need-to-know basis).
+Article 5 – Security
+5.1 The Processor takes appropriate technical and organisational measures to ensure a level of security appropriate to the risk, in accordance with Article 32 GDPR. The current measures are described in Annex 2.
+5.2 A material element of the Processor's security level is the Zero-Knowledge Architecture. The Parties acknowledge that this architecture has the consequence that (i) Personal Data in file content cannot be read by the Processor; (ii) the Processor cannot perform certain processing operations on the file content; and (iii) the Controller is responsible for safely managing encryption keys and passwords.
+5.3 The Processor shall periodically evaluate the measures taken and adapt them as necessary in line with the state of the art, the costs of implementation, and the nature, scope, context and purposes of the Processing, as well as the risks for the rights and freedoms of Data Subjects.
+Article 6 – Sub-processors
+6.1 The Controller hereby grants the Processor general authorisation to engage Sub-processors, provided that they are imposed with at least the same data protection obligations as those laid down in this DPA.
+6.2 A current list of Sub-processors is included in Annex 3 and is also published at beebeeb.io/sub-processors.
+6.3 The Processor shall inform the Controller at least thirty (30) days in advance of any intended additions or replacements of Sub-processors. The Controller has the right, within fourteen (14) days after such notification, to object on reasonable grounds. If the Parties cannot resolve the objection by mutual agreement, the Controller has the right to terminate the Main Agreement for the part that cannot reasonably be continued without the relevant Sub-processor.
+6.4 The Processor remains fully liable to the Controller for compliance by Sub-processors with the obligations under this DPA.
+6.5 The Parties acknowledge that Stripe Payments Europe Ltd. has a dual role: (i) as a Sub-processor to the extent that Stripe processes payments of the Controller on the instructions of the Processor; and (ii) as an independent controller (Article 4(7) GDPR) to the extent that Stripe processes Personal Data for its own legal purposes, including fraud prevention (Stripe Radar), compliance with anti-money laundering legislation (AML / AMLD), sanctions screening and PSD2 compliance. For the processing for which Stripe acts as an independent controller, this DPA does not apply and Stripe's own privacy and processing terms apply.
+Article 7 – Transfers outside the EEA
+7.1 The Processor processes Personal Data in principle exclusively within the European Economic Area (EEA).
+7.2 If transfers outside the EEA are unavoidable, they shall only take place on the basis of an appropriate safeguard pursuant to Chapter V GDPR, including Standard Contractual Clauses adopted by the European Commission or an adequacy decision.
+7.3 The Processor shall not provide Personal Data to authorities of countries outside the EEA other than on the basis of a valid legal basis under Union law or an international treaty to which the Netherlands is a party, taking into account Article 27 of the EU Data Act (Regulation (EU) 2023/2854).
+7.4 The Controller is informed that Stripe Payments Europe Ltd. (Ireland) may, in the context of its services, transfer Personal Data to its US parent Stripe, Inc. and other group entities outside the EEA, on the basis of Standard Contractual Clauses (Decision (EU) 2021/914) and supplementary measures. This transfer takes place under Stripe's responsibility.
+Article 8 – Assistance to the Controller
+8.1 Taking into account the nature of the Processing, the Processor provides reasonable assistance to the Controller in fulfilling the Controller's obligation to respond to requests from Data Subjects exercising their rights (Articles 12 to 23 GDPR).
+8.2 If a Data Subject directly addresses a request to the Processor, the Processor shall forward this as soon as possible to the Controller and shall not respond substantively itself, except as required by law.
+8.3 Taking into account the nature of the Processing and the information available to the Processor, the Processor provides reasonable assistance to the Controller in ensuring compliance with the obligations under Articles 32 to 36 GDPR (security, breaches, DPIA and prior consultation).
+8.4 The Processor is entitled to charge a reasonable fee for assistance under this article if such assistance exceeds the normal level. The Processor shall inform the Controller in advance of expected costs.
+Article 9 – Personal Data Breaches
+9.1 The Processor shall inform the Controller without undue delay, and in any event within forty-eight (48) hours after discovery, of a Personal Data Breach. The notification shall in any event contain the information referred to in Article 33(3) GDPR, to the extent that information is reasonably available at that time.
+9.2 The Processor provides reasonable assistance to the Controller in performing the notification obligation to the Dutch Data Protection Authority and, where applicable, to Data Subjects.
+9.3 The Processor takes appropriate measures without undue delay to mitigate the consequences of the Personal Data Breach and prevent recurrence.
+9.4 It is solely up to the Controller to notify a Personal Data Breach to the Dutch Data Protection Authority and/or Data Subjects, except where the Processor is independently obliged by law to do so.
+Article 10 – Audits
+10.1 The Processor makes available to the Controller all information necessary to demonstrate compliance with the obligations under this DPA and Article 28 GDPR.
+10.2 The Processor enables and contributes to audits, including inspections. Audits shall in principle be conducted on the basis of current certifications (such as ISO 27001, ISO 27701) or independently prepared assurance reports (such as SOC 2 Type II, ISAE 3402). The Processor shall make these reports available upon request.
+10.3 If, in the Controller's opinion, these reports are insufficient, the Controller may, no more than once per calendar year (and additionally where there is reasonable suspicion of a breach), have an audit carried out by an independent expert, provided that at least four (4) weeks' written notice is given. The audit shall disrupt the Processor's operations as little as possible and shall not extend to data or systems of other customers of the Processor.
+10.4 The costs of audits shall be borne by the Controller, unless the audit demonstrates a material breach of this DPA.
+Article 11 – Termination and return
+11.1 Upon termination of the Main Agreement, the Processor shall, at the Controller's choice, delete or return all Personal Data and copies thereof, unless storage is required under Union law or Member State law.
+11.2 The Processor shall give the Controller a reasonable period (at least thirty (30) days after termination) to export Personal Data via the available functionality. Thereafter, the data shall be irretrievably deleted.
+11.3 The Processor shall confirm in writing upon request that deletion has taken place.
+Article 12 – Liability
+12.1 The liability of the Parties under this DPA is subject to the liability limitations from the Main Agreement, to the extent these do not conflict with mandatory provisions of the GDPR.
+12.2 Each Party is liable for damage caused by processing in violation of the GDPR, in accordance with Article 82 GDPR. To the extent the damage is caused by the other Party, that Party indemnifies the first Party for the part attributable to the other Party.
+Article 13 – Final provisions
+13.1 Amendments to this DPA shall only be valid if agreed in writing by the Parties.
+13.2 This DPA shall be governed exclusively by Dutch law. Disputes shall be submitted to the competent court in the district of Oost-Brabant, location 's-Hertogenbosch.
+
+AGREED AND SIGNED IN DUPLICATE:
+Controller
+Processor
+Name: ____________________
+Name: ____________________
+Position: __________________
+Position: __________________
+Date: ___________________
+Date: ___________________
+Signature:
+Signature:
+____________________
+____________________
+
+ANNEX 1 – Specification of the Processing
+Subject matter and nature of the processing
+The storage, synchronisation, making available, duplication for backup, and ultimately deletion of encrypted files in the context of the cloud storage service beebeeb.io. Furthermore: the processing of account and billing data to perform the agreement.
+Purpose of the processing
+Providing the cloud storage service to the Controller, managing the account, performing billing, securing the Service, and complying with legal obligations.
+Types of Personal Data
+	•	Account and contact data of users of the Controller (name, email address)
+	•	Login data (encrypted/hashed)
+	•	Technical data (IP address, user agent, login logs)
+	•	Billing data
+	•	Encrypted file content that may contain Personal Data, but of which the Processor cannot be aware due to the Zero-Knowledge Architecture
+Categories of Data Subjects
+	•	Employees, contractors and end users of the Controller
+	•	Customers and contacts of the Controller (where Personal Data about them is included in files stored by the Controller)
+Special categories of Personal Data
+The Controller is responsible for the content of files it stores. If these files contain special categories of Personal Data (Article 9 GDPR), the Controller is required to ensure the lawfulness thereof and to apply appropriate safeguards. The Processor has no knowledge of the content of these files due to the Zero-Knowledge Architecture.
+Duration of processing
+For the duration of the Main Agreement, plus a thirty (30) day retention period after termination as described in Article 11.
+
+ANNEX 2 – Technical and Organisational Measures
+The Processor takes the following security measures, in accordance with Article 32 GDPR. These measures are periodically evaluated and adapted to the state of the art.
+1. Cryptography and key management
+	•	Client-side encryption of file content (Zero-Knowledge Architecture)
+	•	AES-256 for data at rest, TLS 1.3 for data in transit
+	•	Argon2id for password hashing
+	•	Keys are derived exclusively on user devices and never stored in readable form on the Processor's servers
+2. Access management
+	•	Role-based access control (RBAC) on a need-to-know basis
+	•	Mandatory two-factor authentication for all system administrators
+	•	Separate development, test and production environments
+	•	Logging and auditing of administrative access
+3. Network and infrastructure security
+	•	Firewalls and network segmentation
+	•	Intrusion detection and monitoring
+	•	Secure data centres in the Netherlands (EEA) with physical access control
+	•	Geographically distributed backups within the EEA
+4. Software development and vulnerability management
+	•	Secure software development with code review
+	•	Automated dependency and vulnerability scans
+	•	Periodic penetration tests by external specialists
+	•	Patch management and hardening of systems
+5. Organisational measures
+	•	Confidentiality agreements for all employees
+	•	Periodic training and awareness for employees
+	•	Information security policy (ISMS) based on ISO/IEC 27001
+	•	Incident response procedure including breach notification chain
+	•	Privacy by design and by default as design principles
+6. Continuity and recovery
+	•	Encrypted backups with geographic distribution (within EEA)
+	•	Disaster Recovery Plan with periodic tests
+	•	Erasure coding and redundancy against hardware failure
+7. Analytics and monitoring
+	•	Self-hosted Matomo installation within the EEA, managed by the Processor
+	•	IP address anonymisation and respect for "Do Not Track"
+	•	No use of external tracking or analytics services
+	•	Aggregated or anonymised processing for product improvement
+
+ANNEX 3 – List of Sub-processors
+The current list of Sub-processors is available at beebeeb.io/sub-processors and is maintained by the Processor. At the time of signing, this includes at least the following Sub-processors:
+Sub-processor
+Service
+Location
+Data processed
+Role
+[Data centre / hosting name]
+Hosting & infrastructure
+Netherlands (EEA)
+Encrypted content, account and metadata
+Processor
+Stripe Payments Europe Ltd.
+Payment processing
+Ireland (EEA) — may transfer to Stripe, Inc. (US) on the basis of SCCs
+Name, address, payment data, transaction data
+Processor (for payment processing) and independent controller (for fraud prevention and compliance — see Art. 6.5)
+[Email provider name]
+Transactional email
+[Country] (EEA)
+Email address, name, transaction data
+Processor
+[Support tool name]
+Customer service tooling
+[Country] (EEA)
+Name, email, communication
+Processor
+Not classified as a Sub-processor: The analytics installation (Matomo) is self-hosted by the Processor within the EEA and is therefore not a Sub-processor within the meaning of this DPA.
+
+— End of Data Processing Agreement —

@@ -1,0 +1,153 @@
+
+
+Privacy Policy beebeeb.io
+Version 1.0 – 7 May 2026
+InitLabs B.V., trading under the name beebeeb.io, attaches great importance to your privacy. This privacy policy explains which personal data we process, for what purpose, on what legal basis, and which rights you have. This policy has been drawn up in accordance with the General Data Protection Regulation (GDPR) and the Dutch GDPR Implementation Act.
+The core of beebeeb.io is a Zero-Knowledge Architecture. This means that the content of your files is encrypted on your device before it reaches our servers. We have no technical access to your files or to the keys that would allow them to be decrypted. This fundamentally limits which personal data we can process at all.
+1. Controller
+The controller for the processing of personal data via the beebeeb.io service is:
+	•	InitLabs B.V., trading under the name beebeeb.io
+	•	Registered address: Kelvinstraat 34A, 6601 HE Wijchen, Netherlands
+	•	KvK number: 95157565
+	•	Email for privacy matters: privacy@beebeeb.io
+	•	General contact: contact@beebeeb.io
+We have assessed whether we are required to appoint a Data Protection Officer (DPO) under Article 37 GDPR. At present this is not the case. Privacy enquiries are handled by our internal privacy contact, available via privacy@beebeeb.io.
+2. Which personal data we process
+Due to our Zero-Knowledge Architecture, the amount of personal data we process is intentionally limited. We process the following categories:
+2.1 Account and registration data
+	•	Name (if you choose to provide it)
+	•	Email address
+	•	Hashed password (Argon2id, salted; not readable by us)
+	•	Optionally: organisation, billing address, VAT number (business users)
+2.2 Payment and billing data
+	•	Name, billing address, VAT number
+	•	Transaction data (date, amount, subscription type)
+	•	Payment data (such as a reference to a payment method); the full payment data (credit card number, IBAN mandates) is processed by our payment service provider Stripe and not stored by us. See section 4 for an explanation of Stripe's role.
+2.3 Technical and usage data
+	•	IP address (truncated/masked, stored for at most the duration set out in section 5)
+	•	Login and logout timestamps
+	•	Device type, operating system and browser (user agent)
+	•	Error and diagnostic data (anonymised where possible)
+	•	Volume of encrypted data stored (in bytes; not the content)
+2.4 Analytics data (Matomo)
+We use a self-hosted Matomo installation within the European Economic Area (EEA) to obtain aggregated insights into the use of our website and Service, to improve performance and to detect issues. Because the Matomo installation runs in our own infrastructure within the EEA, no analytics data is shared with third parties.
+Through Matomo we process, among other things:
+	•	Pages visited and the order of visits
+	•	Referring URL (referrer)
+	•	Anonymised IP address (last octet(s) removed before storage)
+	•	Browser type, operating system, language preference and screen resolution
+	•	Time and duration of visit
+	•	Click behaviour and on-page interactions
+Matomo is configured by us so that:
+	•	IP addresses are anonymised before storage (privacy-by-design);
+	•	Where possible, we use the cookieless mode;
+	•	"Do Not Track" signals from browsers are respected;
+	•	Data is not shared with third parties or used for advertising purposes.
+You can opt out of Matomo at any time via the opt-out option on our website (beebeeb.io/privacy#opt-out).
+2.5 What we do not process
+We have no access to:
+	•	The content of your files (text, photos, documents, video, etc.)
+	•	Your encryption keys or passwords in readable form
+	•	File names or folder structures, where these are encrypted client-side
+3. Purposes and legal bases
+We process your personal data for the following purposes, with the corresponding legal basis under Article 6 GDPR:
+Purpose
+Types of data
+Legal basis
+Creating and managing your account
+Account and registration data
+Performance of contract (Art. 6.1.b GDPR)
+Providing the cloud storage service
+Account, technical and usage data
+Performance of contract (Art. 6.1.b GDPR)
+Billing and accounting
+Payment and billing data
+Legal obligation (Art. 6.1.c GDPR); performance of contract (Art. 6.1.b)
+Securing the Service and fraud prevention
+Technical data, IP address, login logs
+Legitimate interest (Art. 6.1.f GDPR)
+Analytics via self-hosted Matomo
+Anonymised usage data
+Legitimate interest (Art. 6.1.f GDPR)
+Customer support and communication
+Account data, communication content
+Performance of contract; legitimate interest
+Complying with lawful requests from competent authorities
+Account and metadata
+Legal obligation (Art. 6.1.c GDPR)
+Product improvement (aggregated, anonymised)
+Anonymised usage data
+Legitimate interest (Art. 6.1.f GDPR)
+Direct marketing to existing customers
+Email address, account data
+Legitimate interest (Art. 6.1.f GDPR); always possible to opt out
+4. Transfers and (sub-)processors
+beebeeb.io uses a limited number of (sub-)processors and external service providers to deliver the Service. An up-to-date list is available at beebeeb.io/sub-processors.
+At the time of publication, this includes at least:
+	•	Hosting / data centre: [name], located in the Netherlands (EEA) — processor
+	•	Stripe Payments Europe Ltd.: located in Ireland (EEA), with parent company Stripe, Inc. in the United States — see below
+	•	Transactional email: [name], located in [country] (EEA) — processor
+	•	Customer support tooling: [name], located in [country] (EEA) — processor
+Personal data is in principle processed exclusively within the European Economic Area (EEA). If transfers outside the EEA are unavoidable, they will only take place on the basis of an appropriate safeguard pursuant to Chapter V GDPR (such as Standard Contractual Clauses adopted by the European Commission).
+Special position of Stripe
+Stripe Payments Europe Ltd. (located in Ireland) is our payment service provider. Stripe has a dual role within the meaning of the GDPR:
+	•	As a processor (Article 28 GDPR) for processing payments that you initiate via beebeeb.io, on our instructions.
+	•	As an independent controller (Article 4(7) GDPR) for its own legal obligations regarding fraud prevention, anti-money laundering legislation (AML / AMLD), sanctions screening, and compliance with payment regulations (including PSD2). For these purposes, Stripe determines the means and purposes of processing itself.
+When entering payment data and on pages where Stripe components are loaded (such as the payment form and checkout steps), Stripe loads a script from the domain r.stripe.com and/or js.stripe.com (Stripe Radar). This script collects information about your device and behaviour to enable Stripe to detect and prevent fraudulent payments.
+In this context, Stripe processes among other things:
+	•	Device and browser information (user agent, screen resolution, time zone, installed fonts/plugins and other fingerprinting characteristics)
+	•	IP address and inferred geographic location
+	•	Interaction patterns on the payment page (mouse, keyboard and scroll behaviour)
+	•	Cookies or similar technologies set by Stripe on the Stripe domain
+This processing takes place on the basis of Stripe's (and our) legitimate interest in fraud prevention, and on the legal obligations under which Stripe operates. This part of the processing falls under Stripe's privacy notice, and we are not in a position to impose contractual restrictions on it.
+Stripe may transfer data in this context to its US parent Stripe, Inc. and to other group entities. Stripe relies on Standard Contractual Clauses (Decision (EU) 2021/914) and supplementary measures for these transfers. For more information, please refer to Stripe's privacy notice at stripe.com/privacy.
+5. Retention periods
+We do not retain personal data longer than necessary for the purposes for which it was collected, or to comply with legal obligations:
+	•	Account and registration data: up to thirty (30) days after termination of the account; thereafter deleted or anonymised.
+	•	Encrypted content: up to thirty (30) days after termination of the account; thereafter irretrievably deleted.
+	•	Payment and billing data: seven (7) years, pursuant to Article 52 of the Dutch General Tax Act.
+	•	IP addresses and login logs: in principle a maximum of thirty (30) days, unless longer retention is necessary for the investigation of abuse or security incidents (in which case up to twelve (12) months).
+	•	Matomo analytics data: at most twenty-four (24) months, then automatically deleted or aggregated.
+	•	Customer service communication: up to twenty-four (24) months after the last contact.
+	•	Anonymised usage data: may be retained indefinitely for analysis and product improvement.
+6. Security
+We take appropriate technical and organisational measures to protect your personal data against loss or unlawful processing, including:
+	•	Client-side encryption of file content (Zero-Knowledge)
+	•	Encryption of data in transit (TLS 1.3) and at rest (AES-256)
+	•	Strict role-based access control for our system administrators, including logging and auditing
+	•	Hashing and salting of user passwords (Argon2id)
+	•	Regular security testing, including penetration tests and vulnerability scans
+	•	Secure software development, including code review and dependency scanning
+	•	Geographically distributed backups of encrypted data within the EEA
+	•	Incident response procedure compliant with Articles 33 and 34 GDPR
+7. Your rights
+Under the GDPR you have the following rights regarding your personal data:
+	•	Access (Art. 15): the right to obtain a copy of the personal data we process about you.
+	•	Rectification (Art. 16): the right to have inaccurate or incomplete data corrected.
+	•	Erasure (Art. 17): the right to have your data deleted, subject to legal retention obligations.
+	•	Restriction (Art. 18): the right to have processing temporarily restricted.
+	•	Objection (Art. 21): the right to object to processing based on legitimate interest.
+	•	Data portability (Art. 20): the right to receive your data in a structured, commonly used and machine-readable format.
+	•	Not to be subject to automated decision-making (Art. 22): we ourselves do not engage in automated decision-making with legal effects. Stripe does apply automated decision-making to payments in the context of fraud prevention; please refer to Stripe's privacy policy for your rights in that context.
+You may submit requests to privacy@beebeeb.io. We respond within one (1) month, with a possible extension of two (2) months for complex or multiple requests. To verify your identity, we may ask for additional information.
+Important: due to the Zero-Knowledge Architecture, we cannot provide access to the content of your files because we ourselves cannot read it. You can export your files yourself at any time via your account.
+8. Complaints
+If you have complaints about how we handle your personal data, please first contact us at privacy@beebeeb.io. We strive to resolve every complaint amicably.
+You also have the right to lodge a complaint with the Dutch Data Protection Authority (Autoriteit Persoonsgegevens), the supervisory authority in the Netherlands: www.autoriteitpersoonsgegevens.nl. If you are based in another EU member state, you may also lodge your complaint with your local supervisory authority.
+9. Cookies and similar technologies
+beebeeb.io uses a minimal number of cookies and similar technologies. We do not place tracking or advertising cookies. We distinguish:
+	•	Functional cookies (no consent required): necessary for the basic operation of the Service, such as session cookies and cookies for authentication and language preference.
+	•	Security cookies (no consent required): necessary for fraud prevention, brute-force protection and CSRF protection.
+	•	Analytics via Matomo: in cookieless mode where possible. If Matomo places cookies, we will explicitly request your consent via a cookie banner. Anonymised IP addresses and respect for "Do Not Track" are configured by default.
+	•	Stripe (Stripe Radar): Stripe places its own cookies and/or similar technologies on payment pages on the Stripe domain in the context of fraud prevention. These technologies are necessary for the secure processing of your payment. For Stripe's processing, we refer you to Stripe's privacy policy.
+A current overview of placed cookies is available in our Cookie Statement at beebeeb.io/cookies.
+10. Requests from government authorities
+beebeeb.io occasionally receives requests from Dutch and foreign government authorities for the disclosure of data. We assess every request legally and only honour lawful requests based on applicable Dutch and European law.
+Due to our Zero-Knowledge Architecture, we cannot provide unencrypted content because we cannot read it ourselves. We can only provide account and billing data, technical metadata, and encrypted content as stored by us.
+To the extent legally permitted, we inform you of requests relating to your data. We periodically publish a transparency report with aggregated information on requests received.
+11. Changes
+We may amend this privacy policy from time to time, for example in case of changes to our services or applicable legislation. The most recent version is always available at beebeeb.io/privacy. Material changes will be announced via email or within the Service, at least thirty (30) days before they take effect.
+12. Contact
+Do you have questions about this privacy policy or about how we handle your personal data? Please contact us at privacy@beebeeb.io or by post at the registered address mentioned above.
+
+— End of Privacy Policy —

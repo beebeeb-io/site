@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/base.astro';
+import { legalDocList } from '../lib/legalDocs';
+---
+
+<Base
+  title="Legal — Beebeeb"
+  description="Legal documents for Beebeeb: terms, privacy, DPA, acceptable use, cookies, sub-processors, law enforcement, transparency, complaints, and SLA."
+  path="/legal"
+>
+  <section class="legal-index">
+    <div class="bb-container legal-index-grid">
+      <div>
+        <div class="bb-eyebrow">Legal</div>
+        <h1>Legal documents.</h1>
+        <p>
+          Public legal and compliance documents for Beebeeb, formatted in the
+          same visual system as the rest of the site.
+        </p>
+      </div>
+
+      <div class="legal-index-list">
+        {legalDocList.map((doc) => (
+          <a href={doc.href}>
+            <span>{doc.title}</span>
+            <small>{doc.description}</small>
+          </a>
+        ))}
+        <div class="legal-index-note">
+          The supplied English package did not include an English
+          Notice-and-Action Procedure source file. It is not published here
+          until that English text is available.
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal-index {
+    padding: 86px 32px 104px;
+    background: var(--paper);
+  }
+
+  .legal-index-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 64px;
+    align-items: start;
+    padding: 0;
+  }
+
+  .legal-index h1 {
+    margin: 18px 0 20px;
+    color: var(--ink);
+    font-size: clamp(42px, 5vw, 66px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.02;
+  }
+
+  .legal-index p {
+    max-width: 460px;
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .legal-index-list {
+    display: grid;
+    gap: 10px;
+  }
+
+  .legal-index-list a,
+  .legal-index-note {
+    display: grid;
+    gap: 5px;
+    padding: 16px 18px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper-2);
+    text-decoration: none;
+  }
+
+  .legal-index-list a span {
+    color: var(--ink);
+    font-size: 15px;
+    font-weight: 650;
+  }
+
+  .legal-index-list a small,
+  .legal-index-note {
+    color: var(--ink-3);
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .legal-index-list a:hover {
+    border-color: var(--amber-deep);
+  }
+
+  .legal-index-note {
+    background: oklch(0.96 0.05 88 / 0.45);
+  }
+
+  @media (max-width: 840px) {
+    .legal-index-grid {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .legal-index {
+      padding: 60px 20px 76px;
+    }
+  }
+</style>

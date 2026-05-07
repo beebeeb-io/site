@@ -67,7 +67,7 @@ const bizComing = !cfg.bizLive ? [
   </div>
 
   <!-- Plan cards -->
-  <div style="padding: 32px 32px 64px; background: var(--paper);">
+  <div id="waitlist" style="padding: 32px 32px 64px; background: var(--paper); scroll-margin-top: 96px;">
     <div class="bb-container" style="padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;">
 
       <!-- Free -->
@@ -165,12 +165,19 @@ const bizComing = !cfg.bizLive ? [
             1 user &middot; &euro;10,99 / extra TB
           </div>
         </div>
-        <a id="pro-cta"
-           href={cfg.isLive ? 'https://app.beebeeb.io/signup?plan=pro' : '#waitlist'}
-           class:list={['bb-cta', cfg.isLive ? '' : 'ghost']}
-           style="justify-content: center; padding: 12px 14px; margin-top: auto;">
-          {cfg.proCTA}
-        </a>
+        {cfg.isLive ? (
+          <a id="pro-cta"
+             href="https://app.beebeeb.io/signup?plan=pro"
+             target="_blank" rel="noopener noreferrer"
+             class="bb-cta"
+             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+            {cfg.proCTA}
+          </a>
+        ) : (
+          <div style="margin-top: auto;">
+            <WaitlistForm source="pricing" plan="pro" />
+          </div>
+        )}
       </div>
 
       <!-- Business -->
@@ -212,11 +219,6 @@ const bizComing = !cfg.bizLive ? [
         {cfg.bizLive ? (
           <a id="biz-cta" href="https://app.beebeeb.io/signup?plan=business" class="bb-cta amber"
              target="_blank" rel="noopener noreferrer"
-             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
-            {cfg.bizCTA}
-          </a>
-        ) : cfg.isLive ? (
-          <a id="biz-cta" href="#waitlist" class="bb-cta"
              style="justify-content: center; padding: 12px 14px; margin-top: auto;">
             {cfg.bizCTA}
           </a>

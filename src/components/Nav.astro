@@ -32,6 +32,7 @@ const links = [
 
 const primaryHref = cfg.primaryHref || 'https://app.beebeeb.io/signup';
 const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the waitlist');
+const waitlistHref = pathname === '/' || pathname.startsWith('/pricing') ? '#waitlist' : '/#waitlist';
 ---
 
 <nav class="bb-launch-nav" id="navbar">
@@ -74,7 +75,7 @@ const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the wait
         </a>
       </>
     ) : (
-      <a href="#waitlist" class="bb-cta">Join the waitlist</a>
+      <a href={waitlistHref} class="bb-cta">Join the waitlist</a>
     )}
   </div>
 
@@ -110,7 +111,7 @@ const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the wait
         </a>
       </>
     ) : (
-      <a href="#waitlist" class="bb-mobile-primary">Join the waitlist</a>
+      <a href={waitlistHref} class="bb-mobile-primary">Join the waitlist</a>
     )}
   </div>
 </div>

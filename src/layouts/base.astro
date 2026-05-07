@@ -2,7 +2,8 @@
 import { ClientRouter } from 'astro:transitions';
 import SEO from '../components/global/SEO.astro';
 import ComingSoon from '../components/ComingSoon.astro';
-import { fetchGlobal } from '../lib/strapi';
+import { fetchGlobal, getLaunchPhase } from '../lib/strapi';
+import { phaseConfig } from '../lib/phase';
 import '../styles/global.css';
 
 interface Props {
@@ -25,6 +26,8 @@ const {
 
 const globalData = await fetchGlobal();
 const siteMode = globalData?.site_mode || 'live';
+const phase = await getLaunchPhase();
+const cfg = phaseConfig(phase);
 const Nav = chrome ? (await import('../components/Nav.astro')).default : null;
 const Footer = chrome ? (await import('../components/Footer.astro')).default : null;
 ---
@@ -55,7 +58,7 @@ const Footer = chrome ? (await import('../components/Footer.astro')).default : n
   <body class="min-h-screen">
     <div class="bb-scroll-progress" transition:persist></div>
 
-    {Nav && <Nav />}
+    {Nav && <Nav {cfg} />}
 
     <main transition:animate="fade">
       <slot />
@@ -63,7 +66,7 @@ const Footer = chrome ? (await import('../components/Footer.astro')).default : n
 
     {Footer && (
       <div>
-        <Footer />
+        <Footer {cfg} />
       </div>
     )}
 

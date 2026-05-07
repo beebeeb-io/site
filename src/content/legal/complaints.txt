@@ -1,0 +1,111 @@
+
+
+Complaints Policy beebeeb.io
+Internal complaints mechanism in accordance with Article 20 Digital Services Act
+Version 1.0 – 7 May 2026
+If you do not agree with a decision we have taken on the basis of our Acceptable Use Policy or our Notice-and-Action Procedure, you can object via this complaints policy. This policy meets the requirements of Article 20 of the Digital Services Act (Regulation (EU) 2022/2065).
+1. Which decisions can you complain about?
+You can lodge a complaint against any of the following decisions:
+Type of decision
+Examples
+Removal or restriction of content
+A shared link has been blocked or a file removed
+Suspension or termination of the account
+Your account has been blocked or definitively terminated
+Restriction of visibility
+A shared link has been "shadow-banned" or made non-indexable
+Suspension of payments
+Your payout (if applicable) has been suspended
+Restriction of your ability to submit reports
+You have been flagged as an abuser of the reporting system (Art. 23 DSA)
+Refusal to follow up on a report
+You have submitted a notice-and-action report that we have rejected
+2. Who can file a complaint?
+Role
+Right to complain
+User whose content has been affected
+Yes
+User whose account has been suspended or terminated
+Yes
+Reporter of a notice-and-action report
+Yes, if we have rejected the report
+Third-party stakeholder
+In specific cases, after assessment
+3. Time limit for filing
+You must submit a complaint within six (6) months of the date on which you were informed of the contested decision. Complaints submitted after this period may be declared inadmissible, unless you can demonstrate that you reasonably could not complain earlier.
+4. How to submit a complaint?
+Method
+Where
+Online form
+beebeeb.io/klacht
+Email
+klacht@beebeeb.io
+Post
+InitLabs B.V., attn. Trust & Safety / Complaints Office, Kelvinstraat 34A, 6601 HE Wijchen, Netherlands
+5. What must your complaint contain?
+A complaint is sufficiently substantiated when it contains:
+	•	Your name, email address and (if applicable) account details.
+	•	A reference to the decision you are complaining about — preferably with our reference or sequence number from our communication.
+	•	The reasons why you consider the decision incorrect. This may be substantive, procedural or both.
+	•	Any supporting evidence that supports your complaint.
+	•	What you would like as the outcome (for example: reversal of the decision, restoration of your account, alternative measure).
+We may return incomplete complaints for supplementation before we take them into substantive consideration.
+6. Handling process
+6.1 Acknowledgement of receipt
+We acknowledge receipt within three (3) business days and inform you of the sequence number.
+6.2 Substantive assessment
+The complaint is assessed by a person who was not involved in the original decision. For complaints about notice-and-action decisions this is a qualified Trust & Safety officer; for more complex complaints, an internal Complaints Committee or external legal adviser may be engaged.
+The assessment includes:
+	•	A re-evaluation of the facts
+	•	A test against our internal procedures and the AUP / the DSA
+	•	Assessment of any new information you provide
+	•	Where relevant: hearing of the other involved party
+6.3 Time limit
+We strive to handle every complaint within thirty (30) days of receipt of a complete complaint. In complex cases we may extend this period once by thirty (30) days, in which case we will inform you of the extension.
+In no event will the handling time be longer than six (6) months from receipt of a complete complaint.
+6.4 Possible outcomes
+Outcome
+What does that mean?
+Complaint upheld
+We reverse the original decision in whole or in part
+Complaint partially upheld
+We modify the decision, but not entirely in line with your request
+Complaint rejected
+The original decision remains unchanged
+Inadmissible
+The complaint does not meet the formal requirements
+6.5 Written decision
+You will receive a reasoned written decision by email. This contains:
+	•	The facts we have established
+	•	The assessment based on our AUP, this policy and (where applicable) the DSA
+	•	The decision
+	•	The possibilities for further legal remedies (see section 7)
+7. Further legal remedies
+If you do not agree with our decision on your complaint, you have the following options:
+7.1 Out-of-court dispute settlement (Article 21 DSA)
+You have the right to submit your dispute to an out-of-court dispute settlement body certified by the Dutch Digital Services Coordinator. A current list of certified bodies is available from the Authority for Consumers and Markets (ACM) as the Dutch DSC, at acm.nl.
+beebeeb.io will cooperate in good faith with such a procedure. The decision of the body is not binding on the parties, save where the parties jointly agree to be bound.
+7.2 Complaint to a supervisory authority
+You can lodge a complaint with:
+	•	The Authority for Consumers and Markets (ACM) as the Dutch Digital Services Coordinator: acm.nl
+	•	The Dutch Data Protection Authority (AP) for complaints about the processing of personal data: autoriteitpersoonsgegevens.nl
+	•	Supervisory authorities in other EU member states to the extent competent
+7.3 Court proceedings
+You retain at all times the right to submit your dispute to the competent court.
+8. No retaliation
+We will not penalise you for submitting a complaint. If we find that a complaint has been filed in bad faith or as part of a pattern of abuse, this may have consequences (see section 11 of our Notice-and-Action procedure). Good-faith complaints — even when unfounded — will not lead to disadvantage.
+9. Recording and transparency
+All complaints and their handling are recorded in our internal complaints register. Aggregated data is included in our annual Transparency Report, in accordance with Article 24 DSA.
+10. Changes
+We may amend this complaints policy when changes in laws or regulations give cause. The most recent version is always available at beebeeb.io/klacht. Material changes shall be announced at least thirty (30) days in advance.
+11. Contact
+Purpose
+Contact
+Submit a complaint
+klacht@beebeeb.io or beebeeb.io/klacht
+General questions
+legal@beebeeb.io
+PGP key
+beebeeb.io/legal/pgp
+
+— End of Complaints Policy —

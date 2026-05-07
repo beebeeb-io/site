@@ -119,8 +119,7 @@ export async function fetchGlobal() {
       'populate': '*',
     });
     return data || null;
-  } catch (e) {
-    console.error('[strapi] Failed to load global:', e);
+  } catch {
     return null;
   }
 }

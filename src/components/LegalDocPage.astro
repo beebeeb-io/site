@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/base.astro';
+import LegalText from './blocks/LegalText.astro';
+import type { LegalDoc } from '../lib/legalDocs';
+
+interface Props {
+  doc: LegalDoc;
+}
+
+const { doc } = Astro.props;
+---
+
+<Base
+  title={`${doc.title} — Beebeeb`}
+  description={doc.description}
+  path={doc.href}
+>
+  <LegalText
+    title={doc.title}
+    description={doc.description}
+    sourceName={doc.sourceName}
+    text={doc.text}
+  />
+</Base>

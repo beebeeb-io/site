@@ -1,0 +1,149 @@
+
+
+Cookie Statement beebeeb.io
+Version 1.0 – 7 May 2026
+beebeeb.io is a service of InitLabs B.V., with registered office at Kelvinstraat 34A, 6601 HE Wijchen, Netherlands, KvK number 95157565. This cookie statement describes which cookies and similar technologies we use on beebeeb.io and in our applications, for what purpose, and how you can manage your preferences.
+This cookie statement supplements our Privacy Policy.
+1. What are cookies and similar technologies?
+Cookies are small text files stored by your browser when you visit a website. They are used to remember information about your visit or preferences. By "similar technologies" we mean, among others: localStorage, sessionStorage, IndexedDB, web beacons, pixels, and device fingerprinting techniques.
+Pursuant to Article 11.7a of the Dutch Telecommunications Act ("cookie law") and Article 7 GDPR, prior consent is required for the placement or reading of non-necessary cookies. For strictly necessary (functional) cookies and cookies that serve solely to measure visitor numbers under strict conditions, no consent is required.
+2. Our categories
+We distinguish four categories:
+Category
+Consent required?
+What does it do?
+Strictly necessary
+No
+Enables the basic functionality of the Service
+Security
+No
+Prevents fraud, brute-force attacks and CSRF
+Analytics (cookieless or anonymised)
+No, subject to conditions
+Aggregated usage measurements
+Payment security (Stripe)
+No, strictly necessary for payment
+Fraud prevention during payment
+We do not place advertising cookies, tracking cookies or social media platform cookies.
+3. Strictly necessary cookies and storage
+These cookies are necessary for the basic operation of the Service. Without them the Service does not function correctly. No consent is required.
+Name
+Domain
+Purpose
+Type
+Retention
+bb_session
+beebeeb.io
+Session identification and authentication
+HTTP cookie (HttpOnly, Secure, SameSite=Strict)
+Session / max 30 days with "stay logged in"
+bb_csrf
+beebeeb.io
+Cross-Site Request Forgery protection
+HTTP cookie (Secure, SameSite=Strict)
+Session
+bb_lang
+beebeeb.io
+Language preference (NL/EN)
+HTTP cookie
+12 months
+bb_consent
+beebeeb.io
+Storage of your cookie preferences
+HTTP cookie
+12 months
+bb_kek_meta (localStorage)
+beebeeb.io
+Metadata for local key derivation (no keys or file content)
+localStorage
+Until logout / clearing
+4. Security cookies
+These cookies serve solely for security purposes such as preventing automated attacks. No consent is required (legitimate interest, Art. 6.1.f GDPR and exception Art. 11.7a Dutch Telecommunications Act).
+Name
+Domain
+Purpose
+Retention
+bb_rate_limit
+beebeeb.io
+Rate limiting per IP / session
+1 hour
+bb_login_attempts
+beebeeb.io
+Brute-force login protection
+24 hours
+5. Analytics: self-hosted Matomo
+We use a self-hosted Matomo installation within the European Economic Area to obtain aggregated insights into the use of the Service. We do not share this data with third parties.
+We prefer to use Matomo in cookieless mode. In that case, no cookies are placed and no consent is required.
+If Matomo does place cookies (depending on configuration), the following cookies apply, for which we request explicit consent via our cookie banner:
+Name
+Domain
+Purpose
+Retention
+_pk_id.*
+beebeeb.io
+Anonymous visitor ID
+13 months
+_pk_ses.*
+beebeeb.io
+Session identification
+30 minutes
+_pk_ref.*
+beebeeb.io
+Referring campaign
+6 months
+_pk_testcookie.*
+beebeeb.io
+Test whether cookies work
+1 minute
+Privacy measures we apply to Matomo:
+	•	IP addresses are anonymised before storage (last octet(s) removed)
+	•	"Do Not Track" signals from your browser are respected
+	•	Visitor profiles are not retained for longer than 24 months
+	•	No integration with advertising networks
+	•	No cross-site tracking
+	•	No sale or transfer of data to third parties
+Opt-out: You may opt out of Matomo analytics at any time via beebeeb.io/privacy/opt-out.
+6. Stripe Radar (payment security)
+On pages where payment functionality is offered (such as buying a subscription, paying an invoice), the Stripe.js library is loaded from the domains js.stripe.com, m.stripe.com, q.stripe.com and r.stripe.com. This library is necessary to securely process your payment.
+Stripe places cookies and uses similar technologies on the Stripe domains in this context (not on beebeeb.io). Stripe uses these technologies for, among other things:
+	•	Secure payment functionality (Stripe Elements / Stripe Checkout)
+	•	Fraud prevention via Stripe Radar (device fingerprinting, behavioural analysis, session analysis)
+	•	Compliance with legal obligations including anti-money laundering legislation and sanctions screening
+For these technologies Stripe acts as an independent controller (see section 4 of our Privacy Policy). For more information we refer you to Stripe's privacy notice and cookie policy.
+Examples of cookies that Stripe may place on its own domain:
+Name (indicative)
+Domain
+Purpose
+Retention
+__stripe_mid
+stripe.com
+Fraud prevention and transaction identification
+1 year
+__stripe_sid
+stripe.com
+Session identification during payment
+30 minutes
+m
+m.stripe.com
+Device identification for Stripe Radar
+2 years
+These cookies are placed by Stripe and not by beebeeb.io. We have no technical control over these cookies. Because Stripe Radar is essential for secure payment processing, opting out is not possible without consequences for payment functionality.
+7. Consent, withdrawing and modifying
+On your first visit to beebeeb.io we request via a cookie banner your consent for optional cookies (such as Matomo with cookies, where applicable). Strictly necessary cookies and security cookies are placed without consent because they are necessary for delivering the Service.
+You can adjust or withdraw your cookie preferences at any time via:
+	•	The "Cookie settings" link in the footer of our website
+	•	beebeeb.io/cookies/settings
+Withdrawing consent has no retroactive effect — data collected before withdrawal remains part of the existing dataset but will be deleted in accordance with the retention periods.
+8. Managing cookies via your browser
+In addition to our cookie settings, you can always manage cookies via your browser. Most browsers allow you to block, delete or receive notifications before a cookie is placed. Please note that disabling strictly necessary cookies may result in the Service not working (fully).
+General instructions:
+	•	Chrome: Settings → Privacy and security → Cookies and other site data
+	•	Firefox: Settings → Privacy & Security → Cookies and Site Data
+	•	Safari: Preferences → Privacy
+	•	Edge: Settings → Cookies and site permissions
+9. Changes
+We may amend this cookie statement when we introduce new technologies or change existing ones. The most recent version is always available at beebeeb.io/cookies. Material changes will be announced at least thirty (30) days in advance via email or within the Service.
+10. Contact
+Questions about this cookie statement or about the cookies we use? Please contact us at privacy@beebeeb.io.
+
+— End of Cookie Statement —

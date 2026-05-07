@@ -1,0 +1,90 @@
+
+
+Sub-processor List beebeeb.io
+Last updated: 7 May 2026 Version: 1.0
+beebeeb.io (InitLabs B.V.) uses a limited number of sub-processors and external service providers to deliver its service. This page contains the current list.
+This list is binding for our Data Processing Agreement (Article 6 and Annex 3) and is updated when sub-processors are added, replaced or removed. We inform our business customers at least thirty (30) days in advance of changes, so they have the opportunity to object.
+Stay informed of changes
+You can subscribe to automatic notifications of changes via beebeeb.io/sub-processors/subscribe. You will receive an email when this page changes.
+We also publish an RSS feed with changes.
+Active sub-processors
+Infrastructure and hosting
+Sub-processor
+Role
+Location
+Data processed
+In use since
+[Data centre name]
+Processor
+Netherlands (EEA)
+Encrypted content, account and metadata, technical logs
+7 May 2026
+[Backup provider name, if separate]
+Processor
+Netherlands or [EEA country]
+Encrypted backup data
+7 May 2026
+Payment processing
+Sub-processor
+Role
+Location
+Data processed
+In use since
+Stripe Payments Europe Ltd.
+Processor (payment processing) and independent controller (fraud prevention and compliance)
+Ireland (EEA); transfers to Stripe, Inc. (US) on the basis of Standard Contractual Clauses
+Name, address, email, payment method reference, transaction data, fraud prevention data
+7 May 2026
+Stripe note: Stripe has a dual role. As a processor, Stripe follows our instructions to process payments. As an independent controller, Stripe processes data for its own legal purposes such as fraud prevention (Stripe Radar), anti-money laundering legislation and sanctions screening. See also our Privacy Policy section 4.
+Email and communication
+Sub-processor
+Role
+Location
+Data processed
+In use since
+[Transactional email provider name]
+Processor
+[EEA country]
+Email address, name, transactional message content
+7 May 2026
+[Helpdesk tool name, if applicable]
+Processor
+[EEA country]
+Email address, name, support communication
+7 May 2026
+Accounting and billing
+Sub-processor
+Role
+Location
+Data processed
+In use since
+[Accounting package, e.g. Moneybird]
+Processor
+Netherlands (EEA)
+Name, billing address, VAT number, invoice lines
+7 May 2026
+[Accountant, if external]
+Independent controller (own legal obligations)
+Netherlands
+Invoice and accounting data
+7 May 2026
+Not classified as sub-processors
+The following systems are not sub-processors because they are self-hosted by beebeeb.io within its own infrastructure in the EEA:
+	•	Matomo Analytics (self-hosted in EEA) — we do not share analytics data with third parties
+	•	Authentication and session management — own system
+	•	Key derivation services — performed on the user's device (Zero-Knowledge)
+Sub-contractors of sub-processors
+Our sub-processors in turn use their own sub-contractors (such as data centres, email relays, etc.). These are governed by the agreement between beebeeb.io and the relevant sub-processor. A current list is available from the relevant sub-processor (for example, Stripe publishes its own sub-processor list at stripe.com/legal/subprocessors).
+Change history
+Date
+Change
+Type of change
+7 May 2026
+First publication of the list
+—
+Objection to sub-processors
+Business customers can object to a new or replaced sub-processor within fourteen (14) days after our notification. You may direct objections to legal@beebeeb.io. We will discuss the objection by mutual agreement. If we cannot find a solution, you have the right to terminate the agreement for the part that cannot reasonably be continued without the relevant sub-processor, in accordance with Article 6.3 of our Data Processing Agreement.
+Contact
+Questions about this list or about a specific sub-processor? Please contact us at legal@beebeeb.io or privacy@beebeeb.io.
+
+— End of Sub-processor List —

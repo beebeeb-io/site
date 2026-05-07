@@ -1,0 +1,229 @@
+
+
+Transparency Report beebeeb.io
+Reporting period: [Period to insert, e.g. 1 January 2026 – 31 December 2026] Publication date: 7 May 2026 Version: [Sequential number]
+beebeeb.io publishes an annual transparency report in which we report, in aggregated form, on requests from government authorities and other third parties for the disclosure, removal or alteration of data. We do this to be transparent about how we handle our responsibilities under Dutch and European law, and to give users and partners insight into the extent to which the Service is the subject of government requests.
+This report is in line with our Law Enforcement Guidelines and our obligations under the Digital Services Act (including Articles 15, 24 and 42 DSA where applicable to our services).
+Methodology
+	•	Requests are counted per unique request number in our internal register.
+	•	"Account" refers to a unique beebeeb.io account; multiple requests relating to the same account count separately as requests.
+	•	"Fully granted" means we provided all requested information to the extent we have it.
+	•	"Partially granted" means we provided part of the requested information or limited the scope of the request.
+	•	"Refused" means we provided no information, either because the request did not meet legal requirements, or because the requested information does not exist (due to Zero-Knowledge or retention periods).
+1. Government request overview
+Total
+Category
+Number
+Total requests received
+[N]
+Fully granted
+[N]
+Partially granted
+[N]
+Refused / returned for supplementation
+[N]
+Number of unique accounts affected
+[N]
+Number of accounts notified
+[N]
+Number of accounts where notification was delayed
+[N]
+Breakdown by request type
+Type of request
+Number
+Full
+Partial
+Refused
+Production order Art. 126nd DCP
+[N]
+[N]
+[N]
+[N]
+Production order Art. 126ng DCP (with investigating-judge warrant)
+[N]
+[N]
+[N]
+[N]
+Decryption order Art. 125k / 126nh DCP
+[N]
+[N]
+[N]
+[N]
+Dutch Intelligence and Security Services Act 2017 (AIVD/MIVD)
+[N]
+[N]
+[N]
+[N]
+EU Data Act Art. 17-22 (public emergency)
+[N]
+[N]
+[N]
+[N]
+Civil claims / lawyers
+[N]
+[N]
+[N]
+[N]
+Tax authority requests
+[N]
+[N]
+[N]
+[N]
+Emergency Disclosure Requests
+[N]
+[N]
+[N]
+[N]
+Foreign requests (via MLAT/EIO)
+[N]
+[N]
+[N]
+[N]
+Foreign requests (direct, refused)
+[N]
+[N]
+[N]
+[N]
+Total
+[N]
+[N]
+[N]
+[N]
+Geographical origin
+Country / jurisdiction
+Number of requests
+Netherlands
+[N]
+Other EU member states (via EIO / MLAT)
+[N]
+United States
+[N]
+United Kingdom
+[N]
+Other
+[N]
+Nature of data requested
+Type of data
+Number of requests
+Provided?
+Account registration data
+[N]
+[N]
+Login / session logs
+[N]
+[N]
+Billing data
+[N]
+[N]
+Encrypted file content (as stored)
+[N]
+[N]
+Unencrypted file content
+[N]
+0 (technically impossible due to Zero-Knowledge)
+Decryption keys or passwords
+[N]
+0 (technically impossible due to Zero-Knowledge)
+2. Notice-and-Action requests (DSA)
+Under our Notice-and-Action procedure, third parties can report suspected unlawful content. Requests can be submitted by individuals, organisations, rights holders or competent authorities.
+Category
+Number
+Total reports received
+[N]
+By rights holders
+[N]
+By authorities
+[N]
+By other third parties
+[N]
+Granted (content restricted or removed)
+[N]
+Refused (unfounded, insufficiently specified)
+[N]
+Abusive reports
+[N]
+Average handling time
+[N days]
+Breakdown by reported category
+Type of reported content
+Number
+Granted
+Suspected copyright infringement
+[N]
+[N]
+Suspected criminal material
+[N]
+[N]
+Suspected Article 240b DCC (CSAM)
+[N]
+[N]
+Privacy / personal data violation
+[N]
+[N]
+Phishing or fraud
+[N]
+[N]
+Malware
+[N]
+[N]
+Other
+[N]
+[N]
+Measures taken
+Measure
+Number of times applied
+Shared link restricted or blocked
+[N]
+Account temporarily suspended
+[N]
+Account permanently terminated
+[N]
+Reported to authorities / authorities informed
+[N]
+No action taken (report unfounded)
+[N]
+3. Internal complaints (DSA Art. 20)
+Users whose content has been removed or blocked on the basis of a report can object via our Complaints Policy.
+Category
+Number
+Total complaints received
+[N]
+Complaints upheld (decision reversed)
+[N]
+Complaints rejected
+[N]
+Complaints referred to out-of-court dispute settlement
+[N]
+Average handling time
+[N days]
+4. Changes to the Zero-Knowledge architecture
+In the reporting period:
+	•	☐ No material changes have been made to the Zero-Knowledge architecture
+	•	☐ The following changes have been made: [description]
+	•	☐ No requests have been received that would have led to a change to the architecture if granted
+	•	☐ The following requests have been received that would have led to a change to the architecture: [description and outcome]
+5. Personal data breaches
+Category
+Number
+Data breaches internally registered
+[N]
+Data breaches reported to the Dutch Data Protection Authority (Art. 33 GDPR)
+[N]
+Data breaches where data subjects were informed (Art. 34 GDPR)
+[N]
+Estimated number of affected accounts
+[N]
+For more information on individual data breaches, to the extent we are permitted to communicate publicly, please refer to our status and incident page at status.beebeeb.io.
+6. Warrant Canary
+On the date of publication of this report, InitLabs B.V. ("beebeeb.io") confirms the following:
+	•	☐ We have not received any request to install a back door or weaken our encryption.
+	•	☐ We have not received any request to disclose information that we are not permitted to inform our users about, other than regular criminal procedural powers on which we report aggregated in this report.
+	•	☐ We have not received any National Security Letter (NSL) or comparable instrument.
+The absence of this declaration in future reports may be an indication of a changed situation.
+7. Questions or comments
+Do you have questions about this report or about how we handle government requests? Please contact legal@beebeeb.io.
+We expect to publish the next transparency report around [date next report].
+
+Next reporting: [date]. Earlier reports are available via beebeeb.io/transparency/archive.
+
+— End of Transparency Report —

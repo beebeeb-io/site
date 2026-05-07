@@ -123,12 +123,19 @@ const bizBaseAnnual = +(bizBaseMonthly * 10 / 12).toFixed(2);
             1 user &middot; &euro;10,99 / extra TB
           </div>
         </div>
-        <a id="teaser-pro-cta"
-           href={cfg.isLive ? 'https://app.beebeeb.io/signup?plan=pro' : '#waitlist'}
-           class:list={['bb-cta', cfg.isLive ? '' : 'ghost']}
-           style="justify-content: center; padding: 12px 14px; margin-top: auto;">
-          {cfg.proCTA}
-        </a>
+        {cfg.isLive ? (
+          <a id="teaser-pro-cta"
+             href="https://app.beebeeb.io/signup?plan=pro"
+             target="_blank" rel="noopener noreferrer"
+             class="bb-cta"
+             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+            {cfg.proCTA}
+          </a>
+        ) : (
+          <div style="margin-top: auto;">
+            <WaitlistForm source="pricing" plan="pro" />
+          </div>
+        )}
       </div>
 
       <div class:list={['bb-plan', !cfg.bizLive ? 'coming' : '']}>
@@ -169,11 +176,6 @@ const bizBaseAnnual = +(bizBaseMonthly * 10 / 12).toFixed(2);
         {cfg.bizLive ? (
           <a id="teaser-biz-cta" href="https://app.beebeeb.io/signup?plan=business" class="bb-cta amber"
              target="_blank" rel="noopener noreferrer"
-             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
-            {cfg.bizCTA}
-          </a>
-        ) : cfg.isLive ? (
-          <a id="teaser-biz-cta" href="#waitlist" class="bb-cta"
              style="justify-content: center; padding: 12px 14px; margin-top: auto;">
             {cfg.bizCTA}
           </a>

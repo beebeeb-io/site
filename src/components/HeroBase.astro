@@ -67,7 +67,7 @@ const trust = [
   </div>
 
   {phaseOne && (
-    <div class="hero-waitlist">
+    <div id="waitlist" class="hero-waitlist">
       <WaitlistForm source="hero" />
     </div>
   )}
@@ -211,6 +211,7 @@ const trust = [
   .hero-waitlist {
     position: relative;
     padding: 0 32px 54px;
+    scroll-margin-top: 96px;
   }
 
   .hero-trust {

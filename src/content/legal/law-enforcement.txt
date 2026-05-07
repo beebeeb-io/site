@@ -1,0 +1,99 @@
+
+
+Law Enforcement Guidelines beebeeb.io
+Version 1.0 – 7 May 2026
+These Law Enforcement Guidelines describe how beebeeb.io (InitLabs B.V.) handles requests from Dutch and foreign law enforcement, intelligence services and other government bodies. We publish these guidelines to be transparent about our procedures and the safeguards we apply for the privacy and rights of our users.
+1. Our principles
+beebeeb.io is built on four legal and ethical principles:
+	•	We provide only what is legally required. We do not voluntarily comply with requests that do not meet applicable legal requirements.
+	•	We assess every request legally. Our legal advisors review every request for lawfulness, jurisdiction, scope and proportionality.
+	•	We inform our users where legally permitted. Unless a court gag order, a specific statutory secrecy obligation or a justified interest of an ongoing investigation prohibits this.
+	•	We can only provide what we have. Due to our Zero-Knowledge Architecture, we cannot provide unencrypted file content — we don't have it ourselves.
+2. What data can/can't we provide?
+Available (subject to lawfulness of the request)
+	•	Account registration data: name, email address, registration date, IP address at registration (insofar as we still have it)
+	•	Login data: login timestamps, IP addresses at login (within our retention period of 30 days, or 12 months in case of security incidents)
+	•	Billing data: billing address, VAT number, transaction overviews, payment method used (reference, no full payment data)
+	•	Storage metadata: amount of data stored (bytes), number of files (as metadata counts), upload/modification timestamps (insofar as available in our logging)
+	•	Encrypted file content: as stored by us, in encrypted form
+Not available by technical design
+	•	Unencrypted file content: the content of files is encrypted on the user's device. We do not have the cryptographic keys and cannot decrypt the content.
+	•	File names, folder structures and other file metadata insofar as these are subject to client-side encryption.
+	•	Passwords: we only store Argon2id hashes. Passwords are not retrievable.
+	•	Decryption keys: by technical design not present at our end.
+We do not make active copies
+We do not maintain shadow copies of files for investigative purposes. We do not perform content scanning (other than deduplication of encrypted blocks at infrastructure level, which does not provide insight into content).
+3. Requirements for a request
+We only accept requests that meet all of the following requirements:
+	•	The request originates from a competent Dutch or European authority, or from a foreign authority on the basis of a valid international legal assistance route (e.g. MLAT, or via Eurojust).
+	•	The request is based on a specific legal basis (such as Article 126nd, 126ng, 126nh of the Dutch Code of Criminal Procedure, a decryption order under Article 125k DCP, or a comparable provision).
+	•	The request is in writing, signed by a competent person, and contains a clear description of:
+	•	The data requested (specific, not generic)
+	•	The accounts involved (email or unique ID)
+	•	The legal basis
+	•	The reason why the data is necessary
+	•	The request meets the requirements of proportionality and subsidiarity.
+For requests pursuant to Article 126ng paragraph 2 DCP (demanding stored data from a communications service provider) we require a warrant from the investigating judge.
+For requests pursuant to Article 125k / 126nh DCP (decryption order) we point out that our Zero-Knowledge Architecture means we have no knowledge of the manner of encryption within the meaning of paragraph 2 of these articles, because keys exist only with the user themselves.
+4. How to submit a request
+For Dutch law enforcement
+Requests can only be sent by secure electronic mail or registered post to:
+	•	Email: legal@beebeeb.io (PGP key available at beebeeb.io/legal/pgp)
+	•	Post: InitLabs B.V., attn. Legal Department, Kelvinstraat 34A, 6601 HE Wijchen, Netherlands
+We confirm receipt within five (5) business days. Response time on a request is in principle fourteen (14) business days, unless urgency requires otherwise and is demonstrated.
+For foreign authorities
+Foreign authorities should submit requests via:
+	•	Mutual Legal Assistance Treaty (MLAT): through the Dutch Ministry of Justice and Security
+	•	European Investigation Order (EIO) for EU member states
+	•	Eurojust for coordination within the EU
+Direct requests from foreign authorities without one of the above routes are in principle rejected, unless there is a valid basis under Union law or an international treaty to which the Netherlands is a party, taking into account Article 27 of the EU Data Act (Regulation (EU) 2023/2854).
+Emergency Disclosure Requests
+In case of an acute threat to the life or physical safety of a person (for example missing person cases, imminent suicide risk, child abduction), we may in exceptional cases provide expedited information on the basis of Article 18 of the Digital Services Act or Article 21 of the EU Data Act, provided the request:
+	•	Demonstrates an imminent and specific threat
+	•	Is specific about the requested information
+	•	Originates from a verified government authority
+Send such requests to emergency@beebeeb.io with subject "EMERGENCY DISCLOSURE REQUEST" and a phone number for verification.
+5. What happens after receipt?
+	•	Receipt and logging. The request is registered in our internal government requests register.
+	•	Legal review. Our legal advisor (internal and/or external) reviews lawfulness, jurisdiction, scope and proportionality.
+	•	User notification. Unless a valid gag order or comparable statutory secrecy obligation prohibits this, we inform the user concerned by email. For criminal investigations in the Netherlands, an after-the-fact notification obligation often applies under Article 126bb DCP.
+	•	Objection or limitation request. If we consider a request unlawful, disproportionate or insufficiently specified, we object or request limitation.
+	•	Disclosure. If all requirements are met, we provide only the specifically requested data, in encrypted or anonymised form where possible.
+	•	Recording. The disclosure is logged in our internal logs and aggregated in our annual Transparency Report.
+6. Notification to users
+We endeavour to inform users of requests relating to their data, so that they can take legal action themselves if needed. We delay notification only if:
+	•	A court order (gag order) or specific statutory provision prohibits notification
+	•	Notification would reasonably frustrate an ongoing investigation (upon request and with reasoning by the authority)
+	•	There is an acute threat to the life or safety of persons
+If we have delayed notification, we will inform the user as soon as possible after the secrecy obligation expires.
+7. Our position on encryption
+We consider Zero-Knowledge encryption a fundamental security measure that we will not voluntarily weaken or circumvent. Concretely this means:
+	•	We will not implement "back doors" or master keys allowing us or third parties to decrypt content
+	•	We do not perform client-side scanning on unencrypted files
+	•	We do not force our users to use recovery mechanisms that undermine the Zero-Knowledge guarantee
+	•	We will use all available legal means to prevent being forced to undermine the Zero-Knowledge architecture
+If we were ever to be forced to make a material change to our security architecture that would impact the Zero-Knowledge property, we will, to the extent legally permitted, make this public via this page and our Transparency Report.
+8. Stripe and payment data
+Requests for payment data may also be submitted to Stripe. Stripe has its own Law Enforcement Guidelines available at stripe.com/legal/law-enforcement. We cannot handle or forward requests on Stripe's behalf — those should be submitted directly to Stripe.
+9. Transparency Report
+We periodically (in principle annually, on 1 March) publish a transparency report in which we report aggregated information on:
+	•	Number of requests received, broken down by type and origin
+	•	Number of requests we honoured fully or partially, refused or returned for supplementation
+	•	Number of accounts affected by requests
+	•	Types of data provided
+See beebeeb.io/transparency for the most recent report.
+10. Contact
+Purpose
+Contact
+Regular requests
+legal@beebeeb.io
+Emergency requests
+emergency@beebeeb.io
+General questions about these guidelines
+legal@beebeeb.io
+PGP key
+beebeeb.io/legal/pgp
+Postal address
+InitLabs B.V., attn. Legal Department, Kelvinstraat 34A, 6601 HE Wijchen, Netherlands
+
+— End of Law Enforcement Guidelines —
