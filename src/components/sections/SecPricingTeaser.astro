@@ -4,10 +4,10 @@ import type { PhaseConfig } from '../../lib/phase';
 const { cfg } = Astro.props as { cfg: PhaseConfig };
 const waitlist = cfg.phase === 1;
 const plans = [
-  ['Free', '0 euro', '5 GB', 'Private encrypted storage to get started.'],
-  ['Basic', '3 euro', '100 GB', 'Room for everyday files and encrypted sharing.'],
-  ['Pro', '8 euro', '1 TB', 'More storage for people who live in the cloud.'],
-  ['Business', '15 euro', '2 TB / user', 'Team storage with the same zero-knowledge model.'],
+  { name: 'Free',     price: '€0',       note: '',      storage: '5 GB',           desc: 'Try Beebeeb with no commitment.',                         popular: false, badge: null,         cta: cfg.freeCTA,  href: cfg.isLive ? 'https://app.beebeeb.io/signup?plan=free'     : '#waitlist' },
+  { name: 'Basic',    price: '€10,99',   note: '/mo',   storage: '1 TB',           desc: 'For people who want real privacy for their personal files.', popular: cfg.isLive, badge: null, cta: cfg.basicCTA, href: cfg.isLive ? 'https://app.beebeeb.io/signup?plan=basic'    : '#waitlist' },
+  { name: 'Pro',      price: '€54,95',   note: '/mo',   storage: '5 TB base',      desc: 'For power users with serious storage needs.',              popular: false, badge: null,         cta: cfg.proCTA,   href: cfg.isLive ? 'https://app.beebeeb.io/signup?plan=pro'      : '#waitlist' },
+  { name: 'Business', price: '€109,90',  note: '/mo',   storage: '10 TB + 3 users', desc: 'For teams. Shared workspaces, admin console, SLA.',       popular: false, badge: cfg.bizBadge, cta: cfg.bizCTA,   href: cfg.bizLive ? 'https://app.beebeeb.io/signup?plan=business' : '#waitlist' },
 ];
 ---
 
@@ -23,15 +23,18 @@ const plans = [
     </div>
 
     <div class="plan-grid">
-      {plans.map(([name, price, storage, desc], index) => (
-        <article class:list={['bb-plan', index === 2 && 'popular']}>
-          {index === 2 && <div class="bb-plan-badge">Popular</div>}
-          <div class="t-label">{name}</div>
-          <div class="price">{price}<span>{price === '0 euro' ? '' : ' / month'}</span></div>
-          <p>{desc}</p>
-          <div class="storage">{storage}</div>
-          <a href={waitlist ? '#waitlist' : cfg.primaryHref} class:list={['bb-cta', index === 2 ? 'amber' : 'ghost']}>
-            {waitlist ? 'Join the waitlist' : 'Sign up'}
+      {plans.map((plan) => (
+        <article class:list={['bb-plan', plan.popular && 'popular', plan.badge && !plan.popular && 'coming']}>
+          {plan.popular && <div class="bb-plan-badge popular">Most popular</div>}
+          {plan.badge && !plan.popular && <div class="bb-plan-badge coming">{plan.badge}</div>}
+          <div class="t-label">{plan.name}</div>
+          <div class="price">{plan.price}<span>{plan.note}</span></div>
+          <p>{plan.desc}</p>
+          <div class="storage">{plan.storage}</div>
+          <a href={plan.href} class:list={['bb-cta', plan.popular ? 'amber' : 'ghost']}
+             target={plan.href.startsWith('http') ? '_blank' : undefined}
+             rel={plan.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+            {plan.cta}
           </a>
         </article>
       ))}
