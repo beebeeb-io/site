@@ -6,13 +6,13 @@ interface Props {
 const { height = 320 } = Astro.props;
 const demoId = `enc-demo-${Math.random().toString(36).slice(2)}`;
 const plaintext = [
-  'Q3 strategy - board copy',
+  'Q3 strategy — board copy',
   '',
   'Headcount targets: 14 ENG, 4 SEC, 2 PM.',
-  'Burn target: EUR 312k/mo by August.',
+  'Burn target: €312k/mo by August.',
   'Customers: 1,840 paid · 12,400 free tier.',
   '',
-  'Confidential - do not distribute.',
+  'Confidential — do not distribute.',
 ];
 ---
 
@@ -155,9 +155,9 @@ const plaintext = [
       lock.dataset.stage = String(stage);
       status.textContent =
         stage === 0
-          ? 'Reading file...'
+          ? 'Reading file…'
           : stage === 1
-            ? 'Deriving your key locally · encrypting on device...'
+            ? 'Deriving your key locally · encrypting on device…'
             : 'Stored. Key never leaves your device.';
 
       plainLines.forEach((line) => {
@@ -185,34 +185,39 @@ const plaintext = [
       root.dataset.initialized = 'false';
     }
 
+    function runEncrypt(startProgress = 0) {
+      stage = 1;
+      progress = startProgress;
+      const start = performance.now() - progress * 1700;
+
+      function tick(now) {
+        progress = Math.min(1, (now - start) / 1700);
+        render();
+
+        if (progress < 1) {
+          raf = window.requestAnimationFrame(tick);
+        } else {
+          stage = 2;
+          render();
+          timeouts.push(window.setTimeout(cycle, 3000));
+        }
+      }
+
+      raf = window.requestAnimationFrame(tick);
+    }
+
     function cycle() {
       stage = 0;
       progress = 0;
       render();
 
       timeouts.push(window.setTimeout(() => {
-        stage = 1;
-        const start = performance.now();
-
-        function tick(now) {
-          progress = Math.min(1, (now - start) / 1700);
-          render();
-
-          if (progress < 1) {
-            raf = window.requestAnimationFrame(tick);
-          } else {
-            stage = 2;
-            render();
-            timeouts.push(window.setTimeout(cycle, 3000));
-          }
-        }
-
-        raf = window.requestAnimationFrame(tick);
+        runEncrypt(0);
       }, 2400));
     }
 
     root.__bbEncCleanup = cleanup;
-    cycle();
+    runEncrypt(0.18);
   }
 
   function initAllEncDemos() {
@@ -238,13 +243,13 @@ const plaintext = [
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border: 1px solid oklch(0.3 0.014 70);
+    border: 1px solid var(--line-2);
     border-radius: 12px;
-    background: oklch(0.16 0.014 70);
-    color: oklch(0.94 0.01 85);
+    background: var(--paper);
+    color: var(--ink);
     box-shadow:
-      0 30px 60px -25px oklch(0.12 0.01 70 / 0.55),
-      0 8px 20px -10px oklch(0.12 0.01 70 / 0.5);
+      0 30px 60px -25px rgba(24, 20, 10, 0.18),
+      0 8px 20px -10px rgba(24, 20, 10, 0.08);
     font-family: var(--font-mono);
   }
 
@@ -253,8 +258,8 @@ const plaintext = [
     align-items: center;
     gap: 8px;
     padding: 10px 14px;
-    border-bottom: 1px solid oklch(0.3 0.014 70);
-    background: oklch(0.2 0.012 70);
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-2);
   }
 
   .bb-enc-dot {
@@ -278,14 +283,14 @@ const plaintext = [
 
   .bb-enc-path {
     margin-left: 12px;
-    color: oklch(0.72 0.014 82);
+    color: var(--ink-3);
     font-size: 11px;
     white-space: nowrap;
   }
 
   .bb-enc-meta {
     margin-left: auto;
-    color: oklch(0.62 0.012 82);
+    color: var(--ink-4);
     font-size: 10.5px;
     white-space: nowrap;
   }
@@ -305,14 +310,14 @@ const plaintext = [
   }
 
   .bb-enc-cipher {
-    background: oklch(0.19 0.018 78);
+    background: oklch(0.99 0.01 88);
   }
 
   .bb-enc-label {
     position: absolute;
     top: 8px;
     right: 12px;
-    color: oklch(0.58 0.012 82);
+    color: var(--ink-4);
     font-size: 9.5px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
@@ -324,9 +329,9 @@ const plaintext = [
     align-items: center;
     justify-content: center;
     gap: 10px;
-    border-inline: 1px dashed oklch(0.34 0.014 70);
-    background: oklch(0.18 0.012 70);
-    color: oklch(0.68 0.012 82);
+    border-inline: 1px dashed var(--line);
+    background: var(--paper-2);
+    color: var(--ink-3);
     font-size: 9px;
     letter-spacing: 0.06em;
     line-height: 1.4;
@@ -339,10 +344,10 @@ const plaintext = [
     justify-content: center;
     width: 36px;
     height: 36px;
-    border: 1px solid oklch(0.42 0.016 72);
+    border: 1px solid var(--line-2);
     border-radius: 999px;
-    background: oklch(0.2 0.012 70);
-    color: oklch(0.86 0.14 84);
+    background: var(--paper);
+    color: var(--ink);
     transition:
       background 300ms ease,
       border-color 300ms ease,
@@ -350,15 +355,15 @@ const plaintext = [
   }
 
   .bb-enc-lock-icon[data-stage='1'] {
-    border-color: var(--amber, var(--color-amber));
-    background: var(--amber, var(--color-amber));
-    color: var(--ink, var(--color-ink));
+    border-color: var(--ink);
+    background: var(--amber);
+    color: var(--ink);
   }
 
   .bb-enc-lock-icon[data-stage='2'] {
-    border-color: var(--amber, var(--color-amber));
-    background: oklch(0.12 0.012 70);
-    color: var(--amber, var(--color-amber));
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--amber);
   }
 
   .bb-enc-lock-icon svg {
@@ -381,16 +386,17 @@ const plaintext = [
   }
 
   .enc-demo .pln {
-    color: oklch(0.9 0.012 85);
+    color: var(--ink);
     transition: opacity 200ms linear;
   }
 
   .enc-demo .cph {
-    color: var(--amber, var(--color-amber));
+    color: var(--amber-deep);
+    letter-spacing: -0.01em;
   }
 
   .enc-demo .ws {
-    color: oklch(0.56 0.012 82);
+    color: var(--ink-4);
   }
 
   .bb-enc-status {
@@ -398,9 +404,9 @@ const plaintext = [
     align-items: center;
     gap: 12px;
     padding: 8px 14px;
-    border-top: 1px solid oklch(0.3 0.014 70);
-    background: oklch(0.2 0.012 70);
-    color: oklch(0.7 0.014 82);
+    border-top: 1px solid var(--line);
+    background: var(--paper-2);
+    color: var(--ink-3);
     font-size: 10.5px;
   }
 
@@ -409,16 +415,16 @@ const plaintext = [
     height: 6px;
     flex: none;
     border-radius: 999px;
-    background: oklch(0.62 0.012 82);
+    background: var(--ink-4);
     transition: background 200ms ease;
   }
 
   .bb-enc-led[data-stage='1'] {
-    background: var(--amber, var(--color-amber));
+    background: var(--amber);
   }
 
   .bb-enc-led[data-stage='2'] {
-    background: var(--green, var(--color-green));
+    background: var(--green);
   }
 
   @keyframes blink {
@@ -438,7 +444,7 @@ const plaintext = [
     height: 1em;
     margin-left: 1px;
     animation: blink 1s steps(2, end) infinite;
-    background: var(--amber, var(--color-amber));
+    background: var(--amber-deep);
     vertical-align: text-bottom;
   }
 
@@ -453,7 +459,7 @@ const plaintext = [
 
     .bb-enc-lock {
       min-height: 70px;
-      border-block: 1px dashed oklch(0.34 0.014 70);
+      border-block: 1px dashed var(--line);
       border-inline: none;
     }
 

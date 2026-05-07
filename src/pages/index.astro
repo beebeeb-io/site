@@ -7,10 +7,11 @@ import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
 import SecProblem from '../components/sections/SecProblem.astro';
 import SecApproach from '../components/sections/SecApproach.astro';
+import SecOpenSource from '../components/sections/SecOpenSource.astro';
 import SecProduct from '../components/sections/SecProduct.astro';
 import SecHowItWorks from '../components/sections/SecHowItWorks.astro';
-import SecCLI from '../components/sections/SecCLI.astro';
 import SecPricingTeaser from '../components/sections/SecPricingTeaser.astro';
+import SecTeamSubtle from '../components/sections/SecTeamSubtle.astro';
 import SecFinalCTA from '../components/sections/SecFinalCTA.astro';
 import '../styles/landing.css';
 
@@ -28,10 +29,11 @@ const cfg = phaseConfig(phase);
     <Hero {cfg} />
     <SecProblem />
     <SecApproach />
-    <SecProduct {cfg} />
+    <SecOpenSource />
     <SecHowItWorks />
-    <SecCLI />
+    <SecProduct {cfg} />
     <SecPricingTeaser {cfg} />
+    <SecTeamSubtle />
     <SecFinalCTA {cfg} />
   </main>
   <Footer {cfg} />

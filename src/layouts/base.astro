@@ -1,7 +1,5 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
 import SEO from '../components/global/SEO.astro';
 import ComingSoon from '../components/ComingSoon.astro';
 import { fetchGlobal } from '../lib/strapi';
@@ -27,6 +25,8 @@ const {
 
 const globalData = await fetchGlobal();
 const siteMode = globalData?.site_mode || 'live';
+const Nav = chrome ? (await import('../components/Nav.astro')).default : null;
+const Footer = chrome ? (await import('../components/Footer.astro')).default : null;
 ---
 
 {siteMode === 'coming-soon' ? (
@@ -55,14 +55,14 @@ const siteMode = globalData?.site_mode || 'live';
   <body class="min-h-screen">
     <div class="bb-scroll-progress" transition:persist></div>
 
-    {chrome && <Nav />}
+    {Nav && <Nav />}
 
     <main transition:animate="fade">
       <slot />
     </main>
 
-    {chrome && (
-      <div transition:persist="footer">
+    {Footer && (
+      <div>
         <Footer />
       </div>
     )}

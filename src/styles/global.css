@@ -54,7 +54,14 @@ html, body {
   text-rendering: optimizeLegibility;
 }
 
-body { font-feature-settings: 'ss01', 'cv11'; }
+body {
+  display: block;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: initial;
+  font-feature-settings: 'ss01', 'cv11';
+}
 
 a { color: inherit; }
 
@@ -73,6 +80,7 @@ a { color: inherit; }
 
 .bb-link {
   color: var(--ink);
+  font-size: 13.5px;
   text-decoration: underline;
   text-underline-offset: 3px;
   text-decoration-thickness: 1px;

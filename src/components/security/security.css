@@ -11,8 +11,6 @@
   --amber: var(--color-amber, oklch(0.78 0.14 78));
   --amber-deep: var(--color-amber-deep, oklch(0.58 0.16 60));
   --amber-soft: var(--color-amber-bg, oklch(0.92 0.06 88));
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
   background: var(--paper);
   color: var(--ink);
 }

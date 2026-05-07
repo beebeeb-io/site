@@ -5,7 +5,8 @@ interface Props {
 }
 
 const { source, plan } = Astro.props;
-const formId = `waitlist-${source}`;
+const formId = `waitlist-${source}${plan ? `-${plan}` : ''}`;
+const apiUrl = (import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io') + '/api/v1/waitlist';
 ---
 
 <form id={formId} class="bb-waitlist-form">
@@ -14,8 +15,8 @@ const formId = `waitlist-${source}`;
   <p class="status" aria-live="polite"></p>
 </form>
 
-<script define:vars={{ source, plan }}>
-  const form = document.getElementById('waitlist-' + source);
+<script define:vars={{ formId, source, plan, apiUrl }}>
+  const form = document.getElementById(formId);
 
   if (form && !form.dataset.bound) {
     form.dataset.bound = 'true';
@@ -50,7 +51,7 @@ const formId = `waitlist-${source}`;
       setStatus('', '');
 
       try {
-        const response = await fetch('https://api.beebeeb.io/api/v1/waitlist', {
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),

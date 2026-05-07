@@ -6,30 +6,30 @@ interface Props {
 const { showCanary = false } = Astro.props;
 
 const sections = [
-  { id: 'overview', label: 'Overview' },
-  { id: 'journey', label: 'File journey' },
-  { id: 'stack', label: 'Crypto stack' },
+  { id: 'journey', label: 'Journey' },
+  { id: 'stack', label: 'Stack' },
   { id: 'keys', label: 'Keys' },
   { id: 'sharing', label: 'Sharing' },
   { id: 'threat-model', label: 'Threat model' },
   { id: 'infrastructure', label: 'Infrastructure' },
   { id: 'legal', label: 'Legal' },
-  ...(showCanary ? [{ id: 'warrant-canary', label: 'Canary' }] : []),
+  ...(showCanary ? [{ id: 'canary', label: 'Canary' }] : []),
   { id: 'open-source', label: 'Open source' },
-  { id: 'audit', label: 'Disclosure' },
+  { id: 'disclosure', label: 'Disclosure' },
   { id: 'changelog', label: 'Changelog' },
 ];
 ---
 
-<nav class="security-section-nav" aria-label="Security page sections">
-  <div class="security-container nav-scroll">
+<div class="security-section-nav" role="navigation" aria-label="Security page sections">
+  <div class="bb-container nav-scroll">
+    <span>Jump to</span>
     {sections.map((section) => (
       <a href={`#${section.id}`} data-section-link={section.id}>
         {section.label}
       </a>
     ))}
   </div>
-</nav>
+</div>
 
 <script>
   const nav = document.querySelector('.security-section-nav');
@@ -66,16 +66,17 @@ const sections = [
 <style>
   .security-section-nav {
     position: sticky;
-    top: 64px;
-    z-index: 20;
+    top: 49px;
+    z-index: 40;
     border-bottom: 1px solid var(--line);
-    background: oklch(0.985 0.004 85 / 0.88);
-    backdrop-filter: blur(12px);
+    background: oklch(0.985 0.004 85 / 0.92);
+    backdrop-filter: blur(8px);
   }
 
   .nav-scroll {
     display: flex;
-    gap: 18px;
+    align-items: center;
+    gap: 4px;
     overflow-x: auto;
     padding: 12px 32px;
     scrollbar-width: none;
@@ -85,28 +86,33 @@ const sections = [
     display: none;
   }
 
+  span {
+    flex: 0 0 auto;
+    margin-right: 10px;
+    color: var(--ink-4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
   a {
     flex: 0 0 auto;
-    color: var(--ink-3);
-    font-family: var(--font-mono);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    padding: 6px 12px;
+    border-radius: 6px;
+    color: var(--ink-2);
+    font-size: 12.5px;
+    font-weight: 500;
     text-decoration: none;
-    text-transform: uppercase;
-    transition: color 150ms ease;
+    transition:
+      background 150ms ease,
+      color 150ms ease;
   }
 
   a:hover,
   a[aria-current='true'] {
+    background: var(--paper);
     color: var(--ink);
-  }
-
-  a[aria-current='true'] {
-    text-decoration: underline;
-    text-decoration-color: var(--amber-deep);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 7px;
   }
 
   @media (max-width: 840px) {
@@ -116,6 +122,10 @@ const sections = [
 
     .nav-scroll {
       padding-inline: 20px;
+    }
+
+    span {
+      display: none;
     }
   }
 </style>

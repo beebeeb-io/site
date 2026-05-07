@@ -1,6 +1,4 @@
 ---
-const primitives = ['AES-256-GCM', 'HKDF-SHA256', 'OPAQUE PAKE', 'X25519', 'Argon2id', 'BIP39'];
-
 const points = [
   {
     n: '01',
@@ -20,21 +18,17 @@ const points = [
 ];
 ---
 
-<section id="overview" class="security-hero" data-security-section>
-  <div class="security-container">
+<section class="security-hero">
+  <div class="bb-container">
     <div class="bb-eyebrow">Security</div>
     <h1 class="bb-display-xl">
       Three things you<br />
       should know about us.
     </h1>
 
-    <div class="hero-chips" aria-label="Cryptographic primitives">
-      {primitives.map((primitive) => <span class="crypto-chip">{primitive}</span>)}
-    </div>
-
     <div class="hero-points">
       {points.map((p, i) => (
-        <article class="hero-point">
+        <article class="hero-point" data-edge={i < 2 ? 'right' : undefined}>
           <div class="bb-step-num">{p.n} / 03</div>
           <h2>{p.t}</h2>
           <p>{p.d}</p>
@@ -52,35 +46,23 @@ const points = [
 <style>
   .security-hero {
     padding: 120px 32px 96px;
-    border-bottom: 1px solid oklch(0.34 0.014 70);
-    background:
-      radial-gradient(ellipse at 20% 0%, oklch(0.30 0.02 70) 0%, transparent 48%),
-      radial-gradient(ellipse at 85% 35%, oklch(0.25 0.018 62) 0%, transparent 48%),
-      var(--ink);
-    color: var(--paper);
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .security-hero .bb-container {
+    padding: 0;
   }
 
   .security-hero .bb-eyebrow {
     margin-bottom: 22px;
-    color: oklch(0.78 0.01 80);
   }
 
   .security-hero h1 {
     max-width: 1100px;
-    margin: 0 0 28px;
-  }
-
-  .hero-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 48px;
-  }
-
-  .hero-chips .crypto-chip {
-    border-color: oklch(0.42 0.014 70);
-    background: oklch(0.24 0.012 70);
-    color: oklch(0.90 0.006 80);
+    margin: 0 0 48px;
+    font-size: clamp(40px, 5vw, 72px);
   }
 
   .hero-points {
@@ -88,9 +70,9 @@ const points = [
     grid-template-columns: repeat(3, 1fr);
     gap: 0;
     overflow: hidden;
-    border: 1px solid oklch(0.38 0.012 70);
+    border: 1px solid var(--line);
     border-radius: 12px;
-    background: oklch(0.22 0.012 70);
+    background: var(--paper);
   }
 
   .hero-point {
@@ -99,16 +81,15 @@ const points = [
     flex-direction: column;
     gap: 14px;
     padding: 32px 28px;
-    border-right: 1px solid oklch(0.38 0.012 70);
   }
 
-  .hero-point:last-child {
-    border-right: 0;
+  .hero-point[data-edge='right'] {
+    border-right: 1px solid var(--line);
   }
 
   .hero-point h2 {
     margin: 0;
-    color: var(--paper);
+    color: var(--ink);
     font-size: 22px;
     font-weight: 600;
     letter-spacing: -0.02em;
@@ -117,22 +98,22 @@ const points = [
 
   .hero-point p {
     margin: 0;
-    color: oklch(0.76 0.008 80);
+    color: var(--ink-2);
     font-size: 14px;
     line-height: 1.65;
     text-wrap: pretty;
   }
 
   .hero-reviewed {
-    margin: 36px 0 0;
-    color: oklch(0.66 0.008 80);
+    margin: 36px 0 14px;
+    color: var(--ink-3);
     font-family: var(--font-mono);
     font-size: 14px;
     letter-spacing: 0.02em;
   }
 
   .hero-reviewed span {
-    color: oklch(0.82 0.008 80);
+    color: var(--ink-2);
   }
 
   @media (max-width: 860px) {
@@ -147,7 +128,7 @@ const points = [
     .hero-point {
       min-height: 0;
       border-right: 0;
-      border-bottom: 1px solid oklch(0.38 0.012 70);
+      border-bottom: 1px solid var(--line);
     }
 
     .hero-point:last-child {

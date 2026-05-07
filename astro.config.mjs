@@ -6,6 +6,9 @@ export default defineConfig({
   output: 'server',
   adapter: node({ mode: 'standalone' }),
   site: 'https://beebeeb.io',
+  devToolbar: {
+    enabled: false,
+  },
   integrations: [sitemap()],
   image: {
     domains: ['localhost'],

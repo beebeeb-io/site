@@ -1,3 +1,6 @@
+import { readFileSync } from 'fs';
+import { join } from 'path';
+
 const STRAPI_URL = (typeof process !== 'undefined' && process.env?.STRAPI_URL) || import.meta.env.STRAPI_URL || 'http://localhost:1337';
 const STRAPI_TOKEN = (typeof process !== 'undefined' && process.env?.STRAPI_TOKEN) || import.meta.env.STRAPI_TOKEN || '';
 
@@ -139,27 +142,25 @@ export function clearCache(): void {
   cache.clear();
 }
 
-let _phaseCache: { value: 1 | 2 | 3 | 4; expires: number } | null = null;
-
 export async function getLaunchPhase(): Promise<1 | 2 | 3 | 4> {
-  const now = Date.now();
-  if (_phaseCache && now < _phaseCache.expires) return _phaseCache.value;
-  try {
-    const { data } = await fetchStrapi<{ phase?: string }>('launch-phase', {}, false);
-    // Strapi enum values are "phase1".."phase4" (numbers can't start enum values)
-    const raw = data?.phase ?? 'phase1';
-    const phase = parseInt(raw.replace('phase', ''), 10) as 1 | 2 | 3 | 4;
-    _phaseCache = { value: phase, expires: now + 60_000 };
-    return phase;
-  } catch {
-    // Fall back to env var LAUNCH_PHASE, then 1
-    const envPhase = parseInt(process.env.LAUNCH_PHASE ?? '1', 10) as 1|2|3|4;
-    return _phaseCache?.value ?? ([1,2,3,4].includes(envPhase) ? envPhase : 1);
+  // Check env var first (for CI/CD overrides)
+  const envPhase = process.env.LAUNCH_PHASE;
+  if (envPhase && ['1', '2', '3', '4'].includes(envPhase)) {
+    return parseInt(envPhase, 10) as 1 | 2 | 3 | 4;
   }
+
+  // Fall back to JSON config file
+  try {
+    const configPath = join(process.cwd(), 'src/config/phase.json');
+    const config = JSON.parse(readFileSync(configPath, 'utf-8'));
+    const phase = config.phase as 1 | 2 | 3 | 4;
+    if ([1, 2, 3, 4].includes(phase)) return phase;
+  } catch {
+  }
+
+  return 1;
 }
 
-export function invalidateLaunchPhaseCache(): void {
-  _phaseCache = null;
-}
+export function invalidateLaunchPhaseCache() {}
 
 export { STRAPI_URL };

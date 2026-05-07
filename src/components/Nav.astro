@@ -19,7 +19,7 @@ const current =
       : 'product');
 
 const links = [
-  { label: 'Product', href: '/#product', id: 'product' },
+  { label: 'Product', href: '/#product', id: 'home' },
   { label: 'Security', href: '/security', id: 'security' },
   { label: 'Pricing', href: '/pricing', id: 'pricing' },
   {
@@ -34,7 +34,7 @@ const primaryHref = cfg.primaryHref || 'https://app.beebeeb.io/signup';
 const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the waitlist');
 ---
 
-<nav class="bb-launch-nav" id="navbar" transition:persist>
+<nav class="bb-launch-nav" id="navbar">
   <a href="/" class="bb-nav-logo" aria-label="Beebeeb.io home">
     <img src="/assets/beebeeb-logo.png" alt="beebeeb.io" />
   </a>
@@ -68,13 +68,13 @@ const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the wait
           href={primaryHref}
           target={primaryHref.startsWith('http') ? '_blank' : undefined}
           rel={primaryHref.startsWith('http') ? 'noopener noreferrer' : undefined}
-          class="bb-cta amber"
+          class="bb-cta"
         >
           {primaryCTA}
         </a>
       </>
     ) : (
-      <a href="#waitlist" class="bb-cta amber">Join the waitlist</a>
+      <a href="#waitlist" class="bb-cta">Join the waitlist</a>
     )}
   </div>
 
@@ -139,7 +139,7 @@ const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the wait
   .bb-nav-logo img {
     display: block;
     width: auto;
-    height: 21px;
+    height: 15px;
   }
 
   .bb-nav-links {
@@ -200,13 +200,13 @@ const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the wait
     justify-content: center;
     gap: 10px;
     padding: 8px 14px;
-    border: 1px solid var(--amber-deep, var(--color-amber-deep));
+    border: 1px solid var(--ink, var(--color-ink));
     border-radius: 6px;
-    background: var(--amber, var(--color-amber));
-    color: var(--ink, var(--color-ink));
+    background: var(--ink, var(--color-ink));
+    color: var(--paper, var(--color-paper));
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.4) inset,
-      0 4px 12px -4px oklch(0.66 0.15 72 / 0.4);
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 4px 12px -4px rgba(24, 20, 10, 0.3);
     cursor: pointer;
     font-family: var(--font-sans);
     font-size: 13px;
@@ -220,10 +220,10 @@ const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the wait
   }
 
   .bb-cta:hover {
-    background: oklch(0.79 0.17 82);
+    background: oklch(0.24 0.012 70);
     box-shadow:
-      0 1px 0 rgba(255, 255, 255, 0.5) inset,
-      0 8px 20px -6px oklch(0.66 0.15 72 / 0.5);
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 8px 20px -6px rgba(24, 20, 10, 0.35);
     transform: translateY(-1px);
   }
 
@@ -242,6 +242,11 @@ const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the wait
     color: var(--ink, var(--color-ink));
   }
 
+  .mobile-menu-backdrop,
+  .mobile-menu {
+    display: none;
+  }
+
   @media (max-width: 840px) {
     .bb-nav-links,
     .bb-nav-right {
@@ -251,6 +256,57 @@ const primaryCTA = cfg.primaryCTA || (cfg.isLive ? 'Start free' : 'Join the wait
     .menu-toggle {
       display: flex;
       margin-left: auto;
+    }
+
+    .mobile-menu-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: block;
+      background: oklch(0.18 0.01 70 / 0.24);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 160ms ease;
+    }
+
+    .mobile-menu-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .mobile-menu {
+      position: fixed;
+      top: 57px;
+      right: 16px;
+      left: 16px;
+      z-index: 1001;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 20px;
+      border: 1px solid var(--line, var(--color-line));
+      border-radius: 8px;
+      background: var(--paper, var(--color-paper));
+      box-shadow: var(--shadow-2);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+      transition:
+        opacity 160ms ease,
+        transform 160ms ease;
+    }
+
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .mobile-menu a {
+      color: var(--ink, var(--color-ink));
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
     }
   }
 

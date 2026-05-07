@@ -31,8 +31,8 @@ const cfg = phaseConfig(phase);
 >
   <Nav active="security" cfg={cfg} />
   <main class="security-page">
-    <SecurityHero />
     <SecurityNav showCanary={cfg.phase >= 2} />
+    <SecurityHero />
     <SecurityZeroKnowledge />
     <SecurityEncryption />
     <SecurityKeyDerivation />
