@@ -146,11 +146,15 @@ export async function getLaunchPhase(): Promise<1 | 2 | 3 | 4> {
   if (_phaseCache && now < _phaseCache.expires) return _phaseCache.value;
   try {
     const { data } = await fetchStrapi<{ phase?: string }>('launch-phase', {}, false);
-    const phase = parseInt(data?.phase ?? '1', 10) as 1 | 2 | 3 | 4;
+    // Strapi enum values are "phase1".."phase4" (numbers can't start enum values)
+    const raw = data?.phase ?? 'phase1';
+    const phase = parseInt(raw.replace('phase', ''), 10) as 1 | 2 | 3 | 4;
     _phaseCache = { value: phase, expires: now + 60_000 };
     return phase;
   } catch {
-    return _phaseCache?.value ?? 1;
+    // Fall back to env var LAUNCH_PHASE, then 1
+    const envPhase = parseInt(process.env.LAUNCH_PHASE ?? '1', 10) as 1|2|3|4;
+    return _phaseCache?.value ?? ([1,2,3,4].includes(envPhase) ? envPhase : 1);
   }
 }
 

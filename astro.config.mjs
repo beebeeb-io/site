@@ -1,6 +1,5 @@
 import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
-import tailwindcss from '@tailwindcss/vite';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
@@ -16,7 +15,6 @@ export default defineConfig({
     ],
   },
   vite: {
-    plugins: [tailwindcss()],
     envPrefix: ['STRAPI_', 'REVALIDATE_'],
   },
 });
