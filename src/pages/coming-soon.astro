@@ -13,6 +13,7 @@ import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
 import '@fontsource/jetbrains-mono/600.css';
 import MatomoTagManager from '../components/global/MatomoTagManager.astro';
+import FaviconLinks from '../components/global/FaviconLinks.astro';
 
 const launchDate = '2026-09-01T12:00:00Z';
 const apiUrl = import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io';
@@ -25,7 +26,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io';
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Beebeeb — Encrypted cloud storage on twice-loved drives</title>
   <meta name="description" content="Zero-knowledge cloud storage, hosted in the EU, governed by EU law. Running on certified refurbished enterprise drives. Privacy you can prove. Storage that doesn't waste a planet." />
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <FaviconLinks />
   <meta name="theme-color" content="#1a1816" />
 
   <!-- Open Graph -->

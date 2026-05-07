@@ -12,6 +12,7 @@
  * This page is server-rendered (no static params needed since code is dynamic).
  */
 import MatomoTagManager from '../../components/global/MatomoTagManager.astro';
+import FaviconLinks from '../../components/global/FaviconLinks.astro';
 
 const { code } = Astro.params;
 
@@ -29,6 +30,7 @@ const signupUrl = safeCode
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>You're invited to Beebeeb</title>
   <meta name="description" content="Someone thinks you'd like Beebeeb — end-to-end encrypted cloud storage. Sign up and you both get +10 GB free." />
+  <FaviconLinks />
   <!-- Prevent indexing — referral pages shouldn't rank -->
   <meta name="robots" content="noindex, nofollow" />
 

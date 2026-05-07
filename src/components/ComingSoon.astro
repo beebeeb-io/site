@@ -1,5 +1,6 @@
 ---
 import MatomoTagManager from './global/MatomoTagManager.astro';
+import FaviconLinks from './global/FaviconLinks.astro';
 
 interface Props {
   title?: string;
@@ -23,7 +24,7 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Beebeeb — Coming soon</title>
     <meta name="description" content={subtitle} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <FaviconLinks />
     <meta name="theme-color" content="#faf9f7" />
     <MatomoTagManager />
     <style>
