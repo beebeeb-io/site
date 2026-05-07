@@ -1,0 +1,17 @@
+<script is:inline>
+  window._mtm = window._mtm || [];
+  if (!window.__bbMatomoTagManagerStarted) {
+    window.__bbMatomoTagManagerStarted = true;
+    window._mtm.push({ 'mtm.startTime': new Date().getTime(), event: 'mtm.Start' });
+    (function () {
+      var d = document;
+      if (d.getElementById('matomo-tag-manager')) return;
+      var g = d.createElement('script');
+      var s = d.getElementsByTagName('script')[0];
+      g.async = true;
+      g.id = 'matomo-tag-manager';
+      g.src = 'https://analytics.devidee.cloud/js/container_h42wcCxR.js';
+      s.parentNode.insertBefore(g, s);
+    })();
+  }
+</script>

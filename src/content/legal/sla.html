@@ -1,0 +1,176 @@
+<p><strong>Version 1.0 - 7 May 2026</strong></p>
+<p>This Service Level Agreement ("SLA") governs the availability and support commitments for the Beebeeb service as delivered by InitLabs B.V., trading under the name beebeeb.io, to eligible business customers. This SLA is part of the Terms of Service and applies only where the customer has an active subscription that expressly includes an SLA.</p>
+
+<h2>1. Applicability</h2>
+<p>The public Beebeeb plans are Free, Basic, Pro and Business. Only the Business plan includes an availability target and service credits under this SLA. Free, Basic and Pro are provided on a best-efforts basis, without a contractual availability target.</p>
+<p>Any custom enterprise arrangement is handled by separate written agreement. Such an arrangement is not a public plan and does not change the availability target for the public Business plan unless explicitly agreed in writing.</p>
+
+<h2>2. Definitions</h2>
+<p><strong>Availability:</strong> the percentage of time within a Monthly Period that the Service is accessible to the customer and able to perform its core functions: uploading, downloading and synchronising encrypted Content.</p>
+<p><strong>Monthly Period:</strong> a calendar month.</p>
+<p><strong>Scheduled Maintenance:</strong> a maintenance window announced in advance by beebeeb.io. Time during Scheduled Maintenance does not count as Unavailability.</p>
+<p><strong>Service:</strong> the Beebeeb encrypted cloud storage and synchronisation service, including the web app, CLI and other clients that are live for the customer's phase.</p>
+<p><strong>Service Credit:</strong> a percentage credit on the recurring monthly fee for the affected Business subscription, as set out in this SLA.</p>
+<p><strong>Unavailability:</strong> any continuous period of five (5) minutes or more during which the core functions of the Service do not work for the customer, other than for reasons that are out of scope under this SLA.</p>
+
+<h2>3. Availability Target</h2>
+<div class="legal-table-wrap"><table>
+  <tbody>
+    <tr>
+      <td><p>Plan</p></td>
+      <td><p>Public plan details</p></td>
+      <td><p>Availability target per Monthly Period</p></td>
+    </tr>
+    <tr>
+      <td><p>Free</p></td>
+      <td><p>5 GB storage, 1 user</p></td>
+      <td><p>Best effort; no SLA</p></td>
+    </tr>
+    <tr>
+      <td><p>Basic</p></td>
+      <td><p>1 TB storage, 1 user</p></td>
+      <td><p>Best effort; no SLA</p></td>
+    </tr>
+    <tr>
+      <td><p>Pro</p></td>
+      <td><p>5 TB base storage, 1 user, expandable storage</p></td>
+      <td><p>Best effort; no SLA</p></td>
+    </tr>
+    <tr>
+      <td><p>Business</p></td>
+      <td><p>10 TB base storage, 3 users, shared workspaces, admin console and priority support</p></td>
+      <td><p>99.5%</p></td>
+    </tr>
+  </tbody>
+</table></div>
+<p>Availability is measured through our internal monitoring, using multiple monitoring endpoints within the EEA where possible, and is published through status.beebeeb.io where technically available.</p>
+
+<h2>4. Scope and Exclusions</h2>
+<p>The following cases do not count as Unavailability:</p>
+<ul>
+  <li>Scheduled Maintenance announced at least forty-eight (48) hours in advance, unless urgent security maintenance makes shorter notice necessary.</li>
+  <li>Interruptions caused by the customer's own systems, networks, devices, browsers, credentials, keys or client-side configuration.</li>
+  <li>Internet or connectivity issues outside the reasonable control of beebeeb.io.</li>
+  <li>Force majeure, including DDoS attacks, large-scale internet outages, power failures, government measures, natural disasters, war, pandemics and comparable events.</li>
+  <li>Suspension or restriction of an account due to non-payment, breach of the Terms of Service, breach of the Acceptable Use Policy or a lawful order from a competent authority.</li>
+  <li>Beta, preview or experimental features that are expressly marked as such.</li>
+  <li>Loss of access caused by loss of password, recovery material or encryption keys. Due to the Zero-Knowledge Architecture, beebeeb.io cannot recover keys or decrypt customer Content.</li>
+</ul>
+
+<h2>5. Calculating Availability</h2>
+<p>Availability in a Monthly Period is calculated as follows:</p>
+<p><strong>Availability (%) = ((Total minutes in month - out-of-scope unavailable minutes - in-scope unavailable minutes) / (Total minutes in month - out-of-scope unavailable minutes)) x 100</strong></p>
+<p>For this calculation, an incident starts when beebeeb.io detects the issue through monitoring or receives enough information from the customer to confirm the issue, whichever occurs first. The incident ends when the affected core functions are restored.</p>
+
+<h2>6. Service Credits</h2>
+<p>If Availability for the Business plan in a Monthly Period is lower than 99.5%, the customer may claim a Service Credit according to the following schedule.</p>
+<div class="legal-table-wrap"><table>
+  <tbody>
+    <tr>
+      <td><p>Actual Availability for Business</p></td>
+      <td><p>Service Credit</p></td>
+    </tr>
+    <tr>
+      <td><p>&gt;= 99.0% and &lt; 99.5%</p></td>
+      <td><p>5% of the monthly Business subscription fee</p></td>
+    </tr>
+    <tr>
+      <td><p>&gt;= 98.0% and &lt; 99.0%</p></td>
+      <td><p>10% of the monthly Business subscription fee</p></td>
+    </tr>
+    <tr>
+      <td><p>&lt; 98.0%</p></td>
+      <td><p>20% of the monthly Business subscription fee</p></td>
+    </tr>
+  </tbody>
+</table></div>
+<p>Service Credits are the customer's sole and exclusive remedy for failure to meet the Business availability target. Service Credits are applied to a future invoice and are not paid out in cash. The maximum Service Credit in any Monthly Period is twenty percent (20%) of the monthly Business subscription fee for the affected account.</p>
+
+<h2>7. Claiming Service Credits</h2>
+<p>To claim a Service Credit, the customer must email support@beebeeb.io within thirty (30) days after the end of the affected Monthly Period. The claim must include the account identification, the Monthly Period concerned and, where available, timestamps or other information about the observed Unavailability.</p>
+<p>We will assess the claim against our monitoring data and respond within thirty (30) days after receiving a complete claim. If the claim is approved, the Service Credit will be applied to the next invoice or the first practical invoice thereafter.</p>
+
+<h2>8. Support and Response Targets</h2>
+<p>The following support channels and response targets apply to the public plans.</p>
+<div class="legal-table-wrap"><table>
+  <tbody>
+    <tr>
+      <td><p>Plan</p></td>
+      <td><p>Support channel</p></td>
+      <td><p>Response target</p></td>
+    </tr>
+    <tr>
+      <td><p>Free</p></td>
+      <td><p>Community and documentation</p></td>
+      <td><p>Best effort</p></td>
+    </tr>
+    <tr>
+      <td><p>Basic</p></td>
+      <td><p>Email support</p></td>
+      <td><p>Best effort</p></td>
+    </tr>
+    <tr>
+      <td><p>Pro</p></td>
+      <td><p>Email support</p></td>
+      <td><p>Best effort, prioritised above Basic where possible</p></td>
+    </tr>
+    <tr>
+      <td><p>Business</p></td>
+      <td><p>Priority support</p></td>
+      <td><p>Within the Service Window according to incident priority</p></td>
+    </tr>
+  </tbody>
+</table></div>
+<p>The Service Window for Business support is Monday through Friday, 09:00 to 17:00 CET/CEST, excluding Dutch public holidays, unless a separate written agreement states otherwise.</p>
+
+<h2>9. Incident Priorities</h2>
+<div class="legal-table-wrap"><table>
+  <tbody>
+    <tr>
+      <td><p>Priority</p></td>
+      <td><p>Situation</p></td>
+      <td><p>Business response target</p></td>
+    </tr>
+    <tr>
+      <td><p>P1</p></td>
+      <td><p>Full Unavailability for multiple Business customers or a confirmed security incident requiring urgent action</p></td>
+      <td><p>4 business hours</p></td>
+    </tr>
+    <tr>
+      <td><p>P2</p></td>
+      <td><p>Unavailability for a Business customer or significant functional limitation</p></td>
+      <td><p>1 business day</p></td>
+    </tr>
+    <tr>
+      <td><p>P3</p></td>
+      <td><p>Partial issue with a workaround available</p></td>
+      <td><p>3 business days</p></td>
+    </tr>
+    <tr>
+      <td><p>P4</p></td>
+      <td><p>General question, minor issue or documentation request</p></td>
+      <td><p>Best effort</p></td>
+    </tr>
+  </tbody>
+</table></div>
+<p>Response targets are not resolution guarantees. We will work to restore the affected functionality as quickly as reasonably possible, taking into account security, data integrity and the Zero-Knowledge Architecture.</p>
+
+<h2>10. Security Incidents and Data Breaches</h2>
+<p>In case of a Personal Data Breach involving Personal Data of a Business customer or its Data Subjects, Article 9 of the Data Processing Agreement applies. We inform the customer without undue delay and in any event within forty-eight (48) hours after discovery, to the extent the relevant information is reasonably available.</p>
+<p>Because Content is encrypted client-side, a compromise of encrypted stored Content does not by itself mean that beebeeb.io can access unencrypted Content or keys. We will still assess such incidents under applicable law and our Data Processing Agreement.</p>
+
+<h2>11. Maintenance and Status Communication</h2>
+<p>We may perform Scheduled Maintenance to improve reliability, security and performance. Where possible, we schedule maintenance outside peak hours and announce it through the Service, email or status.beebeeb.io.</p>
+<p>For urgent security maintenance, shorter notice may be necessary. We will communicate the nature and expected duration of such maintenance as soon as reasonably possible.</p>
+
+<h2>12. Backup and Recovery</h2>
+<p>For the Business plan, we strive for recovery within twenty-four (24) hours where data loss is caused by an event attributable to beebeeb.io and recovery is technically possible within the Zero-Knowledge Architecture. The target Recovery Point Objective for infrastructure-level recovery is four (4) hours.</p>
+<p>These recovery targets do not apply where access is lost because the customer lost passwords, keys or recovery material. We cannot reconstruct encryption keys or decrypt Content.</p>
+
+<h2>13. Changes</h2>
+<p>We may amend this SLA from time to time. Material changes that negatively affect customers will be announced at least thirty (30) days before they take effect, unless the change is required by law or needed for urgent security reasons.</p>
+
+<h2>14. Contact</h2>
+<p>Questions about this SLA or Service Credit claims may be sent to support@beebeeb.io or legal@beebeeb.io.</p>
+
+<p><em>- End of Service Level Agreement -</em></p>

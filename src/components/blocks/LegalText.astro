@@ -3,12 +3,13 @@ interface Props {
   title?: string;
   body?: string;
   text?: string;
+  html?: string;
   description?: string;
   sourceName?: string;
   [key: string]: unknown;
 }
 
-const { title, body, text, description, sourceName } = Astro.props;
+const { title, body, text, html, description, sourceName } = Astro.props;
 
 function escapeHtml(value: string) {
   return value
@@ -20,19 +21,30 @@ function escapeHtml(value: string) {
 }
 
 function autolink(value: string) {
-  return value
-    .replace(
-      /\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})\b/gi,
-      '<a href="mailto:$1">$1</a>',
-    )
-    .replace(
-      /\b((?:https?:\/\/)?(?:www\.)?(?:beebeeb\.io|stripe\.com|autoriteitpersoonsgegevens\.nl)[^\s<]*)/gi,
-      (match) => {
-        const href = match.startsWith('http') ? match : `https://${match}`;
-        const external = href.startsWith('https://beebeeb.io') ? '' : ' target="_blank" rel="noopener noreferrer"';
-        return `<a href="${href}"${external}>${match}</a>`;
-      },
-    );
+  const links: string[] = [];
+  const token = (link: string) => {
+    const index = links.push(link) - 1;
+    return `%%LEGAL_LINK_${index}%%`;
+  };
+
+  const withEmails = value.replace(
+    /\b([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})\b/gi,
+    (match) => token(`<a href="mailto:${match}">${match}</a>`),
+  );
+
+  const withLinks = withEmails.replace(
+    /\b((?:https?:\/\/)?(?:www\.)?(?:status\.beebeeb\.io|docs\.beebeeb\.io|beebeeb\.io|stripe\.com|autoriteitpersoonsgegevens\.nl|ec\.europa\.eu)[^\s<]*)/gi,
+    (raw) => {
+      const [, match, trailing = ''] = raw.match(/^(.+?)([.,;:)]+)?$/) ?? [raw, raw, ''];
+      const href = match.startsWith('http') ? match : `https://${match}`;
+      const internal = /^https:\/\/(?:www\.)?beebeeb\.io\b/i.test(href)
+        || /^https:\/\/(?:status|docs)\.beebeeb\.io\b/i.test(href);
+      const external = internal ? '' : ' target="_blank" rel="noopener noreferrer"';
+      return `${token(`<a href="${href}"${external}>${match}</a>`)}${trailing}`;
+    },
+  );
+
+  return links.reduce((result, link, index) => result.replace(`%%LEGAL_LINK_${index}%%`, link), withLinks);
 }
 
 function renderInline(value: string) {
@@ -103,8 +115,18 @@ function renderPlainText(value: string, heading?: string) {
   return html;
 }
 
-const rendered = text ? renderPlainText(text, title) : body;
-const hasPlaceholders = Boolean(text && /\[[^\]]+\]/.test(text));
+function renderHtmlFragment(value: string) {
+  return value
+    .split(/(<[^>]+>)/g)
+    .map((part) => {
+      if (!part || part.startsWith('<')) return part;
+      return autolink(part).replace(/(\[[^\]]+\])/g, '<span class="legal-placeholder">$1</span>');
+    })
+    .join('');
+}
+
+const rendered = html ? renderHtmlFragment(html) : text ? renderPlainText(text, title) : body;
+const hasPlaceholders = Boolean((html || text || body) && /\[[^\]]+\]/.test(html || text || body || ''));
 ---
 
 <section class="legal-shell">
@@ -137,7 +159,7 @@ const hasPlaceholders = Boolean(text && /\[[^\]]+\]/.test(text));
 
   .legal-container {
     width: 100%;
-    max-width: 880px;
+    max-width: 980px;
     margin: 0 auto;
   }
 
@@ -234,6 +256,56 @@ const hasPlaceholders = Boolean(text && /\[[^\]]+\]/.test(text));
 
   .legal-content :global(li) {
     margin-bottom: 7px;
+  }
+
+  .legal-content :global(.legal-table-wrap) {
+    width: 100%;
+    margin: 20px 0 30px;
+    overflow-x: auto;
+    border: 1px solid var(--line, var(--color-line));
+    border-radius: 8px;
+    background: var(--paper, var(--color-paper));
+    box-shadow: 0 18px 42px -34px oklch(0.12 0.02 70 / 0.28);
+  }
+
+  .legal-content :global(table) {
+    width: 100%;
+    min-width: 620px;
+    border-collapse: collapse;
+    color: var(--ink-2, var(--color-ink-2));
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .legal-content :global(td),
+  .legal-content :global(th) {
+    min-width: 140px;
+    padding: 11px 13px;
+    border-right: 1px solid var(--line, var(--color-line));
+    border-bottom: 1px solid var(--line, var(--color-line));
+    vertical-align: top;
+  }
+
+  .legal-content :global(td:last-child),
+  .legal-content :global(th:last-child) {
+    border-right: 0;
+  }
+
+  .legal-content :global(tr:last-child td),
+  .legal-content :global(tr:last-child th) {
+    border-bottom: 0;
+  }
+
+  .legal-content :global(tr:first-child td),
+  .legal-content :global(th) {
+    background: var(--paper-2, var(--color-paper-2));
+    color: var(--ink, var(--color-ink));
+    font-weight: 650;
+  }
+
+  .legal-content :global(td p),
+  .legal-content :global(th p) {
+    margin: 0;
   }
 
   .legal-content :global(a) {

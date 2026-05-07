@@ -11,6 +11,7 @@
  *
  * This page is server-rendered (no static params needed since code is dynamic).
  */
+import MatomoTagManager from '../../components/global/MatomoTagManager.astro';
 
 const { code } = Astro.params;
 
@@ -33,6 +34,7 @@ const signupUrl = safeCode
 
   <!-- Auto-redirect after 2 seconds -->
   <meta http-equiv="refresh" content={`2;url=${signupUrl}`} />
+  <MatomoTagManager />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

@@ -11,6 +11,10 @@ const apiUrl = (import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io') + '/
 
 <form id={formId} class="bb-waitlist-form">
   <input type="email" placeholder="your@email.com" required maxlength="320" />
+  <input type="hidden" name="plan" value={plan ?? ''} data-waitlist-plan />
+  <input type="hidden" name="storageTb" data-waitlist-storage-tb />
+  <input type="hidden" name="users" data-waitlist-users />
+  <input type="hidden" name="details" data-waitlist-details />
   <button type="submit" class="bb-cta amber">Join the waitlist</button>
   <p class="status" aria-live="polite"></p>
 </form>
@@ -45,7 +49,14 @@ const apiUrl = (import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io') + '/
       }
 
       const payload = { email, source };
-      if (plan) payload.plan = plan;
+      const selectedPlan = (plan || form.querySelector('input[name="plan"]')?.value || '').trim();
+      const storageTb = form.querySelector('input[name="storageTb"]')?.value.trim();
+      const users = form.querySelector('input[name="users"]')?.value.trim();
+      const details = form.querySelector('input[name="details"]')?.value.trim();
+      if (selectedPlan) payload.plan = selectedPlan;
+      if (storageTb) payload.storageTb = Number(storageTb);
+      if (users) payload.users = Number(users);
+      if (details) payload.details = details;
 
       button.disabled = true;
       setStatus('', '');

@@ -1,4 +1,6 @@
 ---
+import MatomoTagManager from './global/MatomoTagManager.astro';
+
 interface Props {
   title?: string;
   subtitle?: string;
@@ -23,6 +25,7 @@ const {
     <meta name="description" content={subtitle} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#faf9f7" />
+    <MatomoTagManager />
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 

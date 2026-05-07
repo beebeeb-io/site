@@ -1,7 +1,7 @@
 ---
 import type { PhaseConfig } from '../lib/phase';
 import EncDemo from './EncDemo.astro';
-import WaitlistForm from './WaitlistForm.astro';
+import WaitlistModalTrigger from './WaitlistModalTrigger.astro';
 
 interface Props {
   cfg: PhaseConfig;
@@ -32,11 +32,22 @@ const trust = [
         Privacy isn't a feature you find in a settings menu. It's the starting position.
         Everything we build follows from that.
       </p>
+      {phaseOne && <span id="waitlist" class="waitlist-anchor" aria-hidden="true"></span>}
       <div class="hero-actions">
-        <a href={primaryHref} class="bb-cta amber">
-          {primaryCTA}
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-        </a>
+        {phaseOne ? (
+          <WaitlistModalTrigger
+            source="hero"
+            label={primaryCTA}
+            variant="basic"
+            buttonClass="hero-primary"
+            showArrow
+          />
+        ) : (
+          <a href={primaryHref} class="bb-cta amber">
+            {primaryCTA}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        )}
         <a href="#how" class="bb-cta ghost">How it works</a>
       </div>
       <div class="hero-caption">{caption}</div>
@@ -66,11 +77,6 @@ const trust = [
     ))}
   </div>
 
-  {phaseOne && (
-    <div id="waitlist" class="hero-waitlist">
-      <WaitlistForm source="hero" />
-    </div>
-  )}
 </section>
 
 <style>
@@ -139,6 +145,11 @@ const trust = [
     margin-bottom: 14px;
   }
 
+  .waitlist-anchor {
+    display: block;
+    scroll-margin-top: 96px;
+  }
+
   .hero-actions .bb-cta {
     gap: 10px;
     min-height: unset;
@@ -149,7 +160,24 @@ const trust = [
     letter-spacing: -0.005em;
   }
 
+  .hero-actions :global(.waitlist-modal-trigger) {
+    gap: 10px;
+    min-height: unset;
+    padding: 14px 22px;
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
   .hero-actions .bb-cta.amber {
+    border-color: var(--amber-deep);
+    background: var(--amber);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.4) inset,
+      0 4px 12px -4px oklch(0.66 0.15 72 / 0.4);
+  }
+
+  .hero-actions :global(.waitlist-modal-trigger.basic) {
     border-color: var(--amber-deep);
     background: var(--amber);
     box-shadow:
@@ -206,12 +234,6 @@ const trust = [
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 16px;
-  }
-
-  .hero-waitlist {
-    position: relative;
-    padding: 0 32px 54px;
-    scroll-margin-top: 96px;
   }
 
   .hero-trust {

@@ -12,6 +12,7 @@ import '@fontsource/inter/800.css';
 import '@fontsource/jetbrains-mono/400.css';
 import '@fontsource/jetbrains-mono/500.css';
 import '@fontsource/jetbrains-mono/600.css';
+import MatomoTagManager from '../components/global/MatomoTagManager.astro';
 
 const launchDate = '2026-09-01T12:00:00Z';
 const apiUrl = import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io';
@@ -32,6 +33,7 @@ const apiUrl = import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io';
   <meta property="og:description" content="Zero-knowledge cloud storage on recertified enterprise drives. EU-only. Open source. Coming Q3 2026." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://beebeeb.io/coming-soon" />
+  <MatomoTagManager />
 
   <style>
     /* ============================================================

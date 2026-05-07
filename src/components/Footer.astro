@@ -9,30 +9,19 @@ interface Props {
 const { cfg: providedCfg } = Astro.props;
 const cfg = providedCfg ?? phaseConfig();
 
+const releasesHref = 'https://github.com/beebeeb-io/releases';
 const appLinks = [
-  { label: 'Web app', href: 'https://app.beebeeb.io', live: cfg.webLive, external: true },
-  { label: 'CLI · curl install', href: 'https://github.com/beebeeb-io/cli', live: cfg.cliLive, external: true },
-  { label: 'macOS', href: 'https://github.com/beebeeb-io/desktop/releases', live: cfg.desktopLive, external: true },
-  { label: 'Windows', href: 'https://github.com/beebeeb-io/desktop/releases', live: cfg.desktopLive, external: true },
-  { label: 'Linux', href: 'https://github.com/beebeeb-io/desktop/releases', live: cfg.desktopLive, external: true },
-  { label: 'iOS', href: 'https://apps.apple.com/app/beebeeb', live: cfg.iosLive, external: true },
-  {
-    label: 'Android',
-    href: 'https://play.google.com/store/apps/details?id=io.beebeeb',
-    live: cfg.androidLive,
-    external: true,
-  },
-  {
-    label: 'rclone backend',
-    href: 'https://github.com/beebeeb-io/rclone-backend',
-    live: cfg.rcloneLive,
-    external: true,
-  },
+  { label: 'CLI', href: releasesHref, live: cfg.cliLive, external: true },
+  { label: 'macOS', href: releasesHref, live: cfg.desktopLive, external: true },
+  { label: 'Windows', href: releasesHref, live: cfg.desktopLive, external: true },
+  { label: 'Linux', href: releasesHref, live: cfg.desktopLive, external: true },
+  { label: 'iOS', href: releasesHref, live: cfg.iosLive, external: true },
+  { label: 'Android', href: releasesHref, live: cfg.androidLive, external: true },
+  { label: 'rclone backend', href: releasesHref, live: cfg.rcloneLive, external: true },
 ];
-const downloads = appLinks.filter((item) => item.live);
 
 const columns = [
-  { title: 'Get the apps', items: downloads },
+  { title: 'Get the apps', items: appLinks },
   {
     title: 'Security',
     items: [
@@ -84,7 +73,7 @@ const columns = [
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noopener noreferrer' : undefined}
               >
-                {item.label}
+                {item.label}{item.live === false ? ' (coming soon)' : ''}
               </a>
             ))}
           </div>

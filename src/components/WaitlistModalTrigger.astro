@@ -1,0 +1,557 @@
+---
+import WaitlistForm from './WaitlistForm.astro';
+
+interface Props {
+  source: string;
+  plan?: string;
+  planLabel?: string;
+  label?: string;
+  variant?: 'free' | 'basic' | 'pro' | 'business' | 'business-muted';
+  extraInfo?: string;
+  buttonClass?: string;
+  showArrow?: boolean;
+  renderButton?: boolean;
+  storageInputId?: string;
+  usersInputId?: string;
+}
+
+const {
+  source,
+  plan,
+  planLabel,
+  label = 'Join the waitlist',
+  variant = 'basic',
+  extraInfo,
+  buttonClass = '',
+  showArrow = false,
+  renderButton = true,
+  storageInputId,
+  usersInputId,
+} = Astro.props as Props;
+
+const clean = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+const modalId = `waitlist-modal-${clean(source)}${plan ? `-${clean(plan)}` : ''}`;
+const displayPlan = planLabel ?? (plan ? plan.charAt(0).toUpperCase() + plan.slice(1) : '');
+const title = displayPlan ? `Join the ${displayPlan} waitlist` : 'Join the waitlist';
+const helper = extraInfo ?? (displayPlan ? 'We will email you when this plan is available.' : 'Choose a plan for your launch notification.');
+const classes = ['bb-cta', 'waitlist-modal-trigger', variant, buttonClass].filter(Boolean).join(' ');
+const summaryTitle = displayPlan || 'Free';
+const summaryPlan = plan ?? 'free';
+const genericFlow = !plan;
+const planOptions = [
+  { value: 'free', label: 'Free' },
+  { value: 'basic', label: 'Basic' },
+  { value: 'pro', label: 'Pro' },
+  { value: 'business', label: 'Business' },
+];
+---
+
+{renderButton && (
+  <button
+    type="button"
+    class={classes}
+    data-waitlist-open={modalId}
+    aria-haspopup="dialog"
+    aria-controls={modalId}
+  >
+    <span>{label}</span>
+    {showArrow && (
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+    )}
+  </button>
+)}
+
+<dialog id={modalId} class="waitlist-modal" aria-labelledby={`${modalId}-title`}>
+  <div class="modal-shell">
+    <button type="button" class="modal-close" data-waitlist-close={modalId} aria-label="Close waitlist modal">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="modal-copy">
+      {displayPlan && <div class="modal-kicker">Selected plan · {displayPlan}</div>}
+      <h2 id={`${modalId}-title`}>{title}</h2>
+      <p>{helper}</p>
+    </div>
+    {genericFlow && (
+      <div class="modal-plan-picker" aria-label="Select a plan">
+        <div class="picker-label">Plan</div>
+        <div class="plan-options">
+          {planOptions.map((option) => (
+            <button
+              type="button"
+              class:list={['plan-option', option.value === summaryPlan && 'selected']}
+              data-waitlist-plan-option={option.value}
+              aria-pressed={option.value === summaryPlan ? 'true' : 'false'}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+        <div class="generic-controls" data-waitlist-generic-pro-controls hidden>
+          <div class="control-line">
+            <label for={`${modalId}-pro-storage`}>Storage</label>
+            <strong data-waitlist-generic-pro-label>5 TB</strong>
+          </div>
+          <input id={`${modalId}-pro-storage`} type="range" class="modal-slider" data-waitlist-generic-pro-storage min="5" max="100" step="1" value="5" />
+          <div class="control-scale"><span>5 TB</span><span>99 TB</span><span>100+</span></div>
+        </div>
+        <div class="generic-controls" data-waitlist-generic-business-controls hidden>
+          <div class="control-line">
+            <label for={`${modalId}-business-storage`}>Storage</label>
+            <strong data-waitlist-generic-business-storage-label>10 TB</strong>
+          </div>
+          <input id={`${modalId}-business-storage`} type="range" class="modal-slider" data-waitlist-generic-business-storage min="10" max="100" step="1" value="10" />
+          <div class="control-scale"><span>10 TB</span><span>99 TB</span><span>100+</span></div>
+          <div class="control-line users-line">
+            <label for={`${modalId}-business-users`}>Users</label>
+            <strong data-waitlist-generic-business-users-label>3 users</strong>
+          </div>
+          <input id={`${modalId}-business-users`} type="range" class="modal-slider" data-waitlist-generic-business-users min="3" max="50" step="1" value="3" />
+          <div class="control-scale"><span>3</span><span>49</span><span>50+</span></div>
+        </div>
+      </div>
+    )}
+    <div class="modal-summary" aria-label="Waitlist selection summary">
+      <div class="summary-row">
+        <span>Plan</span>
+        <strong data-waitlist-summary-plan>{summaryTitle}</strong>
+      </div>
+      <div class="summary-row" data-waitlist-summary-storage hidden={!storageInputId}>
+        <span>Storage</span>
+        <strong data-waitlist-summary-storage-value></strong>
+      </div>
+      <div class="summary-row" data-waitlist-summary-users hidden={!usersInputId}>
+        <span>Users</span>
+        <strong data-waitlist-summary-users-value></strong>
+      </div>
+    </div>
+    <WaitlistForm {source} {plan} />
+  </div>
+</dialog>
+
+<script define:vars={{ modalId, source, summaryTitle, summaryPlan, storageInputId, usersInputId, genericFlow }}>
+  const dialog = document.getElementById(modalId);
+  const openButtons = document.querySelectorAll(`[data-waitlist-open="${modalId}"], [data-waitlist-trigger][data-waitlist-source="${source}"]`);
+  const closeButtons = document.querySelectorAll(`[data-waitlist-close="${modalId}"]`);
+
+  if (dialog && !dialog.dataset.bound) {
+    dialog.dataset.bound = 'true';
+
+    function openDialog() {
+      if (typeof dialog.showModal === 'function') {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute('open', '');
+      }
+      dialog.querySelector('input[type="email"]')?.focus();
+    }
+
+    function closeDialog() {
+      if (typeof dialog.close === 'function') {
+        dialog.close();
+      } else {
+        dialog.removeAttribute('open');
+      }
+    }
+
+    function readNumericInput(id) {
+      if (!id) return null;
+      const input = document.getElementById(id);
+      const value = Number(input?.value);
+      return Number.isFinite(value) ? value : null;
+    }
+
+    function planLabel(value) {
+      return value === 'free' ? 'Free'
+        : value === 'basic' ? 'Basic'
+          : value === 'pro' ? 'Pro'
+            : value === 'business' ? 'Business'
+              : summaryTitle;
+    }
+
+    function formatStorage(tb) {
+      return tb >= 100 ? '100+ TB' : `${tb} TB`;
+    }
+
+    function formatUsers(count) {
+      return count >= 50 ? '50+ users' : `${count} ${count === 1 ? 'user' : 'users'}`;
+    }
+
+    function selectedGenericPlan() {
+      return dialog.querySelector('[data-waitlist-plan-option].selected')?.dataset.waitlistPlanOption || summaryPlan;
+    }
+
+    function setGenericPlan(value) {
+      dialog.querySelectorAll('[data-waitlist-plan-option]').forEach((button) => {
+        const selected = button.dataset.waitlistPlanOption === value;
+        button.classList.toggle('selected', selected);
+        button.setAttribute('aria-pressed', String(selected));
+      });
+    }
+
+    function readGenericSelection(planValue) {
+      if (!genericFlow) return { planValue: summaryPlan, label: summaryTitle, storageTb: null, users: null };
+
+      const proControls = dialog.querySelector('[data-waitlist-generic-pro-controls]');
+      const businessControls = dialog.querySelector('[data-waitlist-generic-business-controls]');
+      const proStorage = dialog.querySelector('[data-waitlist-generic-pro-storage]');
+      const businessStorage = dialog.querySelector('[data-waitlist-generic-business-storage]');
+      const businessUsers = dialog.querySelector('[data-waitlist-generic-business-users]');
+      const proLabel = dialog.querySelector('[data-waitlist-generic-pro-label]');
+      const businessStorageLabel = dialog.querySelector('[data-waitlist-generic-business-storage-label]');
+      const businessUsersLabel = dialog.querySelector('[data-waitlist-generic-business-users-label]');
+
+      if (proControls) proControls.hidden = planValue !== 'pro';
+      if (businessControls) businessControls.hidden = planValue !== 'business';
+
+      const proTb = Number(proStorage?.value || 5);
+      const businessTb = Number(businessStorage?.value || 10);
+      const businessUserCount = Number(businessUsers?.value || 3);
+      if (proLabel) proLabel.textContent = formatStorage(proTb);
+      if (businessStorageLabel) businessStorageLabel.textContent = formatStorage(businessTb);
+      if (businessUsersLabel) businessUsersLabel.textContent = formatUsers(businessUserCount);
+
+      return {
+        planValue,
+        label: planLabel(planValue),
+        storageTb: planValue === 'pro' ? proTb : planValue === 'business' ? businessTb : null,
+        users: planValue === 'business' ? businessUserCount : null,
+      };
+    }
+
+    function updateSummary() {
+      const genericPlan = selectedGenericPlan();
+      const selection = readGenericSelection(genericPlan);
+      const storageTb = genericFlow ? selection.storageTb : readNumericInput(storageInputId);
+      const users = genericFlow ? selection.users : readNumericInput(usersInputId);
+      const planValue = genericFlow ? selection.planValue : summaryPlan;
+      const label = genericFlow ? selection.label : summaryTitle;
+      const planField = dialog.querySelector('form')?.querySelector('input[name="plan"]');
+      const planSummary = dialog.querySelector('[data-waitlist-summary-plan]');
+      const storageRow = dialog.querySelector('[data-waitlist-summary-storage]');
+      const storageValue = dialog.querySelector('[data-waitlist-summary-storage-value]');
+      const usersRow = dialog.querySelector('[data-waitlist-summary-users]');
+      const usersValue = dialog.querySelector('[data-waitlist-summary-users-value]');
+      const form = dialog.querySelector('form');
+      const storageField = form?.querySelector('input[name="storageTb"]');
+      const usersField = form?.querySelector('input[name="users"]');
+      const detailsField = form?.querySelector('input[name="details"]');
+      const details = [`Selection: ${label}`];
+
+      if (planField) planField.value = planValue;
+      if (planSummary) planSummary.textContent = label;
+
+      if (storageTb !== null) {
+        const storageLabel = formatStorage(storageTb);
+        if (storageValue) storageValue.textContent = storageLabel;
+        if (storageRow) storageRow.hidden = false;
+        if (storageField) storageField.value = String(storageTb);
+        details.push(`Storage: ${storageLabel}`);
+      } else {
+        if (storageRow) storageRow.hidden = true;
+        if (storageField) storageField.value = '';
+      }
+
+      if (users !== null) {
+        const userLabel = formatUsers(users);
+        if (usersValue) usersValue.textContent = userLabel;
+        if (usersRow) usersRow.hidden = false;
+        if (usersField) usersField.value = String(users);
+        details.push(`Users: ${userLabel}`);
+      } else {
+        if (usersRow) usersRow.hidden = true;
+        if (usersField) usersField.value = '';
+      }
+
+      if (detailsField) detailsField.value = details.join('; ');
+    }
+
+    dialog.querySelectorAll('[data-waitlist-plan-option]').forEach((button) => {
+      button.addEventListener('click', () => {
+        setGenericPlan(button.dataset.waitlistPlanOption || summaryPlan);
+        updateSummary();
+      });
+    });
+    dialog.querySelectorAll('[data-waitlist-generic-pro-storage], [data-waitlist-generic-business-storage], [data-waitlist-generic-business-users]').forEach((input) => {
+      input.addEventListener('input', updateSummary);
+    });
+
+    openButtons.forEach((button) => button.addEventListener('click', (event) => {
+      event.preventDefault();
+      updateSummary();
+      openDialog();
+    }));
+    closeButtons.forEach((button) => button.addEventListener('click', closeDialog));
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) closeDialog();
+    });
+  }
+</script>
+
+<style>
+  .waitlist-modal-trigger {
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .waitlist-modal-trigger.plan-card {
+    width: 100%;
+    margin-top: auto;
+    padding: 12px 14px;
+  }
+
+  .waitlist-modal-trigger.free {
+    border-color: var(--line-2, var(--color-line-2));
+    background: transparent;
+    color: var(--ink, var(--color-ink));
+    box-shadow: none;
+  }
+
+  .waitlist-modal-trigger.free:hover {
+    border-color: var(--ink-3, var(--color-ink-3));
+    background: var(--paper-2, var(--color-paper-2));
+  }
+
+  .waitlist-modal-trigger.basic {
+    border-color: var(--amber-deep, var(--color-amber-deep));
+    background: var(--amber, var(--color-amber));
+    color: var(--ink, var(--color-ink));
+  }
+
+  .waitlist-modal-trigger.pro {
+    border-color: var(--ink, var(--color-ink));
+    background: var(--ink, var(--color-ink));
+    color: var(--paper, var(--color-paper));
+  }
+
+  .waitlist-modal-trigger.business,
+  .waitlist-modal-trigger.business-muted {
+    border-color: oklch(0.34 0.012 75);
+    background: oklch(0.30 0.010 75);
+    color: var(--paper, var(--color-paper));
+    box-shadow: none;
+  }
+
+  .waitlist-modal-trigger.business:hover,
+  .waitlist-modal-trigger.business-muted:hover {
+    background: oklch(0.34 0.012 75);
+  }
+
+  .waitlist-modal {
+    width: min(460px, calc(100vw - 32px));
+    padding: 0;
+    border: 1px solid var(--line-2, var(--color-line-2));
+    border-radius: 8px;
+    background: var(--paper, var(--color-paper));
+    color: var(--ink, var(--color-ink));
+    box-shadow: 0 30px 80px -30px rgba(24, 20, 10, 0.4);
+  }
+
+  .waitlist-modal::backdrop {
+    background: rgba(24, 20, 10, 0.34);
+    backdrop-filter: blur(4px);
+  }
+
+  .modal-shell {
+    position: relative;
+    padding: 24px;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line, var(--color-line));
+    border-radius: 8px;
+    background: var(--paper-2, var(--color-paper-2));
+    color: var(--ink-2, var(--color-ink-2));
+    cursor: pointer;
+  }
+
+  .modal-copy {
+    padding-right: 32px;
+    margin-bottom: 18px;
+  }
+
+  .modal-kicker {
+    margin-bottom: 8px;
+    color: var(--amber-deep, var(--color-amber-deep));
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .modal-copy h2 {
+    margin: 0 0 8px;
+    color: var(--ink, var(--color-ink));
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+  }
+
+  .modal-copy p {
+    margin: 0;
+    color: var(--ink-2, var(--color-ink-2));
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .modal-plan-picker {
+    display: grid;
+    gap: 10px;
+    margin: 0 0 14px;
+  }
+
+  .picker-label,
+  .control-line label {
+    color: var(--ink-3, var(--color-ink-3));
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .plan-options {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .plan-option {
+    min-width: 0;
+    min-height: 38px;
+    padding: 0 8px;
+    border: 1px solid var(--line, var(--color-line));
+    border-radius: 8px;
+    background: var(--paper-2, var(--color-paper-2));
+    color: var(--ink-2, var(--color-ink-2));
+    cursor: pointer;
+    font: inherit;
+    font-size: 12.5px;
+    font-weight: 700;
+    transition:
+      background 150ms ease,
+      border-color 150ms ease,
+      color 150ms ease;
+  }
+
+  .plan-option.selected {
+    border-color: var(--ink, var(--color-ink));
+    background: var(--ink, var(--color-ink));
+    color: var(--paper, var(--color-paper));
+  }
+
+  .generic-controls {
+    display: grid;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--line, var(--color-line));
+    border-radius: 8px;
+    background: var(--paper-2, var(--color-paper-2));
+  }
+
+  .generic-controls[hidden] {
+    display: none;
+  }
+
+  .control-line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .control-line strong {
+    color: var(--ink, var(--color-ink));
+    font-family: var(--font-mono);
+    font-size: 12px;
+  }
+
+  .users-line {
+    margin-top: 6px;
+  }
+
+  .modal-slider {
+    width: 100%;
+    accent-color: var(--ink, var(--color-ink));
+  }
+
+  .control-scale {
+    display: flex;
+    justify-content: space-between;
+    color: var(--ink-4, var(--color-ink-4));
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+
+  .modal-summary {
+    display: grid;
+    gap: 8px;
+    margin: 0 0 18px;
+    padding: 12px;
+    border: 1px solid var(--line, var(--color-line));
+    border-radius: 8px;
+    background: var(--paper-2, var(--color-paper-2));
+  }
+
+  .summary-row {
+    display: flex;
+    min-height: 28px;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .summary-row[hidden] {
+    display: none;
+  }
+
+  .summary-row span {
+    color: var(--ink-3, var(--color-ink-3));
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .summary-row strong {
+    display: inline-flex;
+    min-width: 0;
+    max-width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 9px;
+    border: 1px solid var(--line-2, var(--color-line-2));
+    border-radius: 999px;
+    background: var(--paper, var(--color-paper));
+    color: var(--ink, var(--color-ink));
+    font-size: 12.5px;
+    font-weight: 700;
+    line-height: 1.2;
+    text-align: right;
+  }
+
+  .waitlist-modal :global(.bb-waitlist-form) {
+    max-width: none;
+  }
+
+  .waitlist-modal :global(.bb-waitlist-form input),
+  .waitlist-modal :global(.bb-waitlist-form button) {
+    width: 100%;
+  }
+
+  @media (max-width: 430px) {
+    .plan-options {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

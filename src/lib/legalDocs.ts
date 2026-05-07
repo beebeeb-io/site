@@ -1,13 +1,13 @@
-import termsText from '../content/legal/terms.txt?raw';
-import privacyText from '../content/legal/privacy.txt?raw';
-import dpaText from '../content/legal/dpa.txt?raw';
-import acceptableUseText from '../content/legal/acceptable-use.txt?raw';
-import cookiesText from '../content/legal/cookies.txt?raw';
-import subProcessorsText from '../content/legal/sub-processors.txt?raw';
-import lawEnforcementText from '../content/legal/law-enforcement.txt?raw';
-import transparencyText from '../content/legal/transparency.txt?raw';
-import complaintsText from '../content/legal/complaints.txt?raw';
-import slaText from '../content/legal/sla.txt?raw';
+import termsHtml from '../content/legal/terms.html?raw';
+import privacyHtml from '../content/legal/privacy.html?raw';
+import dpaHtml from '../content/legal/dpa.html?raw';
+import acceptableUseHtml from '../content/legal/acceptable-use.html?raw';
+import cookiesHtml from '../content/legal/cookies.html?raw';
+import subProcessorsHtml from '../content/legal/sub-processors.html?raw';
+import lawEnforcementHtml from '../content/legal/law-enforcement.html?raw';
+import transparencyHtml from '../content/legal/transparency.html?raw';
+import complaintsHtml from '../content/legal/complaints.html?raw';
+import slaHtml from '../content/legal/sla.html?raw';
 
 export interface LegalDoc {
   slug: string;
@@ -15,7 +15,7 @@ export interface LegalDoc {
   href: string;
   description: string;
   sourceName: string;
-  text: string;
+  html: string;
 }
 
 export const legalDocs = {
@@ -25,7 +25,7 @@ export const legalDocs = {
     href: '/terms',
     description: 'The terms that govern use of the Beebeeb service.',
     sourceName: '01 Terms of Service',
-    text: termsText,
+    html: termsHtml,
   },
   privacy: {
     slug: 'privacy',
@@ -33,7 +33,7 @@ export const legalDocs = {
     href: '/privacy',
     description: 'How Beebeeb processes personal data and what our zero-knowledge architecture means for privacy.',
     sourceName: '02 Privacy Policy',
-    text: privacyText,
+    html: privacyHtml,
   },
   dpa: {
     slug: 'dpa',
@@ -41,7 +41,7 @@ export const legalDocs = {
     href: '/dpa',
     description: 'GDPR Article 28 data processing terms for business customers.',
     sourceName: '03 Data Processing Agreement',
-    text: dpaText,
+    html: dpaHtml,
   },
   acceptableUse: {
     slug: 'aup',
@@ -49,7 +49,7 @@ export const legalDocs = {
     href: '/aup',
     description: 'Rules for lawful and acceptable use of the Beebeeb service.',
     sourceName: '04 Acceptable Use Policy',
-    text: acceptableUseText,
+    html: acceptableUseHtml,
   },
   cookies: {
     slug: 'cookies',
@@ -57,7 +57,7 @@ export const legalDocs = {
     href: '/cookies',
     description: 'Which cookies and similar technologies Beebeeb uses.',
     sourceName: '05 Cookie Statement',
-    text: cookiesText,
+    html: cookiesHtml,
   },
   subProcessors: {
     slug: 'sub-processors',
@@ -65,7 +65,7 @@ export const legalDocs = {
     href: '/sub-processors',
     description: 'The current list of service providers and sub-processors used by Beebeeb.',
     sourceName: '06 Sub-processor List',
-    text: subProcessorsText,
+    html: subProcessorsHtml,
   },
   lawEnforcement: {
     slug: 'law-enforcement',
@@ -73,7 +73,7 @@ export const legalDocs = {
     href: '/law-enforcement',
     description: 'How Beebeeb handles requests from authorities and what data we can and cannot provide.',
     sourceName: '07 Law Enforcement Guidelines',
-    text: lawEnforcementText,
+    html: lawEnforcementHtml,
   },
   transparency: {
     slug: 'transparency',
@@ -81,7 +81,7 @@ export const legalDocs = {
     href: '/transparency',
     description: 'Aggregated reporting on government and third-party requests.',
     sourceName: '08 Transparency Report',
-    text: transparencyText,
+    html: transparencyHtml,
   },
   complaints: {
     slug: 'complaints',
@@ -89,7 +89,7 @@ export const legalDocs = {
     href: '/complaints',
     description: 'Internal complaint handling under Article 20 of the Digital Services Act.',
     sourceName: '10 Complaints Procedure DSA',
-    text: complaintsText,
+    html: complaintsHtml,
   },
   sla: {
     slug: 'sla',
@@ -97,7 +97,7 @@ export const legalDocs = {
     href: '/sla',
     description: 'Availability and support commitments for eligible business customers.',
     sourceName: '11 Service Level Agreement',
-    text: slaText,
+    html: slaHtml,
   },
 } satisfies Record<string, LegalDoc>;
 

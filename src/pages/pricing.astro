@@ -4,7 +4,7 @@ import { getLaunchPhase } from '../lib/strapi';
 import { phaseConfig } from '../lib/phase';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
-import WaitlistForm from '../components/WaitlistForm.astro';
+import WaitlistModalTrigger from '../components/WaitlistModalTrigger.astro';
 import SecFinalCTA from '../components/sections/SecFinalCTA.astro';
 import '../styles/landing.css';
 
@@ -90,15 +90,12 @@ const bizComing = !cfg.bizLive ? [
           </div>
         </div>
         {cfg.isLive ? (
-          <a href="https://app.beebeeb.io/signup?plan=free" class="bb-cta ghost"
-             target="_blank" rel="noopener noreferrer"
-             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+          <a href="https://app.beebeeb.io/signup?plan=free" class="bb-cta plan-cta free"
+             target="_blank" rel="noopener noreferrer">
             {cfg.freeCTA}
           </a>
         ) : (
-          <div style="margin-top: auto;">
-            <WaitlistForm source="pricing" plan="free" />
-          </div>
+          <WaitlistModalTrigger source="pricing" plan="free" planLabel="Free" variant="free" buttonClass="plan-card" />
         )}
       </div>
 
@@ -124,15 +121,12 @@ const bizComing = !cfg.bizLive ? [
           </div>
         </div>
         {cfg.isLive ? (
-          <a href="https://app.beebeeb.io/signup?plan=basic" class="bb-cta amber"
-             target="_blank" rel="noopener noreferrer"
-             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+          <a href="https://app.beebeeb.io/signup?plan=basic" class="bb-cta plan-cta basic"
+             target="_blank" rel="noopener noreferrer">
             {cfg.basicCTA}
           </a>
         ) : (
-          <div style="margin-top: auto;">
-            <WaitlistForm source="pricing" plan="basic" />
-          </div>
+          <WaitlistModalTrigger source="pricing" plan="basic" planLabel="Basic" variant="basic" buttonClass="plan-card" />
         )}
       </div>
 
@@ -169,14 +163,11 @@ const bizComing = !cfg.bizLive ? [
           <a id="pro-cta"
              href="https://app.beebeeb.io/signup?plan=pro"
              target="_blank" rel="noopener noreferrer"
-             class="bb-cta"
-             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+             class="bb-cta plan-cta pro">
             {cfg.proCTA}
           </a>
         ) : (
-          <div style="margin-top: auto;">
-            <WaitlistForm source="pricing" plan="pro" />
-          </div>
+          <WaitlistModalTrigger source="pricing" plan="pro" planLabel="Pro" variant="pro" buttonClass="plan-card" storageInputId="pro-slider" />
         )}
       </div>
 
@@ -201,7 +192,6 @@ const bizComing = !cfg.bizLive ? [
           </div>
           <input type="range" class="bb-slider" id="biz-tb-slider"
                  min="10" max="100" step="1" value="10"
-                 disabled={!cfg.bizLive}
                  aria-label="Business storage in TB" />
           <div style="height: 10px;"></div>
           <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px;">
@@ -210,22 +200,26 @@ const bizComing = !cfg.bizLive ? [
           </div>
           <input type="range" class="bb-slider" id="biz-user-slider"
                  min="3" max="50" step="1" value="3"
-                 disabled={!cfg.bizLive}
                  aria-label="Business team size" />
           <div style="font-size: 11.5px; color: var(--ink-3); margin-top: 8px; font-family: var(--font-mono);">
             &euro;10,99/extra TB &middot; &euro;4,99/extra user
           </div>
         </div>
         {cfg.bizLive ? (
-          <a id="biz-cta" href="https://app.beebeeb.io/signup?plan=business" class="bb-cta amber"
-             target="_blank" rel="noopener noreferrer"
-             style="justify-content: center; padding: 12px 14px; margin-top: auto;">
+          <a id="biz-cta" href="https://app.beebeeb.io/signup?plan=business" class="bb-cta plan-cta business"
+             target="_blank" rel="noopener noreferrer">
             {cfg.bizCTA}
           </a>
         ) : (
-          <div style="margin-top: auto;">
-            <WaitlistForm source="pricing" plan="business" />
-          </div>
+          <WaitlistModalTrigger
+            source="pricing"
+            plan="business"
+            planLabel="Business"
+            variant="business-muted"
+            buttonClass="plan-card"
+            storageInputId="biz-tb-slider"
+            usersInputId="biz-user-slider"
+          />
         )}
       </div>
 
@@ -379,7 +373,7 @@ const bizComing = !cfg.bizLive ? [
       if (priceEl) priceEl.textContent = 'Get a quote';
       if (unitEl)  unitEl.textContent = '';
       if (noteEl)  noteEl.textContent = 'Beyond 99 TB';
-      if (ctaEl)   { ctaEl.textContent = 'Get a quote →'; ctaEl.href = 'mailto:sales@beebeeb.io'; ctaEl.className = 'bb-cta ghost'; }
+      if (ctaEl)   { ctaEl.textContent = 'Get a quote →'; ctaEl.href = 'mailto:sales@beebeeb.io'; ctaEl.className = 'bb-cta plan-cta free'; }
     } else {
       const monthly = proBaseMonthly + Math.max(0, tb - 5) * 10.99;
       const annual  = proBaseAnnual  + Math.max(0, tb - 5) * 10.99;
@@ -390,7 +384,7 @@ const bizComing = !cfg.bizLive ? [
       if (noteEl)  noteEl.textContent = billing === 'annual'
         ? (hasExtras ? 'Base annual · add-ons monthly' : 'billed €' + (proBaseAnnual * 12).toFixed(2).replace('.', ',') + '/year')
         : 'billed monthly';
-      if (ctaEl && isLive) { ctaEl.textContent = proCTA; ctaEl.href = 'https://app.beebeeb.io/signup?plan=pro'; ctaEl.className = 'bb-cta'; }
+      if (ctaEl && isLive) { ctaEl.textContent = proCTA; ctaEl.href = 'https://app.beebeeb.io/signup?plan=pro'; ctaEl.className = 'bb-cta plan-cta pro'; }
     }
   }
   if (proSlider) proSlider.addEventListener('input', updatePro);
@@ -412,7 +406,7 @@ const bizComing = !cfg.bizLive ? [
       if (priceEl) priceEl.textContent = 'Get a quote';
       if (unitEl)  unitEl.textContent = '';
       if (noteEl)  noteEl.textContent = 'Beyond 99 TB or 49 users';
-      if (ctaEl && bizLive) { ctaEl.textContent = 'Get a quote →'; ctaEl.href = 'mailto:sales@beebeeb.io'; ctaEl.className = 'bb-cta ghost'; }
+      if (ctaEl && bizLive) { ctaEl.textContent = 'Get a quote →'; ctaEl.href = 'mailto:sales@beebeeb.io'; ctaEl.className = 'bb-cta plan-cta business-muted'; }
     } else {
       const monthly = bizBaseMonthly + Math.max(0, tb - 10) * 10.99 + Math.max(0, users - 3) * 4.99;
       const annual  = bizBaseAnnual  + Math.max(0, tb - 10) * 10.99 + Math.max(0, users - 3) * 4.99;
@@ -423,7 +417,7 @@ const bizComing = !cfg.bizLive ? [
       if (noteEl)  noteEl.textContent = billing === 'annual'
         ? (hasExtras ? 'Base annual · add-ons monthly' : 'billed €' + (bizBaseAnnual * 12).toFixed(2).replace('.', ',') + '/year')
         : 'billed monthly';
-      if (ctaEl && bizLive) { ctaEl.textContent = bizCTA; ctaEl.href = 'https://app.beebeeb.io/signup?plan=business'; ctaEl.className = 'bb-cta amber'; }
+      if (ctaEl && bizLive) { ctaEl.textContent = bizCTA; ctaEl.href = 'https://app.beebeeb.io/signup?plan=business'; ctaEl.className = 'bb-cta plan-cta business'; }
     }
   }
   if (bizTbSlider)   bizTbSlider.addEventListener('input', updateBiz);
@@ -445,6 +439,50 @@ const bizComing = !cfg.bizLive ? [
 
   .bb-platform.coming .platform-glyph {
     color: var(--ink-4);
+  }
+
+  .plan-cta {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 14px;
+    margin-top: auto;
+  }
+
+  .plan-cta.free {
+    border-color: var(--line-2);
+    background: transparent;
+    color: var(--ink);
+    box-shadow: none;
+  }
+
+  .plan-cta.free:hover {
+    border-color: var(--ink-3);
+    background: var(--paper-2);
+  }
+
+  .plan-cta.basic {
+    border-color: var(--amber-deep);
+    background: var(--amber);
+    color: var(--ink);
+  }
+
+  .plan-cta.pro {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .plan-cta.business,
+  .plan-cta.business-muted {
+    border-color: oklch(0.34 0.012 75);
+    background: oklch(0.30 0.010 75);
+    color: var(--paper);
+    box-shadow: none;
+  }
+
+  .plan-cta.business:hover,
+  .plan-cta.business-muted:hover {
+    background: oklch(0.34 0.012 75);
   }
 
   @media (max-width: 760px) {

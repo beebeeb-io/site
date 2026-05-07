@@ -1,6 +1,7 @@
 ---
 import { ClientRouter } from 'astro:transitions';
 import SEO from '../components/global/SEO.astro';
+import MatomoTagManager from '../components/global/MatomoTagManager.astro';
 import ComingSoon from '../components/ComingSoon.astro';
 import { fetchGlobal, getLaunchPhase } from '../lib/strapi';
 import { phaseConfig } from '../lib/phase';
@@ -53,6 +54,7 @@ const Footer = chrome ? (await import('../components/Footer.astro')).default : n
     />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <meta name="theme-color" content="#faf9f7" />
+    <MatomoTagManager />
     <ClientRouter />
   </head>
   <body class="min-h-screen">
