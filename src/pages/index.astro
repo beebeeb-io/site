@@ -21,7 +21,7 @@ import CtaSection from '../components/blocks/CtaSection.astro';
     cta_primary_href="https://app.beebeeb.io/signup"
     cta_secondary_label="How it works"
     cta_secondary_href="/security"
-    trust_badges={['Zero-knowledge encryption', 'EU-only infrastructure', 'Open source']}
+    trust_badges={['Zero-knowledge encryption', 'EU-only infrastructure', 'Open source', 'Circular infrastructure']}
   />
 
   <!-- ═══════════════════════════════════════════════════════════
@@ -186,6 +186,26 @@ import CtaSection from '../components/blocks/CtaSection.astro';
               <span class="inline-flex px-2.5 py-1 bg-paper-2 border border-line rounded-md font-mono text-[11px] text-ink-3">github.com/beebeeb-io</span>
             </div>
           </div>
+        </div>
+
+        <!-- DRAFT: copy needs Guus review before deploy -->
+        <!-- Circular infrastructure -->
+        <div class="relative p-7 border border-line rounded-[14px] bg-paper overflow-hidden bb-fade-up">
+          <div class="mb-5">
+            <!-- Simple recycling icon using basic shapes -->
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-amber-deep">
+              <path d="M3 12a9 9 0 0 1 9-9 9 9 0 0 1 9 9"/>
+              <polyline points="17 12 21 8 17 4"/>
+              <path d="M21 12a9 9 0 0 1-9 9 9 9 0 0 1-9-9"/>
+              <polyline points="7 12 3 16 7 20"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold tracking-[-0.02em] mb-2 leading-tight">Circular infrastructure</h3>
+          <p class="text-[13.5px] text-ink-2 leading-relaxed">
+            We run on recertified enterprise drives — the same hardware used by hyperscale data centres,
+            now in its second life. No new manufacturing emissions, no landfill. Better for the planet,
+            and lower costs we pass directly to you.
+          </p>
         </div>
 
       </div>
