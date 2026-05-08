@@ -34,6 +34,7 @@ data/
 *.db
 *.sqlite
 *.sqlite3
+deploy.sh
 
 # OS
 .DS_Store
