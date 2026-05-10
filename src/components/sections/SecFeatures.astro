@@ -1,0 +1,128 @@
+---
+const features = [
+  {
+    key: 'e2e',
+    label: 'End-to-end encrypted',
+    body: 'Files are encrypted on your device before they leave it. The server receives ciphertext. Nothing else.',
+    mono: 'AES-256-GCM · on device',
+  },
+  {
+    key: 'zk',
+    label: 'Zero-knowledge — mathematically',
+    body: "Your master key lives in your 12-word recovery phrase, not on our servers. We can't read your files. The architecture makes it impossible, not just against policy.",
+    mono: 'No backdoor · no exceptions',
+  },
+  {
+    key: 'photos',
+    label: 'iPhone Photos backup',
+    body: 'Back up your iPhone camera roll, encrypted, to your vault. Photos stay yours — not fed into training datasets or ad profiles.',
+    mono: 'iOS · end-to-end encrypted',
+  },
+  {
+    key: 'requests',
+    label: 'File requests',
+    body: 'Send a link, let someone upload to your vault. You receive the files encrypted. The person uploading never sees what else is there.',
+    mono: 'Collect files · stay private',
+  },
+  {
+    key: 'proof',
+    label: 'Proof of existence',
+    body: 'Timestamp any file on the blockchain. Get a cryptographic certificate that proves it existed at a specific point in time — without uploading the file contents.',
+    mono: 'Blockchain timestamp · SHA-256',
+  },
+  {
+    key: 'share',
+    label: 'Share links with expiry',
+    body: 'Share files with a link that expires. The decryption key travels in the URL fragment — the part our server never sees. Revoke any link at any time.',
+    mono: 'Auto-expiry · revocable',
+  },
+  {
+    key: 'eu',
+    label: 'Made in Europe',
+    body: 'Operated by Initlabs B.V., Netherlands. Stored in Falkenstein, Germany. Hetzner infrastructure. EU law applies. No US Cloud Act exposure.',
+    mono: 'Falkenstein · Hetzner',
+  },
+];
+---
+
+<section id="features" style="padding: 110px 32px; background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+  <div class="bb-container" style="padding: 0;">
+    <div style="margin-bottom: 56px; max-width: 600px;">
+      <div class="bb-eyebrow" style="margin-bottom: 18px;">What it does</div>
+      <h2 class="bb-display-l" style="margin: 0 0 18px;">Privacy that works. Features that don't cut corners.</h2>
+      <p style="font-size: 17px; line-height: 1.6; color: var(--ink-2); margin: 0; text-wrap: pretty;">
+        Every feature starts from the same constraint: we cannot read your files.
+        Everything built on top of that is designed to stay honest about it.
+      </p>
+    </div>
+
+    <div class="features-grid">
+      {features.map((f) => (
+        <div class="feature-card">
+          <div class="feature-label">{f.label}</div>
+          <p class="feature-body">{f.body}</p>
+          <div class="t-mono feature-mono">{f.mono}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--line);
+  }
+
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 28px 26px;
+    background: var(--paper);
+    min-height: 180px;
+  }
+
+  .feature-label {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.018em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  .feature-body {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink-2);
+    text-wrap: pretty;
+    flex: 1;
+  }
+
+  .feature-mono {
+    font-size: 10.5px;
+    color: var(--amber-deep);
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 900px) {
+    .features-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .features-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
