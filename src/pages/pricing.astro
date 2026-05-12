@@ -96,7 +96,7 @@ const bizComing = !cfg.bizLive ? [
             {cfg.freeCTA}
           </a>
         ) : (
-          <WaitlistModalTrigger source="pricing" plan="free" planLabel="Free" variant="free" buttonClass="plan-card" />
+          <button type="button" class="bb-cta plan-cta free pricing-waitlist-btn" data-preselect="free">Join the waitlist</button>
         )}
       </div>
 
@@ -127,7 +127,7 @@ const bizComing = !cfg.bizLive ? [
             {cfg.basicCTA}
           </a>
         ) : (
-          <WaitlistModalTrigger source="pricing" plan="basic" planLabel="Basic" variant="basic" buttonClass="plan-card" />
+          <button type="button" class="bb-cta plan-cta basic pricing-waitlist-btn" data-preselect="basic">Join the waitlist</button>
         )}
       </div>
 
@@ -168,7 +168,7 @@ const bizComing = !cfg.bizLive ? [
             {cfg.proCTA}
           </a>
         ) : (
-          <WaitlistModalTrigger source="pricing" plan="pro" planLabel="Pro" variant="pro" buttonClass="plan-card" storageInputId="pro-slider" />
+          <button type="button" class="bb-cta plan-cta pro pricing-waitlist-btn" data-preselect="pro">Join the waitlist</button>
         )}
       </div>
 
@@ -212,20 +212,153 @@ const bizComing = !cfg.bizLive ? [
             {cfg.bizCTA}
           </a>
         ) : (
-          <WaitlistModalTrigger
-            source="pricing"
-            plan="business"
-            planLabel="Business"
-            variant="business-muted"
-            buttonClass="plan-card"
-            storageInputId="biz-tb-slider"
-            usersInputId="biz-user-slider"
-          />
+          <button type="button" class="bb-cta plan-cta business-muted pricing-waitlist-btn" data-preselect="business">Join the waitlist</button>
         )}
       </div>
 
     </div>
+
+    <WaitlistModalTrigger source="pricing-picker" renderButton={false} />
   </div>
+
+  <script>
+    function initPricingWaitlist() {
+      const modalId = 'waitlist-modal-pricing-picker';
+      const dialog = document.getElementById(modalId);
+      if (!dialog || dialog.dataset.pricingBound) return;
+      dialog.dataset.pricingBound = 'true';
+
+      const PRICES = {
+        free:     { base: 0,      perTb: 0,     perUser: 0,    baseTb: 5,  baseUsers: 1 },
+        basic:    { base: 10.99,  perTb: 0,     perUser: 0,    baseTb: 1,  baseUsers: 1 },
+        pro:      { base: 54.95,  perTb: 10.99, perUser: 0,    baseTb: 5,  baseUsers: 1 },
+        business: { base: 109.90, perTb: 10.99, perUser: 4.99, baseTb: 10, baseUsers: 3 },
+      };
+
+      function fmtEUR(n) {
+        return '€' + n.toFixed(2).replace('.', ',');
+      }
+
+      function getSelectedPlan() {
+        const sel = dialog.querySelector('[data-waitlist-plan-option].selected');
+        return sel?.dataset.waitlistPlanOption || 'free';
+      }
+
+      function getSliderValue(attr) {
+        const el = dialog.querySelector(`[${attr}]`);
+        return el ? Number(el.value) : 0;
+      }
+
+      function calcPrice(plan) {
+        const p = PRICES[plan];
+        if (!p) return { monthly: 0, breakdown: '' };
+        let monthly = p.base;
+        const parts = [fmtEUR(p.base) + '/mo base'];
+
+        if (plan === 'pro') {
+          const tb = getSliderValue('data-waitlist-generic-pro-storage');
+          const extraTb = Math.max(0, tb - p.baseTb);
+          monthly += extraTb * p.perTb;
+          if (extraTb > 0) parts.push('+' + fmtEUR(extraTb * p.perTb) + ' (' + extraTb + ' extra TB)');
+        }
+        if (plan === 'business') {
+          const tb = getSliderValue('data-waitlist-generic-business-storage');
+          const users = getSliderValue('data-waitlist-generic-business-users');
+          const extraTb = Math.max(0, tb - p.baseTb);
+          const extraUsers = Math.max(0, users - p.baseUsers);
+          monthly += extraTb * p.perTb + extraUsers * p.perUser;
+          if (extraTb > 0) parts.push('+' + fmtEUR(extraTb * p.perTb) + ' (' + extraTb + ' extra TB)');
+          if (extraUsers > 0) parts.push('+' + fmtEUR(extraUsers * p.perUser) + ' (' + extraUsers + ' extra users)');
+        }
+        return { monthly, breakdown: parts.length > 1 ? parts.join(' ') : '' };
+      }
+
+      function ensurePriceRow() {
+        let row = dialog.querySelector('[data-pricing-row]');
+        if (!row) {
+          const summary = dialog.querySelector('.modal-summary');
+          if (!summary) return null;
+          row = document.createElement('div');
+          row.setAttribute('data-pricing-row', '');
+          row.style.cssText = 'display:flex;min-height:28px;align-items:center;justify-content:space-between;gap:14px;';
+          const label = document.createElement('span');
+          label.textContent = 'Price';
+          label.style.cssText = 'color:var(--ink-3);font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;';
+          const value = document.createElement('strong');
+          value.setAttribute('data-pricing-value', '');
+          value.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;padding:4px 9px;border:1px solid var(--line-2);border-radius:999px;background:var(--paper);color:var(--ink);font-size:12.5px;font-weight:700;line-height:1.2;';
+          row.appendChild(label);
+          row.appendChild(value);
+          summary.insertBefore(row, summary.firstChild);
+
+          const breakdown = document.createElement('div');
+          breakdown.setAttribute('data-pricing-breakdown', '');
+          breakdown.style.cssText = 'font-size:11px;color:var(--ink-3);font-family:var(--font-mono);padding:2px 2px 0;';
+          summary.insertBefore(breakdown, row.nextSibling);
+        }
+        return row;
+      }
+
+      function updatePrice() {
+        const plan = getSelectedPlan();
+        const { monthly, breakdown } = calcPrice(plan);
+        const row = ensurePriceRow();
+        if (!row) return;
+        const valueEl = row.querySelector('[data-pricing-value]');
+        const breakdownEl = dialog.querySelector('[data-pricing-breakdown]');
+        if (valueEl) {
+          valueEl.textContent = plan === 'free' ? 'Free' : fmtEUR(monthly) + '/mo';
+        }
+        if (breakdownEl) {
+          breakdownEl.textContent = breakdown;
+          breakdownEl.style.display = breakdown ? '' : 'none';
+        }
+      }
+
+      function selectPlan(plan) {
+        dialog.querySelectorAll('[data-waitlist-plan-option]').forEach((option) => {
+          const selected = option.dataset.waitlistPlanOption === plan;
+          option.classList.toggle('selected', selected);
+          option.setAttribute('aria-pressed', String(selected));
+        });
+        const proControls = dialog.querySelector('[data-waitlist-generic-pro-controls]');
+        const bizControls = dialog.querySelector('[data-waitlist-generic-business-controls]');
+        if (proControls) proControls.hidden = plan !== 'pro';
+        if (bizControls) bizControls.hidden = plan !== 'business';
+
+        const summaryPlan = dialog.querySelector('[data-waitlist-summary-plan]');
+        if (summaryPlan) summaryPlan.textContent = plan.charAt(0).toUpperCase() + plan.slice(1);
+        const storageRow = dialog.querySelector('[data-waitlist-summary-storage]');
+        const usersRow = dialog.querySelector('[data-waitlist-summary-users]');
+        if (storageRow) storageRow.hidden = plan !== 'pro' && plan !== 'business';
+        if (usersRow) usersRow.hidden = plan !== 'business';
+
+        const planField = dialog.querySelector('input[name="plan"]');
+        if (planField) planField.value = plan;
+        updatePrice();
+      }
+
+      dialog.querySelectorAll('[data-waitlist-plan-option]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          selectPlan(btn.dataset.waitlistPlanOption || 'free');
+        });
+      });
+
+      dialog.querySelectorAll('[data-waitlist-generic-pro-storage], [data-waitlist-generic-business-storage], [data-waitlist-generic-business-users]').forEach((input) => {
+        input.addEventListener('input', updatePrice);
+      });
+
+      document.querySelectorAll('.pricing-waitlist-btn').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          selectPlan(btn.dataset.preselect || 'free');
+          if (typeof dialog.showModal === 'function') dialog.showModal();
+          dialog.querySelector('input[type="email"]')?.focus();
+        });
+      });
+    }
+    initPricingWaitlist();
+    document.addEventListener('astro:after-swap', initPricingWaitlist);
+  </script>
 
   <!-- Features section -->
   <div style="padding: 64px 32px; background: var(--paper-2); border-top: 1px solid var(--line);">
