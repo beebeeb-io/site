@@ -1,25 +1,23 @@
 ---
-export const prerender = true
-
-import { getCollection, render } from 'astro:content'
 import Base from '../../layouts/base.astro'
+import { fetchBlogPostBySlug, fetchBlogPosts } from '../../lib/strapi'
+import { articleSchema } from '../../lib/schemas'
 
-export async function getStaticPaths() {
-  const posts = await getCollection('blog')
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }))
+const { slug } = Astro.params
+if (!slug) {
+  Astro.response.status = 404
+  return Astro.rewrite('/404')
 }
 
-const { post } = Astro.props
-const { Content } = await render(post)
+const post = await fetchBlogPostBySlug(slug)
+if (!post) {
+  Astro.response.status = 404
+  return Astro.rewrite('/404')
+}
 
-// Prev / next
-const allPosts = (await getCollection('blog')).sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-)
-const idx = allPosts.findIndex((p) => p.id === post.id)
+// Fetch all posts for prev/next navigation
+const allPosts = await fetchBlogPosts()
+const idx = allPosts.findIndex((p) => p.slug === post.slug)
 const prevPost = idx < allPosts.length - 1 ? allPosts[idx + 1] : null
 const nextPost = idx > 0 ? allPosts[idx - 1] : null
 
@@ -31,33 +29,26 @@ function formatDate(iso: string): string {
   })
 }
 
-const canonicalUrl = `https://beebeeb.io/blog/${post.id}`
-const shareText = encodeURIComponent(post.data.title + ' — ' + post.data.excerpt)
+const canonicalUrl = `https://beebeeb.io/blog/${post.slug}`
+const shareText = encodeURIComponent(post.title + ' — ' + post.excerpt)
 const twitterUrl = `https://x.com/intent/post?text=${shareText}&url=${encodeURIComponent(canonicalUrl)}`
 const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURIComponent(canonicalUrl)}`
+
+const jsonLd = articleSchema({
+  headline: post.title,
+  description: post.seoDescription || post.excerpt,
+  datePublished: post.publishedAt,
+  authorName: post.author?.name,
+  image: post.coverImage,
+  url: canonicalUrl,
+})
 ---
 
 <Base
-  title={`${post.data.title} — Beebeeb Blog`}
-  description={post.data.excerpt}
-  path={`/blog/${post.id}`}
-  jsonLd={{
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.data.title,
-    description: post.data.excerpt,
-    datePublished: post.data.date,
-    author: {
-      '@type': 'Person',
-      name: post.data.author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: 'Beebeeb',
-      url: 'https://beebeeb.io',
-    },
-    url: canonicalUrl,
-  }}
+  title={`${post.seoTitle || post.title} — Beebeeb Blog`}
+  description={post.seoDescription || post.excerpt}
+  path={`/blog/${post.slug}`}
+  jsonLd={jsonLd}
 >
   <!-- Hero / header -->
   <section class="px-8 pt-[72px] pb-12 border-b border-line" style="background: linear-gradient(180deg, var(--color-paper-2) 0%, var(--color-paper) 100%);">
@@ -70,26 +61,26 @@ const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURI
       </a>
 
       <div class="flex items-center gap-2 mb-5">
-        <span class="text-[11px] font-mono text-ink-4">{formatDate(post.data.date)}</span>
-        <span class="text-ink-4">·</span>
-        <span class="text-[11px] font-mono text-ink-4">{post.data.readingTime} min read</span>
+        <span class="text-[11px] font-mono text-ink-4">{formatDate(post.publishedAt)}</span>
+        <span class="text-ink-4">&middot;</span>
+        <span class="text-[11px] font-mono text-ink-4">{post.readingTime} min read</span>
       </div>
 
       <h1 class="text-[40px] sm:text-[48px] leading-[1.06] font-bold tracking-[-0.025em] text-ink mb-5">
-        {post.data.title}
+        {post.title}
       </h1>
 
       <p class="text-[16px] text-ink-2 leading-relaxed mb-6">
-        {post.data.excerpt}
+        {post.excerpt}
       </p>
 
       <div class="flex items-center gap-2.5">
         <div class="w-8 h-8 rounded-full bg-amber-bg text-amber-deep flex items-center justify-center text-[12px] font-bold shrink-0">
-          {post.data.author.charAt(0)}
+          {(post.author?.name || 'B').charAt(0)}
         </div>
         <div>
-          <div class="text-[13px] font-medium text-ink">{post.data.author}</div>
-          <div class="text-[11px] text-ink-4">Initlabs B.V. · Wijchen, Netherlands</div>
+          <div class="text-[13px] font-medium text-ink">{post.author?.name || 'Beebeeb Team'}</div>
+          <div class="text-[11px] text-ink-4">Initlabs B.V. &middot; Wijchen, Netherlands</div>
         </div>
       </div>
     </div>
@@ -97,9 +88,7 @@ const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURI
 
   <!-- Post body -->
   <article class="px-8 py-12">
-    <div class="max-w-[720px] mx-auto prose-blog">
-      <Content />
-    </div>
+    <div class="max-w-[720px] mx-auto prose-blog" set:html={post.content} />
   </article>
 
   <!-- Share + prev/next -->
@@ -141,24 +130,24 @@ const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURI
       <!-- Prev / Next -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {prevPost && (
-          <a href={`/blog/${prevPost.id}`} class="group block border border-line rounded-xl p-5 no-underline hover:border-amber-deep/40 hover:shadow-1 transition-all bg-paper">
+          <a href={`/blog/${prevPost.slug}`} class="group block border border-line rounded-xl p-5 no-underline hover:border-amber-deep/40 hover:shadow-1 transition-all bg-paper">
             <div class="text-[10px] font-mono text-ink-4 uppercase tracking-wider mb-2 flex items-center gap-1">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
               Previous
             </div>
             <div class="text-[14px] font-semibold text-ink group-hover:text-amber-deep transition-colors leading-snug">
-              {prevPost.data.title}
+              {prevPost.title}
             </div>
           </a>
         )}
         {nextPost && (
-          <a href={`/blog/${nextPost.id}`} class:list={['group block border border-line rounded-xl p-5 no-underline hover:border-amber-deep/40 hover:shadow-1 transition-all bg-paper', !prevPost && 'sm:col-start-2']}>
+          <a href={`/blog/${nextPost.slug}`} class:list={['group block border border-line rounded-xl p-5 no-underline hover:border-amber-deep/40 hover:shadow-1 transition-all bg-paper', !prevPost && 'sm:col-start-2']}>
             <div class="text-[10px] font-mono text-ink-4 uppercase tracking-wider mb-2 flex items-center justify-end gap-1">
               Next
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </div>
             <div class="text-[14px] font-semibold text-ink group-hover:text-amber-deep transition-colors leading-snug text-right">
-              {nextPost.data.title}
+              {nextPost.title}
             </div>
           </a>
         )}
@@ -186,14 +175,14 @@ const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURI
 </script>
 
 <style>
-/* ── Prose typography for blog post body ── */
+/* -- Prose typography for blog post body -- */
 .prose-blog {
   color: var(--color-ink-2);
   font-size: 16px;
   line-height: 1.75;
 }
 
-.prose-blog h2 {
+.prose-blog :global(h2) {
   font-size: 1.5rem;
   font-weight: 700;
   letter-spacing: -0.02em;
@@ -203,7 +192,7 @@ const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURI
   line-height: 1.25;
 }
 
-.prose-blog h3 {
+.prose-blog :global(h3) {
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--color-ink);
@@ -211,21 +200,21 @@ const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURI
   margin-bottom: 0.5rem;
 }
 
-.prose-blog p {
+.prose-blog :global(p) {
   margin-bottom: 1.25rem;
 }
 
-.prose-blog strong {
+.prose-blog :global(strong) {
   color: var(--color-ink);
   font-weight: 600;
 }
 
-.prose-blog em {
+.prose-blog :global(em) {
   color: var(--color-ink);
   font-style: italic;
 }
 
-.prose-blog code {
+.prose-blog :global(code) {
   font-family: var(--font-mono);
   font-size: 0.85em;
   background: var(--color-paper-2);
@@ -235,37 +224,37 @@ const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURI
   color: var(--color-ink);
 }
 
-.prose-blog ul {
+.prose-blog :global(ul) {
   list-style: none;
   padding-left: 0;
   margin-bottom: 1.25rem;
 }
 
-.prose-blog ul li {
+.prose-blog :global(ul li) {
   padding-left: 1.25rem;
   position: relative;
   margin-bottom: 0.4rem;
 }
 
-.prose-blog ul li::before {
-  content: '—';
+.prose-blog :global(ul li::before) {
+  content: '\2014';
   position: absolute;
   left: 0;
   color: var(--color-amber-deep);
   font-weight: 600;
 }
 
-.prose-blog ol {
+.prose-blog :global(ol) {
   list-style: decimal;
   padding-left: 1.5rem;
   margin-bottom: 1.25rem;
 }
 
-.prose-blog ol li {
+.prose-blog :global(ol li) {
   margin-bottom: 0.4rem;
 }
 
-.prose-blog blockquote {
+.prose-blog :global(blockquote) {
   border-left: 3px solid var(--color-amber-deep);
   margin-left: 0;
   padding-left: 1.25rem;
@@ -273,17 +262,17 @@ const mastodonUrl = `https://mastodon.social/share?text=${shareText}+${encodeURI
   font-style: italic;
 }
 
-.prose-blog a {
+.prose-blog :global(a) {
   color: var(--color-amber-deep);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
-.prose-blog a:hover {
+.prose-blog :global(a:hover) {
   color: var(--color-ink);
 }
 
-.prose-blog hr {
+.prose-blog :global(hr) {
   border: none;
   border-top: 1px solid var(--color-line);
   margin: 2.5rem 0;

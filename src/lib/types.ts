@@ -66,3 +66,35 @@ export interface SupportConfig {
   contact_hours?: string;
   contact_response_time?: string;
 }
+
+export interface BlogAuthor {
+  id: number;
+  name: string;
+  slug: string;
+  bio?: string;
+  avatar?: string;
+  role?: string;
+  socialLinks?: Record<string, string>;
+}
+
+export interface BlogCategory {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string;
+}
+
+export interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  coverImage?: string;
+  author?: BlogAuthor;
+  category?: BlogCategory;
+  publishedAt: string;
+  readingTime: number;
+  seoTitle?: string;
+  seoDescription?: string;
+}

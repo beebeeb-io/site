@@ -1,0 +1,48 @@
+---
+import { strapiImage } from '../../lib/strapi';
+
+interface Props {
+  image?: { url?: string; alternativeText?: string } | null;
+  caption?: string;
+  mode?: 'contained' | 'full-width';
+  [key: string]: unknown;
+}
+
+const { image, caption, mode = 'contained' } = Astro.props;
+
+const src = image?.url ? strapiImage(image.url) : '';
+const alt = image?.alternativeText || '';
+---
+
+{src && (
+  <section class:list={[
+    'bg-paper',
+    mode === 'full-width' ? 'px-0' : 'px-8',
+  ]}>
+    <div class:list={[
+      'mx-auto py-10',
+      mode === 'full-width' ? 'max-w-full' : 'max-w-[1200px]',
+    ]}>
+      <figure>
+        <img
+          src={src}
+          alt={alt}
+          class:list={[
+            'w-full rounded-lg',
+            mode === 'full-width' ? 'rounded-none' : '',
+          ]}
+          loading="lazy"
+          decoding="async"
+        />
+        {caption && (
+          <figcaption class:list={[
+            'text-[12px] text-ink-3 mt-3 text-center',
+            mode === 'full-width' ? 'px-8' : '',
+          ]}>
+            {caption}
+          </figcaption>
+        )}
+      </figure>
+    </div>
+  </section>
+)}

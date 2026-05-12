@@ -1,0 +1,41 @@
+---
+interface StatItem {
+  value: string;
+  label: string;
+}
+
+interface Props {
+  stats?: StatItem[];
+  [key: string]: unknown;
+}
+
+const { stats = [] } = Astro.props;
+
+const colsClass = stats.length <= 1
+  ? 'grid-cols-1 max-w-[320px]'
+  : stats.length === 2
+    ? 'grid-cols-1 sm:grid-cols-2 max-w-[640px]'
+    : stats.length === 3
+      ? 'grid-cols-1 sm:grid-cols-3 max-w-[960px]'
+      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 max-w-[1100px]';
+---
+
+{stats.length > 0 && (
+  <section class="px-8 py-[72px] bg-paper border-t border-b border-line">
+    <div class:list={['grid gap-6 mx-auto', colsClass]}>
+      {stats.map((stat, i) => (
+        <div class:list={[
+          'text-center p-7 border border-line rounded-xl bg-paper bb-fade-up',
+          i === 1 ? 'bb-delay-1' : i === 2 ? 'bb-delay-2' : i === 3 ? 'bb-delay-3' : '',
+        ]}>
+          <div class="text-[40px] font-bold tracking-[-0.03em] text-ink leading-none mb-2">
+            {stat.value}
+          </div>
+          <div class="text-[13px] text-ink-3 leading-relaxed">
+            {stat.label}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+)}

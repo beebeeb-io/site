@@ -1,0 +1,65 @@
+---
+interface FeatureItem {
+  icon?: string;
+  title: string;
+  description?: string;
+}
+
+interface Props {
+  label?: string;
+  title?: string;
+  features?: FeatureItem[];
+  columns?: 2 | 3 | 4;
+  [key: string]: unknown;
+}
+
+const { label, title, features = [], columns = 3 } = Astro.props;
+
+const colsClass = columns === 2
+  ? 'grid-cols-1 sm:grid-cols-2'
+  : columns === 4
+    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+
+const iconMap: Record<string, string> = {
+  shield: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  lock: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  cloud: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>',
+  zap: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  globe: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  key: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>',
+  check: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  server: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
+};
+
+const defaultIcon = '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>';
+---
+
+{features.length > 0 && (
+  <section class="px-8 py-[72px] bg-paper">
+    <div class="max-w-[1100px] mx-auto">
+      {label && <div class="section-label text-center bb-fade-up">{label}</div>}
+      {title && <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-14 leading-tight bb-fade-up bb-delay-1">{title}</h2>}
+      <div class:list={['grid gap-6', colsClass]}>
+        {features.map((feature, i) => (
+          <div class:list={[
+            'p-6 border border-line rounded-xl bg-paper bb-fade-up bb-lift',
+            i % 3 === 1 ? 'bb-delay-1' : i % 3 === 2 ? 'bb-delay-2' : '',
+          ]}>
+            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mb-4">
+              <Fragment set:html={iconMap[feature.icon || ''] || defaultIcon} />
+            </div>
+            <h3 class="text-[16px] font-bold tracking-[-0.01em] text-ink mb-2 leading-snug">
+              {feature.title}
+            </h3>
+            {feature.description && (
+              <p class="text-[13.5px] text-ink-2 leading-relaxed">
+                {feature.description}
+              </p>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

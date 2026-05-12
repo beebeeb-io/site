@@ -1,13 +1,18 @@
 ---
 import Base from '../layouts/base.astro';
 import BlockRenderer from '../components/blocks/BlockRenderer.astro';
-import { fetchPageBySlug } from '../lib/strapi';
+import { fetchPageBySlug, fetchLandingPageBySlug } from '../lib/strapi';
 
 const { slug } = Astro.params;
 const pageSlug = slug || 'home';
 const url = new URL(Astro.request.url);
 const isPreview = url.searchParams.get('preview') === 'true';
-const page = await fetchPageBySlug(pageSlug, isPreview);
+
+// Try pages collection first, then landing-pages
+let page = await fetchPageBySlug(pageSlug, isPreview);
+if (!page) {
+  page = await fetchLandingPageBySlug(pageSlug, isPreview);
+}
 
 if (!page) {
   Astro.response.status = 404;
