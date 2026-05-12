@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: '.',
+  testDir: './tests',
   use: { baseURL: 'http://localhost:4321' },
 });
