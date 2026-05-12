@@ -21,6 +21,10 @@ import StatusGrid from './StatusGrid.astro';
 import DocsGrid from './DocsGrid.astro';
 import CareersList from './CareersList.astro';
 import BountyTable from './BountyTable.astro';
+import TestimonialBlock from './TestimonialBlock.astro';
+import StatsBlock from './StatsBlock.astro';
+import ImageBlock from './ImageBlock.astro';
+import FeatureGrid from './FeatureGrid.astro';
 
 interface Props {
   blocks: Array<{
@@ -54,6 +58,10 @@ const componentMap: Record<string, any> = {
   'blocks.docs-grid': DocsGrid,
   'blocks.careers-list': CareersList,
   'blocks.bounty-table': BountyTable,
+  'blocks.testimonial': TestimonialBlock,
+  'blocks.stats': StatsBlock,
+  'blocks.image': ImageBlock,
+  'blocks.feature-grid': FeatureGrid,
 };
 ---
 {blocks.map((block) => {
