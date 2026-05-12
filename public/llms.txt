@@ -1,0 +1,25 @@
+# Beebeeb
+
+> End-to-end encrypted, zero-knowledge cloud storage. Made in Europe by Initlabs B.V.
+
+## Main pages
+
+- [Home](https://beebeeb.io): Product overview — encrypted storage with apps for every platform
+- [Security](https://beebeeb.io/security): How zero-knowledge encryption works — AES-256-GCM, Argon2id, key derivation flow
+- [Pricing](https://beebeeb.io/pricing): Free (5 GB), Personal (EUR 3.59/mo), Pro (EUR 7.19/mo), Business (EUR 24.99/user/mo)
+- [Support](https://beebeeb.io/support): FAQ, contact form, system status
+- [Blog](https://beebeeb.io/blog): Engineering and privacy articles from the team
+- [Features](https://beebeeb.io/features): Full feature list with platform availability
+
+## Comparisons
+
+- [vs iCloud](https://beebeeb.io/vs/icloud): Feature-by-feature comparison with Apple iCloud
+- [vs Proton Drive](https://beebeeb.io/vs/proton-drive): Comparison with Proton Drive
+- [vs Tresorit](https://beebeeb.io/vs/tresorit): Comparison with Tresorit
+
+## Optional
+
+- [About](https://beebeeb.io/about): Company story, founders, five promises
+- [Status](https://beebeeb.io/status): Real-time service uptime and incident history
+- [Open source](https://github.com/beebeeb-io): GitHub repositories — core, cli, web, mobile, desktop
+- [Bug bounty](https://beebeeb.io/bug-bounty): Responsible disclosure program and reward tiers
