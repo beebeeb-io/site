@@ -1,0 +1,7 @@
+{
+  "collectionName": "components_blocks_stats",
+  "info": { "displayName": "Stats", "icon": "chartBubble" },
+  "attributes": {
+    "stats": { "type": "component", "repeatable": true, "component": "blocks.stat-item" }
+  }
+}

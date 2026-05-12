@@ -1,0 +1,33 @@
+{
+  "kind": "singleType",
+  "collectionName": "support_configs",
+  "info": {
+    "singularName": "support-config",
+    "pluralName": "support-configs",
+    "displayName": "Support Config"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "heroTitle": {
+      "type": "string",
+      "default": "How can we help?"
+    },
+    "heroSubtitle": {
+      "type": "text"
+    },
+    "contactEmail": {
+      "type": "string",
+      "default": "support@beebeeb.io"
+    },
+    "securityEmail": {
+      "type": "string",
+      "default": "security@beebeeb.io"
+    },
+    "responseTimeText": {
+      "type": "string",
+      "default": "We typically respond within 24 hours on business days."
+    }
+  }
+}

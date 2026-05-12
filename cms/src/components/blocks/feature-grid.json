@@ -1,0 +1,10 @@
+{
+  "collectionName": "components_blocks_feature_grids",
+  "info": { "displayName": "Feature Grid", "icon": "apps" },
+  "attributes": {
+    "label": { "type": "string" },
+    "title": { "type": "string" },
+    "columns": { "type": "enumeration", "enum": ["2", "3", "4"], "default": "3" },
+    "features": { "type": "component", "repeatable": true, "component": "blocks.feature-item" }
+  }
+}

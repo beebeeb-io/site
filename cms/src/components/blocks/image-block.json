@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_image_blocks",
+  "info": { "displayName": "Image Block", "icon": "picture" },
+  "attributes": {
+    "image": { "type": "media", "allowedTypes": ["images"], "multiple": false },
+    "caption": { "type": "string" },
+    "width": { "type": "enumeration", "enum": ["contained", "full-width"], "default": "contained" }
+  }
+}

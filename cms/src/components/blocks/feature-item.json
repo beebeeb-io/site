@@ -1,0 +1,9 @@
+{
+  "collectionName": "components_blocks_feature_items",
+  "info": { "displayName": "Feature Item", "icon": "apps" },
+  "attributes": {
+    "icon": { "type": "string" },
+    "title": { "type": "string", "required": true },
+    "description": { "type": "text", "required": true }
+  }
+}

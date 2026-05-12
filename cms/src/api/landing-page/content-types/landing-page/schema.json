@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "pages",
+  "collectionName": "landing_pages",
   "info": {
-    "singularName": "page",
-    "pluralName": "pages",
-    "displayName": "Page"
+    "singularName": "landing-page",
+    "pluralName": "landing-pages",
+    "displayName": "Landing Page"
   },
   "options": {
     "draftAndPublish": true
@@ -19,11 +19,16 @@
       "targetField": "title",
       "required": true
     },
-    "seo_title": {
+    "seoTitle": {
       "type": "string"
     },
-    "seo_description": {
+    "seoDescription": {
       "type": "text"
+    },
+    "ogImage": {
+      "type": "media",
+      "allowedTypes": ["images"],
+      "multiple": false
     },
     "blocks": {
       "type": "dynamiczone",
