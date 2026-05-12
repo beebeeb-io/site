@@ -16,12 +16,15 @@ const current =
     ? 'security'
     : pathname.startsWith('/pricing')
       ? 'pricing'
-      : 'product');
+      : pathname.startsWith('/support')
+        ? 'support'
+        : 'product');
 
 const links = [
   { label: 'Product', href: '/#product', id: 'home' },
   { label: 'Security', href: '/security', id: 'security' },
   { label: 'Pricing', href: '/pricing', id: 'pricing' },
+  { label: 'Support', href: '/support', id: 'support' },
   {
     label: 'Open source',
     href: 'https://github.com/beebeeb-io',
