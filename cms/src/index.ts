@@ -153,7 +153,7 @@ export default {
               { number: '01', icon: 'shield', title: 'Zero-knowledge, architecturally.', description: 'Files are encrypted on your device with a key we never see. Our servers store opaque blobs — if subpoenaed, we hand over encrypted garbage, and that\'s the point.', stat: 'AES-256-GCM · Argon2id · X25519' },
               { number: '02', icon: 'cloud', title: 'European soil, European law.', description: 'Every byte lives in an EU-operated data centre. No CLOUD Act exposure, no US subprocessors, no fine print that moves your data to Oregon overnight.', stat: 'Choice of region · DE · NL · FR' },
               { number: '03', icon: 'users', title: 'Built for small teams that act big.', description: 'Shared vaults, team keys, client portals, audit logs, SSO. Everything regulated industries need — without the enterprise ceremony or pricing.', stat: 'From 5 seats · €9.99 / seat' },
-              { number: '04', icon: 'key', title: 'Open where it counts.', description: 'Every client app — web, iOS, Android, desktop — is open source and reproducibly built. Read the code, compile it yourself, run it offline. We earn trust, we don\'t ask for it.', stat: 'AGPL-3.0 · audited by Cure53' },
+              { number: '04', icon: 'key', title: 'Open where it counts.', description: 'Every client app — web, iOS, Android, desktop — is open source and reproducibly built. Read the code, compile it yourself, run it offline. We earn trust, we don\'t ask for it.', stat: 'AGPL-3.0 · open to audit' },
             ],
           },
           {
@@ -532,7 +532,7 @@ async function seedFaqContent(strapi) {
         { question: 'What encryption does Beebeeb use?', answer: '<p>AES-256-GCM for file encryption, Argon2id for key derivation from your passphrase, X25519 for key exchange when sharing files, and HKDF-SHA256 for per-file key derivation. Every file — and every filename — is encrypted on your device before upload.</p>', sortOrder: 1, searchTags: 'encryption,aes,argon2,zero-knowledge,e2ee' },
         { question: 'Can Beebeeb staff read my files?', answer: '<p>No. This is not a policy decision — it is an architectural guarantee. Your encryption keys are derived from your passphrase, which never leaves your device. Our servers store only encrypted blobs. If compelled by law enforcement, we can only hand over encrypted data we cannot decrypt.</p>', sortOrder: 2, searchTags: 'zero-knowledge,privacy,staff,access,read' },
         { question: 'Is Beebeeb open source?', answer: '<p>All client applications (web, desktop, mobile, CLI) are open source under AGPL-3.0 and available on <a href="https://github.com/beebeeb-io">GitHub</a>. You can audit the encryption implementation, compile from source, or self-host.</p>', sortOrder: 3, searchTags: 'open source,github,code,audit,agpl' },
-        { question: 'Has Beebeeb been audited?', answer: '<p>Our cryptographic implementation is based on well-established primitives (AES-256-GCM, Argon2id, X25519). We are planning a third-party security audit with Cure53. All client code is open for public review on GitHub.</p>', sortOrder: 4, searchTags: 'audit,cure53,security,review' },
+        { question: 'Has Beebeeb been audited?', answer: '<p>Not yet. A third-party security audit is planned but has not been scheduled. Our cryptographic implementation uses well-established primitives (AES-256-GCM, Argon2id, X25519) and all client code is open source on GitHub for public review.</p>', sortOrder: 4, searchTags: 'audit,security,review' },
       ],
     },
     {
