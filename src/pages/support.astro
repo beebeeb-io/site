@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/base.astro';
+import SupportHero from '../components/sections/SupportHero.astro';
+import SupportQuickLinks from '../components/sections/SupportQuickLinks.astro';
+import SupportFaq from '../components/sections/SupportFaq.astro';
+import SupportContact from '../components/sections/SupportContact.astro';
+import { fetchFaqCategories, fetchSupportConfig } from '../lib/strapi';
+import type { FaqCategory } from '../lib/types';
+
+const categories: FaqCategory[] = await fetchFaqCategories();
+const supportConfig = await fetchSupportConfig();
+
+// Build FAQPage JSON-LD from all FAQ items across categories
+const allFaqs = categories.flatMap((cat) => cat.faqs || []);
+const faqJsonLd = allFaqs.length > 0
+  ? {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: allFaqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    }
+  : null;
+
+const heroTitle = supportConfig?.hero_title || 'How can we help?';
+const heroSubtitle = supportConfig?.hero_subtitle || 'Find answers to common questions, check system status, or get in touch with our team.';
+---
+
+<Base
+  title="Support — Beebeeb"
+  description="Get help with Beebeeb. Browse frequently asked questions, check system status, or contact our team directly."
+  path="/support"
+  jsonLd={faqJsonLd ? [faqJsonLd] : undefined}
+>
+  <SupportHero title={heroTitle} subtitle={heroSubtitle} />
+  <SupportQuickLinks />
+  <SupportFaq categories={categories} />
+  <SupportContact config={supportConfig} />
+</Base>
