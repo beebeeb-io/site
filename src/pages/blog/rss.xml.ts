@@ -2,9 +2,7 @@
  * RSS 2.0 feed for the Beebeeb blog.
  * Served at https://beebeeb.io/blog/rss.xml
  */
-export const prerender = true
-
-import { getCollection } from 'astro:content'
+import { fetchBlogPosts } from '../../lib/strapi'
 import type { APIRoute } from 'astro'
 
 const SITE = 'https://beebeeb.io'
@@ -26,26 +24,24 @@ function rfcDate(iso: string): string {
 }
 
 export const GET: APIRoute = async () => {
-  const posts = (await getCollection('blog')).sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
-  )
+  const posts = await fetchBlogPosts()
 
   const items = posts
     .map(
       (post) => `
   <item>
-    <title>${esc(post.data.title)}</title>
-    <link>${SITE}/blog/${post.id}</link>
-    <guid isPermaLink="true">${SITE}/blog/${post.id}</guid>
-    <description>${esc(post.data.excerpt)}</description>
-    <pubDate>${rfcDate(post.data.date)}</pubDate>
-    <author>hello@beebeeb.io (${esc(post.data.author)})</author>
+    <title>${esc(post.title)}</title>
+    <link>${SITE}/blog/${post.slug}</link>
+    <guid isPermaLink="true">${SITE}/blog/${post.slug}</guid>
+    <description>${esc(post.excerpt)}</description>
+    <pubDate>${rfcDate(post.publishedAt)}</pubDate>
+    <author>hello@beebeeb.io (${esc(post.author?.name || 'Beebeeb Team')})</author>
   </item>`
     )
     .join('\n')
 
   const lastBuildDate = posts[0]
-    ? rfcDate(posts[0].data.date)
+    ? rfcDate(posts[0].publishedAt)
     : new Date().toUTCString()
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
