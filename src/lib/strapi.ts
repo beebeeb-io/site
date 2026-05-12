@@ -113,6 +113,37 @@ export async function fetchPageBySlug(slug: string, preview = false) {
   }
 }
 
+export async function fetchLandingPageBySlug(slug: string, preview = false) {
+  try {
+    const params: Record<string, string> = {
+      'filters[slug][$eq]': slug,
+      'populate[blocks][on][blocks.hero-landing][populate]': '*',
+      'populate[blocks][on][blocks.hero-simple][populate]': '*',
+      'populate[blocks][on][blocks.trust-bar][populate]': '*',
+      'populate[blocks][on][blocks.pillars-grid][populate][pillars][populate]': '*',
+      'populate[blocks][on][blocks.comparison-table][populate]': '*',
+      'populate[blocks][on][blocks.founder-quote][populate]': '*',
+      'populate[blocks][on][blocks.cta-section][populate]': '*',
+      'populate[blocks][on][blocks.faq-accordion][populate][items][populate]': '*',
+      'populate[blocks][on][blocks.rich-text][populate]': '*',
+      'populate[blocks][on][blocks.testimonial][populate]': '*',
+      'populate[blocks][on][blocks.stats][populate]': '*',
+      'populate[blocks][on][blocks.image][populate]': '*',
+      'populate[blocks][on][blocks.feature-grid][populate][features][populate]': '*',
+    };
+    if (preview) {
+      params['publicationState'] = 'preview';
+    }
+    const { data } = await fetchStrapi<any[]>('landing-pages', params, !preview);
+    const page = data?.[0];
+    if (!page) return null;
+    return page;
+  } catch (e) {
+    console.error(`[strapi] Failed to load landing page "${slug}":`, e);
+    return null;
+  }
+}
+
 export async function fetchGlobal() {
   try {
     const { data } = await fetchStrapi<any>('global', {
