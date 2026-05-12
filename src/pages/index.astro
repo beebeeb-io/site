@@ -2,6 +2,7 @@
 import Base from '../layouts/base.astro';
 import { getLaunchPhase } from '../lib/strapi';
 import { phaseConfig } from '../lib/phase';
+import { softwareApplicationSchema } from '../lib/schemas';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Hero from '../components/Hero.astro';
@@ -23,6 +24,8 @@ const cfg = phaseConfig(phase);
 <Base
   title="Beebeeb - End-to-end encrypted cloud storage"
   description="Your files are encrypted on your device before they leave it. EU-only infrastructure. Open source clients. Zero knowledge by architecture."
+  robots="index, follow, max-snippet:-1"
+  jsonLd={[softwareApplicationSchema()]}
   chrome={false}
 >
   <Nav active="home" {cfg} />

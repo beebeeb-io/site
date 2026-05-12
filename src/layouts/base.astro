@@ -13,6 +13,7 @@ interface Props {
   description?: string;
   path?: string;
   noindex?: boolean;
+  robots?: string;
   jsonLd?: Record<string, any> | Record<string, any>[];
   chrome?: boolean;
 }
@@ -22,6 +23,7 @@ const {
   description = 'Beebeeb is the European cloud for people who want their files encrypted before they leave their device, stored on EU soil, and governed by EU law.',
   path,
   noindex,
+  robots,
   jsonLd,
   chrome = true,
 } = Astro.props;
@@ -51,6 +53,7 @@ const Footer = chrome ? (await import('../components/Footer.astro')).default : n
       description={description}
       path={path}
       noindex={noindex}
+      robots={robots}
       jsonLd={jsonLd}
     />
     <FaviconLinks />

@@ -1,4 +1,6 @@
 ---
+import { organizationSchema, websiteSchema } from '../../lib/schemas';
+
 interface Props {
   title: string;
   description?: string;
@@ -6,6 +8,7 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   noindex?: boolean;
+  robots?: string;
   jsonLd?: Record<string, any> | Record<string, any>[];
 }
 
@@ -16,6 +19,7 @@ const {
   image,
   type = 'website',
   noindex,
+  robots,
   jsonLd,
 } = Astro.props;
 
@@ -23,21 +27,7 @@ const siteUrl = 'https://beebeeb.io';
 const canonicalUrl = path ? `${siteUrl}${path}` : new URL(Astro.url.pathname, siteUrl).href;
 const ogImage = image || `${siteUrl}/og-image.png`;
 
-const orgSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  name: 'Beebeeb',
-  legalName: 'Initlabs B.V.',
-  url: siteUrl,
-  description: 'End-to-end encrypted cloud storage. Made in Europe.',
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'Kelvinstraat 34A',
-    addressLocality: 'Wijchen',
-    postalCode: '6601 HE',
-    addressCountry: 'NL',
-  },
-};
+const robotsContent = noindex ? 'noindex, nofollow' : robots || null;
 
 const breadcrumbs = Astro.url.pathname !== '/' ? {
   '@context': 'https://schema.org',
@@ -54,7 +44,8 @@ const breadcrumbs = Astro.url.pathname !== '/' ? {
 } : null;
 
 const allJsonLd = [
-  orgSchema,
+  organizationSchema(),
+  websiteSchema(),
   ...(breadcrumbs ? [breadcrumbs] : []),
   ...(Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []),
 ];
@@ -63,7 +54,7 @@ const allJsonLd = [
 <title>{title}</title>
 <meta name="description" content={description} />
 <link rel="canonical" href={canonicalUrl} />
-{noindex && <meta name="robots" content="noindex, nofollow" />}
+{robotsContent && <meta name="robots" content={robotsContent} />}
 
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
