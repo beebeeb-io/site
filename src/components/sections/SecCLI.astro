@@ -1,55 +1,122 @@
 <section class="cli-band">
-  <div class="bb-container cli-grid">
-    <div>
-      <div class="t-label">Install the CLI</div>
-      <h2>One line. Encrypted from the first byte.</h2>
-      <p>Scriptable storage for engineers. It verifies itself, adds <code>bb</code> to your PATH, and uploads ciphertext only.</p>
+  <div class="bb-container cli-inner">
+    <div class="cli-text">
+      <div class="t-label cli-label">Install the CLI</div>
+      <p class="cli-desc">One line. Verifies its own signature. Works on macOS, Linux, and WSL.</p>
     </div>
-    <div class="terminal-card">
-      <div class="terminal-top"><span></span><span></span><span></span></div>
-      <code><span>$</span> curl -fsSL https://get.beebeeb.io | sh</code>
+
+    <div class="cli-row">
+      <div class="terminal-card">
+        <div class="terminal-body">
+          <code id="cli-cmd"><span class="prompt">$</span> curl -fsSL https://get.beebeeb.io | sh</code>
+          <button
+            type="button"
+            class="copy-btn"
+            aria-label="Copy install command"
+            data-cmd="curl -fsSL https://get.beebeeb.io | sh"
+          >
+            <svg class="icon-copy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span class="copy-label">COPY</span>
+          </button>
+        </div>
+      </div>
+
+      <a href="https://github.com/beebeeb-io/cli" target="_blank" rel="noopener noreferrer" class="source-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M12 .5C5.7.5.7 5.6.7 11.9c0 5 3.3 9.3 7.8 10.8.6.1.8-.2.8-.6v-2c-3.2.7-3.8-1.5-3.8-1.5-.5-1.3-1.3-1.6-1.3-1.6-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.5-.3-5.2-1.3-5.2-5.7 0-1.3.4-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2.9-.3 1.9-.4 2.9-.4s2 .1 2.9.4c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.7.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.2 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.5-1.5 7.8-5.8 7.8-10.8C23.3 5.6 18.3.5 12 .5z"/>
+        </svg>
+        View source
+      </a>
     </div>
   </div>
 </section>
 
+<script>
+  const btn = document.querySelector('.copy-btn') as HTMLButtonElement;
+  if (btn) {
+    btn.addEventListener('click', async () => {
+      const cmd = btn.getAttribute('data-cmd') || '';
+      try {
+        await navigator.clipboard.writeText(cmd);
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+      } catch {
+        // Fallback for older browsers
+        const ta = document.createElement('textarea');
+        ta.value = cmd;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), 2000);
+      }
+    });
+  }
+</script>
+
 <style>
   .cli-band {
-    padding: 86px 32px;
+    padding: 80px 32px;
     background:
-      linear-gradient(135deg, oklch(0.2 0.015 70), oklch(0.15 0.012 70)),
-      var(--color-ink);
-    color: var(--color-paper);
+      radial-gradient(ellipse at 30% 20%, oklch(0.28 0.02 70) 0%, transparent 50%),
+      radial-gradient(ellipse at 70% 80%, oklch(0.22 0.015 70) 0%, transparent 50%),
+      var(--ink);
+    color: var(--paper);
+    position: relative;
+    overflow: hidden;
   }
 
-  .cli-grid {
-    display: grid;
-    grid-template-columns: 0.9fr 1.1fr;
-    gap: 56px;
-    align-items: center;
+  .cli-band::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 50% 50%, oklch(0.82 0.17 84 / 0.06) 1px, transparent 1.5px);
+    background-size: 24px 24px;
+    pointer-events: none;
   }
 
-  .t-label {
-    color: var(--color-amber);
+  .cli-inner {
+    position: relative;
+    max-width: 860px;
+    margin: 0 auto;
   }
 
-  h2 {
-    max-width: 560px;
-    margin: 14px 0 16px;
-    color: var(--color-paper);
-    font-size: clamp(34px, 4vw, 54px);
-    letter-spacing: -0.04em;
-    line-height: 1;
+  .cli-text {
+    margin-bottom: 28px;
   }
 
-  p {
-    max-width: 480px;
+  .cli-label {
+    color: var(--amber);
+    margin-bottom: 12px;
+  }
+
+  .cli-desc {
     margin: 0;
-    color: oklch(0.78 0.01 80);
-    font-size: 16px;
-    line-height: 1.65;
+    color: oklch(0.82 0.01 80);
+    font-size: 17px;
+    line-height: 1.55;
+    max-width: 520px;
+  }
+
+  .cli-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
   }
 
   .terminal-card {
+    flex: 1;
+    min-width: 0;
     overflow: hidden;
     border: 1px solid oklch(0.36 0.012 70);
     border-radius: 10px;
@@ -57,37 +124,124 @@
     box-shadow: 0 24px 60px oklch(0 0 0 / 0.22);
   }
 
-  .terminal-top {
+  .terminal-body {
     display: flex;
-    gap: 7px;
-    padding: 12px 14px;
-    border-bottom: 1px solid oklch(0.32 0.012 70);
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
   }
 
-  .terminal-top span {
-    width: 8px;
-    height: 8px;
-    border-radius: 999px;
-    background: oklch(0.52 0.01 80);
-  }
-
-  .terminal-card code {
-    display: block;
-    padding: 28px;
+  .terminal-body code {
+    flex: 1;
+    min-width: 0;
     color: oklch(0.94 0.005 80);
     font-family: var(--font-mono);
-    font-size: clamp(15px, 2.2vw, 22px);
+    font-size: clamp(14px, 1.8vw, 17px);
     line-height: 1.4;
     overflow-wrap: anywhere;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .terminal-card code span {
-    color: var(--color-amber);
+  .prompt {
+    color: var(--amber);
   }
 
-  @media (max-width: 820px) {
-    .cli-grid {
-      grid-template-columns: 1fr;
+  .copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border: 1px solid oklch(0.4 0.012 70);
+    border-radius: 6px;
+    background: oklch(0.2 0.012 70);
+    color: oklch(0.78 0.01 80);
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 150ms var(--ease);
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  .copy-btn:hover {
+    background: oklch(0.26 0.012 70);
+    border-color: oklch(0.48 0.012 70);
+    color: var(--paper);
+  }
+
+  .copy-btn .icon-check {
+    display: none;
+  }
+
+  .copy-btn.copied .icon-copy {
+    display: none;
+  }
+
+  .copy-btn.copied .icon-check {
+    display: block;
+    color: var(--green);
+  }
+
+  .copy-btn.copied .copy-label {
+    color: var(--green);
+  }
+
+  .copy-btn.copied {
+    border-color: oklch(0.42 0.08 155);
+  }
+
+  .source-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: oklch(0.68 0.01 80);
+    font-size: 13.5px;
+    text-decoration: none;
+    transition: color 150ms var(--ease);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .source-link:hover {
+    color: var(--paper);
+  }
+
+  .source-link svg {
+    opacity: 0.7;
+    transition: opacity 150ms var(--ease);
+  }
+
+  .source-link:hover svg {
+    opacity: 1;
+  }
+
+  @media (max-width: 640px) {
+    .cli-band {
+      padding: 64px 24px;
+    }
+
+    .cli-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .terminal-body {
+      padding: 14px 16px;
+    }
+
+    .terminal-body code {
+      font-size: 13px;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .source-link {
+      justify-content: center;
     }
   }
 </style>
