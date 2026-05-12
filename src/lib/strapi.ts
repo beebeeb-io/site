@@ -162,6 +162,83 @@ export async function fetchSupportConfig(): Promise<import('./types').SupportCon
   }
 }
 
+import type { BlogPost, BlogAuthor, BlogCategory } from './types';
+
+function mapBlogPost(raw: any): BlogPost {
+  const author = raw.author
+    ? {
+        id: raw.author.id,
+        name: raw.author.name,
+        slug: raw.author.slug,
+        bio: raw.author.bio || undefined,
+        avatar: raw.author.avatar?.url
+          ? strapiImage(raw.author.avatar.url)
+          : undefined,
+        role: raw.author.role || undefined,
+        socialLinks: raw.author.socialLinks || undefined,
+      } as BlogAuthor
+    : undefined;
+
+  const category = raw.category
+    ? {
+        id: raw.category.id,
+        name: raw.category.name,
+        slug: raw.category.slug,
+        description: raw.category.description || undefined,
+      } as BlogCategory
+    : undefined;
+
+  return {
+    id: raw.id,
+    title: raw.title,
+    slug: raw.slug,
+    excerpt: raw.excerpt || '',
+    content: raw.content || '',
+    coverImage: raw.coverImage?.url
+      ? strapiImage(raw.coverImage.url)
+      : undefined,
+    author,
+    category,
+    publishedAt: raw.publishedAt,
+    readingTime: raw.readingTime || Math.ceil((raw.content || '').split(/\s+/).length / 200),
+    seoTitle: raw.seoTitle || undefined,
+    seoDescription: raw.seoDescription || undefined,
+  };
+}
+
+export async function fetchBlogPosts(): Promise<BlogPost[]> {
+  try {
+    const { data } = await fetchStrapi<any[]>('blog-posts', {
+      'sort': 'publishedAt:desc',
+      'pagination[pageSize]': '100',
+      'populate[author][populate]': '*',
+      'populate[category][populate]': '*',
+      'populate[coverImage][populate]': '*',
+    });
+    return (data || []).map(mapBlogPost);
+  } catch (e) {
+    console.error('[strapi] Failed to load blog posts:', e);
+    return [];
+  }
+}
+
+export async function fetchBlogPostBySlug(slug: string): Promise<BlogPost | null> {
+  try {
+    const { data } = await fetchStrapi<any[]>('blog-posts', {
+      'filters[slug][$eq]': slug,
+      'populate[author][populate]': '*',
+      'populate[category][populate]': '*',
+      'populate[coverImage][populate]': '*',
+    });
+    const raw = data?.[0];
+    if (!raw) return null;
+    return mapBlogPost(raw);
+  } catch (e) {
+    console.error(`[strapi] Failed to load blog post "${slug}":`, e);
+    return null;
+  }
+}
+
 export function clearCache(): void {
   cache.clear();
 }
