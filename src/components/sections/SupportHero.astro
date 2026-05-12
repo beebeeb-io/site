@@ -1,0 +1,99 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+}
+
+const {
+  title = 'How can we help?',
+  subtitle = 'Find answers to common questions, check system status, or get in touch with our team.',
+} = Astro.props;
+---
+
+<section class="support-hero">
+  <div class="bb-container support-hero-inner">
+    <div class="bb-eyebrow bb-fade-up" style="margin-bottom: 18px; justify-content: center;">Support center</div>
+    <h1 class="bb-display-l bb-fade-up bb-delay-1" style="margin: 0 0 18px; text-align: center;">{title}</h1>
+    <p class="support-subtitle bb-fade-up bb-delay-2">{subtitle}</p>
+    <div class="support-search-wrap bb-fade-up bb-delay-3">
+      <svg class="support-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input
+        id="faqSearch"
+        type="search"
+        placeholder="Search frequently asked questions..."
+        autocomplete="off"
+        class="support-search"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .support-hero {
+    padding: 72px 32px 56px;
+    text-align: center;
+    position: relative;
+    background:
+      radial-gradient(ellipse at top right, oklch(0.95 0.07 88 / 0.5) 0%, transparent 50%),
+      radial-gradient(ellipse at bottom left, oklch(0.96 0.04 90 / 0.4) 0%, transparent 50%),
+      var(--paper);
+  }
+
+  .support-hero-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .support-subtitle {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0 auto 36px;
+    max-width: 560px;
+    text-wrap: pretty;
+  }
+
+  .support-search-wrap {
+    position: relative;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .support-search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ink-4);
+    pointer-events: none;
+  }
+
+  .support-search {
+    width: 100%;
+    padding: 12px 16px 12px 40px;
+    border: 1px solid var(--line-2);
+    border-radius: 8px;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 150ms var(--ease), box-shadow 150ms var(--ease);
+  }
+
+  .support-search:focus {
+    border-color: var(--amber-deep);
+    box-shadow: 0 0 0 3px oklch(0.82 0.17 84 / 0.15);
+  }
+
+  .support-search::placeholder {
+    color: var(--ink-4);
+  }
+
+  @media (max-width: 560px) {
+    .support-hero {
+      padding: 48px 20px 36px;
+    }
+  }
+</style>

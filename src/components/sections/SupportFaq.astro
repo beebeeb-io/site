@@ -1,0 +1,306 @@
+---
+import type { FaqCategory } from '../../lib/types';
+
+interface Props {
+  categories?: FaqCategory[];
+}
+
+const { categories = [] } = Astro.props;
+
+// Flatten all FAQ items for the two-column grid, preserving category info
+const allFaqs = categories.flatMap((cat) =>
+  (cat.faqs || []).map((faq) => ({ ...faq, categorySlug: cat.slug, categoryName: cat.name }))
+);
+---
+
+<section id="faq" class="faq-section">
+  <div class="bb-container" style="padding: 0;">
+    <div style="margin-bottom: 48px; max-width: 600px;">
+      <div class="bb-eyebrow bb-fade-up" style="margin-bottom: 18px;">Frequently asked questions</div>
+      <h2 class="bb-display-l bb-fade-up bb-delay-1" style="margin: 0; font-size: clamp(28px, 3.4vw, 44px);">Common questions, honest answers.</h2>
+    </div>
+
+    {categories.length > 1 && (
+      <div class="faq-filters bb-fade-up bb-delay-2" id="faqFilters">
+        <button class="faq-chip active" data-filter="all" type="button">All</button>
+        {categories.map((cat) => (
+          <button class="faq-chip" data-filter={cat.slug} type="button">{cat.name}</button>
+        ))}
+      </div>
+    )}
+
+    <div class="faq-grid bb-fade-up bb-delay-3" id="faqGrid">
+      {allFaqs.map((faq) => (
+        <div class="faq-card" data-category={faq.categorySlug} data-question={faq.question.toLowerCase()} data-answer={(faq.answer || '').toLowerCase()}>
+          <button class="faq-question" type="button" aria-expanded="false">
+            <span class="faq-question-text">{faq.question}</span>
+            <span class="faq-toggle" aria-hidden="true">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            </span>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner" set:html={faq.answer || ''} />
+            {faq.categoryName && (
+              <div class="faq-category-tag t-mono">{faq.categoryName}</div>
+            )}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="faq-empty" id="faqEmpty" style="display: none;">
+      <p>No questions match your search. Try different keywords or <a href="#contact" class="bb-link">contact us directly</a>.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initFaqInteractions() {
+    const searchInput = document.getElementById('faqSearch') as HTMLInputElement | null;
+    const faqGrid = document.getElementById('faqGrid');
+    const faqEmpty = document.getElementById('faqEmpty');
+    const faqFilters = document.getElementById('faqFilters');
+    if (!faqGrid) return;
+
+    const cards = Array.from(faqGrid.querySelectorAll('.faq-card')) as HTMLElement[];
+    let activeFilter = 'all';
+
+    // Toggle expand/collapse
+    cards.forEach((card) => {
+      const btn = card.querySelector('.faq-question') as HTMLButtonElement;
+      if (!btn || btn.dataset.bound === 'true') return;
+      btn.dataset.bound = 'true';
+      btn.addEventListener('click', () => {
+        const wasOpen = card.classList.contains('open');
+        // Close all others
+        cards.forEach((c) => {
+          if (c !== card) {
+            c.classList.remove('open');
+            const b = c.querySelector('.faq-question');
+            if (b) b.setAttribute('aria-expanded', 'false');
+          }
+        });
+        card.classList.toggle('open', !wasOpen);
+        btn.setAttribute('aria-expanded', String(!wasOpen));
+      });
+    });
+
+    // Category filter chips
+    if (faqFilters) {
+      const chips = Array.from(faqFilters.querySelectorAll('.faq-chip')) as HTMLButtonElement[];
+      chips.forEach((chip) => {
+        if (chip.dataset.bound === 'true') return;
+        chip.dataset.bound = 'true';
+        chip.addEventListener('click', () => {
+          chips.forEach((c) => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeFilter = chip.dataset.filter || 'all';
+          filterCards();
+        });
+      });
+    }
+
+    // Search
+    if (searchInput) {
+      if (searchInput.dataset.bound !== 'true') {
+        searchInput.dataset.bound = 'true';
+        searchInput.addEventListener('input', () => {
+          filterCards();
+        });
+      }
+    }
+
+    function filterCards() {
+      const query = (searchInput?.value || '').toLowerCase().trim();
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const cat = card.dataset.category || '';
+        const question = card.dataset.question || '';
+        const answer = card.dataset.answer || '';
+
+        const matchesFilter = activeFilter === 'all' || cat === activeFilter;
+        const matchesSearch = !query || question.includes(query) || answer.includes(query);
+
+        const visible = matchesFilter && matchesSearch;
+        card.style.display = visible ? '' : 'none';
+        if (visible) visibleCount++;
+      });
+
+      if (faqEmpty) {
+        faqEmpty.style.display = visibleCount === 0 ? '' : 'none';
+      }
+    }
+  }
+
+  // Run on initial load and after view transitions
+  initFaqInteractions();
+  document.addEventListener('astro:after-swap', initFaqInteractions);
+</script>
+
+<style>
+  .faq-section {
+    padding: 72px 32px;
+    background: var(--paper-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .faq-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .faq-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 14px;
+    border: 1px solid var(--line-2);
+    border-radius: 999px;
+    background: var(--paper);
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 150ms var(--ease);
+  }
+
+  .faq-chip:hover {
+    border-color: var(--ink-3);
+    color: var(--ink);
+  }
+
+  .faq-chip.active {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+
+  .faq-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .faq-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: border-color 150ms var(--ease);
+  }
+
+  .faq-card:hover {
+    border-color: var(--line-2);
+  }
+
+  .faq-card.open {
+    border-color: var(--amber-deep);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    padding: 18px 20px;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
+    text-align: left;
+    cursor: pointer;
+    transition: color 150ms var(--ease);
+  }
+
+  .faq-question:hover {
+    color: var(--amber-deep);
+  }
+
+  .faq-question-text {
+    flex: 1;
+  }
+
+  .faq-toggle {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-3);
+    transition: transform 200ms var(--ease), color 150ms var(--ease);
+    margin-top: 1px;
+  }
+
+  .faq-card.open .faq-toggle {
+    transform: rotate(45deg);
+    color: var(--amber-deep);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms var(--ease);
+  }
+
+  .faq-card.open .faq-answer {
+    max-height: 600px;
+  }
+
+  .faq-answer-inner {
+    padding: 0 20px 18px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+
+  .faq-answer-inner :global(p) {
+    margin: 0 0 8px;
+  }
+
+  .faq-answer-inner :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .faq-answer-inner :global(a) {
+    color: var(--amber-deep);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .faq-category-tag {
+    margin-top: 12px;
+    padding: 0 20px 4px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-4);
+  }
+
+  .faq-empty {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--ink-3);
+    font-size: 15px;
+  }
+
+  @media (max-width: 760px) {
+    .faq-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .faq-section {
+      padding: 48px 20px;
+    }
+  }
+</style>
