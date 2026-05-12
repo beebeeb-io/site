@@ -1,7 +1,6 @@
 /* Beebeeb — design system. Source of truth: theme.css + launch-styles.css from Claude Design. */
 
-@import url('https://fonts.bunny.net/css?family=geist:400,500,600,700&display=swap');
-@import url('https://fonts.bunny.net/css?family=jetbrains-mono:400,500,600&display=swap');
+/* Fonts are self-hosted via @fontsource — see base.astro */
 
 :root {
   --paper:    oklch(0.985 0.004 85);
@@ -18,7 +17,7 @@
   --amber-soft:   oklch(0.92 0.06 88);
   --green:    oklch(0.62 0.12 155);
   --red:      oklch(0.55 0.18 28);
-  --font-sans: 'Geist', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-sans: 'Geist Sans', system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   --font-serif: 'Instrument Serif', 'Iowan Old Style', Georgia, serif;
   --shadow-1: 0 1px 2px oklch(0.18 0.01 70 / 0.05), 0 2px 6px oklch(0.18 0.01 70 / 0.04);

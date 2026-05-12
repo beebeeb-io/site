@@ -2,7 +2,6 @@ import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 import sitemap from '@astrojs/sitemap';
 import llmsTxt from 'astro-llms-txt';
-
 export default defineConfig({
   output: 'server',
   adapter: node({ mode: 'standalone' }),

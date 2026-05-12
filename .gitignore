@@ -73,3 +73,6 @@ playwright-report/
 graphify-out/.graphify_root
 graphify-out/cache/
 src/graphify-out/
+cms/.strapi/
+cms/.strapi-updater.json
+cms/types/
