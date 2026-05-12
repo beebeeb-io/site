@@ -137,6 +137,31 @@ export async function fetchChangelogEntries() {
   }
 }
 
+export async function fetchFaqCategories(): Promise<import('./types').FaqCategory[]> {
+  try {
+    const { data } = await fetchStrapi<any[]>('faq-categories', {
+      'sort': 'order:asc',
+      'populate[faqs][sort]': 'order:asc',
+      'populate[faqs][populate]': '*',
+    });
+    return data || [];
+  } catch (e) {
+    console.error('[strapi] Failed to load FAQ categories:', e);
+    return [];
+  }
+}
+
+export async function fetchSupportConfig(): Promise<import('./types').SupportConfig | null> {
+  try {
+    const { data } = await fetchStrapi<any>('support-config', {
+      'populate': '*',
+    });
+    return data || null;
+  } catch {
+    return null;
+  }
+}
+
 export function clearCache(): void {
   cache.clear();
 }
