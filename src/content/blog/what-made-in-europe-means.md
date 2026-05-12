@@ -2,7 +2,7 @@
 title: "What 'Made in Europe' actually means for your data"
 date: "2026-04-28"
 author: "Guus Langelaar"
-excerpt: "EU jurisdiction, Hetzner Falkenstein, Dutch corporate law, and why none of this matters without zero-knowledge encryption — but together, they do."
+excerpt: "EU jurisdiction, Falkenstein data center, Dutch corporate law, and why none of this matters without zero-knowledge encryption — but together, they do."
 readingTime: 5
 ---
 
@@ -30,11 +30,11 @@ Our legal obligations are:
 
 If a Dutch court orders us to produce user data, we comply — but we can only produce what we have, which is encrypted ciphertext. This isn't a legal loophole. It's what zero-knowledge architecture produces.
 
-## The infrastructure: Hetzner, Falkenstein
+## The infrastructure: Falkenstein, Germany
 
-Our primary data center is in Falkenstein, Saxony, Germany. The facility is operated by Hetzner Online GmbH, a German company founded in 1997. Hetzner has no US ownership, no US operations, and is subject to German data protection law (Bundesdatenschutzgesetz) alongside GDPR.
+Our primary data center is in Falkenstein, Saxony, Germany. The facility is operated by a German company with no US ownership, no US operations, and is subject to German data protection law (Bundesdatenschutzgesetz) alongside GDPR.
 
-We chose Hetzner's Falkenstein data center specifically rather than "EU infrastructure" generically for several reasons, which we've covered in more detail in a separate post. The short version: German data center law is among the strictest in the world, Hetzner has a strong track record, and the jurisdiction is unambiguous.
+We chose Falkenstein specifically rather than "EU infrastructure" generically for several reasons, which we've covered in more detail in a separate post. The short version: German data center law is among the strictest in the world, the operator has a strong track record, and the jurisdiction is unambiguous.
 
 ## Why jurisdiction alone isn't enough
 

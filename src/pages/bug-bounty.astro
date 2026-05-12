@@ -7,86 +7,70 @@ import Base from '../layouts/base.astro';
   description="Beebeeb's responsible disclosure program. Report security vulnerabilities in beebeeb.io and earn rewards from €100 to €5,000."
   path="/bug-bounty"
 >
-  <div class="px-8 py-20 max-w-[780px] mx-auto">
+  <div class="bounty-page">
 
-    <div class="mb-10">
-      <div class="section-label mb-4">Security</div>
-      <h1 class="text-[40px] font-bold tracking-[-0.025em] leading-tight mb-4">
+    <div class="bounty-intro">
+      <div class="section-label">Security</div>
+      <h1 class="bounty-title">
         Bug Bounty Program
       </h1>
-      <p class="text-[15px] leading-relaxed" style="color: var(--color-ink-2);">
+      <p class="bounty-subtitle">
         We believe security researchers make products safer for everyone.
         If you find a vulnerability in Beebeeb, we want to hear from you — and we'll pay for the disclosure.
       </p>
     </div>
 
     <!-- Reward table -->
-    <div class="mb-12">
-      <h2 class="text-[20px] font-semibold tracking-tight mb-5">Rewards</h2>
-      <div class="rounded-xl border overflow-hidden" style="border-color: var(--color-line);">
-        <div class="grid text-[11px] font-semibold uppercase tracking-wider px-5 py-2.5"
-          style="grid-template-columns: 1fr 1fr 2fr; background: var(--color-paper-2); border-bottom: 1px solid var(--color-line); color: var(--color-ink-4);">
+    <div class="bounty-section bounty-section--large">
+      <h2 class="bounty-heading">Rewards</h2>
+      <div class="bounty-table">
+        <div class="bounty-table-header">
           <span>Severity</span>
           <span>Reward</span>
           <span>Examples</span>
         </div>
 
-        {[
-          {
-            level: 'Critical',
-            reward: '€5,000',
-            bg: 'oklch(0.98 0.01 15)',
-            badge: 'oklch(0.55 0.18 25)',
-            badgeBg: 'oklch(0.95 0.04 25)',
-            examples: 'RCE, authentication bypass, mass data exposure, cryptographic break',
-          },
-          {
-            level: 'High',
-            reward: '€2,000',
-            bg: 'var(--color-paper)',
-            badge: 'oklch(0.55 0.15 50)',
-            badgeBg: 'oklch(0.95 0.04 50)',
-            examples: 'Privilege escalation, unauthorized file access, account takeover',
-          },
-          {
-            level: 'Medium',
-            reward: '€500',
-            bg: 'var(--color-paper-2)',
-            badge: 'var(--color-amber-deep)',
-            badgeBg: 'var(--color-amber-bg)',
-            examples: 'CSRF, stored XSS, insecure direct object reference',
-          },
-          {
-            level: 'Low',
-            reward: '€100',
-            bg: 'var(--color-paper)',
-            badge: 'var(--color-ink-3)',
-            badgeBg: 'var(--color-paper-3)',
-            examples: 'Reflected XSS (requires interaction), verbose error messages, open redirect',
-          },
-        ].map((row, i) => (
-          <div class="grid gap-4 px-5 py-4 items-start"
-            style={`grid-template-columns: 1fr 1fr 2fr; background: ${row.bg}; ${i > 0 ? 'border-top: 1px solid var(--color-line);' : ''}`}>
-            <span class="inline-flex items-center self-start">
-              <span class="text-[11.5px] font-semibold px-2.5 py-0.5 rounded-full"
-                style={`color: ${row.badge}; background: ${row.badgeBg};`}>
-                {row.level}
-              </span>
-            </span>
-            <span class="text-[15px] font-semibold font-mono" style="color: var(--color-ink);">{row.reward}</span>
-            <span class="text-[13px] leading-relaxed" style="color: var(--color-ink-3);">{row.examples}</span>
-          </div>
-        ))}
+        <div class="bounty-table-row bounty-table-row--critical">
+          <span class="bounty-table-cell">
+            <span class="bounty-severity-badge bounty-severity-badge--critical">Critical</span>
+          </span>
+          <span class="bounty-table-cell bounty-reward t-mono">€5,000</span>
+          <span class="bounty-table-cell bounty-examples">RCE, authentication bypass, mass data exposure, cryptographic break</span>
+        </div>
+
+        <div class="bounty-table-row">
+          <span class="bounty-table-cell">
+            <span class="bounty-severity-badge bounty-severity-badge--high">High</span>
+          </span>
+          <span class="bounty-table-cell bounty-reward t-mono">€2,000</span>
+          <span class="bounty-table-cell bounty-examples">Privilege escalation, unauthorized file access, account takeover</span>
+        </div>
+
+        <div class="bounty-table-row bounty-table-row--alt">
+          <span class="bounty-table-cell">
+            <span class="bounty-severity-badge bounty-severity-badge--medium">Medium</span>
+          </span>
+          <span class="bounty-table-cell bounty-reward t-mono">€500</span>
+          <span class="bounty-table-cell bounty-examples">CSRF, stored XSS, insecure direct object reference</span>
+        </div>
+
+        <div class="bounty-table-row">
+          <span class="bounty-table-cell">
+            <span class="bounty-severity-badge bounty-severity-badge--low">Low</span>
+          </span>
+          <span class="bounty-table-cell bounty-reward t-mono">€100</span>
+          <span class="bounty-table-cell bounty-examples">Reflected XSS (requires interaction), verbose error messages, open redirect</span>
+        </div>
       </div>
-      <p class="text-[12px] mt-3" style="color: var(--color-ink-4);">
+      <p class="bounty-fine-print">
         Rewards are determined by severity, impact, and report quality.
         Duplicate reports receive no reward. Final determination is at our discretion.
       </p>
     </div>
 
     <!-- In scope -->
-    <div class="mb-10">
-      <h2 class="text-[20px] font-semibold tracking-tight mb-4">In scope</h2>
+    <div class="bounty-section">
+      <h2 class="bounty-heading">In scope</h2>
       <ul class="scope-list">
         <li><code>api.beebeeb.io</code> — REST API server</li>
         <li><code>app.beebeeb.io</code> — Web application</li>
@@ -96,12 +80,12 @@ import Base from '../layouts/base.astro';
     </div>
 
     <!-- Out of scope -->
-    <div class="mb-10">
-      <h2 class="text-[20px] font-semibold tracking-tight mb-4">Out of scope</h2>
+    <div class="bounty-section">
+      <h2 class="bounty-heading">Out of scope</h2>
       <ul class="scope-list oos">
         <li>Denial-of-service attacks (network or application layer)</li>
         <li>Social engineering or phishing against Beebeeb staff</li>
-        <li>Stripe, Hetzner, Cloudflare, or other third-party services</li>
+        <li>Stripe, Cloudflare, or other third-party services</li>
         <li>Vulnerabilities in dependencies we don't control</li>
         <li>Missing security headers without demonstrated exploitability</li>
         <li>Rate limiting issues without a viable attack scenario</li>
@@ -110,56 +94,63 @@ import Base from '../layouts/base.astro';
     </div>
 
     <!-- Our commitments -->
-    <div class="mb-10">
-      <h2 class="text-[20px] font-semibold tracking-tight mb-4">Our commitments</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {[
-          { icon: '⏱', title: '72-hour acknowledgment', desc: 'We confirm receipt of every valid report within 72 hours.' },
-          { icon: '🔒', title: '30-day fix for High+', desc: 'High and Critical vulnerabilities are fixed within 30 days of verification.' },
-          { icon: '🤝', title: 'No legal action', desc: 'We will not pursue legal action against researchers who follow this policy.' },
-          { icon: '📣', title: 'Credit with permission', desc: 'We\'ll credit you in our Hall of Fame if you want.' },
-        ].map(c => (
-          <div class="p-4 rounded-xl border" style="background: var(--color-paper-2); border-color: var(--color-line);">
-            <div class="text-[20px] mb-2">{c.icon}</div>
-            <div class="text-[13.5px] font-semibold mb-1" style="color: var(--color-ink);">{c.title}</div>
-            <div class="text-[12.5px] leading-relaxed" style="color: var(--color-ink-3);">{c.desc}</div>
-          </div>
-        ))}
+    <div class="bounty-section">
+      <h2 class="bounty-heading">Our commitments</h2>
+      <div class="bounty-commitments-grid">
+        <div class="bounty-commitment-card">
+          <div class="bounty-commitment-icon">⏱</div>
+          <div class="bounty-commitment-title">72-hour acknowledgment</div>
+          <div class="bounty-commitment-desc">We confirm receipt of every valid report within 72 hours.</div>
+        </div>
+        <div class="bounty-commitment-card">
+          <div class="bounty-commitment-icon">🔒</div>
+          <div class="bounty-commitment-title">30-day fix for High+</div>
+          <div class="bounty-commitment-desc">High and Critical vulnerabilities are fixed within 30 days of verification.</div>
+        </div>
+        <div class="bounty-commitment-card">
+          <div class="bounty-commitment-icon">🤝</div>
+          <div class="bounty-commitment-title">No legal action</div>
+          <div class="bounty-commitment-desc">We will not pursue legal action against researchers who follow this policy.</div>
+        </div>
+        <div class="bounty-commitment-card">
+          <div class="bounty-commitment-icon">📣</div>
+          <div class="bounty-commitment-title">Credit with permission</div>
+          <div class="bounty-commitment-desc">We'll credit you in our Hall of Fame if you want.</div>
+        </div>
       </div>
     </div>
 
     <!-- How to report -->
-    <div class="mb-12 p-6 rounded-xl border"
-      style="background: var(--color-amber-bg); border-color: oklch(0.86 0.07 90);">
-      <h2 class="text-[18px] font-semibold tracking-tight mb-3">How to report</h2>
-      <p class="text-[13.5px] leading-relaxed mb-4" style="color: var(--color-ink-2);">
-        Send your report to
-        <a href="mailto:security@beebeeb.io" class="font-semibold"
-          style="color: var(--color-amber-deep);">security@beebeeb.io</a>.
-        A PGP key is available on request for sensitive disclosures.
-      </p>
-      <p class="text-[13px] leading-relaxed mb-3" style="color: var(--color-ink-2);">
-        A good report includes:
-      </p>
-      <ul class="report-checklist">
-        <li>A clear description of the vulnerability and its impact</li>
-        <li>Step-by-step reproduction instructions</li>
-        <li>Any proof-of-concept code, screenshots, or HTTP traces</li>
-        <li>Your suggested severity level and reasoning</li>
-      </ul>
+    <div class="bounty-section bounty-section--large">
+      <div class="bounty-report-box">
+        <h2 class="bounty-heading">How to report</h2>
+        <p class="bounty-report-text">
+          Send your report to
+          <a href="mailto:security@beebeeb.io" class="bounty-report-email">security@beebeeb.io</a>.
+          A PGP key is available on request for sensitive disclosures.
+        </p>
+        <p class="bounty-report-subtext">
+          A good report includes:
+        </p>
+        <ul class="report-checklist">
+          <li>A clear description of the vulnerability and its impact</li>
+          <li>Step-by-step reproduction instructions</li>
+          <li>Any proof-of-concept code, screenshots, or HTTP traces</li>
+          <li>Your suggested severity level and reasoning</li>
+        </ul>
+      </div>
     </div>
 
     <!-- Hall of Fame -->
-    <div class="mb-10">
-      <h2 class="text-[20px] font-semibold tracking-tight mb-2">Hall of Fame</h2>
-      <p class="text-[13.5px] mb-6" style="color: var(--color-ink-3);">
+    <div class="bounty-section">
+      <h2 class="bounty-heading">Hall of Fame</h2>
+      <p class="bounty-hof-subtitle">
         Security researchers who have responsibly disclosed vulnerabilities.
       </p>
-      <div class="p-8 rounded-xl border text-center"
-        style="background: var(--color-paper-2); border-color: var(--color-line); border-style: dashed;">
-        <div class="text-[28px] mb-2">🏆</div>
-        <div class="text-[14px] font-medium mb-1" style="color: var(--color-ink);">Be the first!</div>
-        <div class="text-[12.5px]" style="color: var(--color-ink-4);">
+      <div class="bounty-hof-empty">
+        <div class="bounty-hof-trophy">🏆</div>
+        <div class="bounty-hof-title">Be the first!</div>
+        <div class="bounty-hof-note">
           No vulnerabilities have been responsibly disclosed yet.
         </div>
       </div>
@@ -169,6 +160,141 @@ import Base from '../layouts/base.astro';
 </Base>
 
 <style>
+  /* ── Page layout ────────────────────────────────────────── */
+  .bounty-page {
+    padding: 80px 32px;
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  /* ── Intro ──────────────────────────────────────────────── */
+  .bounty-intro {
+    margin-bottom: 40px;
+  }
+
+  .bounty-title {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin: 0 0 16px;
+  }
+
+  .bounty-subtitle {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  /* ── Sections ───────────────────────────────────────────── */
+  .bounty-section {
+    margin-bottom: 40px;
+  }
+
+  .bounty-section--large {
+    margin-bottom: 48px;
+  }
+
+  .bounty-heading {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 20px;
+  }
+
+  /* ── Reward table ───────────────────────────────────────── */
+  .bounty-table {
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .bounty-table-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    padding: 10px 20px;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-4);
+  }
+
+  .bounty-table-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2fr;
+    gap: 16px;
+    padding: 16px 20px;
+    align-items: start;
+    background: var(--paper);
+  }
+
+  .bounty-table-row + .bounty-table-row {
+    border-top: 1px solid var(--line);
+  }
+
+  .bounty-table-row--critical {
+    background: oklch(0.98 0.01 15);
+  }
+
+  .bounty-table-row--alt {
+    background: var(--paper-2);
+  }
+
+  .bounty-table-cell {
+    display: inline-flex;
+    align-items: flex-start;
+  }
+
+  .bounty-severity-badge {
+    font-size: 11.5px;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 999px;
+  }
+
+  .bounty-severity-badge--critical {
+    color: oklch(0.55 0.18 25);
+    background: oklch(0.95 0.04 25);
+  }
+
+  .bounty-severity-badge--high {
+    color: oklch(0.55 0.15 50);
+    background: oklch(0.95 0.04 50);
+  }
+
+  .bounty-severity-badge--medium {
+    color: var(--amber-deep);
+    background: var(--amber-soft);
+  }
+
+  .bounty-severity-badge--low {
+    color: var(--ink-3);
+    background: var(--paper-3);
+  }
+
+  .bounty-reward {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .bounty-examples {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+
+  .bounty-fine-print {
+    font-size: 12px;
+    margin: 12px 0 0;
+    color: var(--ink-4);
+  }
+
+  /* ── Scope lists ────────────────────────────────────────── */
   .scope-list {
     display: flex;
     flex-direction: column;
@@ -176,14 +302,16 @@ import Base from '../layouts/base.astro';
     padding-left: 0;
     list-style: none;
   }
+
   .scope-list li {
     display: flex;
     align-items: flex-start;
     gap: 10px;
     font-size: 14px;
     line-height: 1.5;
-    color: var(--color-ink-2);
+    color: var(--ink-2);
   }
+
   .scope-list li::before {
     content: '✓';
     font-size: 11px;
@@ -199,26 +327,94 @@ import Base from '../layouts/base.astro';
     flex-shrink: 0;
     margin-top: 1px;
   }
+
   .scope-list.oos li::before {
     content: '✕';
     color: oklch(0.5 0.18 25);
     background: oklch(0.95 0.04 25);
   }
+
   .scope-list code {
-    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    font-family: var(--font-mono);
     font-size: 12px;
-    background: var(--color-paper-2);
-    border: 1px solid var(--color-line);
+    background: var(--paper-2);
+    border: 1px solid var(--line);
     padding: 1px 5px;
     border-radius: 4px;
   }
+
   .scope-list a {
-    color: var(--color-amber-deep);
+    color: var(--amber-deep);
     text-decoration: none;
   }
+
   .scope-list a:hover {
     text-decoration: underline;
   }
+
+  /* ── Commitments grid ───────────────────────────────────── */
+  .bounty-commitments-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .bounty-commitment-card {
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+
+  .bounty-commitment-icon {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .bounty-commitment-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .bounty-commitment-desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--ink-3);
+  }
+
+  /* ── Report box ─────────────────────────────────────────── */
+  .bounty-report-box {
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid oklch(0.86 0.07 90);
+    background: var(--amber-soft);
+  }
+
+  .bounty-report-box .bounty-heading {
+    margin-bottom: 12px;
+  }
+
+  .bounty-report-text {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0 0 16px;
+  }
+
+  .bounty-report-email {
+    font-weight: 600;
+    color: var(--amber-deep);
+  }
+
+  .bounty-report-subtext {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-2);
+    margin: 0 0 12px;
+  }
+
   .report-checklist {
     display: flex;
     flex-direction: column;
@@ -226,18 +422,84 @@ import Base from '../layouts/base.astro';
     padding-left: 0;
     list-style: none;
   }
+
   .report-checklist li {
     display: flex;
     align-items: flex-start;
     gap: 8px;
     font-size: 13px;
     line-height: 1.5;
-    color: var(--color-ink-2);
+    color: var(--ink-2);
   }
+
   .report-checklist li::before {
     content: '→';
-    color: var(--color-amber-deep);
+    color: var(--amber-deep);
     font-weight: 600;
     flex-shrink: 0;
+  }
+
+  /* ── Hall of Fame ───────────────────────────────────────── */
+  .bounty-hof-subtitle {
+    font-size: 13.5px;
+    color: var(--ink-3);
+    margin: 0 0 24px;
+  }
+
+  .bounty-hof-empty {
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px dashed var(--line);
+    background: var(--paper-2);
+    text-align: center;
+  }
+
+  .bounty-hof-trophy {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .bounty-hof-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .bounty-hof-note {
+    font-size: 12.5px;
+    color: var(--ink-4);
+  }
+
+  /* ── Responsive ─────────────────────────────────────────── */
+  @media (max-width: 760px) {
+    .bounty-table-header,
+    .bounty-table-row {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .bounty-table-header span:nth-child(3),
+    .bounty-examples {
+      display: none;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .bounty-page {
+      padding: 48px 20px;
+    }
+
+    .bounty-title {
+      font-size: 32px;
+    }
+
+    .bounty-commitments-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bounty-table-header,
+    .bounty-table-row {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>

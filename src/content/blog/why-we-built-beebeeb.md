@@ -36,7 +36,7 @@ We wanted a product that solves all three: simple enough for anyone to use, genu
 
 Beebeeb encrypts every file on your device before it leaves, using AES-256-GCM with a unique key derived per file. Your master key is derived from your password using OPAQUE — a recent cryptographic protocol that means we never see your password, not even a hash of it, during login.
 
-Files are stored on Hetzner's infrastructure in Falkenstein, Germany. Beebeeb is operated by Initlabs B.V., a Dutch company registered with the Dutch Chamber of Commerce. Dutch privacy law applies. German data center law applies. No US parent company. No US jurisdiction.
+Files are stored on dedicated infrastructure in Falkenstein, Germany. Beebeeb is operated by Initlabs B.V., a Dutch company registered with the Dutch Chamber of Commerce. Dutch privacy law applies. German data center law applies. No US parent company. No US jurisdiction.
 
 We're launching with a web client and mobile apps. Desktop sync is in development. The encryption engine is open source and independently auditable — if you want to verify that we're not lying about any of this, you can.
 

@@ -31,7 +31,7 @@ bun run build # Static output in dist/
 ALL copy comes from the design files. Don't invent marketing language.
 - Company: Initlabs B.V., KvK 95157565, BTW NL867023430B01, Kelvinstraat 34A, 6601 HE Wijchen
 - Voice: honest, precise, calm. No adjectives that can't be measured.
-- Name infrastructure: "Hetzner · Germany" not "EU cloud"
+- Name infrastructure by location: "Falkenstein, Germany" — do not name the provider
 
 
 ## Graphify
