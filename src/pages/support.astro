@@ -11,7 +11,7 @@ const categories: FaqCategory[] = await fetchFaqCategories();
 const supportConfig = await fetchSupportConfig();
 
 // Build FAQPage JSON-LD from all FAQ items across categories
-const allFaqs = categories.flatMap((cat) => cat.faqs || []);
+const allFaqs = categories.flatMap((cat) => cat.faq_items || []);
 const faqJsonLd = allFaqs.length > 0
   ? {
       '@context': 'https://schema.org',
@@ -27,8 +27,8 @@ const faqJsonLd = allFaqs.length > 0
     }
   : null;
 
-const heroTitle = supportConfig?.hero_title || 'How can we help?';
-const heroSubtitle = supportConfig?.hero_subtitle || 'Find answers to common questions, check system status, or get in touch with our team.';
+const heroTitle = supportConfig?.heroTitle || 'How can we help?';
+const heroSubtitle = supportConfig?.heroSubtitle || 'Find answers to common questions, check system status, or get in touch with our team.';
 ---
 
 <Base

@@ -171,9 +171,9 @@ export async function fetchChangelogEntries() {
 export async function fetchFaqCategories(): Promise<import('./types').FaqCategory[]> {
   try {
     const { data } = await fetchStrapi<any[]>('faq-categories', {
-      'sort': 'order:asc',
-      'populate[faqs][sort]': 'order:asc',
-      'populate[faqs][populate]': '*',
+      'sort': 'sortOrder:asc',
+      'populate[faq_items][sort]': 'sortOrder:asc',
+      'populate[faq_items][populate]': '*',
     });
     return data || [];
   } catch (e) {

@@ -46,25 +46,24 @@ export interface FaqItem {
   id: number;
   question: string;
   answer: string;
-  category?: string;
-  order?: number;
+  sortOrder?: number;
+  searchTags?: string;
 }
 
 export interface FaqCategory {
   id: number;
   name: string;
   slug: string;
-  order?: number;
-  faqs: FaqItem[];
+  sortOrder?: number;
+  faq_items: FaqItem[];
 }
 
 export interface SupportConfig {
-  hero_title?: string;
-  hero_subtitle?: string;
-  contact_email?: string;
-  contact_phone?: string;
-  contact_hours?: string;
-  contact_response_time?: string;
+  heroTitle?: string;
+  heroSubtitle?: string;
+  contactEmail?: string;
+  securityEmail?: string;
+  responseTimeText?: string;
 }
 
 export interface BlogAuthor {

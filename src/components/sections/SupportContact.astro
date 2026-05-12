@@ -7,9 +7,9 @@ interface Props {
 
 const { config } = Astro.props;
 
-const email = config?.contact_email || 'hello@beebeeb.io';
-const hours = config?.contact_hours || 'Monday to Friday, 09:00 - 17:00 CET';
-const responseTime = config?.contact_response_time || 'Within 24 hours on business days';
+const email = config?.contactEmail || 'support@beebeeb.io';
+const securityEmail = config?.securityEmail || 'security@beebeeb.io';
+const responseTime = config?.responseTimeText || 'We typically respond within 24 hours on business days.';
 ---
 
 <section id="contact" class="contact-section">
@@ -37,11 +37,11 @@ const responseTime = config?.contact_response_time || 'Within 24 hours on busine
 
           <div class="contact-detail">
             <div class="contact-detail-icon">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             </div>
             <div>
-              <div class="contact-detail-label t-mono">Hours</div>
-              <div class="contact-detail-value">{hours}</div>
+              <div class="contact-detail-label t-mono">Security issues</div>
+              <a href={`mailto:${securityEmail}`} class="contact-detail-value bb-link">{securityEmail}</a>
             </div>
           </div>
 

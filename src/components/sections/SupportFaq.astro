@@ -9,7 +9,7 @@ const { categories = [] } = Astro.props;
 
 // Flatten all FAQ items for the two-column grid, preserving category info
 const allFaqs = categories.flatMap((cat) =>
-  (cat.faqs || []).map((faq) => ({ ...faq, categorySlug: cat.slug, categoryName: cat.name }))
+  (cat.faq_items || []).map((faq) => ({ ...faq, categorySlug: cat.slug, categoryName: cat.name }))
 );
 ---
 
