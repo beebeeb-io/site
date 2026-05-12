@@ -1,190 +1,440 @@
 ---
 import Base from '../layouts/base.astro';
+import { getLaunchPhase } from '../lib/strapi';
+import { phaseConfig } from '../lib/phase';
 
-const API_URL = import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io';
+const phase = await getLaunchPhase();
+const cfg = phaseConfig(phase);
+
+interface RoadmapItem {
+  name: string;
+  description: string;
+  phase: 1 | 2 | 3 | 4;
+}
+
+const phases = [
+  {
+    number: 1 as const,
+    title: 'Foundation',
+    subtitle: 'Marketing site, waitlist, infrastructure',
+    items: [
+      { name: 'Marketing website', description: 'Product pages, pricing, security docs, blog', phase: 1 as const },
+      { name: 'Waitlist signup', description: 'Email collection with plan preference', phase: 1 as const },
+      { name: 'Encryption core', description: 'AES-256-GCM, Argon2id, X25519 key exchange', phase: 1 as const },
+      { name: 'API server', description: 'Rust + Axum backend with zero-knowledge storage', phase: 1 as const },
+      { name: 'EU infrastructure', description: 'Dedicated servers in Falkenstein, Germany', phase: 1 as const },
+    ],
+  },
+  {
+    number: 2 as const,
+    title: 'Launch',
+    subtitle: 'Web app, CLI, and first paying customers',
+    items: [
+      { name: 'Web application', description: 'Upload, download, preview, organize — all encrypted in-browser via WASM', phase: 2 as const },
+      { name: 'CLI tool (bb)', description: 'Upload, download, sync from the terminal. Homebrew + direct download.', phase: 2 as const },
+      { name: 'Free + Basic + Pro plans', description: 'Stripe billing, storage upgrades, annual discounts', phase: 2 as const },
+      { name: 'Encrypted file sharing', description: 'Share files and folders with end-to-end encryption intact', phase: 2 as const },
+      { name: 'Photo backup', description: 'Automatic encrypted backup with thumbnail preview', phase: 2 as const },
+      { name: 'File versioning', description: '90-day version history on paid plans', phase: 2 as const },
+      { name: 'Data export', description: 'Download everything as an encrypted archive', phase: 2 as const },
+      { name: 'Warrant canary', description: 'Public transparency report and canary statement', phase: 2 as const },
+    ],
+  },
+  {
+    number: 3 as const,
+    title: 'All platforms',
+    subtitle: 'Native apps for every device',
+    items: [
+      { name: 'iOS app', description: 'Native Swift app with photo backup, Face ID, share extension', phase: 3 as const },
+      { name: 'Android app', description: 'Native Kotlin app with photo backup and share intent', phase: 3 as const },
+      { name: 'macOS desktop sync', description: 'Background sync daemon with Finder integration', phase: 3 as const },
+      { name: 'Windows desktop sync', description: 'Background sync with Explorer integration', phase: 3 as const },
+      { name: 'Linux desktop sync', description: 'Background sync daemon, .deb and AppImage', phase: 3 as const },
+    ],
+  },
+  {
+    number: 4 as const,
+    title: 'Teams & business',
+    subtitle: 'Shared workspaces, admin tools, compliance',
+    items: [
+      { name: 'Business plan', description: 'Per-seat pricing with dedicated support and SLA', phase: 4 as const },
+      { name: 'Team vaults', description: 'Shared encrypted workspaces with per-user key wrapping', phase: 4 as const },
+      { name: 'SSO (SAML/OIDC)', description: 'Enterprise single sign-on integration', phase: 4 as const },
+      { name: 'Admin console', description: 'User management, storage allocation, audit log', phase: 4 as const },
+      { name: 'Client portals', description: 'Encrypted file exchange with external parties', phase: 4 as const },
+      { name: 'Data residency controls', description: 'Choose storage region per vault (DE, NL, FR)', phase: 4 as const },
+      { name: 'Third-party security audit', description: 'Independent audit of encryption implementation', phase: 4 as const },
+    ],
+  },
+];
+
+function phaseStatus(itemPhase: number, currentPhase: number): 'done' | 'active' | 'upcoming' {
+  if (itemPhase < currentPhase) return 'done';
+  if (itemPhase === currentPhase) return 'active';
+  return 'upcoming';
+}
+
+function statusLabel(status: 'done' | 'active' | 'upcoming'): string {
+  if (status === 'done') return 'Completed';
+  if (status === 'active') return 'Live now';
+  return 'Planned';
+}
 ---
 
 <Base
   title="Roadmap — Beebeeb"
-  description="Vote for the apps you want backup guides for. Built in the open."
+  description="What we've shipped, what's live, and what's coming next. Beebeeb product roadmap with honest timelines."
   path="/roadmap"
 >
-
-  <!-- ═══════════════════════════════════════════════════════════
-       HERO
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="px-8 pt-[72px] pb-16 text-center relative" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 85%);">
-    <div class="section-label bb-fade-up">Community roadmap</div>
-    <h1 class="text-[48px] leading-[1.05] font-bold tracking-[-0.03em] mt-3.5 max-w-[800px] mx-auto bb-fade-up bb-delay-1">
-      What should we support next?
-    </h1>
-    <p class="text-base text-ink-2 mt-[22px] max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
-      Vote for the apps you want backup guides for. The most-requested apps get built first.
-      Submit an app we haven't listed yet.
-    </p>
-    <p class="mt-4 text-[13px] text-ink-3 bb-fade-up bb-delay-3">
-      Built in the open &mdash; decisions made by the community.
-    </p>
-  </section>
-
-  <!-- ═══════════════════════════════════════════════════════════
-       ROADMAP LIST
-       ═══════════════════════════════════════════════════════════ -->
-  <section class="px-8 py-16 bg-paper">
-    <div class="max-w-[720px] mx-auto">
-
-      <!-- List -->
-      <div id="roadmap-list" class="space-y-3">
-        <div class="text-ink-3 text-sm">Loading...</div>
+  <section class="roadmap-hero">
+    <div class="roadmap-container">
+      <div class="bb-eyebrow" style="justify-content: center; display: inline-flex;">Product roadmap</div>
+      <h1 class="roadmap-title">What we've built.<br />What's next.</h1>
+      <p class="roadmap-subtitle">
+        We ship in phases. Each phase is fully usable on its own.
+        No half-finished features, no "coming soon" that never arrives.
+      </p>
+      <div class="roadmap-current">
+        Currently in <strong>Phase {phase}</strong> — {phases[phase - 1]?.title}
       </div>
-
-      <!-- Submit form -->
-      <div class="mt-14 pt-10 border-t border-line">
-        <h2 class="text-xl font-bold tracking-[-0.02em] mb-2">Don't see your app?</h2>
-        <p class="text-[13.5px] text-ink-2 mb-6">Submit it and others can vote for it.</p>
-        <form id="submit-form" class="flex gap-3 items-start flex-wrap">
-          <input
-            id="app-name-input"
-            type="text"
-            placeholder="App name (e.g. Signal, Notion, Obsidian)"
-            maxlength="100"
-            class="flex-1 min-w-0 px-4 py-2.5 rounded-lg border border-line bg-paper text-sm text-ink placeholder:text-ink-3 focus:outline-none focus:ring-2 focus:ring-amber/50 focus:border-amber-deep transition-all"
-          />
-          <button
-            type="submit"
-            class="px-5 py-2.5 rounded-lg bg-amber text-[oklch(0.25_0.05_84)] font-semibold text-sm hover:bg-amber-deep transition-colors shrink-0"
-          >
-            Submit
-          </button>
-        </form>
-        <p id="submit-status" class="mt-3 text-sm hidden"></p>
-      </div>
-
     </div>
   </section>
 
+  <section class="roadmap-timeline">
+    <div class="roadmap-container">
+      {phases.map((p) => {
+        const status = phaseStatus(p.number, phase);
+        return (
+          <div class:list={['roadmap-phase', `phase-${status}`]}>
+            <div class="phase-header">
+              <div class="phase-number-wrap">
+                <span class="phase-number">{p.number}</span>
+                <span class:list={['phase-badge', status]}>{statusLabel(status)}</span>
+              </div>
+              <h2 class="phase-title">{p.title}</h2>
+              <p class="phase-subtitle">{p.subtitle}</p>
+            </div>
+
+            <div class="phase-items">
+              {p.items.map((item) => (
+                <div class:list={['roadmap-item', `item-${status}`]}>
+                  <div class="item-dot-wrap">
+                    <span class:list={['item-dot', status]} />
+                  </div>
+                  <div class="item-content">
+                    <div class="item-name">{item.name}</div>
+                    <div class="item-desc">{item.description}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="roadmap-note">
+    <div class="roadmap-container">
+      <div class="note-card">
+        <div class="note-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
+        <div>
+          <div class="note-title">This roadmap is honest.</div>
+          <p class="note-body">
+            Items marked "Planned" are committed to but not yet scheduled.
+            We don't announce dates we can't keep. When something ships,
+            it shows up here as "Live now" — not before.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
 </Base>
 
-<script define:vars={{ API_URL }}>
-  const ENDPOINT = `${API_URL}/api/v1/feedback/app-requests`;
-
-  // Track which apps the user has voted for this session
-  const voted = new Set(JSON.parse(sessionStorage.getItem('bb_voted') || '[]'));
-
-  function saveVoted() {
-    sessionStorage.setItem('bb_voted', JSON.stringify([...voted]));
+<style>
+  .roadmap-hero {
+    padding: 72px 32px 48px;
+    text-align: center;
+    background: linear-gradient(180deg, var(--amber-soft) 0%, var(--paper) 85%);
+    border-bottom: 1px solid var(--line);
   }
 
-  async function loadList() {
-    const list = document.getElementById('roadmap-list');
-    try {
-      const res = await fetch(ENDPOINT);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const { items } = await res.json();
-      renderList(items);
-    } catch (e) {
-      list.innerHTML = '<div class="text-ink-3 text-sm">Could not load the roadmap right now.</div>';
+  .roadmap-container {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .roadmap-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.08;
+    margin: 14px 0 0;
+  }
+
+  .roadmap-subtitle {
+    font-size: 16px;
+    color: var(--ink-2);
+    line-height: 1.6;
+    margin: 18px auto 0;
+    max-width: 520px;
+  }
+
+  .roadmap-current {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 24px;
+    padding: 8px 16px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--paper);
+    font-size: 13px;
+    color: var(--ink-2);
+    font-family: var(--font-mono);
+  }
+
+  .roadmap-current strong {
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  .roadmap-timeline {
+    padding: 64px 32px;
+    background: var(--paper);
+  }
+
+  .roadmap-phase {
+    position: relative;
+    padding-bottom: 48px;
+  }
+
+  .roadmap-phase:last-child {
+    padding-bottom: 0;
+  }
+
+  .roadmap-phase::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 40px;
+    bottom: 0;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .roadmap-phase:last-child::before {
+    display: none;
+  }
+
+  .phase-header {
+    margin-bottom: 20px;
+  }
+
+  .phase-number-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .phase-number {
+    display: inline-flex;
+    width: 32px;
+    height: 32px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .phase-done .phase-number {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .phase-active .phase-number {
+    background: var(--amber);
+    color: var(--ink);
+  }
+
+  .phase-upcoming .phase-number {
+    background: var(--paper-2);
+    color: var(--ink-3);
+    border: 1px solid var(--line);
+  }
+
+  .phase-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .phase-badge.done {
+    background: var(--paper-2);
+    color: var(--ink-3);
+  }
+
+  .phase-badge.active {
+    background: oklch(0.95 0.05 155);
+    color: oklch(0.35 0.1 155);
+    border: 1px solid oklch(0.85 0.08 155);
+  }
+
+  .phase-badge.upcoming {
+    background: var(--amber-soft);
+    color: var(--amber-deep);
+    border: 1px solid oklch(0.86 0.07 90);
+  }
+
+  .phase-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 4px;
+    padding-left: 42px;
+  }
+
+  .phase-subtitle {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin: 0;
+    padding-left: 42px;
+  }
+
+  .phase-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-left: 42px;
+  }
+
+  .roadmap-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    transition: background 150ms ease;
+  }
+
+  .roadmap-item:hover {
+    background: var(--paper-2);
+  }
+
+  .item-dot-wrap {
+    padding-top: 5px;
+    flex-shrink: 0;
+  }
+
+  .item-dot {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .item-dot.done {
+    background: var(--ink-3);
+  }
+
+  .item-dot.active {
+    background: oklch(0.55 0.12 155);
+  }
+
+  .item-dot.upcoming {
+    background: var(--amber);
+  }
+
+  .item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .item-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    line-height: 1.45;
+    margin-top: 2px;
+  }
+
+  .phase-upcoming .item-name {
+    color: var(--ink-2);
+  }
+
+  .phase-upcoming .item-desc {
+    color: var(--ink-4);
+  }
+
+  .roadmap-note {
+    padding: 0 32px 64px;
+    background: var(--paper);
+  }
+
+  .note-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 20px;
+    border: 1px dashed var(--line-2);
+    border-radius: 10px;
+    background: var(--paper-2);
+  }
+
+  .note-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background: var(--amber-soft);
+    border: 1px solid oklch(0.86 0.07 90);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--amber-deep);
+    flex-shrink: 0;
+  }
+
+  .note-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .note-body {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  @media (max-width: 560px) {
+    .roadmap-hero {
+      padding: 48px 20px 32px;
+    }
+
+    .roadmap-timeline {
+      padding: 40px 20px;
+    }
+
+    .phase-title,
+    .phase-subtitle,
+    .phase-items {
+      padding-left: 42px;
+    }
+
+    .roadmap-note {
+      padding: 0 20px 48px;
     }
   }
-
-  function renderList(items) {
-    const list = document.getElementById('roadmap-list');
-    if (!items || items.length === 0) {
-      list.innerHTML = '<div class="text-ink-3 text-sm">No requests yet. Be the first to submit one below.</div>';
-      return;
-    }
-
-    list.innerHTML = items.map((item, i) => {
-      const hasVoted = voted.has(item.app_name);
-      return `
-        <div class="flex items-center gap-4 p-4 rounded-lg border border-line bg-paper hover:bg-paper-2 transition-colors group" data-app="${item.app_name}">
-          <span class="text-[13px] font-mono text-ink-3 w-6 text-right shrink-0">${i + 1}</span>
-          <span class="flex-1 font-medium text-[15px] tracking-[-0.01em]">${escapeHtml(item.app_name)}</span>
-          <span class="vote-count text-[13px] font-mono text-ink-2 shrink-0">${item.votes}</span>
-          <button
-            class="vote-btn shrink-0 px-3 py-1.5 rounded-md border text-[12px] font-semibold transition-all ${hasVoted ? 'bg-amber-bg border-[oklch(0.86_0.07_90)] text-amber-deep cursor-default' : 'border-line text-ink-2 hover:border-amber-deep hover:text-amber-deep hover:bg-amber-bg'}"
-            data-app="${item.app_name}"
-            ${hasVoted ? 'disabled' : ''}
-          >${hasVoted ? 'Voted' : 'Vote'}</button>
-        </div>
-      `;
-    }).join('');
-
-    list.querySelectorAll('.vote-btn:not([disabled])').forEach(btn => {
-      btn.addEventListener('click', () => handleVote(btn));
-    });
-  }
-
-  async function handleVote(btn) {
-    const appName = btn.dataset.app;
-    btn.disabled = true;
-    btn.textContent = '...';
-
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ app_name: appName }),
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
-      voted.add(appName);
-      saveVoted();
-
-      const row = btn.closest('[data-app]');
-      const countEl = row.querySelector('.vote-count');
-      countEl.textContent = parseInt(countEl.textContent, 10) + 1;
-
-      btn.textContent = 'Voted';
-      btn.classList.remove('border-line', 'text-ink-2', 'hover:border-amber-deep', 'hover:text-amber-deep', 'hover:bg-amber-bg');
-      btn.classList.add('bg-amber-bg', 'border-[oklch(0.86_0.07_90)]', 'text-amber-deep', 'cursor-default');
-    } catch (e) {
-      btn.disabled = false;
-      btn.textContent = 'Vote';
-    }
-  }
-
-  document.getElementById('submit-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const input = document.getElementById('app-name-input');
-    const status = document.getElementById('submit-status');
-    const appName = input.value.trim();
-    if (!appName) return;
-
-    const submitBtn = e.target.querySelector('button[type=submit]');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Submitting...';
-
-    try {
-      const res = await fetch(ENDPOINT, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ app_name: appName }),
-      });
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || `HTTP ${res.status}`);
-      }
-
-      voted.add(appName);
-      saveVoted();
-
-      input.value = '';
-      status.textContent = `"${appName}" added. Thanks for your input.`;
-      status.className = 'mt-3 text-sm text-ink-2';
-      await loadList();
-    } catch (err) {
-      status.textContent = err.message || 'Something went wrong. Try again.';
-      status.className = 'mt-3 text-sm text-red-600';
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Submit';
-    }
-  });
-
-  function escapeHtml(str) {
-    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-  }
-
-  loadList();
-</script>
+</style>
