@@ -28,31 +28,31 @@ const FEATURES = [
     url: 'https://beebeeb.io/vs/icloud',
   }}
 >
-  <!-- ── Hero ──────────────────────────────────────────────────────────── -->
-  <section class="px-8 pt-[72px] pb-14 text-center" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 80%);">
+  <!-- Hero -->
+  <section class="vs-hero" style="background: linear-gradient(180deg, var(--amber-soft) 0%, var(--paper) 80%);">
     <div class="section-label bb-fade-up">Comparison</div>
-    <h1 class="text-[44px] sm:text-[52px] leading-[1.07] font-bold tracking-[-0.03em] mt-3 max-w-[720px] mx-auto bb-fade-up bb-delay-1">
-      Beebeeb <span class="text-ink-3">vs</span> iCloud
+    <h1 class="vs-hero-title bb-fade-up bb-delay-1">
+      Beebeeb <span class="vs-hero-vs">vs</span> iCloud
     </h1>
-    <p class="text-base text-ink-2 mt-5 max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+    <p class="vs-hero-desc bb-fade-up bb-delay-2">
       iCloud is the most convenient cloud storage for Apple users. Beebeeb is the most private. They are not the same thing, and this page is honest about the trade-offs.
     </p>
-    <div class="flex gap-3 justify-center mt-8 flex-wrap bb-fade-up bb-delay-3">
-      <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md">Try Beebeeb free →</a>
+    <div class="vs-hero-cta bb-fade-up bb-delay-3">
+      <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md">Try Beebeeb free &rarr;</a>
       <a href="/pricing" class="btn btn-outline btn-md">See pricing</a>
     </div>
   </section>
 
-  <!-- ── Key callout: encryption model ─────────────────────────────────── -->
-  <section class="px-8 py-10 bg-amber-bg border-t border-b border-amber/30">
-    <div class="max-w-[860px] mx-auto">
-      <div class="flex gap-4 items-start">
-        <svg class="w-5 h-5 mt-0.5 shrink-0 text-amber-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Key callout: encryption model -->
+  <section class="vs-callout">
+    <div class="vs-callout-inner">
+      <div class="vs-callout-row">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="vs-callout-icon">
           <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
         <div>
-          <div class="text-[14px] font-semibold text-ink mb-1">iCloud's encryption model</div>
-          <p class="text-[13px] text-ink-2 leading-relaxed max-w-[660px]">
+          <div class="vs-callout-title">iCloud's encryption model</div>
+          <p class="vs-callout-text">
             By default, Apple holds the encryption keys for iCloud. This means Apple can read your data, respond to law enforcement requests, and is subject to the US Cloud Act for data stored anywhere in the world. <strong>iCloud Advanced Data Protection</strong> (opt-in, requires all devices on iOS 16.2+) adds end-to-end encryption for most iCloud data, but Apple still holds keys for some services (Mail, Contacts, Calendar, iCloud Backup).
           </p>
         </div>
@@ -60,129 +60,514 @@ const FEATURES = [
     </div>
   </section>
 
-  <!-- ── Comparison table ──────────────────────────────────────────────── -->
-  <section class="px-8 py-16 bg-paper">
-    <div class="max-w-[860px] mx-auto">
-      <div class="section-label mb-6 bb-fade-up">Feature comparison</div>
-      <div class="rounded-xl border border-line overflow-hidden bb-fade-up bb-delay-1">
-        <!-- Header -->
-        <div class="grid grid-cols-[2fr_1fr_1fr] bg-paper-2 border-b border-line">
-          <div class="px-5 py-3 text-[11px] font-semibold uppercase tracking-widest text-ink-3">Feature</div>
-          <div class="px-5 py-3 text-[12px] font-bold text-ink border-l border-line text-center">Beebeeb</div>
-          <div class="px-5 py-3 text-[12px] font-medium text-ink-3 border-l border-line text-center">iCloud</div>
+  <!-- Comparison table -->
+  <section class="vs-table-section">
+    <div class="vs-table-container">
+      <div class="section-label vs-table-label bb-fade-up">Feature comparison</div>
+      <div class="vs-table-wrap bb-fade-up bb-delay-1">
+        <div class="vs-table-header">
+          <div class="vs-table-header-feature">Feature</div>
+          <div class="vs-table-header-bb">Beebeeb</div>
+          <div class="vs-table-header-them">iCloud</div>
         </div>
         {FEATURES.map((f) => (
-          <div class="grid grid-cols-[2fr_1fr_1fr] border-b border-line last:border-b-0 hover:bg-paper-2/50">
-            <div class="px-5 py-3.5 text-[13px] text-ink-2">{f.label}</div>
-            <div class="px-5 py-3.5 border-l border-line text-center">
+          <div class="vs-table-row">
+            <div class="vs-table-cell-feature">{f.label}</div>
+            <div class="vs-table-cell">
               {f.bb.val === true && (
                 <span>
-                  <span class="text-green font-semibold text-[13px]">✓</span>
-                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                  <span class="vs-check">&#10003;</span>
+                  {f.bb.note && <span class="vs-note">{f.bb.note}</span>}
                 </span>
               )}
               {f.bb.val === false && (
                 <span>
-                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
-                  {f.bb.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.bb.note}</span>}
+                  <span class="vs-cross">&#10007;</span>
+                  {f.bb.note && <span class="vs-note vs-note--dim">{f.bb.note}</span>}
                 </span>
               )}
               {f.bb.val === 'partial' && (
                 <span>
-                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
-                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                  <span class="vs-partial">~</span>
+                  {f.bb.note && <span class="vs-note">{f.bb.note}</span>}
                 </span>
               )}
-              {f.bb.val === 'note' && <span class="text-[12px] text-ink font-medium">{f.bb.note}</span>}
+              {f.bb.val === 'note' && <span class="vs-price">{f.bb.note}</span>}
             </div>
-            <div class="px-5 py-3.5 border-l border-line text-center">
+            <div class="vs-table-cell">
               {f.them.val === true && (
                 <span>
-                  <span class="text-green font-semibold text-[13px]">✓</span>
-                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                  <span class="vs-check">&#10003;</span>
+                  {f.them.note && <span class="vs-note">{f.them.note}</span>}
                 </span>
               )}
               {f.them.val === false && (
                 <span>
-                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
-                  {f.them.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.them.note}</span>}
+                  <span class="vs-cross">&#10007;</span>
+                  {f.them.note && <span class="vs-note vs-note--dim">{f.them.note}</span>}
                 </span>
               )}
               {f.them.val === 'partial' && (
                 <span>
-                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
-                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                  <span class="vs-partial">~</span>
+                  {f.them.note && <span class="vs-note">{f.them.note}</span>}
                 </span>
               )}
-              {f.them.val === 'note' && <span class="text-[12px] text-ink-2">{f.them.note}</span>}
+              {f.them.val === 'note' && <span class="vs-price-them">{f.them.note}</span>}
             </div>
           </div>
         ))}
       </div>
-      <p class="text-[11px] text-ink-4 mt-3">Prices and features reflect public information as of May 2026. Always verify current pricing on each vendor's website.</p>
+      <p class="vs-disclaimer">Prices and features reflect public information as of May 2026. Always verify current pricing on each vendor's website.</p>
     </div>
   </section>
 
-  <!-- ── Prose sections ─────────────────────────────────────────────────── -->
-  <section class="px-8 py-14 border-t border-line">
-    <div class="max-w-[720px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+  <!-- Prose sections -->
+  <section class="vs-prose-section">
+    <div class="vs-prose-grid">
       <div class="bb-fade-up">
-        <h2 class="text-[20px] font-bold tracking-tight mb-4">What iCloud does well</h2>
-        <p class="text-[14px] text-ink-2 leading-relaxed">
+        <h2 class="vs-prose-heading">What iCloud does well</h2>
+        <p class="vs-prose-text">
           iCloud is the most deeply integrated cloud storage for Apple hardware. If you live in the Apple ecosystem — Mac, iPhone, iPad — iCloud is everywhere: Photos auto-sync, app documents appear seamlessly in Finder, iMessage continuity depends on it, and the 5 GB free tier comes with your Apple ID.
         </p>
-        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+        <p class="vs-prose-text vs-prose-text--mt">
           The price is also genuinely low: €0.99/month for 50 GB and €2.99/month for 200 GB. For users who aren't dealing with sensitive documents and just want their camera roll backed up, iCloud is hard to beat on convenience and price.
         </p>
       </div>
       <div class="bb-fade-up bb-delay-1">
-        <h2 class="text-[20px] font-bold tracking-tight mb-4">Where Beebeeb is different</h2>
-        <p class="text-[14px] text-ink-2 leading-relaxed">
+        <h2 class="vs-prose-heading">Where Beebeeb is different</h2>
+        <p class="vs-prose-text">
           The fundamental difference is the encryption model. iCloud (even with Advanced Data Protection enabled) is operated by a US company subject to US law. Apple has complied with US government data requests — this is documented in their transparency reports. If that matters to you, iCloud is not a viable option.
         </p>
-        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+        <p class="vs-prose-text vs-prose-text--mt">
           Beebeeb is zero-knowledge by architecture: your files are encrypted on your device before they leave. We are physically and legally incapable of accessing your data. We hold ciphertext. No key escrow, no back door, no Advanced Protection toggle required — it's the only mode we have.
         </p>
-        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+        <p class="vs-prose-text vs-prose-text--mt">
           For non-Apple users: iCloud has limited Windows support and no Linux support. Beebeeb works on every platform via the web app and CLI.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ── Who should use which ───────────────────────────────────────────── -->
-  <section class="px-8 py-12 border-t border-line bg-paper-2">
-    <div class="max-w-[720px] mx-auto">
-      <h2 class="text-[18px] font-bold tracking-tight mb-6 bb-fade-up">Who should use which</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div class="rounded-xl border border-line bg-paper p-5 bb-fade-up">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-ink-3 mb-3">iCloud is a better fit if…</div>
-          <ul class="space-y-2 text-[13px] text-ink-2">
-            <li class="flex gap-2"><span class="text-green shrink-0">→</span> You are all-in on Apple hardware</li>
-            <li class="flex gap-2"><span class="text-green shrink-0">→</span> You want seamless macOS/iOS sync</li>
-            <li class="flex gap-2"><span class="text-green shrink-0">→</span> Your data doesn't require strict privacy</li>
-            <li class="flex gap-2"><span class="text-green shrink-0">→</span> You want the cheapest possible storage</li>
+  <!-- Who should use which -->
+  <section class="vs-pick-section">
+    <div class="vs-pick-container">
+      <h2 class="vs-pick-heading bb-fade-up">Who should use which</h2>
+      <div class="vs-pick-grid">
+        <div class="vs-pick-card bb-fade-up">
+          <div class="vs-pick-label">iCloud is a better fit if…</div>
+          <ul class="vs-pick-list">
+            <li class="vs-pick-item"><span class="vs-pick-arrow vs-pick-arrow--green">&rarr;</span> You are all-in on Apple hardware</li>
+            <li class="vs-pick-item"><span class="vs-pick-arrow vs-pick-arrow--green">&rarr;</span> You want seamless macOS/iOS sync</li>
+            <li class="vs-pick-item"><span class="vs-pick-arrow vs-pick-arrow--green">&rarr;</span> Your data doesn't require strict privacy</li>
+            <li class="vs-pick-item"><span class="vs-pick-arrow vs-pick-arrow--green">&rarr;</span> You want the cheapest possible storage</li>
           </ul>
         </div>
-        <div class="rounded-xl border border-amber/30 bg-amber-bg p-5 bb-fade-up bb-delay-1">
-          <div class="text-[11px] font-semibold uppercase tracking-wider text-amber-deep mb-3">Beebeeb is a better fit if…</div>
-          <ul class="space-y-2 text-[13px] text-ink-2">
-            <li class="flex gap-2"><span class="text-amber-deep shrink-0">→</span> You need genuine zero-knowledge encryption</li>
-            <li class="flex gap-2"><span class="text-amber-deep shrink-0">→</span> You use Linux or cross-platform workflows</li>
-            <li class="flex gap-2"><span class="text-amber-deep shrink-0">→</span> You need CLI / scripted access</li>
-            <li class="flex gap-2"><span class="text-amber-deep shrink-0">→</span> EU jurisdiction matters for compliance</li>
+        <div class="vs-pick-card vs-pick-card--amber bb-fade-up bb-delay-1">
+          <div class="vs-pick-label vs-pick-label--amber">Beebeeb is a better fit if…</div>
+          <ul class="vs-pick-list">
+            <li class="vs-pick-item"><span class="vs-pick-arrow vs-pick-arrow--amber">&rarr;</span> You need genuine zero-knowledge encryption</li>
+            <li class="vs-pick-item"><span class="vs-pick-arrow vs-pick-arrow--amber">&rarr;</span> You use Linux or cross-platform workflows</li>
+            <li class="vs-pick-item"><span class="vs-pick-arrow vs-pick-arrow--amber">&rarr;</span> You need CLI / scripted access</li>
+            <li class="vs-pick-item"><span class="vs-pick-arrow vs-pick-arrow--amber">&rarr;</span> EU jurisdiction matters for compliance</li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ── CTA ────────────────────────────────────────────────────────────── -->
-  <section class="px-8 py-14 border-t border-line text-center">
-    <h2 class="text-[28px] font-bold tracking-tight mb-3">Start with 5 GB free</h2>
-    <p class="text-[14px] text-ink-2 mb-6 max-w-[420px] mx-auto">
+  <!-- CTA -->
+  <section class="vs-cta-section">
+    <h2 class="vs-cta-title">Start with 5 GB free</h2>
+    <p class="vs-cta-desc">
       No credit card. Full encryption from day one. EU infrastructure, open source.
     </p>
-    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-lg">Try Beebeeb free →</a>
+    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-lg">Try Beebeeb free &rarr;</a>
   </section>
 </Base>
+
+<style>
+  /* ── Hero ────────────────────────────────────────────────── */
+  .vs-hero {
+    padding: 72px 32px 56px;
+    text-align: center;
+  }
+
+  .vs-hero-title {
+    font-size: 52px;
+    line-height: 1.07;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-top: 14px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vs-hero-vs {
+    color: var(--ink-3);
+  }
+
+  .vs-hero-desc {
+    font-size: 15px;
+    color: var(--ink-2);
+    margin-top: 20px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.65;
+  }
+
+  .vs-hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Callout ────────────────────────────────────────────── */
+  .vs-callout {
+    padding: 40px 32px;
+    background: var(--amber-soft);
+    border-top: 1px solid oklch(0.82 0.17 84 / 0.3);
+    border-bottom: 1px solid oklch(0.82 0.17 84 / 0.3);
+  }
+
+  .vs-callout-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .vs-callout-row {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .vs-callout-icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--amber-deep);
+  }
+
+  .vs-callout-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .vs-callout-text {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    max-width: 660px;
+  }
+
+  /* ── Table ──────────────────────────────────────────────── */
+  .vs-table-section {
+    padding: 64px 32px;
+    background: var(--paper);
+  }
+
+  .vs-table-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .vs-table-label {
+    margin-bottom: 24px;
+  }
+
+  .vs-table-wrap {
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .vs-table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .vs-table-header-feature {
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+
+  .vs-table-header-bb {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    border-left: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .vs-table-header-them {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    border-left: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .vs-table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .vs-table-row:last-child {
+    border-bottom: none;
+  }
+
+  .vs-table-row:hover {
+    background: oklch(0.965 0.008 85 / 0.5);
+  }
+
+  .vs-table-cell-feature {
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .vs-table-cell {
+    padding: 14px 20px;
+    border-left: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .vs-check {
+    color: var(--green);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .vs-cross {
+    color: var(--ink-4);
+    font-size: 13px;
+  }
+
+  .vs-partial {
+    color: var(--amber-deep);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .vs-note {
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-left: 4px;
+    display: block;
+    line-height: 1.3;
+  }
+
+  .vs-note--dim {
+    color: var(--ink-4);
+  }
+
+  .vs-price {
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .vs-price-them {
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+
+  .vs-disclaimer {
+    font-size: 11px;
+    color: var(--ink-4);
+    margin-top: 12px;
+  }
+
+  /* ── Prose ──────────────────────────────────────────────── */
+  .vs-prose-section {
+    padding: 56px 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  .vs-prose-grid {
+    max-width: 720px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .vs-prose-heading {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+
+  .vs-prose-text {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  .vs-prose-text--mt {
+    margin-top: 12px;
+  }
+
+  /* ── Who should use which ───────────────────────────────── */
+  .vs-pick-section {
+    padding: 48px 32px;
+    border-top: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+
+  .vs-pick-container {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .vs-pick-heading {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+  }
+
+  .vs-pick-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .vs-pick-card {
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    padding: 20px;
+  }
+
+  .vs-pick-card--amber {
+    border-color: oklch(0.82 0.17 84 / 0.3);
+    background: var(--amber-soft);
+  }
+
+  .vs-pick-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+    margin-bottom: 12px;
+  }
+
+  .vs-pick-label--amber {
+    color: var(--amber-deep);
+  }
+
+  .vs-pick-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .vs-pick-item {
+    display: flex;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .vs-pick-arrow {
+    flex-shrink: 0;
+  }
+
+  .vs-pick-arrow--green {
+    color: var(--green);
+  }
+
+  .vs-pick-arrow--amber {
+    color: var(--amber-deep);
+  }
+
+  /* ── CTA ────────────────────────────────────────────────── */
+  .vs-cta-section {
+    padding: 56px 32px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .vs-cta-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .vs-cta-desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-bottom: 24px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────── */
+  @media (max-width: 760px) {
+    .vs-hero-title {
+      font-size: 44px;
+    }
+
+    .vs-prose-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .vs-pick-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .vs-hero {
+      padding: 48px 20px 40px;
+    }
+
+    .vs-hero-title {
+      font-size: 36px;
+    }
+
+    .vs-table-section,
+    .vs-prose-section,
+    .vs-pick-section,
+    .vs-cta-section,
+    .vs-callout {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .vs-table-header-feature,
+    .vs-table-cell-feature {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .vs-table-header-bb,
+    .vs-table-header-them,
+    .vs-table-cell {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+</style>

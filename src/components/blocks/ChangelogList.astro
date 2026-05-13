@@ -16,25 +16,111 @@ try {
 }
 ---
 
-<section class="px-8 py-[72px] bg-paper">
-  <div class="max-w-[760px] mx-auto">
-    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-10 bb-fade-up">{title}</h2>}
-    <div class="space-y-8">
+<section class="changelog-list">
+  <div class="changelog-list-inner">
+    {title && <h2 class="changelog-list-title bb-fade-up">{title}</h2>}
+    <div class="changelog-list-entries">
       {entries.map((entry: any) => (
-        <article class="border-b border-line pb-8 bb-fade-up">
-          <div class="flex items-center gap-3 mb-3">
-            <time class="font-mono text-[11px] text-ink-3">{entry.date}</time>
+        <article class="changelog-entry bb-fade-up">
+          <div class="changelog-entry-meta">
+            <time class="changelog-entry-date">{entry.date}</time>
             {entry.tags?.map((tag: string) => (
-              <span class="px-2 py-0.5 bg-amber-bg border border-[oklch(0.86_0.07_90)] text-amber-deep rounded font-mono text-[10px] font-medium">{tag}</span>
+              <span class="changelog-entry-tag">{tag}</span>
             ))}
           </div>
-          <h3 class="text-lg font-semibold mb-2">{entry.title}</h3>
-          {entry.body && <div class="text-[13.5px] text-ink-2 leading-relaxed" set:html={entry.body} />}
+          <h3 class="changelog-entry-title">{entry.title}</h3>
+          {entry.body && <div class="changelog-entry-body" set:html={entry.body} />}
         </article>
       ))}
       {entries.length === 0 && (
-        <p class="text-ink-3 text-center">No changelog entries yet.</p>
+        <p class="changelog-list-empty">No changelog entries yet.</p>
       )}
     </div>
   </div>
 </section>
+
+<style>
+  .changelog-list {
+    padding: 72px 32px;
+    background: var(--paper);
+  }
+
+  .changelog-list-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .changelog-list-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 40px;
+  }
+
+  .changelog-list-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .changelog-entry {
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 32px;
+  }
+
+  .changelog-entry:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .changelog-entry-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .changelog-entry-date {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .changelog-entry-tag {
+    padding: 2px 8px;
+    background: var(--amber-soft);
+    border: 1px solid oklch(0.86 0.07 90);
+    color: var(--amber-deep);
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+  }
+
+  .changelog-entry-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .changelog-entry-body {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+
+  .changelog-entry-body :global(p) {
+    margin: 0 0 8px;
+  }
+
+  .changelog-list-empty {
+    color: var(--ink-3);
+    text-align: center;
+  }
+
+  @media (max-width: 560px) {
+    .changelog-list {
+      padding: 48px 20px;
+    }
+  }
+</style>

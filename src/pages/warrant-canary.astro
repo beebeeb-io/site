@@ -13,21 +13,21 @@ const nextDue      = '2026-05-11';
   path="/warrant-canary"
   noindex={true}
 >
-  <div class="px-8 py-20 max-w-[680px] mx-auto">
+  <div class="canary-page">
 
-    <div class="mb-10">
-      <div class="section-label mb-4">Legal &amp; trust</div>
-      <h1 class="text-[40px] font-bold tracking-[-0.025em] leading-tight mb-4">
+    <div class="canary-header">
+      <div class="section-label canary-label">Legal &amp; trust</div>
+      <h1 class="canary-title">
         Warrant Canary
       </h1>
-      <div class="flex flex-wrap gap-6 text-[13px]" style="color: var(--color-ink-3);">
+      <div class="canary-dates">
         <span>
           Last updated:
-          <span class="font-semibold" style="color: var(--color-ink);">{lastUpdated}</span>
+          <span class="canary-date-value">{lastUpdated}</span>
         </span>
         <span>
           Next update due:
-          <span class="font-semibold" style="color: var(--color-ink);">{nextDue}</span>
+          <span class="canary-date-value">{nextDue}</span>
         </span>
       </div>
     </div>
@@ -58,10 +58,45 @@ const nextDue      = '2026-05-11';
 </Base>
 
 <style>
+  .canary-page {
+    padding: 80px 32px;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .canary-header {
+    margin-bottom: 40px;
+  }
+
+  .canary-label {
+    margin-bottom: 16px;
+  }
+
+  .canary-title {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .canary-dates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    font-size: 13px;
+    color: var(--ink-3);
+  }
+
+  .canary-date-value {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
   .prose-bb {
     font-size: 15px;
     line-height: 1.7;
-    color: var(--color-ink-2);
+    color: var(--ink-2);
   }
   .prose-bb p {
     margin-bottom: 1.25rem;
@@ -75,14 +110,24 @@ const nextDue      = '2026-05-11';
     gap: 0.5rem;
   }
   .prose-bb li {
-    color: var(--color-ink-2);
+    color: var(--ink-2);
   }
   .prose-bb .signature {
     margin-top: 2rem;
     padding-top: 1.25rem;
-    border-top: 1px solid var(--color-line);
+    border-top: 1px solid var(--line);
     font-size: 13px;
-    color: var(--color-ink-3);
+    color: var(--ink-3);
     font-style: italic;
+  }
+
+  @media (max-width: 560px) {
+    .canary-page {
+      padding: 48px 20px;
+    }
+
+    .canary-title {
+      font-size: 32px;
+    }
   }
 </style>

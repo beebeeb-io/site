@@ -21,23 +21,23 @@ import CtaSection from '../components/blocks/CtaSection.astro';
   <!-- ═══════════════════════════════════════════════════════════
        FOUNDERS
        ═══════════════════════════════════════════════════════════ -->
-  <section class="px-8 py-[72px] bg-paper">
-    <div class="max-w-[900px] mx-auto">
+  <section class="about-section">
+    <div class="about-container">
       <div class="section-label bb-fade-up">The founders</div>
-      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-10 bb-fade-up bb-delay-1">
+      <h2 class="about-heading bb-fade-up bb-delay-1">
         Two people, one mission.
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-stagger>
+      <div class="founders-grid" data-stagger>
 
         <!-- Guus -->
-        <div class="p-7 border border-line rounded-lg bg-paper bb-fade-up">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-full bg-amber font-bold text-sm flex items-center justify-center shrink-0">GL</div>
-            <div class="flex-1">
-              <h3 class="text-lg font-bold tracking-[-0.02em] mb-0.5">Guus Langelaar</h3>
-              <div class="text-[12px] text-ink-3 font-medium mb-3">CTO and co-founder</div>
-              <p class="text-[13.5px] text-ink-2 leading-relaxed">
+        <div class="founder-card bb-fade-up">
+          <div class="founder-row">
+            <div class="founder-avatar">GL</div>
+            <div class="founder-info">
+              <h3 class="founder-name">Guus Langelaar</h3>
+              <div class="founder-role">CTO and co-founder</div>
+              <p class="founder-bio">
                 Builds the product. Writes the Rust crypto engine, the server, the web client, and the infrastructure. Previously built enterprise software at scale. Now building the cloud storage he actually wants to use.
               </p>
             </div>
@@ -45,14 +45,14 @@ import CtaSection from '../components/blocks/CtaSection.astro';
         </div>
 
         <!-- Bram -->
-        <div class="p-7 border border-line rounded-lg bg-paper bb-fade-up">
-          <div class="flex items-start gap-4">
-            <div class="w-12 h-12 rounded-full bg-amber font-bold text-sm flex items-center justify-center shrink-0">BL</div>
-            <div class="flex-1">
-              <h3 class="text-lg font-bold tracking-[-0.02em] mb-0.5">Bram Langelaar</h3>
-              <div class="text-[12px] text-ink-3 font-medium mb-3">Co-founder</div>
-              <p class="text-[13.5px] text-ink-2 leading-relaxed">
-                Runs <a href="https://datablocks.dev" class="text-ink underline underline-offset-4 decoration-line hover:text-amber-deep transition-colors">datablocks.dev</a>, specializing in recertified enterprise storage hardware. Handles the physical infrastructure side -- making sure our storage layer is reliable, cost-effective, and European.
+        <div class="founder-card bb-fade-up">
+          <div class="founder-row">
+            <div class="founder-avatar">BL</div>
+            <div class="founder-info">
+              <h3 class="founder-name">Bram Langelaar</h3>
+              <div class="founder-role">Co-founder</div>
+              <p class="founder-bio">
+                Runs <a href="https://datablocks.dev" class="founder-link">datablocks.dev</a>, specializing in recertified enterprise storage hardware. Handles the physical infrastructure side -- making sure our storage layer is reliable, cost-effective, and European.
               </p>
             </div>
           </div>
@@ -65,13 +65,13 @@ import CtaSection from '../components/blocks/CtaSection.astro';
   <!-- ═══════════════════════════════════════════════════════════
        MISSION
        ═══════════════════════════════════════════════════════════ -->
-  <section class="px-8 py-[72px] bg-paper-2 border-t border-line">
-    <div class="max-w-[780px] mx-auto text-center">
+  <section class="about-section about-section--alt">
+    <div class="about-container--narrow about-center">
       <div class="section-label bb-fade-up">Our mission</div>
-      <blockquote class="text-[26px] leading-[1.35] font-bold tracking-[-0.02em] mb-6 bb-fade-up bb-delay-1">
+      <blockquote class="about-quote bb-fade-up bb-delay-1">
         We believe your files should be private by default, not by policy.
       </blockquote>
-      <p class="text-[15px] text-ink-2 leading-relaxed max-w-[620px] mx-auto bb-fade-up bb-delay-2">
+      <p class="about-body about-body--center bb-fade-up bb-delay-2">
         Most cloud providers can read your files. They choose not to, and they write that promise into their terms of service. But a promise is not a guarantee. Policies change. Companies get acquired. Governments issue subpoenas. We wanted something stronger: a system where even we, the operators, cannot access your data. Not "choose not to" -- cannot.
       </p>
     </div>
@@ -82,19 +82,19 @@ import CtaSection from '../components/blocks/CtaSection.astro';
        ═══════════════════════════════════════════════════════════ -->
   <!-- DRAFT: copy needs Guus review before deploy -->
   <!-- Circular economy section -->
-  <section class="px-8 py-[72px] bg-paper-2">
-    <div class="max-w-[900px] mx-auto">
+  <section class="about-section about-section--bg2">
+    <div class="about-container">
       <div class="section-label bb-fade-up">Infrastructure</div>
-      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-6 bb-fade-up bb-delay-1">
+      <h2 class="about-heading bb-fade-up bb-delay-1">
         Built on circular infrastructure.
       </h2>
-      <p class="text-[16px] text-ink-2 leading-relaxed max-w-[680px] bb-fade-up bb-delay-2">
+      <p class="about-body about-body--wide bb-fade-up bb-delay-2">
         Beebeeb runs on recertified enterprise storage — drives that have served their first life
         in large data centres and still have decades of reliable operation ahead. We keep functional
         hardware out of landfill, reduce the carbon cost of new production, and pass the cost
         savings directly to our customers.
       </p>
-      <p class="text-[16px] text-ink-2 leading-relaxed max-w-[680px] bb-fade-up bb-delay-3 mt-4">
+      <p class="about-body about-body--wide about-body--mt bb-fade-up bb-delay-3">
         Privacy and sustainability aren't in tension. The same commitment to doing things right
         that drives our zero-knowledge encryption drives our choice of infrastructure.
       </p>
@@ -104,26 +104,26 @@ import CtaSection from '../components/blocks/CtaSection.astro';
   <!-- ═══════════════════════════════════════════════════════════
        WHY WE EXIST
        ═══════════════════════════════════════════════════════════ -->
-  <section class="px-8 py-[72px] bg-paper border-t border-line">
-    <div class="max-w-[900px] mx-auto">
+  <section class="about-section about-section--border">
+    <div class="about-container">
       <div class="section-label bb-fade-up">Why we exist</div>
-      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-4 bb-fade-up bb-delay-1">
+      <h2 class="about-heading about-heading--tight bb-fade-up bb-delay-1">
         Europe needs its own zero-knowledge cloud.
       </h2>
-      <p class="text-[15px] text-ink-2 leading-relaxed max-w-[700px] mb-10 bb-fade-up bb-delay-2">
+      <p class="about-body about-body--intro bb-fade-up bb-delay-2">
         Right now, most Europeans store their files on servers controlled by US companies, subject to US law, under US jurisdiction. Even when those servers sit in the EU, the data is still accessible to organizations governed by the CLOUD Act. We think that is a problem worth solving.
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" data-stagger>
-        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
-          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-2">The status quo</div>
-          <p class="text-[13.5px] text-ink-2 leading-relaxed">
+      <div class="compare-grid" data-stagger>
+        <div class="compare-card bb-fade-up">
+          <div class="compare-label">The status quo</div>
+          <p class="compare-text">
             Your files are stored in plaintext on someone else's server. The provider can read them, scan them, and hand them over. Your privacy depends entirely on their goodwill and their jurisdiction's laws.
           </p>
         </div>
-        <div class="p-6 border border-line rounded-lg bg-paper bb-fade-up">
-          <div class="font-mono text-[10px] text-amber-deep uppercase tracking-[0.06em] mb-2">What we do differently</div>
-          <p class="text-[13.5px] text-ink-2 leading-relaxed">
+        <div class="compare-card bb-fade-up">
+          <div class="compare-label compare-label--amber">What we do differently</div>
+          <p class="compare-text">
             Your files are encrypted on your device before they leave it. We store ciphertext we cannot decrypt. Even if someone breaks into our servers or a court orders us to hand over data, all they get is encrypted noise.
           </p>
         </div>
@@ -134,58 +134,58 @@ import CtaSection from '../components/blocks/CtaSection.astro';
   <!-- ═══════════════════════════════════════════════════════════
        HOW WE'RE DIFFERENT
        ═══════════════════════════════════════════════════════════ -->
-  <section class="px-8 py-[72px] bg-paper-2 border-t border-line">
-    <div class="max-w-[900px] mx-auto">
+  <section class="about-section about-section--alt about-section--border">
+    <div class="about-container">
       <div class="section-label bb-fade-up">How we are different</div>
-      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-10 bb-fade-up bb-delay-1">
+      <h2 class="about-heading bb-fade-up bb-delay-1">
         Built on principles, not funding rounds.
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5" data-stagger>
+      <div class="principles-grid" data-stagger>
 
-        <div class="flex gap-5 bb-fade-up">
-          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-0.5">
-            <span class="font-mono text-xs font-bold text-amber-deep">1</span>
+        <div class="principle-item bb-fade-up">
+          <div class="principle-num">
+            <span class="principle-num-text">1</span>
           </div>
           <div>
-            <h3 class="text-[16px] font-semibold mb-1">Bootstrapped</h3>
-            <p class="text-[13.5px] text-ink-2 leading-relaxed">
+            <h3 class="principle-title">Bootstrapped</h3>
+            <p class="principle-desc">
               No venture capital, no growth-at-all-costs pressure. We answer to our users, not to investors. The business model is simple: you pay for storage, we keep the lights on.
             </p>
           </div>
         </div>
 
-        <div class="flex gap-5 bb-fade-up">
-          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-0.5">
-            <span class="font-mono text-xs font-bold text-amber-deep">2</span>
+        <div class="principle-item bb-fade-up">
+          <div class="principle-num">
+            <span class="principle-num-text">2</span>
           </div>
           <div>
-            <h3 class="text-[16px] font-semibold mb-1">Open-source clients</h3>
-            <p class="text-[13.5px] text-ink-2 leading-relaxed">
+            <h3 class="principle-title">Open-source clients</h3>
+            <p class="principle-desc">
               Our web app, mobile app, desktop app, and CLI are all open source. You can read the encryption code, audit it, or build your own client. Don't trust us -- verify.
             </p>
           </div>
         </div>
 
-        <div class="flex gap-5 bb-fade-up">
-          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-0.5">
-            <span class="font-mono text-xs font-bold text-amber-deep">3</span>
+        <div class="principle-item bb-fade-up">
+          <div class="principle-num">
+            <span class="principle-num-text">3</span>
           </div>
           <div>
-            <h3 class="text-[16px] font-semibold mb-1">Honest pricing</h3>
-            <p class="text-[13.5px] text-ink-2 leading-relaxed">
+            <h3 class="principle-title">Honest pricing</h3>
+            <p class="principle-desc">
               No hidden fees, no surprise charges, no dark patterns to trick you into a higher tier. The price on the page is the price you pay. We publish our pricing publicly and we do not negotiate.
             </p>
           </div>
         </div>
 
-        <div class="flex gap-5 bb-fade-up">
-          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-0.5">
-            <span class="font-mono text-xs font-bold text-amber-deep">4</span>
+        <div class="principle-item bb-fade-up">
+          <div class="principle-num">
+            <span class="principle-num-text">4</span>
           </div>
           <div>
-            <h3 class="text-[16px] font-semibold mb-1">EU-only infrastructure</h3>
-            <p class="text-[13.5px] text-ink-2 leading-relaxed">
+            <h3 class="principle-title">EU-only infrastructure</h3>
+            <p class="principle-desc">
               Stored in Falkenstein, Germany. Your data never crosses an ocean and never touches a server operated by a non-EU company. GDPR, NIS2, and DORA compliant by architecture.
             </p>
           </div>
@@ -198,44 +198,44 @@ import CtaSection from '../components/blocks/CtaSection.astro';
   <!-- ═══════════════════════════════════════════════════════════
        VALUES
        ═══════════════════════════════════════════════════════════ -->
-  <section class="px-8 py-[72px] bg-paper border-t border-line">
-    <div class="max-w-[900px] mx-auto">
-      <div class="section-label text-center bb-fade-up">What we stand for</div>
-      <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-10 bb-fade-up bb-delay-1">
+  <section class="about-section about-section--border">
+    <div class="about-container">
+      <div class="section-label about-center bb-fade-up">What we stand for</div>
+      <h2 class="about-heading about-center bb-fade-up bb-delay-1">
         Four commitments we will not break.
       </h2>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger>
-        <div class="p-5 border border-line rounded-lg bg-paper text-center bb-fade-up">
-          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mx-auto mb-3">
-            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div class="values-grid" data-stagger>
+        <div class="value-card bb-fade-up">
+          <div class="value-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
           </div>
-          <h3 class="text-[14px] font-bold mb-1.5">Zero-knowledge always</h3>
-          <p class="text-[12px] text-ink-2 leading-relaxed">We cannot read your data. Not by choice -- by design. This is non-negotiable.</p>
+          <h3 class="value-title">Zero-knowledge always</h3>
+          <p class="value-desc">We cannot read your data. Not by choice -- by design. This is non-negotiable.</p>
         </div>
 
-        <div class="p-5 border border-line rounded-lg bg-paper text-center bb-fade-up">
-          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mx-auto mb-3">
-            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <div class="value-card bb-fade-up">
+          <div class="value-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           </div>
-          <h3 class="text-[14px] font-bold mb-1.5">EU sovereignty</h3>
-          <p class="text-[12px] text-ink-2 leading-relaxed">EU company, EU servers, EU law. No US cloud providers. No CLOUD Act exposure.</p>
+          <h3 class="value-title">EU sovereignty</h3>
+          <p class="value-desc">EU company, EU servers, EU law. No US cloud providers. No CLOUD Act exposure.</p>
         </div>
 
-        <div class="p-5 border border-line rounded-lg bg-paper text-center bb-fade-up">
-          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mx-auto mb-3">
-            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+        <div class="value-card bb-fade-up">
+          <div class="value-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
           </div>
-          <h3 class="text-[14px] font-bold mb-1.5">Open source</h3>
-          <p class="text-[12px] text-ink-2 leading-relaxed">All client code is public. Read it, audit it, build on it. Trust is earned, not declared.</p>
+          <h3 class="value-title">Open source</h3>
+          <p class="value-desc">All client code is public. Read it, audit it, build on it. Trust is earned, not declared.</p>
         </div>
 
-        <div class="p-5 border border-line rounded-lg bg-paper text-center bb-fade-up">
-          <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mx-auto mb-3">
-            <svg class="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        <div class="value-card bb-fade-up">
+          <div class="value-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
           </div>
-          <h3 class="text-[14px] font-bold mb-1.5">Honest pricing</h3>
-          <p class="text-[12px] text-ink-2 leading-relaxed">Simple plans, public prices, no tricks. You pay for storage. That is it.</p>
+          <h3 class="value-title">Honest pricing</h3>
+          <p class="value-desc">Simple plans, public prices, no tricks. You pay for storage. That is it.</p>
         </div>
       </div>
     </div>
@@ -244,33 +244,33 @@ import CtaSection from '../components/blocks/CtaSection.astro';
   <!-- ═══════════════════════════════════════════════════════════
        COMPANY DETAILS
        ═══════════════════════════════════════════════════════════ -->
-  <section class="px-8 py-[72px] bg-paper-2 border-t border-line">
-    <div class="max-w-[900px] mx-auto">
+  <section class="about-section about-section--alt about-section--border">
+    <div class="about-container">
       <div class="section-label bb-fade-up">Company details</div>
-      <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-8 bb-fade-up bb-delay-1">
+      <h2 class="about-heading bb-fade-up bb-delay-1">
         Initlabs B.V.
       </h2>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bb-fade-up bb-delay-2" data-stagger>
-        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
-          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Registration</div>
-          <div class="text-[14px] font-semibold">KvK 95157565</div>
+      <div class="details-grid bb-fade-up bb-delay-2" data-stagger>
+        <div class="detail-card bb-fade-up">
+          <div class="detail-label">Registration</div>
+          <div class="detail-value">KvK 95157565</div>
         </div>
-        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
-          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Location</div>
-          <div class="text-[14px] font-semibold">Wijchen, Netherlands</div>
+        <div class="detail-card bb-fade-up">
+          <div class="detail-label">Location</div>
+          <div class="detail-value">Wijchen, Netherlands</div>
         </div>
-        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
-          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Founded</div>
-          <div class="text-[14px] font-semibold">2025</div>
+        <div class="detail-card bb-fade-up">
+          <div class="detail-label">Founded</div>
+          <div class="detail-value">2025</div>
         </div>
-        <div class="p-4 border border-line rounded-lg bg-paper bb-fade-up">
-          <div class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em] mb-1">Funding</div>
-          <div class="text-[14px] font-semibold">Bootstrapped</div>
+        <div class="detail-card bb-fade-up">
+          <div class="detail-label">Funding</div>
+          <div class="detail-value">Bootstrapped</div>
         </div>
       </div>
 
-      <p class="text-[13px] text-ink-3 mt-6 bb-fade-up bb-delay-3">
+      <p class="about-fine bb-fade-up bb-delay-3">
         Initlabs B.V. is a Dutch limited liability company registered at the Chamber of Commerce in the Netherlands. We operate Beebeeb as our primary product.
       </p>
     </div>
@@ -290,3 +290,347 @@ import CtaSection from '../components/blocks/CtaSection.astro';
     dark_bg={true}
   />
 </Base>
+
+<style>
+  /* ── Section layout ─────────────────────────────────────── */
+  .about-section {
+    padding: 72px 32px;
+    background: var(--paper);
+  }
+
+  .about-section--alt {
+    background: var(--paper-2);
+  }
+
+  .about-section--bg2 {
+    background: var(--paper-2);
+  }
+
+  .about-section--border {
+    border-top: 1px solid var(--line);
+  }
+
+  .about-container {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .about-container--narrow {
+    max-width: 780px;
+    margin: 0 auto;
+  }
+
+  .about-center {
+    text-align: center;
+  }
+
+  /* ── Headings ───────────────────────────────────────────── */
+  .about-heading {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+
+  .about-heading--tight {
+    margin-bottom: 16px;
+  }
+
+  /* ── Body text ──────────────────────────────────────────── */
+  .about-body {
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  .about-body--wide {
+    font-size: 16px;
+    max-width: 680px;
+  }
+
+  .about-body--center {
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .about-body--intro {
+    max-width: 700px;
+    margin-bottom: 40px;
+  }
+
+  .about-body--mt {
+    margin-top: 16px;
+  }
+
+  .about-quote {
+    font-size: 26px;
+    line-height: 1.35;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .about-fine {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin-top: 24px;
+  }
+
+  /* ── Founders ───────────────────────────────────────────── */
+  .founders-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .founder-card {
+    padding: 28px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+  }
+
+  .founder-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .founder-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--amber);
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .founder-info {
+    flex: 1;
+  }
+
+  .founder-name {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+
+  .founder-role {
+    font-size: 12px;
+    color: var(--ink-3);
+    font-weight: 500;
+    margin-bottom: 12px;
+  }
+
+  .founder-bio {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  .founder-link {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--line);
+    transition: color 150ms var(--ease);
+  }
+
+  .founder-link:hover {
+    color: var(--amber-deep);
+  }
+
+  /* ── Compare cards ──────────────────────────────────────── */
+  .compare-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .compare-card {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+  }
+
+  .compare-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .compare-label--amber {
+    color: var(--amber-deep);
+  }
+
+  .compare-text {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  /* ── Principles ─────────────────────────────────────────── */
+  .principles-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .principle-item {
+    display: flex;
+    gap: 20px;
+  }
+
+  .principle-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--amber-soft);
+    border: 1px solid oklch(0.86 0.07 90);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .principle-num-text {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--amber-deep);
+  }
+
+  .principle-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .principle-desc {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  /* ── Values ─────────────────────────────────────────────── */
+  .values-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .value-card {
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    text-align: center;
+  }
+
+  .value-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--amber-soft);
+    color: var(--amber-deep);
+    border: 1px solid oklch(0.86 0.07 90);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+  }
+
+  .value-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .value-desc {
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  /* ── Company details ────────────────────────────────────── */
+  .details-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .detail-card {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+  }
+
+  .detail-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .detail-value {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────── */
+  @media (max-width: 760px) {
+    .founders-grid,
+    .compare-grid,
+    .principles-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .values-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .details-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-heading {
+      font-size: 26px;
+    }
+
+    .about-quote {
+      font-size: 22px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .about-section {
+      padding: 48px 20px;
+    }
+
+    .values-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .details-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about-heading {
+      font-size: 24px;
+    }
+  }
+</style>

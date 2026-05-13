@@ -14,11 +14,11 @@ interface Props {
 const { label, title, items = [] } = Astro.props;
 ---
 
-<section class="px-8 py-[72px] bg-paper">
-  <div class="max-w-[760px] mx-auto">
-    {label && <div class="section-label text-center bb-fade-up">{label}</div>}
-    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-10 bb-fade-up bb-delay-1">{title}</h2>}
-    <div class="bb-fade-up bb-delay-2">
+<section class="faq-accordion">
+  <div class="faq-accordion-inner">
+    {label && <div class="section-label faq-accordion-label bb-fade-up">{label}</div>}
+    {title && <h2 class="faq-accordion-title bb-fade-up bb-delay-1">{title}</h2>}
+    <div class="faq-accordion-items bb-fade-up bb-delay-2">
       {items.map((item) => (
         <div class="faq-item">
           <button class="faq-question">
@@ -33,3 +33,126 @@ const { label, title, items = [] } = Astro.props;
     </div>
   </div>
 </section>
+
+<style>
+  .faq-accordion {
+    padding: 72px 32px;
+    background: var(--paper);
+  }
+
+  .faq-accordion-inner {
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .faq-accordion-label {
+    text-align: center;
+  }
+
+  .faq-accordion-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin: 0 0 40px;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .faq-question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    padding: 18px 0;
+    border: none;
+    background: transparent;
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: left;
+    cursor: pointer;
+    transition: color 150ms var(--ease);
+  }
+
+  .faq-question:hover {
+    color: var(--amber-deep);
+  }
+
+  .faq-icon {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  .faq-icon::before,
+  .faq-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--ink-3);
+    transition: transform 200ms var(--ease);
+  }
+
+  .faq-icon::before {
+    top: 50%;
+    left: 2px;
+    right: 2px;
+    height: 1.5px;
+    transform: translateY(-50%);
+  }
+
+  .faq-icon::after {
+    left: 50%;
+    top: 2px;
+    bottom: 2px;
+    width: 1.5px;
+    transform: translateX(-50%);
+  }
+
+  .faq-item.open .faq-icon::after {
+    transform: translateX(-50%) rotate(90deg);
+    opacity: 0;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 300ms var(--ease);
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 600px;
+  }
+
+  .faq-answer-inner {
+    padding: 0 0 18px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-2);
+  }
+
+  .faq-answer-inner :global(p) {
+    margin: 0 0 8px;
+  }
+
+  .faq-answer-inner :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .faq-answer-inner :global(a) {
+    color: var(--amber-deep);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (max-width: 560px) {
+    .faq-accordion {
+      padding: 48px 20px;
+    }
+  }
+</style>

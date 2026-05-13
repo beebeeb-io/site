@@ -23,45 +23,42 @@ interface Props {
 const { label, title, subtitle, plans = [], footnote } = Astro.props;
 ---
 
-<section class="px-8 py-20 bg-paper">
-  <div class="max-w-[1100px] mx-auto">
-    {label && <div class="section-label text-center bb-fade-up">{label}</div>}
-    {title && <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-3 leading-tight bb-fade-up bb-delay-1">{title}</h2>}
-    {subtitle && <p class="text-base text-ink-2 text-center max-w-[600px] mx-auto mb-12 bb-fade-up bb-delay-2">{subtitle}</p>}
+<section class="pricing-grid">
+  <div class="pricing-grid-inner">
+    {label && <div class="section-label pricing-grid-label bb-fade-up">{label}</div>}
+    {title && <h2 class="pricing-grid-title bb-fade-up bb-delay-1">{title}</h2>}
+    {subtitle && <p class="pricing-grid-subtitle bb-fade-up bb-delay-2">{subtitle}</p>}
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" data-stagger>
+    <div class="pricing-grid-cards" data-stagger>
       {plans.map((plan) => {
         const featureList = (plan.features || '').split('\n').filter(Boolean);
         return (
           <div class:list={[
-            'relative p-6 rounded-xl border bb-fade-up',
-            plan.variant === 'amber' ? 'border-amber bg-amber-bg' : 'border-line bg-paper',
+            'pricing-card bb-fade-up',
+            plan.variant === 'amber' && 'pricing-card--amber',
           ]}>
             {plan.popular && (
-              <div class="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span class="px-3 py-1 bg-amber text-ink text-[10px] font-bold tracking-[0.06em] uppercase rounded-full">Most popular</span>
+              <div class="pricing-card-badge-wrap">
+                <span class="pricing-card-badge">Most popular</span>
               </div>
             )}
-            <div class="text-[13px] font-semibold text-ink-3 uppercase tracking-[0.04em]">{plan.name}</div>
-            <div class="mt-2 mb-1">
-              <span class="text-[42px] font-bold tracking-[-0.03em]">&euro;{plan.price || '0'}</span>
-              <span class="text-sm text-ink-3 ml-1">{plan.period || '/mo'}</span>
+            <div class="pricing-card-plan-name">{plan.name}</div>
+            <div class="pricing-card-price">
+              <span class="pricing-card-amount">&euro;{plan.price || '0'}</span>
+              <span class="pricing-card-period">{plan.period || '/mo'}</span>
             </div>
-            {plan.description && <p class="text-[13px] text-ink-2 mb-5 leading-relaxed">{plan.description}</p>}
-            <ul class="space-y-2 mb-6">
+            {plan.description && <p class="pricing-card-desc">{plan.description}</p>}
+            <ul class="pricing-card-features">
               {featureList.map((f: string) => (
-                <li class="flex items-start gap-2 text-[13px] text-ink-2">
-                  <svg class="w-[14px] h-[14px] text-green mt-0.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <li class="pricing-card-feature">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                   {f}
                 </li>
               ))}
             </ul>
             <a
               href={`https://app.beebeeb.io/signup${plan.slug ? `?plan=${plan.slug}` : ''}`}
-              class:list={[
-                'btn w-full justify-center',
-                plan.variant === 'amber' ? 'btn-amber btn-md' : 'btn-outline btn-md',
-              ]}
+              class:list={['bb-cta pricing-card-cta', plan.variant === 'amber' ? 'amber' : 'ghost']}
             >
               {plan.cta_label || `Start with ${plan.name}`}
             </a>
@@ -70,6 +67,167 @@ const { label, title, subtitle, plans = [], footnote } = Astro.props;
       })}
     </div>
 
-    {footnote && <p class="text-[11px] text-ink-4 text-center mt-6 italic">{footnote}</p>}
+    {footnote && <p class="pricing-grid-footnote">{footnote}</p>}
   </div>
 </section>
+
+<style>
+  .pricing-grid {
+    padding: 80px 32px;
+    background: var(--paper);
+  }
+
+  .pricing-grid-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .pricing-grid-label {
+    text-align: center;
+  }
+
+  .pricing-grid-title {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-align: center;
+    margin: 0 0 12px;
+    line-height: 1.1;
+  }
+
+  .pricing-grid-subtitle {
+    font-size: 16px;
+    color: var(--ink-2);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 48px;
+  }
+
+  .pricing-grid-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .pricing-card {
+    position: relative;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pricing-card--amber {
+    border-color: var(--amber);
+    background: var(--amber-soft);
+  }
+
+  .pricing-card-badge-wrap {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .pricing-card-badge {
+    padding: 4px 12px;
+    background: var(--amber);
+    color: var(--ink);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .pricing-card-plan-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .pricing-card-price {
+    margin: 8px 0 4px;
+  }
+
+  .pricing-card-amount {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .pricing-card-period {
+    font-size: 14px;
+    color: var(--ink-3);
+    margin-left: 4px;
+  }
+
+  .pricing-card-desc {
+    font-size: 13px;
+    color: var(--ink-2);
+    margin: 0 0 20px;
+    line-height: 1.7;
+  }
+
+  .pricing-card-features {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .pricing-card-feature {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .pricing-card-feature svg {
+    color: var(--green);
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+
+  .pricing-card-cta {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .pricing-grid-footnote {
+    font-size: 11px;
+    color: var(--ink-4);
+    text-align: center;
+    margin: 24px 0 0;
+    font-style: italic;
+  }
+
+  @media (max-width: 900px) {
+    .pricing-grid-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .pricing-grid {
+      padding: 48px 20px;
+    }
+
+    .pricing-grid-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-grid-title {
+      font-size: clamp(28px, 4vw, 40px);
+    }
+  }
+</style>

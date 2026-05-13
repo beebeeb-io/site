@@ -16,28 +16,28 @@ const alt = image?.alternativeText || '';
 
 {src && (
   <section class:list={[
-    'bg-paper',
-    mode === 'full-width' ? 'px-0' : 'px-8',
+    'image-block',
+    mode === 'full-width' ? 'image-block--full' : 'image-block--contained',
   ]}>
     <div class:list={[
-      'mx-auto py-10',
-      mode === 'full-width' ? 'max-w-full' : 'max-w-[1200px]',
+      'image-block-inner',
+      mode === 'full-width' ? 'image-block-inner--full' : 'image-block-inner--contained',
     ]}>
-      <figure>
+      <figure class="image-block-figure">
         <img
           src={src}
           alt={alt}
           class:list={[
-            'w-full rounded-lg',
-            mode === 'full-width' ? 'rounded-none' : '',
+            'image-block-img',
+            mode === 'full-width' ? 'image-block-img--full' : '',
           ]}
           loading="lazy"
           decoding="async"
         />
         {caption && (
           <figcaption class:list={[
-            'text-[12px] text-ink-3 mt-3 text-center',
-            mode === 'full-width' ? 'px-8' : '',
+            'image-block-caption',
+            mode === 'full-width' ? 'image-block-caption--full' : '',
           ]}>
             {caption}
           </figcaption>
@@ -46,3 +46,60 @@ const alt = image?.alternativeText || '';
     </div>
   </section>
 )}
+
+<style>
+  .image-block {
+    background: var(--paper);
+  }
+
+  .image-block--contained {
+    padding: 0 32px;
+  }
+
+  .image-block--full {
+    padding: 0;
+  }
+
+  .image-block-inner {
+    padding: 40px 0;
+    margin: 0 auto;
+  }
+
+  .image-block-inner--contained {
+    max-width: 1200px;
+  }
+
+  .image-block-inner--full {
+    max-width: 100%;
+  }
+
+  .image-block-figure {
+    margin: 0;
+  }
+
+  .image-block-img {
+    width: 100%;
+    border-radius: 8px;
+  }
+
+  .image-block-img--full {
+    border-radius: 0;
+  }
+
+  .image-block-caption {
+    font-size: 12px;
+    color: var(--ink-3);
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .image-block-caption--full {
+    padding: 0 32px;
+  }
+
+  @media (max-width: 560px) {
+    .image-block--contained {
+      padding: 0 20px;
+    }
+  }
+</style>

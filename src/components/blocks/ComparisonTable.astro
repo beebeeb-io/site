@@ -11,41 +11,41 @@ interface Props {
 const { label, title, columns = [], rows = [], footnote } = Astro.props;
 ---
 
-<section class="px-8 py-[72px] bg-paper-2 border-t border-line">
-  <div class="max-w-[1000px] mx-auto">
-    {label && <div class="section-label text-center bb-fade-up">{label}</div>}
-    {title && <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-9 leading-tight bb-fade-up bb-delay-1">{title}</h2>}
+<section class="comparison-table">
+  <div class="comparison-table-inner">
+    {label && <div class="section-label comparison-table-label bb-fade-up">{label}</div>}
+    {title && <h2 class="comparison-table-title bb-fade-up bb-delay-1">{title}</h2>}
 
-    <div class="border border-line rounded-xl bg-paper overflow-hidden bb-reveal-scale bb-delay-2">
-      <div class="grid gap-3.5 px-[22px] py-3.5 bg-paper border-b border-line" style={`grid-template-columns: 2fr repeat(${columns.length}, 1fr)`}>
+    <div class="comparison-table-wrap bb-fade-up bb-delay-2">
+      <div class="comparison-table-header" style={`grid-template-columns: 2fr repeat(${columns.length}, 1fr)`}>
         <span></span>
         {columns.map((col) => (
-          <div class="text-center">
+          <div class="comparison-table-col-header">
             {col.highlight ? (
               <Fragment>
-                <span class="text-[15px] font-bold tracking-tight">beebeeb<span class="text-amber">.io</span></span>
-                <br /><span class="text-xs font-bold">{col.name}</span>
+                <span class="comparison-table-brand">beebeeb<span class="comparison-table-brand-dot">.io</span></span>
+                <br /><span class="comparison-table-col-name-bold">{col.name}</span>
               </Fragment>
             ) : (
-              <span class="text-xs font-medium text-ink-3">{col.name}</span>
+              <span class="comparison-table-col-name">{col.name}</span>
             )}
           </div>
         ))}
       </div>
 
       {rows.map((row, i) => (
-        <div class:list={['grid gap-3.5 px-[22px] py-[13px] items-center', i < rows.length - 1 ? 'border-b border-line' : '']} style={`grid-template-columns: 2fr repeat(${columns.length}, 1fr)`}>
-          <span class="text-[13px] text-ink-2">{row[0]}</span>
+        <div class:list={['comparison-table-row', i < rows.length - 1 && 'comparison-table-row-bordered']} style={`grid-template-columns: 2fr repeat(${columns.length}, 1fr)`}>
+          <span class="comparison-table-feature">{row[0]}</span>
           {row.slice(1).map((val: string) => (
-            <div class="text-center">
+            <div class="comparison-table-cell">
               {val === 'y' ? (
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)]">
-                  <svg class="w-[11px] h-[11px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span class="comparison-table-check">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
                 </span>
               ) : val === 'n' ? (
-                <span class="font-mono text-[11px] text-ink-4">&mdash;</span>
+                <span class="comparison-table-dash">&mdash;</span>
               ) : (
-                <span class="font-mono text-[10.5px] text-ink-3 bg-paper-2 px-1.5 py-0.5 rounded">{val}</span>
+                <span class="comparison-table-value">{val}</span>
               )}
             </div>
           ))}
@@ -54,7 +54,148 @@ const { label, title, columns = [], rows = [], footnote } = Astro.props;
     </div>
 
     {footnote && (
-      <p class="text-[11px] text-ink-4 text-center mt-3.5 italic">{footnote}</p>
+      <p class="comparison-table-footnote">{footnote}</p>
     )}
   </div>
 </section>
+
+<style>
+  .comparison-table {
+    padding: 72px 32px;
+    background: var(--paper-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .comparison-table-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .comparison-table-label {
+    text-align: center;
+  }
+
+  .comparison-table-title {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-align: center;
+    margin: 0 0 36px;
+    line-height: 1.1;
+  }
+
+  .comparison-table-wrap {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .comparison-table-header {
+    display: grid;
+    gap: 14px;
+    padding: 14px 22px;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .comparison-table-col-header {
+    text-align: center;
+  }
+
+  .comparison-table-brand {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .comparison-table-brand-dot {
+    color: var(--amber);
+  }
+
+  .comparison-table-col-name-bold {
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .comparison-table-col-name {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+  }
+
+  .comparison-table-row {
+    display: grid;
+    gap: 14px;
+    padding: 13px 22px;
+    align-items: center;
+  }
+
+  .comparison-table-row-bordered {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .comparison-table-feature {
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .comparison-table-cell {
+    text-align: center;
+  }
+
+  .comparison-table-check {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: oklch(0.94 0.06 155);
+    color: oklch(0.35 0.12 155);
+  }
+
+  .comparison-table-dash {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-4);
+  }
+
+  .comparison-table-value {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-3);
+    background: var(--paper-2);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  .comparison-table-footnote {
+    font-size: 11px;
+    color: var(--ink-4);
+    text-align: center;
+    margin: 14px 0 0;
+    font-style: italic;
+  }
+
+  @media (max-width: 760px) {
+    .comparison-table-title {
+      font-size: clamp(28px, 4vw, 40px);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .comparison-table {
+      padding: 48px 20px;
+    }
+
+    .comparison-table-wrap {
+      overflow-x: auto;
+    }
+
+    .comparison-table-header,
+    .comparison-table-row {
+      min-width: 600px;
+    }
+  }
+</style>

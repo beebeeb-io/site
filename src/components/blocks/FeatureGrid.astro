@@ -15,45 +15,45 @@ interface Props {
 
 const { label, title, features = [], columns = 3 } = Astro.props;
 
-const colsClass = columns === 2
-  ? 'grid-cols-1 sm:grid-cols-2'
-  : columns === 4
-    ? 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
-    : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
-
 const iconMap: Record<string, string> = {
-  shield: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
-  lock: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
-  cloud: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>',
-  zap: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
-  globe: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
-  key: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>',
-  check: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
-  server: '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
+  shield: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  lock: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>',
+  cloud: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>',
+  zap: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  globe: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>',
+  key: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>',
+  check: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>',
+  server: '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>',
 };
 
-const defaultIcon = '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>';
+const defaultIcon = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>';
+
+const gridClass = columns === 2
+  ? 'feature-grid-cols-2'
+  : columns === 4
+    ? 'feature-grid-cols-4'
+    : 'feature-grid-cols-3';
 ---
 
 {features.length > 0 && (
-  <section class="px-8 py-[72px] bg-paper">
-    <div class="max-w-[1100px] mx-auto">
-      {label && <div class="section-label text-center bb-fade-up">{label}</div>}
-      {title && <h2 class="text-[40px] font-bold tracking-[-0.025em] text-center mb-14 leading-tight bb-fade-up bb-delay-1">{title}</h2>}
-      <div class:list={['grid gap-6', colsClass]}>
+  <section class="feature-grid">
+    <div class="feature-grid-inner">
+      {label && <div class="section-label feature-grid-label bb-fade-up">{label}</div>}
+      {title && <h2 class="feature-grid-title bb-fade-up bb-delay-1">{title}</h2>}
+      <div class:list={['feature-grid-cards', gridClass]}>
         {features.map((feature, i) => (
           <div class:list={[
-            'p-6 border border-line rounded-xl bg-paper bb-fade-up bb-lift',
+            'feature-grid-card bb-fade-up',
             i % 3 === 1 ? 'bb-delay-1' : i % 3 === 2 ? 'bb-delay-2' : '',
           ]}>
-            <div class="w-10 h-10 rounded-[10px] bg-amber-bg text-amber-deep border border-[oklch(0.86_0.07_90)] flex items-center justify-center mb-4">
+            <div class="feature-grid-icon">
               <Fragment set:html={iconMap[feature.icon || ''] || defaultIcon} />
             </div>
-            <h3 class="text-[16px] font-bold tracking-[-0.01em] text-ink mb-2 leading-snug">
+            <h3 class="feature-grid-card-title">
               {feature.title}
             </h3>
             {feature.description && (
-              <p class="text-[13.5px] text-ink-2 leading-relaxed">
+              <p class="feature-grid-card-desc">
                 {feature.description}
               </p>
             )}
@@ -63,3 +63,110 @@ const defaultIcon = '<svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke
     </div>
   </section>
 )}
+
+<style>
+  .feature-grid {
+    padding: 72px 32px;
+    background: var(--paper);
+  }
+
+  .feature-grid-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .feature-grid-label {
+    text-align: center;
+  }
+
+  .feature-grid-title {
+    font-size: 40px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    text-align: center;
+    margin: 0 0 56px;
+    line-height: 1.1;
+  }
+
+  .feature-grid-cards {
+    display: grid;
+    gap: 24px;
+  }
+
+  .feature-grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .feature-grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .feature-grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .feature-grid-card {
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    transition: border-color 150ms var(--ease), transform 150ms var(--ease);
+  }
+
+  .feature-grid-card:hover {
+    border-color: var(--line-2);
+    transform: translateY(-2px);
+  }
+
+  .feature-grid-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--amber-soft);
+    color: var(--amber-deep);
+    border: 1px solid oklch(0.86 0.07 90);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+  }
+
+  .feature-grid-card-title {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0 0 8px;
+    line-height: 1.3;
+  }
+
+  .feature-grid-card-desc {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 900px) {
+    .feature-grid-cols-3,
+    .feature-grid-cols-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .feature-grid {
+      padding: 48px 20px;
+    }
+
+    .feature-grid-cols-2,
+    .feature-grid-cols-3,
+    .feature-grid-cols-4 {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-grid-title {
+      font-size: clamp(28px, 4vw, 40px);
+    }
+  }
+</style>

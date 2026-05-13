@@ -24,13 +24,10 @@ const tiers = tiersRaw.map(t => {
   const pctOff = Math.round((saves / t.retail) * 100);
   const lowStock = t.left !== null && t.left < LOW_STOCK_THRESHOLD + 1;
   const claimedPct = (t.left !== null && t.cap !== null) ? (100 - (t.left / t.cap * 100)) : 0;
-  const borderColor = t.hot ? 'border-amber-deep' : t.star ? 'border-[oklch(0.55_0.12_155)]' : t.apiary ? 'border-[oklch(0.55_0.14_60)]' : 'border-line';
-  const shadow = t.hot ? 'shadow-[0_0_0_3px_oklch(0.94_0.06_90_/_0.5)]' : t.apiary ? 'shadow-[0_0_0_3px_oklch(0.92_0.06_70_/_0.5)]' : '';
-  const bg = t.apiary ? 'bg-[oklch(0.97_0.02_80)]' : 'bg-paper';
   const savesStr = fmtEur(saves);
   const priceStr = fmtEur(t.p);
   const retailStr = fmtEur(t.retail);
-  return { ...t, saves, pctOff, lowStock, claimedPct, borderColor, shadow, bg, savesStr, priceStr, retailStr };
+  return { ...t, saves, pctOff, lowStock, claimedPct, savesStr, priceStr, retailStr };
 });
 
 /* ── Stretch goals ── */
@@ -92,8 +89,6 @@ const proofs = [
 ];
 
 const shares = ['X', 'Reddit', 'HN', 'Mastodon', 'Email'];
-
-/* fmtEur is defined in the tier computation above */
 ---
 
 <Base
@@ -103,330 +98,315 @@ const shares = ['X', 'Reddit', 'HN', 'Mastodon', 'Email'];
   noindex={true}
 >
 
-  <!-- ══════════════════════════════════════════════════════════════
-       NAV STRIP
-       ══════════════════════════════════════════════════════════════ -->
-  <div class="border-b border-line bg-paper-2">
-    <div class="max-w-[1400px] mx-auto px-6 lg:px-8 py-3 flex items-center">
-      <svg class="w-[14px] h-[14px] text-amber" viewBox="0 0 24 24" fill="currentColor">
+  <!-- Nav strip -->
+  <div class="ks-nav-strip">
+    <div class="ks-nav-inner">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="ks-nav-star">
         <path d="M12 2l2.09 6.26L21 9.27l-5 4.87L17.18 21 12 17.77 6.82 21 8 14.14l-5-4.87 6.91-1.01z"/>
       </svg>
-      <span class="ml-3 text-xs text-ink-3">/ kickstarter campaign &middot; live preview</span>
-      <span class="flex-1"></span>
-      <span class="px-2.5 py-1 bg-amber text-ink text-[10px] font-bold tracking-[0.04em] uppercase rounded-md font-mono">DAY 03 OF 30</span>
+      <span class="ks-nav-text">/ kickstarter campaign &middot; live preview</span>
+      <span class="ks-nav-spacer"></span>
+      <span class="ks-nav-badge">DAY 03 OF 30</span>
     </div>
   </div>
 
-  <!-- ══════════════════════════════════════════════════════════════
-       MAIN 2-COL LAYOUT
-       ══════════════════════════════════════════════════════════════ -->
-  <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-[1.6fr_1fr]">
+  <!-- Main 2-col layout -->
+  <div class="ks-layout">
 
-    <!-- ═══════════════════════════════════════════════════════════
-         LEFT: Pitch + Story
-         ═══════════════════════════════════════════════════════════ -->
-    <div class="px-6 lg:px-9 py-8 lg:border-r border-line">
+    <!-- LEFT: Pitch + Story -->
+    <div class="ks-left">
 
       <!-- Pitch video placeholder -->
-      <div class="relative h-[320px] lg:h-[380px] bg-paper-3 rounded-xl overflow-hidden mb-5 border border-line">
-        <div class="absolute inset-0 flex items-center justify-center flex-col gap-3">
-          <div class="w-16 h-16 rounded-full bg-paper shadow-3 flex items-center justify-center border border-line-2">
-            <div class="w-0 h-0 border-t-[12px] border-t-transparent border-b-[12px] border-b-transparent border-l-[18px] border-l-ink ml-1"></div>
+      <div class="ks-video">
+        <div class="ks-video-overlay">
+          <div class="ks-video-play">
+            <div class="ks-video-triangle"></div>
           </div>
-          <span class="font-mono text-[11px] text-ink-3">[ pitch video &middot; 02:14 &middot; Guus & Bram + the architecture ]</span>
+          <span class="ks-video-label">[ pitch video &middot; 02:14 &middot; Guus & Bram + the architecture ]</span>
         </div>
-        <div class="absolute bottom-3 left-3 px-2 py-1 rounded font-mono text-[10px] text-paper" style="background: oklch(0.18 0.01 70 / 0.85);">2:14</div>
+        <div class="ks-video-time">2:14</div>
       </div>
 
       <!-- Headline -->
-      <h1 class="text-[28px] lg:text-[36px] leading-[1.08] tracking-[-0.03em] font-bold mb-3">
+      <h1 class="ks-headline">
         Beebeeb &mdash; zero-knowledge cloud storage,<br />
-        <span class="text-amber-deep">built in the EU &mdash; by Guus & Bram.</span>
+        <span class="ks-headline-accent">built in the EU &mdash; by Guus & Bram.</span>
       </h1>
-      <p class="text-[15px] text-ink-2 leading-relaxed mb-6">
+      <p class="ks-intro">
         We're not pitching another "secure" cloud with marketing-speak. We've built the storage we wanted to use ourselves: files encrypted on your device before they leave it, sharded across three EU datacenters, recoverable only with a key we never see. No US Cloud Act. No surveillance. No master password sitting on someone's server. Help us ship 1.0.
       </p>
 
-      <!-- ── 01 Why we're doing this ── -->
-      <div class="mb-8">
-        <div class="flex items-center gap-2.5 mb-3">
-          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">01</span>
-          <span class="text-[19px] font-semibold tracking-[-0.015em]">Why we're doing this</span>
-          <span class="flex-1 h-px bg-line"></span>
+      <!-- 01 Why we're doing this -->
+      <div class="ks-chapter">
+        <div class="ks-chapter-header">
+          <span class="ks-chapter-num">01</span>
+          <span class="ks-chapter-title">Why we're doing this</span>
+          <span class="ks-chapter-line"></span>
         </div>
-        <p class="text-[14px] text-ink-2 leading-[1.65] mb-3">
+        <p class="ks-body">
           Hi &mdash; we're <strong>Guus & Bram Langelaar</strong>, two brothers from the Netherlands. This isn't our first build together. <strong>I was 8, Bram was 13</strong>, and he sat me down at the kitchen table and walked me through assembling our first PC &mdash; thermal paste, IDE cables, the whole rite of passage. Everything I know about how machines work started there.
         </p>
-        <p class="text-[14px] text-ink-2 leading-[1.65] mb-3">
+        <p class="ks-body">
           Twenty years on, we're still building together &mdash; but with day jobs that fit. <strong>Bram</strong> runs <em>Datablocks</em>, the Netherlands' #1 reseller of factory-recertified enterprise drives &mdash; he knows storage hardware better than anyone we've met, and he's why every byte of Beebeeb sits on a 28TB He-sealed Seagate that would otherwise have been e-waste. <strong>I'm Guus</strong> &mdash; software engineer to the bone, tech-enthusiast, and the one who actually loves writing the systems code at 2am. I do the cryptography, the sharding, the clients. Bram does the iron, the unit economics, and the customer conversations.
         </p>
-        <p class="text-[14px] text-ink-2 leading-[1.65] mb-3">
+        <p class="ks-body">
           The big US-based Drive solutions still have backdoors &mdash; for governments, for ad targeting, for "trust & safety" scanning of your private files. We don't. We <em>cannot</em>. Even the EU-branded clouds don't do real zero-knowledge &mdash; they hold a key. That's the only honest answer: if a provider <em>can</em> read your files, eventually someone makes them.
         </p>
-        <p class="text-[14px] text-ink-2 leading-[1.65]">
+        <p class="ks-body">
           We're on Kickstarter because we don't want VC money &mdash; VCs want growth, we want a product that lasts. &euro;500k gets us a year of full-time work, three EU regions live, audited clients, and a real launch. Same two brothers, same kitchen table, bigger build.
         </p>
       </div>
 
-      <!-- ── 02 What you actually get ── -->
-      <div class="mb-8">
-        <div class="flex items-center gap-2.5 mb-3">
-          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">02</span>
-          <span class="text-[19px] font-semibold tracking-[-0.015em]">What you actually get</span>
-          <span class="flex-1 h-px bg-line"></span>
+      <!-- 02 What you actually get -->
+      <div class="ks-chapter">
+        <div class="ks-chapter-header">
+          <span class="ks-chapter-num">02</span>
+          <span class="ks-chapter-title">What you actually get</span>
+          <span class="ks-chapter-line"></span>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div class="ks-features-grid">
           {features.map(f => (
-            <div class="p-3.5 bg-paper-2 border border-line rounded-md">
-              <div class="text-[13px] font-semibold mb-1">{f.k}</div>
-              <div class="text-[12.5px] text-ink-2 leading-[1.5]">{f.v}</div>
+            <div class="ks-feature-card">
+              <div class="ks-feature-key">{f.k}</div>
+              <div class="ks-feature-val">{f.v}</div>
             </div>
           ))}
         </div>
       </div>
 
-      <!-- ── 03 Architecture ── -->
-      <div class="mb-8">
-        <div class="flex items-center gap-2.5 mb-3">
-          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">03</span>
-          <span class="text-[19px] font-semibold tracking-[-0.015em]">The architecture (in one diagram)</span>
-          <span class="flex-1 h-px bg-line"></span>
+      <!-- 03 Architecture -->
+      <div class="ks-chapter">
+        <div class="ks-chapter-header">
+          <span class="ks-chapter-num">03</span>
+          <span class="ks-chapter-title">The architecture (in one diagram)</span>
+          <span class="ks-chapter-line"></span>
         </div>
-        <!-- Architecture diagram placeholder -->
-        <div class="border border-line rounded-lg bg-paper p-2 mb-2.5">
-          <div class="h-[260px] lg:h-[320px] rounded-md bg-paper-2 flex items-center justify-center">
-            <div class="text-center">
-              <div class="flex justify-center gap-4 mb-4">
-                <div class="w-14 h-14 rounded-xl bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center">
-                  <svg class="w-6 h-6 text-amber-deep" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div class="ks-arch-wrap">
+          <div class="ks-arch-diagram">
+            <div class="ks-arch-center">
+              <div class="ks-arch-icons">
+                <div class="ks-arch-shield">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                 </div>
-                <div class="flex flex-col items-center gap-1.5">
-                  <svg class="w-6 h-3 text-ink-3" viewBox="0 0 24 12"><path d="M0 6h20M16 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+                <div class="ks-arch-arrow">
+                  <svg width="24" height="12" viewBox="0 0 24 12"><path d="M0 6h20M16 2l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
                 </div>
-                <div class="flex gap-2">
+                <div class="ks-arch-regions">
                   {['FRA', 'AMS', 'STO'].map(r => (
-                    <div class="w-11 h-14 rounded-lg border border-line bg-paper-3 flex items-center justify-center">
-                      <span class="font-mono text-[9px] text-ink-3 font-semibold">{r}</span>
+                    <div class="ks-arch-region">
+                      <span class="ks-arch-region-label">{r}</span>
                     </div>
                   ))}
                 </div>
               </div>
-              <div class="font-mono text-[11px] text-ink-3">device-side encryption &rarr; 3-of-5 erasure coding &rarr; 3 EU regions</div>
+              <div class="ks-arch-caption">device-side encryption &rarr; 3-of-5 erasure coding &rarr; 3 EU regions</div>
             </div>
           </div>
         </div>
-        <p class="text-[12.5px] text-ink-3 leading-[1.55]">
+        <p class="ks-caption-text">
           Files are encrypted on-device with a key derived from your recovery phrase. Encrypted blobs are split into shards (3-of-5 erasure coding) and distributed to Falkenstein, Helsinki, and Ede. We never see plaintext. We never see your key. If we got a court order tomorrow, the answer would be: nothing to hand over.
         </p>
       </div>
 
-      <!-- ── 04 Stretch goals ── -->
-      <div class="mb-8">
-        <div class="flex items-center gap-2.5 mb-3">
-          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">04</span>
-          <span class="text-[19px] font-semibold tracking-[-0.015em]">Stretch goals</span>
-          <span class="flex-1 h-px bg-line"></span>
+      <!-- 04 Stretch goals -->
+      <div class="ks-chapter">
+        <div class="ks-chapter-header">
+          <span class="ks-chapter-num">04</span>
+          <span class="ks-chapter-title">Stretch goals</span>
+          <span class="ks-chapter-line"></span>
         </div>
-        <div class="flex flex-col gap-1.5">
-          {stretches.map(s => {
-            const bg = s.highlight ? 'bg-amber-bg' : s.gift ? 'bg-[oklch(0.96_0.04_145)]' : s.cap ? 'bg-[oklch(0.96_0.02_80)]' : 'bg-paper';
-            const border = s.highlight ? 'border-[oklch(0.86_0.07_90)]' : s.gift ? 'border-[oklch(0.78_0.13_145)]' : s.cap ? 'border-ink-3' : 'border-line';
-            const amtColor = s.highlight ? 'text-amber-deep' : s.gift ? 'text-[oklch(0.42_0.13_155)]' : s.cap ? 'text-ink' : 'text-ink-2';
-            const labelWeight = (s.gift || s.cap) ? 'font-semibold' : 'font-normal';
-            return (
-              <div class={`flex items-center gap-3.5 px-3.5 py-2.5 ${bg} border ${border} rounded-md`}>
-                <span class={`font-mono text-xs font-bold ${amtColor} min-w-[80px]`}>{s.at}</span>
-                <span class={`text-[13px] text-ink ${labelWeight}`}>{s.label}</span>
-                {s.highlight && <span class="ml-auto px-2 py-0.5 bg-amber text-ink text-[9px] font-bold tracking-[0.04em] uppercase rounded-sm whitespace-nowrap">BASE GOAL</span>}
-                {s.gift && <span class="ml-auto px-2 py-0.5 bg-[oklch(0.72_0.16_155)] text-paper text-[9px] font-bold tracking-[0.04em] uppercase rounded-sm whitespace-nowrap">FREE FOR ALL BACKERS</span>}
-                {s.cap && <span class="ml-auto px-2 py-0.5 bg-ink text-paper text-[9px] font-bold tracking-[0.04em] uppercase rounded-sm whitespace-nowrap">HARD CAP</span>}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <!-- ── 05 Schedule ── -->
-      <div class="mb-8">
-        <div class="flex items-center gap-2.5 mb-3">
-          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">05</span>
-          <span class="text-[19px] font-semibold tracking-[-0.015em]">Schedule</span>
-          <span class="flex-1 h-px bg-line"></span>
-        </div>
-        <div class="border border-line rounded-lg bg-paper overflow-hidden">
-          {schedule.map((row, i) => (
-            <div class={`grid grid-cols-[120px_1fr] gap-4 px-4 py-3 ${i < schedule.length - 1 ? 'border-b border-line' : ''}`}>
-              <span class="font-mono text-xs text-ink-3">{row.d}</span>
-              <span class="text-[13px] text-ink-2">{row.e}</span>
+        <div class="ks-stretch-list">
+          {stretches.map(s => (
+            <div class:list={['ks-stretch-item', s.highlight && 'ks-stretch-item--highlight', s.gift && 'ks-stretch-item--gift', s.cap && 'ks-stretch-item--cap']}>
+              <span class:list={['ks-stretch-amt', s.highlight && 'ks-stretch-amt--highlight', s.gift && 'ks-stretch-amt--gift', s.cap && 'ks-stretch-amt--cap']}>{s.at}</span>
+              <span class:list={['ks-stretch-label', (s.gift || s.cap) && 'ks-stretch-label--bold']}>{s.label}</span>
+              {s.highlight && <span class="ks-stretch-badge ks-stretch-badge--base">BASE GOAL</span>}
+              {s.gift && <span class="ks-stretch-badge ks-stretch-badge--gift">FREE FOR ALL BACKERS</span>}
+              {s.cap && <span class="ks-stretch-badge ks-stretch-badge--cap">HARD CAP</span>}
             </div>
           ))}
         </div>
       </div>
 
-      <!-- ── 06 FAQ ── -->
-      <div class="mb-8">
-        <div class="flex items-center gap-2.5 mb-3">
-          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">06</span>
-          <span class="text-[19px] font-semibold tracking-[-0.015em]">FAQ</span>
-          <span class="flex-1 h-px bg-line"></span>
+      <!-- 05 Schedule -->
+      <div class="ks-chapter">
+        <div class="ks-chapter-header">
+          <span class="ks-chapter-num">05</span>
+          <span class="ks-chapter-title">Schedule</span>
+          <span class="ks-chapter-line"></span>
+        </div>
+        <div class="ks-schedule">
+          {schedule.map((row, i) => (
+            <div class:list={['ks-schedule-row', i < schedule.length - 1 && 'ks-schedule-row--border']}>
+              <span class="ks-schedule-date">{row.d}</span>
+              <span class="ks-schedule-event">{row.e}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- 06 FAQ -->
+      <div class="ks-chapter">
+        <div class="ks-chapter-header">
+          <span class="ks-chapter-num">06</span>
+          <span class="ks-chapter-title">FAQ</span>
+          <span class="ks-chapter-line"></span>
         </div>
         <div>
           {faqs.map(item => (
-            <div class="py-3.5 border-b border-line">
-              <div class="text-[13.5px] font-semibold mb-1.5">{item.q}</div>
-              <div class="text-[13px] text-ink-2 leading-[1.55]">{item.a}</div>
+            <div class="ks-faq-item">
+              <div class="ks-faq-q">{item.q}</div>
+              <div class="ks-faq-a">{item.a}</div>
             </div>
           ))}
         </div>
       </div>
 
-      <!-- ── 07 Risks & challenges ── -->
-      <div class="mb-8">
-        <div class="flex items-center gap-2.5 mb-3">
-          <span class="font-mono text-[11px] px-1.5 py-0.5 bg-ink text-amber rounded font-semibold tracking-[0.06em]">07</span>
-          <span class="text-[19px] font-semibold tracking-[-0.015em]">Risks & challenges</span>
-          <span class="flex-1 h-px bg-line"></span>
+      <!-- 07 Risks & challenges -->
+      <div class="ks-chapter">
+        <div class="ks-chapter-header">
+          <span class="ks-chapter-num">07</span>
+          <span class="ks-chapter-title">Risks & challenges</span>
+          <span class="ks-chapter-line"></span>
         </div>
-        <p class="text-[13.5px] text-ink-2 leading-[1.65] mb-2.5">
+        <p class="ks-body">
           We're realistic. The biggest risk is <strong>not the tech</strong> &mdash; the encrypted-storage tech is already running in our basement. The biggest risk is <strong>support load</strong> if we sign up 20,000 people and only two of us answer email. That's why higher tiers are capped, and why we're prioritizing async docs, devlog transparency, and a community Matrix room over a 24/7 support team we can't staff yet.
         </p>
-        <p class="text-[13.5px] text-ink-2 leading-[1.65]">
+        <p class="ks-body">
           Second risk: regulatory. We're EU-only on purpose. We won't take US business until we have a US-shaped legal entity, which is not in scope for v1.
         </p>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════════
-         RIGHT: Pledge Sidebar
-         ═══════════════════════════════════════════════════════════ -->
-    <div class="px-6 lg:px-7 py-8 bg-paper-2">
-      <div class="lg:sticky lg:top-0 lg:max-h-screen lg:overflow-y-auto lg:pb-8">
+    <!-- RIGHT: Pledge Sidebar -->
+    <div class="ks-right">
+      <div class="ks-sidebar">
 
         <!-- Funding stats -->
-        <div class="tabular-nums text-[36px] font-bold tracking-[-0.02em] text-ink">&euro;127,840</div>
-        <div class="text-xs text-ink-3">pledged of &euro;500,000 goal</div>
+        <div class="ks-funding-amount">&euro;127,840</div>
+        <div class="ks-funding-goal">pledged of &euro;500,000 goal</div>
 
         <!-- Progress bar -->
-        <div class="mt-2.5 mb-3.5 h-1.5 bg-paper-3 rounded-full overflow-hidden">
-          <div class="h-full rounded-full" style="width: 25.5%; background: linear-gradient(90deg, var(--color-amber), var(--color-amber-deep));"></div>
+        <div class="ks-progress">
+          <div class="ks-progress-fill" style="width: 25.5%; background: linear-gradient(90deg, var(--amber), var(--amber-deep));"></div>
         </div>
 
         <!-- Stats row -->
-        <div class="grid grid-cols-3 gap-2.5 mb-4">
+        <div class="ks-stats-grid">
           <div>
-            <div class="tabular-nums text-lg font-bold text-ink">1,284</div>
-            <div class="text-[11px] text-ink-3">backers</div>
+            <div class="ks-stat-num">1,284</div>
+            <div class="ks-stat-label">backers</div>
           </div>
           <div>
-            <div class="tabular-nums text-lg font-bold text-ink">27</div>
-            <div class="text-[11px] text-ink-3">days to go</div>
+            <div class="ks-stat-num">27</div>
+            <div class="ks-stat-label">days to go</div>
           </div>
           <div>
-            <div class="tabular-nums text-lg font-bold text-ink">25%</div>
-            <div class="text-[11px] text-ink-3">funded</div>
+            <div class="ks-stat-num">25%</div>
+            <div class="ks-stat-label">funded</div>
           </div>
         </div>
 
         <!-- CTAs -->
-        <a href="#tiers" class="btn btn-amber btn-md w-full justify-center font-semibold mb-2 no-underline">Back this project</a>
-        <a href="#remind" class="btn btn-outline btn-md w-full justify-center no-underline">
-          <svg class="w-[13px] h-[13px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <a href="#tiers" class="btn btn-amber btn-md ks-sidebar-cta">Back this project</a>
+        <a href="#remind" class="btn btn-outline btn-md ks-sidebar-cta">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
           Remind me
         </a>
 
         <!-- Urgency bar -->
-        <div class="mt-4 p-3 bg-paper border border-line rounded-md">
-          <div class="flex items-center gap-2 mb-1.5">
-            <div class="w-2 h-2 rounded-full bg-green animate-pulse"></div>
-            <span class="font-mono text-[10px] text-ink-3 uppercase tracking-[0.06em]">Live</span>
+        <div class="ks-urgency">
+          <div class="ks-urgency-live">
+            <div class="ks-urgency-dot"></div>
+            <span class="ks-urgency-live-label">Live</span>
           </div>
-          <div class="text-[12px] text-ink-2 leading-[1.5]">
-            <strong class="text-ink">18 people</strong> backed in the last hour. Founding Hoarder tier has <strong class="text-amber-deep">13 spots left</strong>.
+          <div class="ks-urgency-text">
+            <strong>18 people</strong> backed in the last hour. Founding Hoarder tier has <strong class="ks-urgency-hot">13 spots left</strong>.
           </div>
         </div>
 
-        <div class="my-5 h-px bg-line"></div>
+        <div class="ks-divider"></div>
 
         <!-- Live activity feed -->
-        <div class="mb-4">
-          <div class="text-[10.5px] font-semibold text-ink-3 uppercase tracking-[0.04em] mb-2">Recent backers</div>
-          <div class="flex flex-col gap-1.5">
+        <div class="ks-activity">
+          <div class="ks-activity-heading">Recent backers</div>
+          <div class="ks-activity-list">
             {activity.map(a => (
-              <div class="flex items-center gap-2.5 py-1.5">
-                <div class="w-6 h-6 rounded-full bg-paper-3 border border-line flex items-center justify-center">
-                  <span class="text-[9px] font-bold text-ink-3">{a.name.split(' ').map(w => w[0]).join('')}</span>
+              <div class="ks-activity-item">
+                <div class="ks-activity-avatar">
+                  <span>{a.name.split(' ').map(w => w[0]).join('')}</span>
                 </div>
-                <div class="flex-1 min-w-0">
-                  <div class="text-[11.5px] text-ink truncate"><strong>{a.name}</strong> &middot; {a.city}</div>
-                  <div class="text-[10px] text-ink-3">{a.tier}</div>
+                <div class="ks-activity-info">
+                  <div class="ks-activity-name"><strong>{a.name}</strong> &middot; {a.city}</div>
+                  <div class="ks-activity-tier">{a.tier}</div>
                 </div>
-                <span class="text-[10px] text-ink-3 whitespace-nowrap">{a.ago}</span>
+                <span class="ks-activity-ago">{a.ago}</span>
               </div>
             ))}
           </div>
         </div>
 
         <!-- Storage allocation meter -->
-        <div class="mb-4 p-3 bg-paper border border-line rounded-md">
-          <div class="flex items-baseline gap-1.5 mb-1.5">
-            <span class="text-[10.5px] font-semibold text-ink-2 uppercase tracking-[0.04em]">STORAGE ALLOCATED</span>
-            <span class="flex-1"></span>
-            <span class="font-mono text-[11.5px] font-bold text-ink">11.4</span>
-            <span class="font-mono text-[10.5px] text-ink-3">/ 20 PB-years</span>
+        <div class="ks-storage-meter">
+          <div class="ks-storage-header">
+            <span class="ks-storage-title">STORAGE ALLOCATED</span>
+            <span class="ks-storage-spacer"></span>
+            <span class="ks-storage-val">11.4</span>
+            <span class="ks-storage-max">/ 20 PB-years</span>
           </div>
-          <div class="relative h-2 bg-paper-2 rounded overflow-hidden">
-            <div class="h-full rounded" style="width: 57%; background: linear-gradient(90deg, var(--color-amber), var(--color-amber-deep));"></div>
-            <div class="absolute right-0 -top-0.5 w-px h-3 bg-ink-3"></div>
+          <div class="ks-storage-bar">
+            <div class="ks-storage-bar-fill" style="width: 57%; background: linear-gradient(90deg, var(--amber), var(--amber-deep));"></div>
+            <div class="ks-storage-bar-cap"></div>
           </div>
-          <div class="mt-2 text-[11px] text-ink-2 leading-[1.5]">
-            We commit a <strong class="text-ink">hard ceiling of 20 PB-years</strong> across the campaign &mdash; that's 60 PB physically (3x redundancy across Falkenstein / Helsinki / Ede). Once allocated, tiers close even before their cap. We don't over-promise storage we can't buy and rack.
+          <div class="ks-storage-note">
+            We commit a <strong>hard ceiling of 20 PB-years</strong> across the campaign &mdash; that's 60 PB physically (3x redundancy across Falkenstein / Helsinki / Ede). Once allocated, tiers close even before their cap. We don't over-promise storage we can't buy and rack.
           </div>
         </div>
 
         <!-- Tier heading -->
-        <div id="tiers" class="flex items-center gap-1.5 mb-2">
-          <span class="text-[10.5px] font-semibold text-ink-3 uppercase tracking-[0.04em]">SELECT A TIER</span>
-          <span class="flex-1"></span>
-          <span class="font-mono text-[9.5px] text-ink-3">retail = &euro;7.99 / 2 TB / mo</span>
+        <div id="tiers" class="ks-tier-heading">
+          <span class="ks-tier-heading-label">SELECT A TIER</span>
+          <span class="ks-tier-heading-spacer"></span>
+          <span class="ks-tier-heading-note">retail = &euro;7.99 / 2 TB / mo</span>
         </div>
 
         <!-- Tiers -->
-        <div class="flex flex-col gap-2.5">
+        <div class="ks-tier-list">
           {tiers.map(t => (
-              <div class={`relative p-3 ${t.bg} border ${t.borderColor} rounded-md ${t.shadow}`}>
-                <div class="flex items-baseline gap-1.5 mb-1">
-                  <span class="font-bold text-[15px]">&euro;{t.priceStr}</span>
-                  <span class="font-mono text-[10px] text-ink-3 line-through">&euro;{t.retailStr}</span>
-                  <span class="flex-1"></span>
+              <div class:list={['ks-tier-card', t.hot && 'ks-tier-card--hot', t.star && 'ks-tier-card--star', t.apiary && 'ks-tier-card--apiary']}>
+                <div class="ks-tier-price-row">
+                  <span class="ks-tier-price">&euro;{t.priceStr}</span>
+                  <span class="ks-tier-retail">&euro;{t.retailStr}</span>
+                  <span class="ks-tier-price-spacer"></span>
                   {t.tag && (
-                    <span class={`px-1.5 py-0.5 text-[9px] font-bold tracking-[0.04em] uppercase rounded-sm ${t.star ? 'bg-[oklch(0.72_0.16_155)] text-paper' : 'bg-amber text-ink'}`}>{t.tag}</span>
+                    <span class:list={['ks-tier-tag', t.star && 'ks-tier-tag--star']}>{t.tag}</span>
                   )}
                 </div>
-                <div class="text-[13px] font-semibold mb-0.5">{t.n}</div>
-                <div class="text-[11.5px] text-ink-2 mb-1.5">
+                <div class="ks-tier-name">{t.n}</div>
+                <div class="ks-tier-storage">
                   <strong>{t.tb}</strong> &middot; {t.dur}
                 </div>
-                <div class="inline-block px-1.5 py-0.5 rounded-sm font-mono text-[10px] font-bold tracking-[0.02em] mb-1.5" style="background: oklch(0.95 0.05 145); color: oklch(0.42 0.13 155);">
+                <div class="ks-tier-saves">
                   SAVE &euro;{t.savesStr} &middot; {t.pctOff}% OFF
                 </div>
                 {t.apiary && (
-                  <div class="mt-1 mb-1.5 p-2.5 bg-ink text-paper rounded text-[11px] leading-[1.55]">
-                    <div class="font-mono text-[9.5px] text-amber tracking-[0.06em] mb-1">EVERYTHING IN HIVE, PLUS</div>
+                  <div class="ks-tier-apiary-box">
+                    <div class="ks-tier-apiary-label">EVERYTHING IN HIVE, PLUS</div>
                     <div>Hall-of-Founders page on beebeeb.io (your name + photo + bio) &middot; named-contact priority support (direct line to Guus & Bram, not a queue) &middot; yearly studio visit in Amsterdam (coffee + roadmap preview) &middot; 1hr/yr co-design call with Guus & Bram &middot; 90-day early access to every new feature &middot; custom subdomain (yourname.beebeeb.io) &middot; gold engraved hex tile + signed launch print (numbered /25) &middot; signed DPA &middot; 25 seats &middot; admin console &middot; 100 TB pooled across 60 months &middot; 20% lifetime renewal discount.</div>
                   </div>
                 )}
-                <div class="flex items-center gap-1.5">
-                  <span class="font-mono text-[10.5px] text-ink-3">{t.b} backers</span>
+                <div class="ks-tier-backers-row">
+                  <span class="ks-tier-backers">{t.b} backers</span>
                   {t.left !== null && (
-                    <span class={`font-mono text-[10px] ml-auto ${t.lowStock ? 'text-amber-deep font-semibold' : 'text-ink-3'}`}>
+                    <span class:list={['ks-tier-left', t.lowStock && 'ks-tier-left--low']}>
                       {t.lowStock ? '⚠ ' : ''}{t.left} of {t.cap} left
                     </span>
                   )}
                 </div>
                 {t.left !== null && t.cap !== null && (
-                  <div class="mt-1.5 h-[3px] bg-paper-2 rounded-sm overflow-hidden">
+                  <div class="ks-tier-progress">
                     <div
-                      class={`h-full transition-[width] duration-500 ${t.lowStock ? 'bg-amber-deep' : 'bg-ink-2'}`}
+                      class:list={['ks-tier-progress-fill', t.lowStock && 'ks-tier-progress-fill--low']}
                       style={`width: ${t.claimedPct}%;`}
                     ></div>
                   </div>
@@ -436,35 +416,33 @@ const shares = ['X', 'Reddit', 'HN', 'Mastodon', 'Email'];
         </div>
 
         <!-- Renewal note -->
-        <div class="mt-2.5 p-2.5 bg-paper border border-dashed border-line-2 rounded-md text-[11px] text-ink-2 leading-[1.5]">
-          <strong class="text-ink">After your prepaid term:</strong> auto-renew at standard retail (&euro;7.99 per 2 TB / month, billed yearly). Your <strong>20% backer discount stays for life</strong> &mdash; simple, generous, never expires. We email you 30 days before each renewal. Cancel any time, in two clicks.
+        <div class="ks-renewal-note">
+          <strong>After your prepaid term:</strong> auto-renew at standard retail (&euro;7.99 per 2 TB / month, billed yearly). Your <strong>20% backer discount stays for life</strong> &mdash; simple, generous, never expires. We email you 30 days before each renewal. Cancel any time, in two clicks.
         </div>
 
-        <div class="my-5 h-px bg-line"></div>
+        <div class="ks-divider"></div>
 
         <!-- Social proof -->
-        <div class="mb-4">
-          <div class="flex flex-col gap-2">
-            {proofs.map(p => (
-              <div class="text-[12px] text-ink-2 italic leading-[1.5] pl-3 border-l-2 border-amber">{p}</div>
-            ))}
-          </div>
-        </div>
-
-        <!-- Share buttons -->
-        <div class="text-[10.5px] font-semibold text-ink-3 uppercase tracking-[0.04em] mb-2">SHARE</div>
-        <div class="flex gap-1.5 flex-wrap">
-          {shares.map(s => (
-            <a href="#" class="btn btn-outline btn-sm no-underline text-[12px]">{s}</a>
+        <div class="ks-social-proof">
+          {proofs.map(p => (
+            <div class="ks-proof-quote">{p}</div>
           ))}
         </div>
 
-        <div class="my-5 h-px bg-line"></div>
+        <!-- Share buttons -->
+        <div class="ks-share-heading">SHARE</div>
+        <div class="ks-share-btns">
+          {shares.map(s => (
+            <a href="#" class="btn btn-outline btn-sm ks-share-btn">{s}</a>
+          ))}
+        </div>
+
+        <div class="ks-divider"></div>
 
         <!-- All-or-nothing notice -->
-        <div class="p-3 bg-amber-bg border border-[oklch(0.86_0.07_90)] rounded-md">
-          <div class="text-[10.5px] font-semibold text-amber-deep uppercase tracking-[0.04em]">ALL-OR-NOTHING</div>
-          <div class="text-xs text-ink-2 mt-1 leading-[1.5]">
+        <div class="ks-aon">
+          <div class="ks-aon-title">ALL-OR-NOTHING</div>
+          <div class="ks-aon-text">
             Your card is only charged if we hit &euro;500k. Otherwise: full refund, no questions, no hard feelings.
           </div>
         </div>
@@ -477,7 +455,7 @@ const shares = ['X', 'Reddit', 'HN', 'Mastodon', 'Email'];
 </Base>
 
 <style>
-  /* Hide scroll progress on campaign page — it's a standalone mock */
+  /* Hide scroll progress on campaign page */
   .bb-scroll-progress { display: none; }
 
   /* Pulse animation for live indicator */
@@ -485,7 +463,968 @@ const shares = ['X', 'Reddit', 'HN', 'Mastodon', 'Email'];
     0%, 100% { opacity: 1; }
     50% { opacity: 0.4; }
   }
-  .animate-pulse {
+
+  /* ── Nav strip ──────────────────────────────────────────── */
+  .ks-nav-strip {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+
+  .ks-nav-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+  }
+
+  .ks-nav-star {
+    color: var(--amber);
+  }
+
+  .ks-nav-text {
+    margin-left: 12px;
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .ks-nav-spacer {
+    flex: 1;
+  }
+
+  .ks-nav-badge {
+    padding: 4px 10px;
+    background: var(--amber);
+    color: var(--ink);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+  }
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  .ks-layout {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .ks-left {
+    padding: 32px 24px;
+  }
+
+  .ks-right {
+    padding: 32px 24px;
+    background: var(--paper-2);
+  }
+
+  .ks-sidebar {
+    /* no sticky on mobile */
+  }
+
+  /* ── Video placeholder ──────────────────────────────────── */
+  .ks-video {
+    position: relative;
+    height: 320px;
+    background: var(--paper-3);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border: 1px solid var(--line);
+  }
+
+  .ks-video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ks-video-play {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--paper);
+    box-shadow: var(--shadow-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-2);
+  }
+
+  .ks-video-triangle {
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 18px solid var(--ink);
+    margin-left: 4px;
+  }
+
+  .ks-video-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .ks-video-time {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--paper);
+    background: oklch(0.18 0.01 70 / 0.85);
+  }
+
+  /* ── Headline / intro ───────────────────────────────────── */
+  .ks-headline {
+    font-size: 28px;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .ks-headline-accent {
+    color: var(--amber-deep);
+  }
+
+  .ks-intro {
+    font-size: 15px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  /* ── Chapters ───────────────────────────────────────────── */
+  .ks-chapter {
+    margin-bottom: 32px;
+  }
+
+  .ks-chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .ks-chapter-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 2px 6px;
+    background: var(--ink);
+    color: var(--amber);
+    border-radius: 4px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+  }
+
+  .ks-chapter-title {
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+  }
+
+  .ks-chapter-line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+
+  .ks-body {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+    margin-bottom: 12px;
+  }
+
+  .ks-body:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ── Features grid ──────────────────────────────────────── */
+  .ks-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .ks-feature-card {
+    padding: 14px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  .ks-feature-key {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .ks-feature-val {
+    font-size: 12.5px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  /* ── Architecture diagram ───────────────────────────────── */
+  .ks-arch-wrap {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+
+  .ks-arch-diagram {
+    height: 260px;
+    border-radius: 6px;
+    background: var(--paper-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ks-arch-center {
+    text-align: center;
+  }
+
+  .ks-arch-icons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    align-items: center;
+  }
+
+  .ks-arch-shield {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: var(--amber-soft);
+    border: 1px solid oklch(0.86 0.07 90);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--amber-deep);
+  }
+
+  .ks-arch-arrow {
+    color: var(--ink-3);
+  }
+
+  .ks-arch-regions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .ks-arch-region {
+    width: 44px;
+    height: 56px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--paper-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ks-arch-region-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: var(--ink-3);
+    font-weight: 600;
+  }
+
+  .ks-arch-caption {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .ks-caption-text {
+    font-size: 12.5px;
+    color: var(--ink-3);
+    line-height: 1.55;
+  }
+
+  /* ── Stretch goals ──────────────────────────────────────── */
+  .ks-stretch-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ks-stretch-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  .ks-stretch-item--highlight {
+    background: var(--amber-soft);
+    border-color: oklch(0.86 0.07 90);
+  }
+
+  .ks-stretch-item--gift {
+    background: oklch(0.96 0.04 145);
+    border-color: oklch(0.78 0.13 145);
+  }
+
+  .ks-stretch-item--cap {
+    background: oklch(0.96 0.02 80);
+    border-color: var(--ink-3);
+  }
+
+  .ks-stretch-amt {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink-2);
+    min-width: 80px;
+  }
+
+  .ks-stretch-amt--highlight { color: var(--amber-deep); }
+  .ks-stretch-amt--gift { color: oklch(0.42 0.13 155); }
+  .ks-stretch-amt--cap { color: var(--ink); }
+
+  .ks-stretch-label {
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  .ks-stretch-label--bold {
+    font-weight: 600;
+  }
+
+  .ks-stretch-badge {
+    margin-left: auto;
+    padding: 2px 8px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    white-space: nowrap;
+  }
+
+  .ks-stretch-badge--base {
+    background: var(--amber);
+    color: var(--ink);
+  }
+
+  .ks-stretch-badge--gift {
+    background: oklch(0.72 0.16 155);
+    color: var(--paper);
+  }
+
+  .ks-stretch-badge--cap {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  /* ── Schedule ───────────────────────────────────────────── */
+  .ks-schedule {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    overflow: hidden;
+  }
+
+  .ks-schedule-row {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+    padding: 12px 16px;
+  }
+
+  .ks-schedule-row--border {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ks-schedule-date {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .ks-schedule-event {
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  /* ── FAQ ─────────────────────────────────────────────────── */
+  .ks-faq-item {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .ks-faq-q {
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .ks-faq-a {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.55;
+  }
+
+  /* ── Sidebar ────────────────────────────────────────────── */
+  .ks-funding-amount {
+    font-variant-numeric: tabular-nums;
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .ks-funding-goal {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .ks-progress {
+    margin-top: 10px;
+    margin-bottom: 14px;
+    height: 6px;
+    background: var(--paper-3);
+    border-radius: 999px;
+    overflow: hidden;
+  }
+
+  .ks-progress-fill {
+    height: 100%;
+    border-radius: 999px;
+  }
+
+  .ks-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .ks-stat-num {
+    font-variant-numeric: tabular-nums;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .ks-stat-label {
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .ks-sidebar-cta {
+    width: 100%;
+    justify-content: center;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-decoration: none;
+  }
+
+  /* ── Urgency ────────────────────────────────────────────── */
+  .ks-urgency {
+    margin-top: 16px;
+    padding: 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  .ks-urgency-live {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .ks-urgency-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  .ks-urgency-live-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  .ks-urgency-text {
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  .ks-urgency-hot {
+    color: var(--amber-deep);
+  }
+
+  .ks-divider {
+    margin: 20px 0;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* ── Activity feed ──────────────────────────────────────── */
+  .ks-activity {
+    margin-bottom: 16px;
+  }
+
+  .ks-activity-heading {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  .ks-activity-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ks-activity-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+  }
+
+  .ks-activity-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--paper-3);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ks-activity-avatar span {
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--ink-3);
+  }
+
+  .ks-activity-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .ks-activity-name {
+    font-size: 11.5px;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ks-activity-tier {
+    font-size: 10px;
+    color: var(--ink-3);
+  }
+
+  .ks-activity-ago {
+    font-size: 10px;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+
+  /* ── Storage meter ──────────────────────────────────────── */
+  .ks-storage-meter {
+    margin-bottom: 16px;
+    padding: 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  .ks-storage-header {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .ks-storage-title {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-2);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ks-storage-spacer { flex: 1; }
+
+  .ks-storage-val {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .ks-storage-max {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-3);
+  }
+
+  .ks-storage-bar {
+    position: relative;
+    height: 8px;
+    background: var(--paper-2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .ks-storage-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+  }
+
+  .ks-storage-bar-cap {
+    position: absolute;
+    right: 0;
+    top: -2px;
+    width: 1px;
+    height: 12px;
+    background: var(--ink-3);
+  }
+
+  .ks-storage-note {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  /* ── Tier selection ─────────────────────────────────────── */
+  .ks-tier-heading {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+
+  .ks-tier-heading-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ks-tier-heading-spacer { flex: 1; }
+
+  .ks-tier-heading-note {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--ink-3);
+  }
+
+  .ks-tier-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .ks-tier-card {
+    position: relative;
+    padding: 12px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+
+  .ks-tier-card--hot {
+    border-color: var(--amber-deep);
+    box-shadow: 0 0 0 3px oklch(0.94 0.06 90 / 0.5);
+  }
+
+  .ks-tier-card--star {
+    border-color: oklch(0.55 0.12 155);
+  }
+
+  .ks-tier-card--apiary {
+    border-color: oklch(0.55 0.14 60);
+    box-shadow: 0 0 0 3px oklch(0.92 0.06 70 / 0.5);
+    background: oklch(0.97 0.02 80);
+  }
+
+  .ks-tier-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  .ks-tier-price {
+    font-weight: 700;
+    font-size: 15px;
+  }
+
+  .ks-tier-retail {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ink-3);
+    text-decoration: line-through;
+  }
+
+  .ks-tier-price-spacer { flex: 1; }
+
+  .ks-tier-tag {
+    padding: 2px 6px;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    background: var(--amber);
+    color: var(--ink);
+  }
+
+  .ks-tier-tag--star {
+    background: oklch(0.72 0.16 155);
+    color: var(--paper);
+  }
+
+  .ks-tier-name {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+
+  .ks-tier-storage {
+    font-size: 11.5px;
+    color: var(--ink-2);
+    margin-bottom: 6px;
+  }
+
+  .ks-tier-saves {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+    background: oklch(0.95 0.05 145);
+    color: oklch(0.42 0.13 155);
+  }
+
+  .ks-tier-apiary-box {
+    margin-top: 4px;
+    margin-bottom: 6px;
+    padding: 10px;
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 1.55;
+  }
+
+  .ks-tier-apiary-label {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .ks-tier-backers-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ks-tier-backers {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-3);
+  }
+
+  .ks-tier-left {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    margin-left: auto;
+    color: var(--ink-3);
+  }
+
+  .ks-tier-left--low {
+    color: var(--amber-deep);
+    font-weight: 600;
+  }
+
+  .ks-tier-progress {
+    margin-top: 6px;
+    height: 3px;
+    background: var(--paper-2);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .ks-tier-progress-fill {
+    height: 100%;
+    background: var(--ink-2);
+    transition: width 500ms var(--ease);
+  }
+
+  .ks-tier-progress-fill--low {
+    background: var(--amber-deep);
+  }
+
+  /* ── Renewal note ───────────────────────────────────────── */
+  .ks-renewal-note {
+    margin-top: 10px;
+    padding: 10px;
+    background: var(--paper);
+    border: 1px dashed var(--line-2);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  /* ── Social proof ───────────────────────────────────────── */
+  .ks-social-proof {
+    margin-bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ks-proof-quote {
+    font-size: 12px;
+    color: var(--ink-2);
+    font-style: italic;
+    line-height: 1.5;
+    padding-left: 12px;
+    border-left: 2px solid var(--amber);
+  }
+
+  /* ── Share ──────────────────────────────────────────────── */
+  .ks-share-heading {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+
+  .ks-share-btns {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .ks-share-btn {
+    text-decoration: none;
+    font-size: 12px;
+  }
+
+  /* ── All-or-nothing ─────────────────────────────────────── */
+  .ks-aon {
+    padding: 12px;
+    background: var(--amber-soft);
+    border: 1px solid oklch(0.86 0.07 90);
+    border-radius: 6px;
+  }
+
+  .ks-aon-title {
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--amber-deep);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .ks-aon-text {
+    font-size: 12px;
+    color: var(--ink-2);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────── */
+  @media (min-width: 1024px) {
+    .ks-layout {
+      grid-template-columns: 1.6fr 1fr;
+    }
+
+    .ks-left {
+      padding: 32px 36px;
+      border-right: 1px solid var(--line);
+    }
+
+    .ks-right {
+      padding: 32px 28px;
+    }
+
+    .ks-sidebar {
+      position: sticky;
+      top: 0;
+      max-height: 100vh;
+      overflow-y: auto;
+      padding-bottom: 32px;
+    }
+
+    .ks-video {
+      height: 380px;
+    }
+
+    .ks-headline {
+      font-size: 36px;
+    }
+
+    .ks-arch-diagram {
+      height: 320px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .ks-nav-inner {
+      padding: 12px 16px;
+    }
+
+    .ks-left,
+    .ks-right {
+      padding: 24px 16px;
+    }
+
+    .ks-headline {
+      font-size: 24px;
+    }
+
+    .ks-features-grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

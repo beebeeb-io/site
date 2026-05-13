@@ -8,28 +8,103 @@ interface Props {
 const { title, items = [] } = Astro.props;
 ---
 
-<section class="px-8 py-[72px] bg-paper-2 border-t border-line">
-  <div class="max-w-[900px] mx-auto">
-    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-10 bb-fade-up">{title}</h2>}
-    <div class="space-y-3" data-stagger>
+<section class="threat-model">
+  <div class="threat-model-inner">
+    {title && <h2 class="threat-model-title bb-fade-up">{title}</h2>}
+    <div class="threat-model-items" data-stagger>
       {items.map((item) => (
-        <div class="flex gap-4 p-5 border border-line rounded-lg bg-paper bb-fade-up">
+        <div class="threat-model-item bb-fade-up">
           <div class:list={[
-            'w-8 h-8 rounded-full flex items-center justify-center shrink-0 mt-0.5',
-            item.defended ? 'bg-[oklch(0.94_0.06_155)] text-[oklch(0.35_0.12_155)]' : 'bg-paper-3 text-ink-3',
+            'threat-model-icon',
+            item.defended ? 'threat-model-icon--defended' : 'threat-model-icon--neutral',
           ]}>
             {item.defended ? (
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             ) : (
-              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             )}
           </div>
-          <div>
-            <div class="text-[14px] font-semibold mb-1">{item.title}</div>
-            <div class="text-[13px] text-ink-2 leading-relaxed">{item.body}</div>
+          <div class="threat-model-content">
+            <div class="threat-model-item-title">{item.title}</div>
+            <div class="threat-model-item-body">{item.body}</div>
           </div>
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .threat-model {
+    padding: 72px 32px;
+    background: var(--paper-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .threat-model-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .threat-model-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin: 0 0 40px;
+  }
+
+  .threat-model-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .threat-model-item {
+    display: flex;
+    gap: 16px;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+  }
+
+  .threat-model-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .threat-model-icon--defended {
+    background: oklch(0.94 0.06 155);
+    color: oklch(0.35 0.12 155);
+  }
+
+  .threat-model-icon--neutral {
+    background: var(--paper-3);
+    color: var(--ink-3);
+  }
+
+  .threat-model-item-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .threat-model-item-body {
+    font-size: 13px;
+    color: var(--ink-2);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 560px) {
+    .threat-model {
+      padding: 48px 20px;
+    }
+  }
+</style>

@@ -11,26 +11,113 @@ interface Props {
 const { label, quote, author_name, author_title, author_initials } = Astro.props;
 ---
 
-<section class="px-8 py-[72px] bg-paper">
-  <div class="max-w-[780px] mx-auto text-center">
-    {label && <div class="section-label bb-fade-up">{label}</div>}
+<section class="founder-quote">
+  <div class="founder-quote-inner">
+    {label && <div class="section-label founder-quote-label bb-fade-up">{label}</div>}
     {quote && (
-      <blockquote class="text-[22px] leading-relaxed text-ink-2 tracking-[-0.015em] italic mb-7 bb-fade-up bb-delay-1">
+      <blockquote class="founder-quote-text bb-fade-up bb-delay-1">
         "{quote}"
       </blockquote>
     )}
-    <div class="flex gap-4 justify-center items-center bb-fade-up bb-delay-2">
-      <div class="flex gap-2.5 items-center">
+    <div class="founder-quote-attribution bb-fade-up bb-delay-2">
+      <div class="founder-quote-author">
         {author_initials && (
-          <div class="w-9 h-9 rounded-full bg-amber font-bold text-xs flex items-center justify-center">{author_initials}</div>
+          <div class="founder-quote-avatar">{author_initials}</div>
         )}
-        <div class="text-left">
-          {author_name && <div class="text-[13px] font-semibold">{author_name}</div>}
-          {author_title && <div class="text-[11px] text-ink-3">{author_title}</div>}
+        <div class="founder-quote-author-info">
+          {author_name && <div class="founder-quote-name">{author_name}</div>}
+          {author_title && <div class="founder-quote-role">{author_title}</div>}
         </div>
       </div>
-      <div class="w-px h-6 bg-line-2"></div>
-      <span class="font-mono text-[11px] text-ink-3">beebeeb.io</span>
+      <div class="founder-quote-divider"></div>
+      <span class="founder-quote-brand">beebeeb.io</span>
     </div>
   </div>
 </section>
+
+<style>
+  .founder-quote {
+    padding: 72px 32px;
+    background: var(--paper);
+  }
+
+  .founder-quote-inner {
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .founder-quote-label {
+    text-align: center;
+  }
+
+  .founder-quote-text {
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--ink-2);
+    letter-spacing: -0.015em;
+    font-style: italic;
+    margin: 0 0 28px;
+  }
+
+  .founder-quote-attribution {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .founder-quote-author {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .founder-quote-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--amber);
+    font-weight: 700;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .founder-quote-author-info {
+    text-align: left;
+  }
+
+  .founder-quote-name {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .founder-quote-role {
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  .founder-quote-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--line-2);
+  }
+
+  .founder-quote-brand {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 560px) {
+    .founder-quote {
+      padding: 48px 20px;
+    }
+
+    .founder-quote-text {
+      font-size: 18px;
+    }
+  }
+</style>

@@ -9,39 +9,160 @@ interface Props {
 const { intro, roles = [], facts = [] } = Astro.props;
 ---
 
-<section class="px-8 py-[72px] bg-paper">
-  <div class="max-w-[900px] mx-auto">
-    {intro && <p class="text-base text-ink-2 leading-relaxed max-w-[600px] mb-10 bb-fade-up">{intro}</p>}
+<section class="careers-list">
+  <div class="careers-list-inner">
+    {intro && <p class="careers-list-intro bb-fade-up">{intro}</p>}
 
     {facts.length > 0 && (
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12" data-stagger>
+      <div class="careers-list-facts" data-stagger>
         {facts.map((f) => (
-          <div class="p-4 border border-line rounded-lg text-center bb-fade-up">
-            <div class="text-xl font-bold text-amber-deep">{f.value}</div>
-            <div class="text-[11px] text-ink-3 mt-1">{f.label}</div>
+          <div class="careers-list-fact bb-fade-up">
+            <div class="careers-list-fact-value">{f.value}</div>
+            <div class="careers-list-fact-label">{f.label}</div>
           </div>
         ))}
       </div>
     )}
 
     {roles.length > 0 ? (
-      <div class="space-y-3 bb-fade-up">
-        <h3 class="text-lg font-semibold mb-4">Open positions</h3>
+      <div class="careers-list-roles bb-fade-up">
+        <h3 class="careers-list-heading">Open positions</h3>
         {roles.map((role) => (
-          <div class="flex items-center justify-between p-5 border border-line rounded-lg bg-paper bb-lift">
+          <div class="careers-list-role">
             <div>
-              <div class="text-[14px] font-semibold">{role.title}</div>
-              <div class="text-[12px] text-ink-3">{role.location} &middot; {role.type}</div>
+              <div class="careers-list-role-title">{role.title}</div>
+              <div class="careers-list-role-meta">{role.location} &middot; {role.type}</div>
             </div>
-            <a href="/contact" class="btn btn-outline btn-sm">Apply</a>
+            <a href="/contact" class="bb-cta ghost">Apply</a>
           </div>
         ))}
       </div>
     ) : (
-      <div class="text-center p-10 border border-line rounded-lg bg-paper-2 bb-fade-up">
-        <p class="text-ink-2 mb-2">No open positions right now.</p>
-        <p class="text-[13px] text-ink-3">Send us a note at hello@beebeeb.io if you'd like to be considered for future roles.</p>
+      <div class="careers-list-empty bb-fade-up">
+        <p class="careers-list-empty-title">No open positions right now.</p>
+        <p class="careers-list-empty-desc">Send us a note at hello@beebeeb.io if you'd like to be considered for future roles.</p>
       </div>
     )}
   </div>
 </section>
+
+<style>
+  .careers-list {
+    padding: 72px 32px;
+    background: var(--paper);
+  }
+
+  .careers-list-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .careers-list-intro {
+    font-size: 16px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    max-width: 600px;
+    margin: 0 0 40px;
+  }
+
+  .careers-list-facts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 48px;
+  }
+
+  .careers-list-fact {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .careers-list-fact-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--amber-deep);
+  }
+
+  .careers-list-fact-label {
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+
+  .careers-list-heading {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 16px;
+  }
+
+  .careers-list-roles {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .careers-list-role {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    transition: border-color 150ms var(--ease), transform 150ms var(--ease);
+  }
+
+  .careers-list-role:hover {
+    border-color: var(--line-2);
+    transform: translateY(-1px);
+  }
+
+  .careers-list-role-title {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .careers-list-role-meta {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  .careers-list-empty {
+    text-align: center;
+    padding: 40px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper-2);
+  }
+
+  .careers-list-empty-title {
+    color: var(--ink-2);
+    margin: 0 0 8px;
+  }
+
+  .careers-list-empty-desc {
+    font-size: 13px;
+    color: var(--ink-3);
+    margin: 0;
+  }
+
+  @media (max-width: 760px) {
+    .careers-list-facts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .careers-list {
+      padding: 48px 20px;
+    }
+
+    .careers-list-role {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+  }
+</style>

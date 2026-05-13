@@ -9,19 +9,89 @@ interface Props {
 const { title, body, facts = [] } = Astro.props;
 ---
 
-<section class="px-8 py-[72px] bg-paper">
-  <div class="max-w-[900px] mx-auto">
-    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] mb-6 bb-fade-up">{title}</h2>}
-    {body && <div class="prose text-ink-2 leading-relaxed mb-10 bb-fade-up bb-delay-1" set:html={body} />}
+<section class="about-story">
+  <div class="about-story-inner">
+    {title && <h2 class="about-story-title bb-fade-up">{title}</h2>}
+    {body && <div class="about-story-body bb-fade-up bb-delay-1" set:html={body} />}
     {facts.length > 0 && (
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bb-fade-up bb-delay-2" data-stagger>
+      <div class="about-story-facts bb-fade-up bb-delay-2" data-stagger>
         {facts.map((f) => (
-          <div class="p-4 border border-line rounded-lg text-center bb-fade-up">
-            <div class="text-2xl font-bold text-amber-deep">{f.value}</div>
-            <div class="text-[11px] text-ink-3 mt-1">{f.label}</div>
+          <div class="about-story-fact bb-fade-up">
+            <div class="about-story-fact-value">{f.value}</div>
+            <div class="about-story-fact-label">{f.label}</div>
           </div>
         ))}
       </div>
     )}
   </div>
 </section>
+
+<style>
+  .about-story {
+    padding: 72px 32px;
+    background: var(--paper);
+  }
+
+  .about-story-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .about-story-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 24px;
+  }
+
+  .about-story-body {
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+
+  .about-story-body :global(p) {
+    margin: 0 0 12px;
+  }
+
+  .about-story-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  .about-story-facts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .about-story-fact {
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .about-story-fact-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--amber-deep);
+  }
+
+  .about-story-fact-label {
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-top: 4px;
+  }
+
+  @media (max-width: 760px) {
+    .about-story-facts {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .about-story {
+      padding: 48px 20px;
+    }
+  }
+</style>

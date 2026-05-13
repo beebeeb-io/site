@@ -15,21 +15,89 @@ const defaultItems = {
 const data = items || defaultItems;
 ---
 
-<section class="px-8 py-7 border-t border-b border-line bg-paper-2">
-  <div class="flex items-center gap-7 flex-wrap justify-center max-w-[1100px] mx-auto">
-    <span class="text-[10.5px] font-semibold tracking-[0.04em] uppercase text-ink-3">{data.label}</span>
+<section class="trust-bar">
+  <div class="trust-bar-inner">
+    <span class="trust-bar-label">{data.label}</span>
     {data.providers?.map((p: string) => (
-      <span class="font-mono text-xs text-ink-2 font-medium">{p}</span>
+      <span class="trust-bar-provider">{p}</span>
     ))}
     {data.chips && (
       <Fragment>
-        <span class="text-line-2">&middot;</span>
-        <div class="flex gap-2.5">
+        <span class="trust-bar-separator">&middot;</span>
+        <div class="trust-bar-chips">
           {data.chips.map((chip: string) => (
-            <span class="inline-flex px-2.5 py-1 bg-paper border border-line rounded-md font-mono text-[10.5px] text-ink-3">{chip}</span>
+            <span class="trust-bar-chip">{chip}</span>
           ))}
         </div>
       </Fragment>
     )}
   </div>
 </section>
+
+<style>
+  .trust-bar {
+    padding: 28px 32px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+
+  .trust-bar-inner {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .trust-bar-label {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  .trust-bar-provider {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-2);
+    font-weight: 500;
+  }
+
+  .trust-bar-separator {
+    color: var(--line-2);
+  }
+
+  .trust-bar-chips {
+    display: flex;
+    gap: 10px;
+  }
+
+  .trust-bar-chip {
+    display: inline-flex;
+    padding: 4px 10px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 560px) {
+    .trust-bar {
+      padding: 20px;
+    }
+
+    .trust-bar-inner {
+      gap: 12px;
+    }
+
+    .trust-bar-chips {
+      flex-wrap: wrap;
+    }
+  }
+</style>

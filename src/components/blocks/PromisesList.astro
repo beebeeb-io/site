@@ -8,21 +8,92 @@ interface Props {
 const { title, promises = [] } = Astro.props;
 ---
 
-<section class="px-8 py-[72px] bg-paper-2 border-t border-line">
-  <div class="max-w-[800px] mx-auto">
-    {title && <h2 class="text-[32px] font-bold tracking-[-0.02em] text-center mb-10 bb-fade-up">{title}</h2>}
-    <div class="space-y-6" data-stagger>
+<section class="promises-list">
+  <div class="promises-list-inner">
+    {title && <h2 class="promises-list-title bb-fade-up">{title}</h2>}
+    <div class="promises-list-items" data-stagger>
       {promises.map((p, i) => (
-        <div class="flex gap-5 bb-fade-up">
-          <div class="w-8 h-8 rounded-full bg-amber-bg border border-[oklch(0.86_0.07_90)] flex items-center justify-center shrink-0 mt-1">
-            <span class="font-mono text-xs font-bold text-amber-deep">{i + 1}</span>
+        <div class="promises-item bb-fade-up">
+          <div class="promises-item-number">
+            <span>{i + 1}</span>
           </div>
-          <div>
-            <h3 class="text-[16px] font-semibold mb-1">{p.title}</h3>
-            <p class="text-[13.5px] text-ink-2 leading-relaxed">{p.body}</p>
+          <div class="promises-item-content">
+            <h3 class="promises-item-title">{p.title}</h3>
+            <p class="promises-item-body">{p.body}</p>
           </div>
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .promises-list {
+    padding: 72px 32px;
+    background: var(--paper-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .promises-list-inner {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .promises-list-title {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin: 0 0 40px;
+  }
+
+  .promises-list-items {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .promises-item {
+    display: flex;
+    gap: 20px;
+  }
+
+  .promises-item-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--amber-soft);
+    border: 1px solid oklch(0.86 0.07 90);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+
+  .promises-item-number span {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--amber-deep);
+  }
+
+  .promises-item-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px;
+  }
+
+  .promises-item-body {
+    font-size: 13.5px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  @media (max-width: 560px) {
+    .promises-list {
+      padding: 48px 20px;
+    }
+  }
+</style>

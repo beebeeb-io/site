@@ -19,19 +19,19 @@ function formatDate(iso: string): string {
   path="/blog"
 >
   <!-- Hero -->
-  <section class="px-8 pt-[72px] pb-14 text-center" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 80%);">
+  <section class="blog-hero" style="background: linear-gradient(180deg, var(--amber-soft) 0%, var(--paper) 80%);">
     <div class="section-label bb-fade-up">From the team</div>
-    <h1 class="text-[48px] leading-[1.08] font-bold tracking-[-0.03em] mt-3.5 max-w-[700px] mx-auto bb-fade-up bb-delay-1">
-      Writing on privacy, encryption,<br class="hidden sm:block" />
+    <h1 class="blog-hero-title bb-fade-up bb-delay-1">
+      Writing on privacy, encryption,<br class="blog-br-hidden" />
       and building in Europe.
     </h1>
-    <p class="text-base text-ink-2 mt-5 max-w-[520px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+    <p class="blog-hero-desc bb-fade-up bb-delay-2">
       Technical deep-dives, infrastructure decisions, and honest takes on what it means to build software that genuinely respects your data.
     </p>
-    <div class="flex items-center justify-center gap-3 mt-6 bb-fade-up bb-delay-3">
+    <div class="blog-hero-actions bb-fade-up bb-delay-3">
       <a
         href="/blog/rss.xml"
-        class="inline-flex items-center gap-1.5 text-[12px] text-ink-3 hover:text-ink-2 transition-colors no-underline border border-line rounded-md px-3 py-1.5"
+        class="blog-rss-link"
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
           <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/>
@@ -42,47 +42,47 @@ function formatDate(iso: string): string {
   </section>
 
   <!-- Post grid -->
-  <section class="px-8 py-16 bg-paper border-t border-line">
-    <div class="max-w-[1100px] mx-auto">
+  <section class="blog-grid-section">
+    <div class="blog-grid-container">
       {posts.length === 0 && (
-        <p class="text-center text-ink-3 text-[14px]">No posts yet. Check back soon.</p>
+        <p class="blog-empty">No posts yet. Check back soon.</p>
       )}
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="blog-grid">
         {posts.map((post, i) => (
           <a
             href={`/blog/${post.slug}`}
             class:list={[
-              'group block border border-line rounded-xl bg-paper p-6 no-underline transition-all duration-200 hover:border-amber-deep/40 hover:shadow-2 bb-fade-up',
+              'blog-card bb-fade-up',
               i === 1 ? 'bb-delay-1' : i === 2 ? 'bb-delay-2' : '',
             ]}
           >
             <!-- Date + reading time -->
-            <div class="flex items-center gap-2 mb-4">
-              <span class="text-[11px] font-mono text-ink-4">
+            <div class="blog-card-meta">
+              <span class="blog-card-date">
                 {formatDate(post.publishedAt)}
               </span>
-              <span class="text-ink-4">&middot;</span>
-              <span class="text-[11px] font-mono text-ink-4">
+              <span class="blog-card-sep">&middot;</span>
+              <span class="blog-card-date">
                 {post.readingTime} min read
               </span>
             </div>
 
             <!-- Title -->
-            <h2 class="text-[18px] font-bold tracking-[-0.01em] leading-snug text-ink mb-3 group-hover:text-amber-deep transition-colors">
+            <h2 class="blog-card-title">
               {post.title}
             </h2>
 
             <!-- Excerpt -->
-            <p class="text-[13.5px] text-ink-3 leading-relaxed mb-5 line-clamp-3">
+            <p class="blog-card-excerpt">
               {post.excerpt}
             </p>
 
             <!-- Author -->
-            <div class="flex items-center gap-2 mt-auto pt-4 border-t border-line">
-              <div class="w-6 h-6 rounded-full bg-amber-bg text-amber-deep flex items-center justify-center text-[10px] font-bold shrink-0">
+            <div class="blog-card-author">
+              <div class="blog-card-avatar">
                 {(post.author?.name || 'B').charAt(0)}
               </div>
-              <span class="text-[12px] text-ink-3">{post.author?.name || 'Beebeeb Team'}</span>
+              <span class="blog-card-author-name">{post.author?.name || 'Beebeeb Team'}</span>
             </div>
           </a>
         ))}
@@ -90,3 +90,206 @@ function formatDate(iso: string): string {
     </div>
   </section>
 </Base>
+
+<style>
+  /* ── Hero ────────────────────────────────────────────────── */
+  .blog-hero {
+    padding: 72px 32px 56px;
+    text-align: center;
+  }
+
+  .blog-hero-title {
+    font-size: 48px;
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-top: 14px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .blog-br-hidden {
+    display: none;
+  }
+
+  .blog-hero-desc {
+    font-size: 15px;
+    color: var(--ink-2);
+    margin-top: 20px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.65;
+  }
+
+  .blog-hero-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .blog-rss-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--ink-3);
+    text-decoration: none;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 6px 12px;
+    transition: color 150ms var(--ease);
+  }
+
+  .blog-rss-link:hover {
+    color: var(--ink-2);
+  }
+
+  /* ── Post grid ──────────────────────────────────────────── */
+  .blog-grid-section {
+    padding: 64px 32px;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+
+  .blog-grid-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .blog-empty {
+    text-align: center;
+    color: var(--ink-3);
+    font-size: 14px;
+  }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  /* ── Blog card ──────────────────────────────────────────── */
+  .blog-card {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper);
+    padding: 24px;
+    text-decoration: none;
+    transition: all 200ms var(--ease);
+  }
+
+  .blog-card:hover {
+    border-color: oklch(0.58 0.16 60 / 0.4);
+    box-shadow: var(--shadow-2);
+  }
+
+  .blog-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .blog-card-date {
+    font-size: 11px;
+    font-family: var(--font-mono);
+    color: var(--ink-4);
+  }
+
+  .blog-card-sep {
+    color: var(--ink-4);
+  }
+
+  .blog-card-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 12px;
+    transition: color 150ms var(--ease);
+  }
+
+  .blog-card:hover .blog-card-title {
+    color: var(--amber-deep);
+  }
+
+  .blog-card-excerpt {
+    font-size: 13.5px;
+    color: var(--ink-3);
+    line-height: 1.65;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .blog-card-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+  }
+
+  .blog-card-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--amber-soft);
+    color: var(--amber-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .blog-card-author-name {
+    font-size: 12px;
+    color: var(--ink-3);
+  }
+
+  /* ── Responsive ─────────────────────────────────────────── */
+  @media (min-width: 561px) {
+    .blog-br-hidden {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .blog-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .blog-hero-title {
+      font-size: 38px;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .blog-hero {
+      padding: 48px 20px 40px;
+    }
+
+    .blog-grid-section {
+      padding: 48px 20px;
+    }
+
+    .blog-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .blog-hero-title {
+      font-size: 32px;
+    }
+  }
+</style>

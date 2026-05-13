@@ -6,7 +6,30 @@ interface Props {
 const { region = 'EU sovereign' } = Astro.props;
 ---
 
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-mono font-medium bg-paper-2 border border-line-2 text-ink-3">
-  <span class="w-1.5 h-1.5 rounded-full bg-green"></span>
+<span class="region-badge">
+  <span class="region-badge-dot"></span>
   {region}
 </span>
+
+<style>
+  .region-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    background: var(--paper-2);
+    border: 1px solid var(--line-2);
+    color: var(--ink-3);
+  }
+
+  .region-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green);
+  }
+</style>

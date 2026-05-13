@@ -17,19 +17,100 @@ interface Props {
 const { label, title, steps = [] } = Astro.props;
 ---
 
-<section class="px-12 pt-12 pb-[72px] bg-paper">
-  <div class="border border-line rounded-xl bg-paper-2 p-10 bb-reveal-scale">
-    {label && <div class="section-label text-center mb-8">{label}</div>}
-    <div class="grid gap-4" style={`grid-template-columns: repeat(${steps.length}, 1fr)`}>
+<section class="security-flow">
+  <div class="security-flow-panel">
+    {label && <div class="section-label security-flow-label">{label}</div>}
+    <div class="security-flow-steps" style={`grid-template-columns: repeat(${steps.length}, 1fr)`}>
       {steps.map((step, i) => (
-        <div class="text-center px-3 bb-fade-up" style={`transition-delay: ${i * 0.1}s`}>
-          <div class="w-16 h-16 rounded-2xl bg-paper border border-line mx-auto flex items-center justify-center shadow-1 mb-3">
-            <span class="font-mono text-sm font-bold text-amber-deep">{step.step_number || String(i + 1).padStart(2, '0')}</span>
+        <div class="security-flow-step bb-fade-up" style={`animation-delay: ${i * 0.1}s`}>
+          <div class="security-flow-step-icon">
+            <span class="security-flow-step-number">{step.step_number || String(i + 1).padStart(2, '0')}</span>
           </div>
-          <div class="text-[13px] font-semibold mb-1">{step.title}</div>
-          {step.description && <div class="text-[11px] text-ink-3 leading-relaxed">{step.description}</div>}
+          <div class="security-flow-step-title">{step.title}</div>
+          {step.description && <div class="security-flow-step-desc">{step.description}</div>}
         </div>
       ))}
     </div>
   </div>
 </section>
+
+<style>
+  .security-flow {
+    padding: 48px 48px 72px;
+    background: var(--paper);
+  }
+
+  .security-flow-panel {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--paper-2);
+    padding: 40px;
+  }
+
+  .security-flow-label {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  .security-flow-steps {
+    display: grid;
+    gap: 16px;
+  }
+
+  .security-flow-step {
+    text-align: center;
+    padding: 0 12px;
+  }
+
+  .security-flow-step-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-1);
+  }
+
+  .security-flow-step-number {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--amber-deep);
+  }
+
+  .security-flow-step-title {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .security-flow-step-desc {
+    font-size: 11px;
+    color: var(--ink-3);
+    line-height: 1.7;
+  }
+
+  @media (max-width: 760px) {
+    .security-flow-steps {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .security-flow {
+      padding: 32px 20px 48px;
+    }
+
+    .security-flow-panel {
+      padding: 24px;
+    }
+
+    .security-flow-steps {
+      grid-template-columns: 1fr !important;
+    }
+  }
+</style>

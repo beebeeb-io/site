@@ -28,120 +28,396 @@ const FEATURES = [
     url: 'https://beebeeb.io/vs/proton-drive',
   }}
 >
-  <!-- ── Hero ──────────────────────────────────────────────────────────── -->
-  <section class="px-8 pt-[72px] pb-14 text-center" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 80%);">
+  <!-- Hero -->
+  <section class="vs-hero" style="background: linear-gradient(180deg, var(--amber-soft) 0%, var(--paper) 80%);">
     <div class="section-label bb-fade-up">Comparison</div>
-    <h1 class="text-[44px] sm:text-[52px] leading-[1.07] font-bold tracking-[-0.03em] mt-3 max-w-[720px] mx-auto bb-fade-up bb-delay-1">
-      Beebeeb <span class="text-ink-3">vs</span> Proton Drive
+    <h1 class="vs-hero-title bb-fade-up bb-delay-1">
+      Beebeeb <span class="vs-hero-vs">vs</span> Proton Drive
     </h1>
-    <p class="text-base text-ink-2 mt-5 max-w-[560px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+    <p class="vs-hero-desc bb-fade-up bb-delay-2">
       Both are privacy-first, EU-operated, and encrypted. The main difference: Proton Drive is part of a privacy suite; Beebeeb is a storage product built for developers and power users.
     </p>
-    <div class="flex gap-3 justify-center mt-8 flex-wrap bb-fade-up bb-delay-3">
-      <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md">Try Beebeeb free →</a>
+    <div class="vs-hero-cta bb-fade-up bb-delay-3">
+      <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-md">Try Beebeeb free &rarr;</a>
       <a href="/pricing" class="btn btn-outline btn-md">See pricing</a>
     </div>
   </section>
 
-  <!-- ── Comparison table ──────────────────────────────────────────────── -->
-  <section class="px-8 py-16 bg-paper border-t border-line">
-    <div class="max-w-[860px] mx-auto">
-      <div class="section-label mb-6 bb-fade-up">Feature comparison</div>
-      <div class="rounded-xl border border-line overflow-hidden bb-fade-up bb-delay-1">
-        <!-- Header -->
-        <div class="grid grid-cols-[2fr_1fr_1fr] bg-paper-2 border-b border-line">
-          <div class="px-5 py-3 text-[11px] font-semibold uppercase tracking-widest text-ink-3">Feature</div>
-          <div class="px-5 py-3 text-[12px] font-bold text-ink border-l border-line text-center">Beebeeb</div>
-          <div class="px-5 py-3 text-[12px] font-medium text-ink-3 border-l border-line text-center">Proton Drive</div>
+  <!-- Comparison table -->
+  <section class="vs-table-section">
+    <div class="vs-table-container">
+      <div class="section-label vs-table-label bb-fade-up">Feature comparison</div>
+      <div class="vs-table-wrap bb-fade-up bb-delay-1">
+        <div class="vs-table-header">
+          <div class="vs-table-header-feature">Feature</div>
+          <div class="vs-table-header-bb">Beebeeb</div>
+          <div class="vs-table-header-them">Proton Drive</div>
         </div>
         {FEATURES.map((f) => (
-          <div class="grid grid-cols-[2fr_1fr_1fr] border-b border-line last:border-b-0 hover:bg-paper-2/50">
-            <div class="px-5 py-3.5 text-[13px] text-ink-2">{f.label}</div>
-            <div class="px-5 py-3.5 border-l border-line text-center">
+          <div class="vs-table-row">
+            <div class="vs-table-cell-feature">{f.label}</div>
+            <div class="vs-table-cell">
               {f.bb.val === true && (
                 <span>
-                  <span class="text-green font-semibold text-[13px]">✓</span>
-                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                  <span class="vs-check">&#10003;</span>
+                  {f.bb.note && <span class="vs-note">{f.bb.note}</span>}
                 </span>
               )}
               {f.bb.val === false && (
                 <span>
-                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
-                  {f.bb.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.bb.note}</span>}
+                  <span class="vs-cross">&#10007;</span>
+                  {f.bb.note && <span class="vs-note vs-note--dim">{f.bb.note}</span>}
                 </span>
               )}
               {f.bb.val === 'partial' && (
                 <span>
-                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
-                  {f.bb.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.bb.note}</span>}
+                  <span class="vs-partial">~</span>
+                  {f.bb.note && <span class="vs-note">{f.bb.note}</span>}
                 </span>
               )}
-              {f.bb.val === 'note' && <span class="text-[12px] text-ink font-medium">{f.bb.note}</span>}
+              {f.bb.val === 'note' && <span class="vs-price">{f.bb.note}</span>}
             </div>
-            <div class="px-5 py-3.5 border-l border-line text-center">
+            <div class="vs-table-cell">
               {f.them.val === true && (
                 <span>
-                  <span class="text-green font-semibold text-[13px]">✓</span>
-                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                  <span class="vs-check">&#10003;</span>
+                  {f.them.note && <span class="vs-note">{f.them.note}</span>}
                 </span>
               )}
               {f.them.val === false && (
                 <span>
-                  <span class="text-[13px]" style="color: var(--color-ink-4);">✗</span>
-                  {f.them.note && <span class="text-[11px] text-ink-4 ml-1 block leading-tight">{f.them.note}</span>}
+                  <span class="vs-cross">&#10007;</span>
+                  {f.them.note && <span class="vs-note vs-note--dim">{f.them.note}</span>}
                 </span>
               )}
               {f.them.val === 'partial' && (
                 <span>
-                  <span class="text-amber-deep font-semibold text-[13px]">~</span>
-                  {f.them.note && <span class="text-[11px] text-ink-3 ml-1 block leading-tight">{f.them.note}</span>}
+                  <span class="vs-partial">~</span>
+                  {f.them.note && <span class="vs-note">{f.them.note}</span>}
                 </span>
               )}
-              {f.them.val === 'note' && <span class="text-[12px] text-ink-2">{f.them.note}</span>}
+              {f.them.val === 'note' && <span class="vs-price-them">{f.them.note}</span>}
             </div>
           </div>
         ))}
       </div>
-      <p class="text-[11px] text-ink-4 mt-3">Prices and features reflect public information as of May 2026. Always verify current pricing on each vendor's website.</p>
+      <p class="vs-disclaimer">Prices and features reflect public information as of May 2026. Always verify current pricing on each vendor's website.</p>
     </div>
   </section>
 
-  <!-- ── Prose sections ─────────────────────────────────────────────────── -->
-  <section class="px-8 py-14 border-t border-line">
-    <div class="max-w-[720px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
+  <!-- Prose sections -->
+  <section class="vs-prose-section">
+    <div class="vs-prose-grid">
       <div class="bb-fade-up">
-        <h2 class="text-[20px] font-bold tracking-tight mb-4">What Proton Drive does well</h2>
-        <p class="text-[14px] text-ink-2 leading-relaxed">
+        <h2 class="vs-prose-heading">What Proton Drive does well</h2>
+        <p class="vs-prose-text">
           Proton has built one of the strongest privacy ecosystems in the industry. If you want encrypted email, a VPN, a password manager, and a calendar all from one provider with a consistent privacy philosophy, Proton's bundle is compelling.
         </p>
-        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+        <p class="vs-prose-text vs-prose-text--mt">
           Their mobile apps are polished, their threat model is well-documented, and they have a track record of resisting government requests (their transparency reports are public). Swiss jurisdiction provides genuine legal protections.
         </p>
-        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+        <p class="vs-prose-text vs-prose-text--mt">
           Proton Drive's client-side code is open source, so the encryption implementation is publicly auditable — a meaningful commitment for a privacy product.
         </p>
       </div>
       <div class="bb-fade-up bb-delay-1">
-        <h2 class="text-[20px] font-bold tracking-tight mb-4">Where Beebeeb is different</h2>
-        <p class="text-[14px] text-ink-2 leading-relaxed">
+        <h2 class="vs-prose-heading">Where Beebeeb is different</h2>
+        <p class="vs-prose-text">
           Beebeeb is storage-first. We don't sell you a suite — we build one product and build it well. If you already have email and a VPN you like, you don't need to switch everything to get good encrypted storage.
         </p>
-        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
-          The CLI is the most concrete difference for developers. Proton Drive has no <code class="font-mono text-[12px] bg-paper-2 border border-line px-1 rounded">bb push</code> equivalent, no WebDAV mount, no scripted sync. If your workflow involves terminals, CI pipelines, or backup scripts, Beebeeb is the better fit.
+        <p class="vs-prose-text vs-prose-text--mt">
+          The CLI is the most concrete difference for developers. Proton Drive has no <code class="vs-code">bb push</code> equivalent, no WebDAV mount, no scripted sync. If your workflow involves terminals, CI pipelines, or backup scripts, Beebeeb is the better fit.
         </p>
-        <p class="text-[14px] text-ink-2 leading-relaxed mt-3">
+        <p class="vs-prose-text vs-prose-text--mt">
           At similar price points, Beebeeb is available as a storage-only subscription. Proton Drive at €4/month requires the full Proton bundle — you're paying for services you may not need.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- ── CTA ────────────────────────────────────────────────────────────── -->
-  <section class="px-8 py-14 border-t border-line text-center bg-paper-2">
-    <h2 class="text-[28px] font-bold tracking-tight mb-3">Start with 5 GB free</h2>
-    <p class="text-[14px] text-ink-2 mb-6 max-w-[420px] mx-auto">
+  <!-- CTA -->
+  <section class="vs-cta-section vs-cta-section--alt">
+    <h2 class="vs-cta-title">Start with 5 GB free</h2>
+    <p class="vs-cta-desc">
       No credit card. Full encryption from day one. EU infrastructure, open source.
     </p>
-    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-lg">Try Beebeeb free →</a>
+    <a href="https://app.beebeeb.io/signup" class="btn btn-amber btn-lg">Try Beebeeb free &rarr;</a>
   </section>
 </Base>
+
+<style>
+  /* ── Hero ────────────────────────────────────────────────── */
+  .vs-hero {
+    padding: 72px 32px 56px;
+    text-align: center;
+  }
+
+  .vs-hero-title {
+    font-size: 52px;
+    line-height: 1.07;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin-top: 14px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .vs-hero-vs {
+    color: var(--ink-3);
+  }
+
+  .vs-hero-desc {
+    font-size: 15px;
+    color: var(--ink-2);
+    margin-top: 20px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.65;
+  }
+
+  .vs-hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 32px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Table ──────────────────────────────────────────────── */
+  .vs-table-section {
+    padding: 64px 32px;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+  }
+
+  .vs-table-container {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .vs-table-label {
+    margin-bottom: 24px;
+  }
+
+  .vs-table-wrap {
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    overflow: hidden;
+  }
+
+  .vs-table-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    background: var(--paper-2);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .vs-table-header-feature {
+    padding: 12px 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+
+  .vs-table-header-bb {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+    border-left: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .vs-table-header-them {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--ink-3);
+    border-left: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .vs-table-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .vs-table-row:last-child {
+    border-bottom: none;
+  }
+
+  .vs-table-row:hover {
+    background: oklch(0.965 0.008 85 / 0.5);
+  }
+
+  .vs-table-cell-feature {
+    padding: 14px 20px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  .vs-table-cell {
+    padding: 14px 20px;
+    border-left: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .vs-check {
+    color: var(--green);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .vs-cross {
+    color: var(--ink-4);
+    font-size: 13px;
+  }
+
+  .vs-partial {
+    color: var(--amber-deep);
+    font-weight: 600;
+    font-size: 13px;
+  }
+
+  .vs-note {
+    font-size: 11px;
+    color: var(--ink-3);
+    margin-left: 4px;
+    display: block;
+    line-height: 1.3;
+  }
+
+  .vs-note--dim {
+    color: var(--ink-4);
+  }
+
+  .vs-price {
+    font-size: 12px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .vs-price-them {
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+
+  .vs-disclaimer {
+    font-size: 11px;
+    color: var(--ink-4);
+    margin-top: 12px;
+  }
+
+  .vs-code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: var(--paper-2);
+    border: 1px solid var(--line);
+    padding: 0.1em 0.4em;
+    border-radius: 4px;
+  }
+
+  /* ── Prose ──────────────────────────────────────────────── */
+  .vs-prose-section {
+    padding: 56px 32px;
+    border-top: 1px solid var(--line);
+  }
+
+  .vs-prose-grid {
+    max-width: 720px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .vs-prose-heading {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 16px;
+  }
+
+  .vs-prose-text {
+    font-size: 14px;
+    color: var(--ink-2);
+    line-height: 1.65;
+  }
+
+  .vs-prose-text--mt {
+    margin-top: 12px;
+  }
+
+  /* ── CTA ────────────────────────────────────────────────── */
+  .vs-cta-section {
+    padding: 56px 32px;
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+
+  .vs-cta-section--alt {
+    background: var(--paper-2);
+  }
+
+  .vs-cta-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  .vs-cta-desc {
+    font-size: 14px;
+    color: var(--ink-2);
+    margin-bottom: 24px;
+    max-width: 420px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ── Responsive ─────────────────────────────────────────── */
+  @media (max-width: 760px) {
+    .vs-hero-title {
+      font-size: 44px;
+    }
+
+    .vs-prose-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .vs-hero {
+      padding: 48px 20px 40px;
+    }
+
+    .vs-hero-title {
+      font-size: 36px;
+    }
+
+    .vs-table-section,
+    .vs-prose-section,
+    .vs-cta-section {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+
+    .vs-table-header-feature,
+    .vs-table-cell-feature {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .vs-table-header-bb,
+    .vs-table-header-them,
+    .vs-table-cell {
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+  }
+</style>
