@@ -14,7 +14,7 @@ bun run build # Static output in dist/
 
 - `/` — Landing (hero, trust bar, 4 pillars, comparison, founder quote, CTA)
 - `/security` — How encryption works (flow diagram, primitives, threat model)
-- `/pricing` — 4 plans (Free/Personal/Team/Business)
+- `/pricing` — 4 plans (Free/Basic/Pro/Business)
 - `/about` — Founder story, company details, 5 promises
 - `/status` — System status (service grid, 90-day uptime bars, incidents)
 - `/docs` — Documentation landing (search bar, 6-card category grid)

@@ -151,7 +151,7 @@ async function seedFaqContent(strapi) {
       items: [
         { question: 'Is there a CLI tool?', answer: '<p>Yes. The <code>bb</code> CLI is available via Homebrew (<code>brew install beebeeb-io/tap/bb</code>) or as a direct download. It supports upload, download, sync, and sharing from the terminal.</p>', sortOrder: 1, searchTags: 'cli,terminal,command line,bb,homebrew' },
         { question: 'Is there an API?', answer: '<p>A REST API is available for Pro and Business plans. Documentation is at <a href="https://beebeeb.io/docs">beebeeb.io/docs</a>. The API requires client-side encryption — you encrypt before sending, just like our apps do.</p>', sortOrder: 2, searchTags: 'api,rest,developer,integration' },
-        { question: 'What is the maximum file size?', answer: '<p>Individual files up to 50 GB are supported. Files are chunked and encrypted in 64 MB segments for efficient upload and download. There is no limit on the number of files.</p>', sortOrder: 3, searchTags: 'file size,limit,maximum,upload' },
+        { question: 'What is the maximum file size?', answer: '<p>There is no hard limit per file. Files are chunked and encrypted in segments for efficient upload and download. There is no limit on the number of files.</p>', sortOrder: 3, searchTags: 'file size,limit,maximum,upload' },
       ],
     },
   ];

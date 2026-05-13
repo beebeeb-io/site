@@ -55,8 +55,8 @@ export function softwareApplicationSchema() {
       '@type': 'AggregateOffer',
       priceCurrency: 'EUR',
       lowPrice: '0',
-      highPrice: '24.99',
-      offerCount: '4',
+      highPrice: '109.90',
+      offerCount: '3',
     },
   };
 }

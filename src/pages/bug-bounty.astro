@@ -4,7 +4,7 @@ import Base from '../layouts/base.astro';
 
 <Base
   title="Bug Bounty — Beebeeb"
-  description="Beebeeb's responsible disclosure program. Report security vulnerabilities in beebeeb.io and earn rewards from €100 to €5,000."
+  description="Beebeeb's responsible disclosure program. Report security vulnerabilities in beebeeb.io and earn free plan subscriptions."
   path="/bug-bounty"
 >
   <div class="bounty-page">
@@ -16,7 +16,7 @@ import Base from '../layouts/base.astro';
       </h1>
       <p class="bounty-subtitle">
         We believe security researchers make products safer for everyone.
-        If you find a vulnerability in Beebeeb, we want to hear from you — and we'll pay for the disclosure.
+        If you find a vulnerability in Beebeeb, we want to hear from you — and we'll reward you with a free subscription.
       </p>
     </div>
 
@@ -34,36 +34,36 @@ import Base from '../layouts/base.astro';
           <span class="bounty-table-cell">
             <span class="bounty-severity-badge bounty-severity-badge--critical">Critical</span>
           </span>
-          <span class="bounty-table-cell bounty-reward t-mono">€5,000</span>
-          <span class="bounty-table-cell bounty-examples">RCE, authentication bypass, mass data exposure, cryptographic break</span>
+          <span class="bounty-table-cell bounty-reward">Business plan, lifetime</span>
+          <span class="bounty-table-cell bounty-examples">RCE, key extraction, authentication bypass, mass data exposure</span>
         </div>
 
         <div class="bounty-table-row">
           <span class="bounty-table-cell">
             <span class="bounty-severity-badge bounty-severity-badge--high">High</span>
           </span>
-          <span class="bounty-table-cell bounty-reward t-mono">€2,000</span>
-          <span class="bounty-table-cell bounty-examples">Privilege escalation, unauthorized file access, account takeover</span>
+          <span class="bounty-table-cell bounty-reward">Pro plan, 2 years</span>
+          <span class="bounty-table-cell bounty-examples">XSS with session theft, IDOR, privilege escalation, account takeover</span>
         </div>
 
         <div class="bounty-table-row bounty-table-row--alt">
           <span class="bounty-table-cell">
             <span class="bounty-severity-badge bounty-severity-badge--medium">Medium</span>
           </span>
-          <span class="bounty-table-cell bounty-reward t-mono">€500</span>
-          <span class="bounty-table-cell bounty-examples">CSRF, stored XSS, insecure direct object reference</span>
+          <span class="bounty-table-cell bounty-reward">Pro plan, 1 year</span>
+          <span class="bounty-table-cell bounty-examples">CSRF, information disclosure, rate limiting bypass</span>
         </div>
 
         <div class="bounty-table-row">
           <span class="bounty-table-cell">
             <span class="bounty-severity-badge bounty-severity-badge--low">Low</span>
           </span>
-          <span class="bounty-table-cell bounty-reward t-mono">€100</span>
-          <span class="bounty-table-cell bounty-examples">Reflected XSS (requires interaction), verbose error messages, open redirect</span>
+          <span class="bounty-table-cell bounty-reward">Basic plan, 1 year</span>
+          <span class="bounty-table-cell bounty-examples">Best practice violations, minor information leaks, open redirect</span>
         </div>
       </div>
       <p class="bounty-fine-print">
-        Rewards are determined by severity, impact, and report quality.
+        Rewards are free Beebeeb subscriptions, determined by severity, impact, and report quality.
         Duplicate reports receive no reward. Final determination is at our discretion.
       </p>
     </div>
@@ -98,22 +98,22 @@ import Base from '../layouts/base.astro';
       <h2 class="bounty-heading">Our commitments</h2>
       <div class="bounty-commitments-grid">
         <div class="bounty-commitment-card">
-          <div class="bounty-commitment-icon">⏱</div>
-          <div class="bounty-commitment-title">72-hour acknowledgment</div>
-          <div class="bounty-commitment-desc">We confirm receipt of every valid report within 72 hours.</div>
+          <div class="bounty-commitment-icon bounty-commitment-icon--text">48h</div>
+          <div class="bounty-commitment-title">48-hour acknowledgment</div>
+          <div class="bounty-commitment-desc">We confirm receipt of every valid report within 48 hours.</div>
         </div>
         <div class="bounty-commitment-card">
-          <div class="bounty-commitment-icon">🔒</div>
-          <div class="bounty-commitment-title">30-day fix for High+</div>
-          <div class="bounty-commitment-desc">High and Critical vulnerabilities are fixed within 30 days of verification.</div>
+          <div class="bounty-commitment-icon bounty-commitment-icon--text">14d</div>
+          <div class="bounty-commitment-title">14-day fix for high-severity</div>
+          <div class="bounty-commitment-desc">High and Critical vulnerabilities are fixed within 14 days of verification.</div>
         </div>
         <div class="bounty-commitment-card">
-          <div class="bounty-commitment-icon">🤝</div>
+          <div class="bounty-commitment-icon bounty-commitment-icon--text">Safe</div>
           <div class="bounty-commitment-title">No legal action</div>
           <div class="bounty-commitment-desc">We will not pursue legal action against researchers who follow this policy.</div>
         </div>
         <div class="bounty-commitment-card">
-          <div class="bounty-commitment-icon">📣</div>
+          <div class="bounty-commitment-icon bounty-commitment-icon--text">HoF</div>
           <div class="bounty-commitment-title">Credit with permission</div>
           <div class="bounty-commitment-desc">We'll credit you in our Hall of Fame if you want.</div>
         </div>
@@ -148,8 +148,8 @@ import Base from '../layouts/base.astro';
         Security researchers who have responsibly disclosed vulnerabilities.
       </p>
       <div class="bounty-hof-empty">
-        <div class="bounty-hof-trophy">🏆</div>
-        <div class="bounty-hof-title">Be the first!</div>
+        <div class="bounty-hof-trophy bounty-hof-trophy--text">*</div>
+        <div class="bounty-hof-title">Be the first</div>
         <div class="bounty-hof-note">
           No vulnerabilities have been responsibly disclosed yet.
         </div>
@@ -371,6 +371,21 @@ import Base from '../layouts/base.astro';
     margin-bottom: 8px;
   }
 
+  .bounty-commitment-icon--text {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--amber-deep);
+    background: var(--amber-soft);
+    width: 36px;
+    height: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    letter-spacing: -0.02em;
+  }
+
   .bounty-commitment-title {
     font-size: 13.5px;
     font-weight: 600;
@@ -457,6 +472,13 @@ import Base from '../layouts/base.astro';
   .bounty-hof-trophy {
     font-size: 28px;
     margin-bottom: 8px;
+  }
+
+  .bounty-hof-trophy--text {
+    font-family: var(--font-mono);
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--amber-deep);
   }
 
   .bounty-hof-title {

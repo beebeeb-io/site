@@ -1,4 +1,4 @@
 {
-  "phase": 1,
+  "phase": 2,
   "_comment": "Phase 1=pre-launch, 2=web+CLI live, 3=all clients, 4=business live. Change this to switch the site phase. No rebuild needed — server reads this on every request."
 }

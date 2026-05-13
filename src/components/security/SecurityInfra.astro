@@ -24,12 +24,12 @@ const rows = [
   {
     label: 'Data we can see',
     title: 'Metadata only',
-    body: 'Account email · billing details · file size · upload timestamp · owner · share recipients (when applicable). We see no filenames (those are hashed), no file contents, and no folder structure beyond what’s required to render your file list.',
+    body: "Account email · billing details · file size · upload timestamp · owner · share recipients (when applicable). We see no filenames (those are encrypted), no file contents, and no folder structure beyond what’s required to render your file list.",
   },
   {
     label: 'Data we cannot see',
     title: 'Files, filenames, keys',
-    body: 'File contents are AES-256-GCM ciphertext. Filenames are stored hashed. Your master key, your password, and your recovery phrase never reach us in any form.',
+    body: 'File contents are AES-256-GCM ciphertext. Filenames are encrypted with the same per-file key. Your master key, your password, and your recovery phrase never reach us in any form.',
   },
 ];
 ---

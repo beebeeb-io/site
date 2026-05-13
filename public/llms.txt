@@ -6,7 +6,7 @@
 
 - [Home](https://beebeeb.io): Product overview — encrypted storage with apps for every platform
 - [Security](https://beebeeb.io/security): How zero-knowledge encryption works — AES-256-GCM, Argon2id, key derivation flow
-- [Pricing](https://beebeeb.io/pricing): Free (5 GB), Personal (EUR 3.59/mo), Pro (EUR 7.19/mo), Business (EUR 24.99/user/mo)
+- [Pricing](https://beebeeb.io/pricing): Free (5 GB), Basic (EUR 10.99/mo, 1 TB), Pro (EUR 54.95/mo, 5 TB+), Business (EUR 109.90/mo, 10 TB+, coming later)
 - [Support](https://beebeeb.io/support): FAQ, contact form, system status
 - [Blog](https://beebeeb.io/blog): Engineering and privacy articles from the team
 - [Features](https://beebeeb.io/features): Full feature list with platform availability

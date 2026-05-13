@@ -38,7 +38,7 @@ Beebeeb encrypts every file on your device before it leaves, using AES-256-GCM w
 
 Files are stored on dedicated infrastructure in Falkenstein, Germany. Beebeeb is operated by Initlabs B.V., a Dutch company registered with the Dutch Chamber of Commerce. Dutch privacy law applies. German data center law applies. No US parent company. No US jurisdiction.
 
-We're launching with a web client and mobile apps. Desktop sync is in development. The encryption engine is open source and independently auditable — if you want to verify that we're not lying about any of this, you can.
+We're launching with a web client and CLI. Desktop sync is in development. The encryption engine is open source and independently auditable — if you want to verify that we're not lying about any of this, you can.
 
 We think cloud storage that respects your privacy shouldn't require you to be a cryptographer. That's what we're building.
 
