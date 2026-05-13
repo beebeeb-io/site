@@ -19,47 +19,118 @@ const {
 } = Astro.props;
 ---
 
-<section class:list={[
-  'relative px-8 py-[72px] overflow-hidden',
-  dark_bg ? 'bg-ink text-paper' : 'bg-paper',
-]}>
-  {dark_bg && (
-    <div class="absolute inset-0 opacity-[0.08]" style="background-image: radial-gradient(circle at 50% 50%, oklch(0.82 0.17 84 / 0.5) 1.5px, transparent 1.8px); background-size: 24px 24px;"></div>
-  )}
-
-  <div class="relative max-w-[780px] mx-auto text-center">
-    <h2 class="text-[44px] leading-[1.05] tracking-[-0.03em] font-bold mb-4 bb-fade-up">
+<section class:list={['cta-section', dark_bg && 'cta-section--dark']}>
+  {dark_bg && <div class="cta-dots" />}
+  <div class="cta-inner">
+    <h2 class="cta-title bb-fade-up">
       {title && <Fragment set:html={title} />}
       {title_highlight && (
         <Fragment>
           <br />
-          <span class:list={[dark_bg ? 'text-amber' : 'text-amber-deep']}>{title_highlight}</span>
+          <span class:list={['cta-highlight', dark_bg && 'cta-highlight--dark']}>{title_highlight}</span>
         </Fragment>
       )}
     </h2>
     {description && (
-      <p class:list={[
-        'text-[15px] max-w-[520px] mx-auto mb-7 leading-relaxed bb-fade-up bb-delay-1',
-        dark_bg ? 'text-[oklch(0.78_0.01_80)]' : 'text-ink-2',
-      ]}>
+      <p class:list={['cta-desc bb-fade-up bb-delay-1', dark_bg && 'cta-desc--dark']}>
         {description}
       </p>
     )}
-    <div class="flex gap-2.5 justify-center bb-fade-up bb-delay-2">
+    <div class="cta-buttons bb-fade-up bb-delay-2">
       {cta_primary_label && cta_primary_href && (
         <a href={cta_primary_href} class="btn btn-amber btn-lg">
           {cta_primary_label}
-          <svg class="w-[13px] h-[13px]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
         </a>
       )}
       {cta_secondary_label && cta_secondary_href && (
-        <a href={cta_secondary_href} class:list={[
-          'btn btn-lg',
-          dark_bg ? 'btn-outline border-[oklch(0.35_0.01_70)] text-paper hover:border-[oklch(0.5_0.01_70)]' : 'btn-outline',
-        ]}>
+        <a href={cta_secondary_href} class:list={['btn btn-lg btn-outline', dark_bg && 'cta-btn-outline--dark']}>
           {cta_secondary_label}
         </a>
       )}
     </div>
   </div>
 </section>
+
+<style>
+  .cta-section {
+    position: relative;
+    padding: 72px 32px;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .cta-section--dark {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .cta-dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.08;
+    background-image: radial-gradient(circle at 50% 50%, oklch(0.82 0.17 84 / 0.5) 1.5px, transparent 1.8px);
+    background-size: 24px 24px;
+  }
+
+  .cta-inner {
+    position: relative;
+    max-width: 780px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .cta-title {
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    margin: 0 0 16px;
+  }
+
+  .cta-highlight {
+    color: var(--amber-deep);
+  }
+
+  .cta-highlight--dark {
+    color: var(--amber);
+  }
+
+  .cta-desc {
+    font-size: 15px;
+    max-width: 520px;
+    margin: 0 auto 28px;
+    line-height: 1.6;
+    color: var(--ink-2);
+  }
+
+  .cta-desc--dark {
+    color: oklch(0.78 0.01 80);
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .cta-btn-outline--dark {
+    border-color: oklch(0.35 0.01 70);
+    color: var(--paper);
+  }
+
+  .cta-btn-outline--dark:hover {
+    border-color: oklch(0.5 0.01 70);
+  }
+
+  @media (max-width: 560px) {
+    .cta-section {
+      padding: 48px 20px;
+    }
+
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>

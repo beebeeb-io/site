@@ -9,16 +9,57 @@ interface Props {
 const { label, title, description } = Astro.props;
 ---
 
-<section class="px-8 pt-[72px] pb-12 text-center relative" style="background: linear-gradient(180deg, var(--color-amber-bg) 0%, var(--color-paper) 85%);">
+<section class="hero-simple">
   {label && (
-    <div class="text-[11px] font-semibold tracking-[0.04em] uppercase text-amber-deep bb-fade-up">{label}</div>
+    <div class="hero-simple-label bb-fade-up">{label}</div>
   )}
   {title && (
-    <h1 class="text-[56px] leading-[1.05] font-bold tracking-[-0.03em] mt-3.5 max-w-[900px] mx-auto bb-fade-up bb-delay-1" set:html={title} />
+    <h1 class="hero-simple-title bb-fade-up bb-delay-1" set:html={title} />
   )}
   {description && (
-    <p class="text-base text-ink-2 mt-[22px] max-w-[640px] mx-auto leading-relaxed bb-fade-up bb-delay-2">
+    <p class="hero-simple-desc bb-fade-up bb-delay-2">
       {description}
     </p>
   )}
 </section>
+
+<style>
+  .hero-simple {
+    padding: 72px 32px 48px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(180deg, var(--amber-soft, oklch(0.92 0.06 88)) 0%, var(--paper) 85%);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero-simple-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--amber-deep);
+  }
+
+  .hero-simple-title {
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.05;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    margin: 14px auto 0;
+    max-width: 900px;
+  }
+
+  .hero-simple-desc {
+    font-size: 16px;
+    color: var(--ink-2);
+    margin: 22px auto 0;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 560px) {
+    .hero-simple {
+      padding: 48px 20px 32px;
+    }
+  }
+</style>
