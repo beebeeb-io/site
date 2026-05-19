@@ -1,25 +1,4 @@
 ---
-const steps = [
-  {
-    n: '01',
-    title: 'Sign up',
-    body: 'Pick a password. We generate your master key on your device, encrypted by that password, plus a 12-word recovery phrase only you ever see.',
-    visual: 'recovery',
-  },
-  {
-    n: '02',
-    title: 'Upload',
-    body: 'Drag, drop, done. Files are encrypted on your device before bytes leave you. We see opaque blobs; only you see your stuff.',
-    visual: 'files',
-  },
-  {
-    n: '03',
-    title: 'Share',
-    body: 'Share a link. The decryption key travels in the URL fragment — the part our server never sees. Revoke any link, any time.',
-    visual: 'share',
-  },
-];
-
 const words = ['gather', 'kiwi', 'actor', 'bronze', '••••••', '•••••', '••••••', '••••', '••••••', '••••', '•••••', '••••'];
 const files = [
   ['tax-2025.pdf', '4f9e2a01b7c8a93f'],
@@ -33,77 +12,198 @@ const files = [
     <div style="text-align: center; margin-bottom: 40px;">
       <div class="bb-eyebrow" style="margin: 0 auto 18px; justify-content: center; display: inline-flex;">How it works</div>
       <h2 class="bb-display-l" style="margin: 0 0 28px; font-size: clamp(32px, 3.4vw, 46px);">Three steps. No clever tricks.</h2>
-      <div class="bb-segment" role="tablist" style="margin: 0 auto;">
-        <button type="button" class="on">For everyone</button>
-        <button type="button">For engineers</button>
+      <div class="bb-segment" role="tablist" style="margin: 0 auto;" id="hiw-tabs">
+        <button type="button" class="on" data-tab="everyone">For everyone</button>
+        <button type="button" data-tab="engineers">For engineers</button>
       </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: var(--paper);">
-      {steps.map((step, index) => (
-        <article style={`padding: 36px 32px; border-right: ${index < steps.length - 1 ? '1px solid var(--line)' : 'none'}; display: flex; flex-direction: column; gap: 14px; min-height: 280px;`}>
-          <div class="bb-step-num">{step.n} / 03</div>
-          <h3 style="font-size: 24px; font-weight: 600; letter-spacing: -0.022em; color: var(--ink); margin: 0;">{step.title}</h3>
-          <p style="font-size: 14px; line-height: 1.65; color: var(--ink-2); text-wrap: pretty; min-height: 110px; margin: 0;">{step.body}</p>
+    <!-- For everyone -->
+    <div class="hiw-panel" id="hiw-everyone">
+      <div class="hiw-grid">
+        <article>
+          <div class="bb-step-num">01 / 03</div>
+          <h3 class="step-title">Sign up</h3>
+          <p class="step-body">Pick a password. We generate your master key on your device, encrypted by that password, plus a 12-word recovery phrase only you ever see.</p>
           <div style="flex: 1;"></div>
-
-          {step.visual === 'recovery' && (
-            <div class="step-visual recovery">
-              <div class="t-label">Recovery phrase · 12 words</div>
-              <div class="word-grid">
-                {words.map((word, i) => (
-                  <div>
-                    <span>{String(i + 1).padStart(2, '0')}</span>
-                    <span>{word}</span>
-                  </div>
-                ))}
-              </div>
-              <div class="visual-note">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
-                Only ever shown to you
-              </div>
-            </div>
-          )}
-
-          {step.visual === 'files' && (
-            <div class="step-visual files">
-              <div class="file-head">
-                <span>Your file →</span>
-                <span>What we store</span>
-              </div>
-              {files.map(([name, hash], i) => (
-                <div class="file-row" style={`border-bottom: ${i < files.length - 1 ? '1px solid var(--line)' : 'none'};`}>
-                  <span>{name}</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--amber-deep)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
-                  <span>{hash}.enc</span>
+          <div class="step-visual recovery">
+            <div class="t-label">Recovery phrase · 12 words</div>
+            <div class="word-grid">
+              {words.map((word, i) => (
+                <div>
+                  <span>{String(i + 1).padStart(2, '0')}</span>
+                  <span>{word}</span>
                 </div>
               ))}
             </div>
-          )}
-
-          {step.visual === 'share' && (
-            <div class="step-visual share">
-              <div class="t-label">Share link</div>
-              <div class="share-link">
-                <span>app.beebeeb.io/s/</span><span>k7Qx</span><span>#a3f7c2e9b1d8</span>
-              </div>
-              <div class="share-meta">
-                <span>
-                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
-                  Expires in 7 days
-                </span>
-                <span>Revoke</span>
-              </div>
-              <div class="fragment-note"><span>#</span> = key. Server never sees this.</div>
+            <div class="visual-note">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"></rect><path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg>
+              Only ever shown to you
             </div>
-          )}
+          </div>
         </article>
-      ))}
+        <article>
+          <div class="bb-step-num">02 / 03</div>
+          <h3 class="step-title">Upload</h3>
+          <p class="step-body">Drag, drop, done. Files are encrypted on your device before bytes leave you. We see opaque blobs; only you see your stuff.</p>
+          <div style="flex: 1;"></div>
+          <div class="step-visual files">
+            <div class="file-head">
+              <span>Your file →</span>
+              <span>What we store</span>
+            </div>
+            {files.map(([name, hash], i) => (
+              <div class="file-row" style={`border-bottom: ${i < files.length - 1 ? '1px solid var(--line)' : 'none'};`}>
+                <span>{name}</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--amber-deep)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"></path></svg>
+                <span>{hash}.enc</span>
+              </div>
+            ))}
+          </div>
+        </article>
+        <article>
+          <div class="bb-step-num">03 / 03</div>
+          <h3 class="step-title">Share</h3>
+          <p class="step-body">Share a link. The decryption key travels in the URL fragment — the part our server never sees. Revoke any link, any time.</p>
+          <div style="flex: 1;"></div>
+          <div class="step-visual share">
+            <div class="t-label">Share link</div>
+            <div class="share-link">
+              <span>app.beebeeb.io/s/</span><span>k7Qx</span><span>#a3f7c2e9b1d8</span>
+            </div>
+            <div class="share-meta">
+              <span>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+                Expires in 7 days
+              </span>
+              <span>Revoke</span>
+            </div>
+            <div class="fragment-note"><span>#</span> = key. Server never sees this.</div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <!-- For engineers -->
+    <div class="hiw-panel" id="hiw-engineers" hidden>
+      <div class="hiw-grid">
+        <article>
+          <div class="bb-step-num">01 / 03</div>
+          <h3 class="step-title">Authenticate</h3>
+          <p class="step-body">One command. Your vault key stays on-device, derived from your password via Argon2id. The server never sees key material.</p>
+          <div style="flex: 1;"></div>
+          <div class="step-visual cli-term">
+            <div class="cli-bar"><span>~ · bb login</span></div>
+            <div class="cli-body">
+              <div class="cli-line"><span class="cli-prompt">$</span> bb login</div>
+              <div class="cli-line"><span class="cli-dim">email</span>  you@company.com</div>
+              <div class="cli-line"><span class="cli-dim">pass</span>   <span class="cli-amber">••••••••••••</span></div>
+              <div class="cli-line">&nbsp;</div>
+              <div class="cli-line"><span class="cli-green">✓</span> Authenticated</div>
+              <div class="cli-line"><span class="cli-dim">device</span> MacBook Pro · <span class="cli-path">MBP-8F2A</span></div>
+              <div class="cli-line"><span class="cli-dim">region</span> <span class="cli-amber">Falkenstein</span> · 14 ms</div>
+              <div class="cli-line"><span class="cli-dim">quota</span>  <span class="cli-green">23.4 GB</span> / 200 GB</div>
+            </div>
+          </div>
+        </article>
+        <article>
+          <div class="bb-step-num">02 / 03</div>
+          <h3 class="step-title">Push</h3>
+          <p class="step-body">Encrypt and upload from your terminal. XChaCha20-Poly1305, chunked, streamed. Pipe from stdin, mirror directories, or push single files.</p>
+          <div style="flex: 1;"></div>
+          <div class="step-visual cli-term">
+            <div class="cli-bar"><span>~ · bb push</span></div>
+            <div class="cli-body">
+              <div class="cli-line"><span class="cli-prompt">$</span> bb push <span class="cli-path">./docs/</span> <span class="cli-cyan">--region Falkenstein</span></div>
+              <div class="cli-line cli-dim">  encrypting with <span class="cli-path">bbvk_4e9a…c7d1</span></div>
+              <div class="cli-line">&nbsp;</div>
+              <div class="cli-line">  <span class="cli-green">✓</span> report.pdf          <span class="cli-dim">2.4 MB</span>  <span class="cli-amber">100%</span></div>
+              <div class="cli-line">  <span class="cli-green">✓</span> schema.sql          <span class="cli-dim">14 kB</span>   <span class="cli-amber">100%</span></div>
+              <div class="cli-line">  <span class="cli-cyan">↑</span> backup.tar.zst      <span class="cli-dim">48 MB</span>   <span class="cli-amber">72%</span></div>
+              <div class="cli-line cli-dim">    chunk 231/320 · 14 MB/s · <span class="cli-green">e2ee</span></div>
+            </div>
+          </div>
+        </article>
+        <article>
+          <div class="bb-step-num">03 / 03</div>
+          <h3 class="step-title">Share</h3>
+          <p class="step-body">Generate time-limited, passphrase-protected links. Single-open burns, auto-expiry, Argon2id-wrapped keys. Revoke with one command.</p>
+          <div style="flex: 1;"></div>
+          <div class="step-visual cli-term">
+            <div class="cli-bar"><span>~ · bb share</span></div>
+            <div class="cli-body">
+              <div class="cli-line"><span class="cli-prompt">$</span> bb share <span class="cli-path">leak.pdf</span> <span class="cli-cyan">--expires 48h --max-opens 1</span></div>
+              <div class="cli-line">&nbsp;</div>
+              <div class="cli-line">  <span class="cli-green">✓ Link created</span></div>
+              <div class="cli-line"><span class="cli-dim">  url</span>     https://bee.beebeeb.io/s/<span class="cli-amber">hx7-mk2-qrf</span></div>
+              <div class="cli-line"><span class="cli-dim">  expires</span> 2026-05-21T09:41Z <span class="cli-dim">(48h)</span></div>
+              <div class="cli-line"><span class="cli-dim">  opens</span>   1</div>
+              <div class="cli-line">&nbsp;</div>
+              <div class="cli-line cli-dim"># revoke: bb revoke bbr_914c3a2f</div>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
   </div>
 </section>
 
+<script>
+  const tabs = document.getElementById('hiw-tabs');
+  const panels = { everyone: document.getElementById('hiw-everyone'), engineers: document.getElementById('hiw-engineers') };
+  tabs?.querySelectorAll('button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      tabs.querySelectorAll('button').forEach((b) => b.classList.remove('on'));
+      btn.classList.add('on');
+      const target = btn.dataset.tab;
+      Object.entries(panels).forEach(([key, panel]) => {
+        if (panel) panel.hidden = key !== target;
+      });
+    });
+  });
+</script>
+
 <style>
+  .hiw-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--paper);
+  }
+
+  .hiw-grid article {
+    padding: 36px 32px;
+    border-right: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 280px;
+  }
+
+  .hiw-grid article:last-child {
+    border-right: none;
+  }
+
+  .step-title {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .step-body {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-2);
+    text-wrap: pretty;
+    min-height: 110px;
+    margin: 0;
+  }
+
   .step-visual {
     margin-top: 8px;
     border: 1px solid var(--line);
@@ -255,14 +355,74 @@ const files = [
     letter-spacing: 0.02em;
   }
 
+  /* CLI terminal visual */
+  .cli-term {
+    background: oklch(0.16 0.01 70);
+    border-color: oklch(0.24 0.01 70);
+  }
+
+  .cli-bar {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-bottom: 1px solid oklch(0.24 0.01 70);
+    color: oklch(0.55 0.01 70);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+
+  .cli-body {
+    padding: 10px 12px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.7;
+  }
+
+  .cli-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: oklch(0.85 0.01 70);
+  }
+
+  .cli-prompt {
+    color: oklch(0.55 0.01 70);
+    margin-right: 6px;
+  }
+
+  .cli-dim {
+    color: oklch(0.45 0.01 70);
+  }
+
+  .cli-green {
+    color: oklch(0.72 0.16 155);
+  }
+
+  .cli-amber {
+    color: oklch(0.82 0.17 84);
+  }
+
+  .cli-cyan {
+    color: oklch(0.75 0.1 210);
+  }
+
+  .cli-path {
+    color: oklch(0.78 0.12 70);
+  }
+
   @media (max-width: 900px) {
-    .bb-container > div:last-child {
+    .hiw-grid {
       grid-template-columns: 1fr !important;
     }
 
-    article {
+    .hiw-grid article {
       border-right: 0 !important;
       border-bottom: 1px solid var(--line);
+    }
+
+    .hiw-grid article:last-child {
+      border-bottom: none;
     }
   }
 </style>
