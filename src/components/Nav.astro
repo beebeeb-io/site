@@ -78,7 +78,7 @@ const waitlistHref = pathname === '/' || pathname.startsWith('/pricing') ? '#wai
         </a>
       </>
     ) : (
-      <a href={waitlistHref} class="bb-cta">Join the waitlist</a>
+      <button type="button" class="bb-cta" data-waitlist-trigger data-waitlist-source="hero">Join the waitlist</button>
     )}
   </div>
 
@@ -114,7 +114,7 @@ const waitlistHref = pathname === '/' || pathname.startsWith('/pricing') ? '#wai
         </a>
       </>
     ) : (
-      <a href={waitlistHref} class="bb-mobile-primary">Join the waitlist</a>
+      <button type="button" class="bb-mobile-primary" data-waitlist-trigger data-waitlist-source="hero">Join the waitlist</button>
     )}
   </div>
 </div>
@@ -320,3 +320,14 @@ const waitlistHref = pathname === '/' || pathname.startsWith('/pricing') ? '#wai
     }
   }
 </style>
+
+<script>
+  document.querySelectorAll('[data-waitlist-trigger][data-waitlist-source="hero"]').forEach((btn) => {
+    if (btn.dataset.navWaitlistBound) return;
+    btn.dataset.navWaitlistBound = 'true';
+    btn.addEventListener('click', () => {
+      const modal = document.querySelector('dialog.waitlist-modal');
+      if (!modal) window.location.href = '/#waitlist';
+    });
+  });
+</script>
