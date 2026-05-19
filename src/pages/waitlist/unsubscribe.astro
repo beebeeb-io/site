@@ -1,0 +1,199 @@
+---
+import Base from '../../layouts/base.astro';
+
+const token = Astro.url.searchParams.get('token') ?? '';
+const apiBase = import.meta.env.PUBLIC_API_URL || 'https://api.beebeeb.io';
+
+let success = false;
+let message = '';
+
+if (!token) {
+  message = 'Missing unsubscribe token.';
+} else {
+  try {
+    const res = await fetch(`${apiBase}/api/v1/waitlist/unsubscribe?token=${encodeURIComponent(token)}`);
+    const data = await res.json();
+    if (res.ok) {
+      success = true;
+      message = data.message;
+    } else {
+      message = data.error || 'Something went wrong. Please try again.';
+    }
+  } catch {
+    message = 'Could not reach the server. Please try again later.';
+  }
+}
+---
+
+<Base title="Unsubscribed — Beebeeb" noindex={true} path="/waitlist/unsubscribe">
+  <section class="wl-page">
+    <div class="wl-page__shell">
+      <div class="wl-page__icon" aria-hidden="true">{success ? '✓' : '!'}</div>
+
+      <div class="wl-page__content">
+        <p class="wl-page__label t-label">{success ? 'Unsubscribed' : 'Unsubscribe'}</p>
+        <h1>{success ? "You're unsubscribed." : "Could not unsubscribe."}</h1>
+        <p class="wl-page__body">{message}</p>
+
+        <div class="wl-page__actions">
+          <a href="/" class="wl-page__primary">
+            Back to home
+            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .wl-page {
+    display: grid;
+    min-height: min(760px, calc(100vh - 76px));
+    padding: 88px 32px 104px;
+    place-items: center;
+    background:
+      radial-gradient(circle at 18% 22%, oklch(0.92 0.06 88 / 0.5), transparent 28%),
+      radial-gradient(circle at 82% 76%, oklch(0.90 0.03 120 / 0.35), transparent 30%),
+      var(--paper);
+  }
+
+  .wl-page__shell {
+    position: relative;
+    display: grid;
+    width: min(100%, 920px);
+    min-height: 420px;
+    align-items: center;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background:
+      linear-gradient(135deg, oklch(0.985 0.004 85 / 0.94), oklch(0.965 0.008 85 / 0.9)),
+      var(--paper);
+    box-shadow: var(--shadow-2);
+  }
+
+  .wl-page__shell::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, oklch(0.18 0.01 70 / 0.05) 0.8px, transparent 1.2px);
+    background-size: 22px 22px;
+    pointer-events: none;
+  }
+
+  .wl-page__icon {
+    position: absolute;
+    right: clamp(-18px, -2vw, 8px);
+    bottom: clamp(-26px, -3vw, 2px);
+    color: oklch(0.20 0.015 70 / 0.06);
+    font-size: clamp(148px, 24vw, 280px);
+    font-weight: 700;
+    line-height: 0.75;
+    user-select: none;
+  }
+
+  .wl-page__content {
+    position: relative;
+    z-index: 1;
+    max-width: 540px;
+    padding: clamp(36px, 7vw, 72px);
+  }
+
+  .wl-page__label {
+    margin: 0 0 14px;
+  }
+
+  .wl-page h1 {
+    max-width: 480px;
+    margin: 0;
+    font-size: clamp(36px, 5vw, 58px);
+    font-weight: 600;
+    letter-spacing: -0.038em;
+    line-height: 1.02;
+  }
+
+  .wl-page__body {
+    max-width: 480px;
+    margin: 18px 0 0;
+    color: var(--ink-2);
+    font-size: 15.5px;
+    line-height: 1.7;
+  }
+
+  .wl-page__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 16px;
+    margin-top: 30px;
+  }
+
+  .wl-page__primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 42px;
+    padding: 0 16px;
+    border: 1px solid var(--ink);
+    border-radius: 6px;
+    background: var(--ink);
+    color: var(--paper);
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 4px 12px -4px rgba(24, 20, 10, 0.3);
+    transition:
+      background 150ms var(--ease),
+      box-shadow 150ms var(--ease),
+      transform 150ms var(--ease);
+  }
+
+  .wl-page__primary:hover {
+    background: oklch(0.24 0.012 70);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 8px 20px -6px rgba(24, 20, 10, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .wl-page__primary svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+  }
+
+  @media (max-width: 640px) {
+    .wl-page {
+      min-height: calc(100vh - 64px);
+      padding: 48px 20px 72px;
+    }
+
+    .wl-page__shell {
+      min-height: 460px;
+    }
+
+    .wl-page__content {
+      padding: 32px 26px;
+    }
+
+    .wl-page__icon {
+      right: -14px;
+      bottom: -14px;
+      font-size: 136px;
+    }
+
+    .wl-page__actions {
+      align-items: stretch;
+      flex-direction: column;
+    }
+  }
+</style>
