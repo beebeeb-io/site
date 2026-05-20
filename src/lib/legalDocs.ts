@@ -6,6 +6,7 @@ import cookiesHtml from '../content/legal/cookies.html?raw';
 import subProcessorsHtml from '../content/legal/sub-processors.html?raw';
 import lawEnforcementHtml from '../content/legal/law-enforcement.html?raw';
 import transparencyHtml from '../content/legal/transparency.html?raw';
+import noticeAndActionHtml from '../content/legal/notice-and-action.html?raw';
 import complaintsHtml from '../content/legal/complaints.html?raw';
 import slaHtml from '../content/legal/sla.html?raw';
 
@@ -83,12 +84,20 @@ export const legalDocs = {
     sourceName: '08 Transparency Report',
     html: transparencyHtml,
   },
+  noticeAndAction: {
+    slug: 'notice-and-action',
+    title: 'Notice-and-Action Procedure',
+    href: '/notice-and-action',
+    description: 'How to report suspected unlawful content on beebeeb.io under Article 16 of the Digital Services Act.',
+    sourceName: '09 Notice-and-Action Procedure',
+    html: noticeAndActionHtml,
+  },
   complaints: {
     slug: 'complaints',
     title: 'Complaints Procedure DSA',
     href: '/complaints',
     description: 'Internal complaint handling under Article 20 of the Digital Services Act.',
-    sourceName: '09 Complaints Procedure DSA',
+    sourceName: '10 Complaints Procedure DSA',
     html: complaintsHtml,
   },
   sla: {
@@ -96,7 +105,7 @@ export const legalDocs = {
     title: 'Service Level Agreement',
     href: '/sla',
     description: 'Availability and support commitments for eligible business customers.',
-    sourceName: '10 Service Level Agreement',
+    sourceName: '11 Service Level Agreement',
     html: slaHtml,
   },
 } satisfies Record<string, LegalDoc>;
@@ -110,6 +119,7 @@ export const legalDocList = [
   legalDocs.subProcessors,
   legalDocs.lawEnforcement,
   legalDocs.transparency,
+  legalDocs.noticeAndAction,
   legalDocs.complaints,
   legalDocs.sla,
 ];
