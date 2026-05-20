@@ -3,6 +3,7 @@ import { ClientRouter } from 'astro:transitions';
 import SEO from '../components/global/SEO.astro';
 import MatomoTagManager from '../components/global/MatomoTagManager.astro';
 import FaviconLinks from '../components/global/FaviconLinks.astro';
+import CookieBanner from '../components/global/CookieBanner.astro';
 import ComingSoon from '../components/ComingSoon.astro';
 import { fetchGlobal, getLaunchPhase } from '../lib/strapi';
 import { phaseConfig } from '../lib/phase';
@@ -82,6 +83,8 @@ const Footer = chrome ? (await import('../components/Footer.astro')).default : n
         <Footer {cfg} />
       </div>
     )}
+
+    <CookieBanner />
 
     <script is:inline src="/scripts/main.js"></script>
     <script is:inline>

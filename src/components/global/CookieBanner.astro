@@ -1,0 +1,449 @@
+<!-- Cookie consent banner + settings modal -->
+
+<div id="bb-cookie-banner" class="bb-cookie-banner" role="region" aria-label="Cookie consent" hidden>
+  <div class="bb-cookie-banner-inner">
+    <p class="bb-cookie-banner-text">
+      We use cookieless analytics to improve Beebeeb. No tracking, no ads.
+    </p>
+    <div class="bb-cookie-banner-actions">
+      <button id="bb-cookie-accept" class="bb-cookie-btn bb-cookie-btn--primary" type="button">Accept</button>
+      <button id="bb-cookie-decline" class="bb-cookie-btn bb-cookie-btn--secondary" type="button">Decline</button>
+      <button id="bb-cookie-manage" class="bb-cookie-btn bb-cookie-btn--text" type="button">Manage</button>
+    </div>
+  </div>
+</div>
+
+<dialog id="bb-cookie-dialog" class="bb-cookie-dialog" aria-label="Cookie settings">
+  <div class="bb-cookie-dialog-inner">
+    <div class="bb-cookie-dialog-header">
+      <h2 class="bb-cookie-dialog-title">Cookie settings</h2>
+      <button id="bb-cookie-dialog-close" class="bb-cookie-dialog-close" type="button" aria-label="Close">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="4" y1="4" x2="12" y2="12" /><line x1="12" y1="4" x2="4" y2="12" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="bb-cookie-category">
+      <div class="bb-cookie-category-header">
+        <div>
+          <span class="bb-cookie-category-name">Essential</span>
+          <span class="bb-cookie-category-badge">Always on</span>
+        </div>
+        <label class="bb-cookie-toggle bb-cookie-toggle--disabled">
+          <input type="checkbox" checked disabled />
+          <span class="bb-cookie-toggle-track"></span>
+        </label>
+      </div>
+      <p class="bb-cookie-category-desc">
+        Session, security, and language preferences. Required for the service to function.
+      </p>
+    </div>
+
+    <div class="bb-cookie-category">
+      <div class="bb-cookie-category-header">
+        <div>
+          <span class="bb-cookie-category-name">Analytics</span>
+        </div>
+        <label class="bb-cookie-toggle">
+          <input type="checkbox" id="bb-cookie-analytics-toggle" />
+          <span class="bb-cookie-toggle-track"></span>
+        </label>
+      </div>
+      <p class="bb-cookie-category-desc">
+        Cookieless analytics via Matomo. Helps us understand how people use Beebeeb. No personal data is collected.
+      </p>
+    </div>
+
+    <div class="bb-cookie-dialog-footer">
+      <button id="bb-cookie-save" class="bb-cookie-btn bb-cookie-btn--primary" type="button">Save preferences</button>
+    </div>
+  </div>
+</dialog>
+
+<script is:inline>
+(function () {
+  var COOKIE_NAME = 'bb_consent';
+  var MAX_AGE = 31536000; // 12 months
+
+  function getConsent() {
+    try {
+      var match = document.cookie.split('; ').find(function (c) { return c.startsWith(COOKIE_NAME + '='); });
+      if (!match) return null;
+      return JSON.parse(decodeURIComponent(match.split('=')[1]));
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function setConsent(analytics) {
+    var value = JSON.stringify({ analytics: analytics });
+    document.cookie = COOKIE_NAME + '=' + encodeURIComponent(value) + '; max-age=' + MAX_AGE + '; path=/; SameSite=Lax';
+    document.dispatchEvent(new CustomEvent('bb:consent-changed', { detail: { analytics: analytics } }));
+  }
+
+  function hideBanner() {
+    var banner = document.getElementById('bb-cookie-banner');
+    if (banner) {
+      banner.classList.add('bb-cookie-banner--hiding');
+      setTimeout(function () { banner.hidden = true; }, 300);
+    }
+  }
+
+  function showBanner() {
+    var banner = document.getElementById('bb-cookie-banner');
+    if (banner) {
+      banner.hidden = false;
+      // Force reflow so the animation plays
+      banner.offsetHeight;
+      banner.classList.add('bb-cookie-banner--visible');
+    }
+  }
+
+  function openDialog() {
+    var dialog = document.getElementById('bb-cookie-dialog');
+    var toggle = document.getElementById('bb-cookie-analytics-toggle');
+    if (!dialog) return;
+    var consent = getConsent();
+    if (toggle) toggle.checked = consent ? consent.analytics : false;
+    dialog.showModal();
+  }
+
+  function closeDialog() {
+    var dialog = document.getElementById('bb-cookie-dialog');
+    if (dialog) dialog.close();
+  }
+
+  function init() {
+    var consent = getConsent();
+
+    // Show banner if no consent recorded
+    if (!consent) {
+      showBanner();
+    }
+
+    // Banner buttons
+    var acceptBtn = document.getElementById('bb-cookie-accept');
+    var declineBtn = document.getElementById('bb-cookie-decline');
+    var manageBtn = document.getElementById('bb-cookie-manage');
+
+    if (acceptBtn) acceptBtn.addEventListener('click', function () { setConsent(true); hideBanner(); });
+    if (declineBtn) declineBtn.addEventListener('click', function () { setConsent(false); hideBanner(); });
+    if (manageBtn) manageBtn.addEventListener('click', function () { hideBanner(); openDialog(); });
+
+    // Dialog buttons
+    var closeBtn = document.getElementById('bb-cookie-dialog-close');
+    var saveBtn = document.getElementById('bb-cookie-save');
+
+    if (closeBtn) closeBtn.addEventListener('click', closeDialog);
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+      var toggle = document.getElementById('bb-cookie-analytics-toggle');
+      setConsent(toggle ? toggle.checked : false);
+      closeDialog();
+    });
+
+    // Footer "Cookie settings" link
+    document.querySelectorAll('[data-cookie-settings]').forEach(function (el) {
+      el.addEventListener('click', function (e) {
+        e.preventDefault();
+        openDialog();
+      });
+    });
+
+    // Close dialog on backdrop click
+    var dialog = document.getElementById('bb-cookie-dialog');
+    if (dialog) {
+      dialog.addEventListener('click', function (e) {
+        if (e.target === dialog) closeDialog();
+      });
+    }
+  }
+
+  // Run on initial load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  // Re-init after Astro view transitions
+  document.addEventListener('astro:after-swap', init);
+})();
+</script>
+
+<style>
+  /* ── Banner ── */
+  .bb-cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    padding: 16px 24px;
+    background: var(--paper);
+    border-top: 1px solid var(--line);
+    box-shadow: var(--shadow-2);
+    transform: translateY(100%);
+    opacity: 0;
+    transition: transform 0.35s var(--ease), opacity 0.35s var(--ease);
+  }
+
+  .bb-cookie-banner--visible {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  .bb-cookie-banner--hiding {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
+  .bb-cookie-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .bb-cookie-banner-text {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 13.5px;
+    line-height: 1.5;
+    flex: 1;
+  }
+
+  .bb-cookie-banner-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  /* ── Shared buttons ── */
+  .bb-cookie-btn {
+    border: none;
+    border-radius: 6px;
+    font-family: var(--font-sans);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    line-height: 1;
+    transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  }
+
+  .bb-cookie-btn--primary {
+    padding: 9px 18px;
+    background: var(--amber-deep);
+    color: white;
+  }
+
+  .bb-cookie-btn--primary:hover {
+    background: oklch(0.52 0.16 60);
+  }
+
+  .bb-cookie-btn--secondary {
+    padding: 9px 18px;
+    background: transparent;
+    color: var(--ink-2);
+    border: 1px solid var(--line-2);
+  }
+
+  .bb-cookie-btn--secondary:hover {
+    border-color: var(--ink-3);
+    color: var(--ink);
+  }
+
+  .bb-cookie-btn--text {
+    padding: 9px 12px;
+    background: transparent;
+    color: var(--ink-3);
+  }
+
+  .bb-cookie-btn--text:hover {
+    color: var(--ink);
+  }
+
+  /* ── Dialog ── */
+  .bb-cookie-dialog {
+    position: fixed;
+    border: none;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 480px;
+    width: calc(100% - 32px);
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: var(--shadow-2);
+  }
+
+  .bb-cookie-dialog::backdrop {
+    background: oklch(0.18 0.01 70 / 0.4);
+  }
+
+  .bb-cookie-dialog-inner {
+    padding: 28px;
+  }
+
+  .bb-cookie-dialog-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+  }
+
+  .bb-cookie-dialog-title {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .bb-cookie-dialog-close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--ink-3);
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease;
+  }
+
+  .bb-cookie-dialog-close:hover {
+    background: var(--paper-3);
+    color: var(--ink);
+  }
+
+  /* ── Categories ── */
+  .bb-cookie-category {
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .bb-cookie-category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .bb-cookie-category-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .bb-cookie-category-badge {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 7px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--ink-3);
+    background: var(--paper-3);
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .bb-cookie-category-desc {
+    margin: 8px 0 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-3);
+  }
+
+  /* ── Toggle ── */
+  .bb-cookie-toggle {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .bb-cookie-toggle input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .bb-cookie-toggle-track {
+    width: 38px;
+    height: 22px;
+    background: var(--line-2);
+    border-radius: 11px;
+    position: relative;
+    transition: background 200ms ease;
+  }
+
+  .bb-cookie-toggle-track::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 200ms ease;
+    box-shadow: 0 1px 3px oklch(0.18 0.01 70 / 0.15);
+  }
+
+  .bb-cookie-toggle input:checked + .bb-cookie-toggle-track {
+    background: var(--amber-deep);
+  }
+
+  .bb-cookie-toggle input:checked + .bb-cookie-toggle-track::after {
+    transform: translateX(16px);
+  }
+
+  .bb-cookie-toggle--disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  /* ── Dialog footer ── */
+  .bb-cookie-dialog-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 640px) {
+    .bb-cookie-banner {
+      padding: 16px 20px;
+    }
+
+    .bb-cookie-banner-inner {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+    }
+
+    .bb-cookie-banner-actions {
+      justify-content: stretch;
+    }
+
+    .bb-cookie-btn--primary,
+    .bb-cookie-btn--secondary {
+      flex: 1;
+      text-align: center;
+    }
+
+    .bb-cookie-dialog-inner {
+      padding: 20px;
+    }
+  }
+</style>

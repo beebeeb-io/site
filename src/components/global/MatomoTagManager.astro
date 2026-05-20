@@ -1,17 +1,30 @@
 <script is:inline>
-  window._mtm = window._mtm || [];
-  if (!window.__bbMatomoTagManagerStarted) {
+  function loadMatomo() {
+    if (window.__bbMatomoTagManagerStarted) return;
+    window._mtm = window._mtm || [];
     window.__bbMatomoTagManagerStarted = true;
     window._mtm.push({ 'mtm.startTime': new Date().getTime(), event: 'mtm.Start' });
-    (function () {
-      var d = document;
-      if (d.getElementById('matomo-tag-manager')) return;
-      var g = d.createElement('script');
-      var s = d.getElementsByTagName('script')[0];
-      g.async = true;
-      g.id = 'matomo-tag-manager';
-      g.src = 'https://analytics.devidee.cloud/js/container_h42wcCxR.js';
-      s.parentNode.insertBefore(g, s);
-    })();
+    var d = document;
+    var g = d.createElement('script');
+    var s = d.getElementsByTagName('script')[0];
+    g.async = true;
+    g.id = 'matomo-tag-manager';
+    g.src = 'https://analytics.devidee.cloud/js/container_h42wcCxR.js';
+    s.parentNode.insertBefore(g, s);
   }
+
+  // Check consent on load
+  try {
+    var consent = JSON.parse(
+      decodeURIComponent(
+        (document.cookie.split('; ').find(function (c) { return c.startsWith('bb_consent='); }) || '').split('=')[1] || 'null'
+      )
+    );
+    if (consent && consent.analytics) loadMatomo();
+  } catch (e) {}
+
+  // Listen for consent changes
+  document.addEventListener('bb:consent-changed', function (e) {
+    if (e.detail && e.detail.analytics) loadMatomo();
+  });
 </script>

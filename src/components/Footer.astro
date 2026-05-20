@@ -45,6 +45,7 @@ const columns = [
       { label: 'Privacy', href: '/privacy' },
       { label: 'Terms', href: '/terms' },
       { label: 'Cookies', href: '/cookies' },
+      { label: 'Cookie settings', href: '#', cookieSettings: true },
     ],
   },
 ];
@@ -73,6 +74,7 @@ const columns = [
                 href={item.href}
                 target={item.external ? '_blank' : undefined}
                 rel={item.external ? 'noopener noreferrer' : undefined}
+                {...(item.cookieSettings ? { 'data-cookie-settings': '' } : {})}
               >
                 {item.label}{item.live === false ? ' (coming soon)' : ''}
               </a>
