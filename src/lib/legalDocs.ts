@@ -88,7 +88,7 @@ export const legalDocs = {
     title: 'Complaints Procedure DSA',
     href: '/complaints',
     description: 'Internal complaint handling under Article 20 of the Digital Services Act.',
-    sourceName: '10 Complaints Procedure DSA',
+    sourceName: '09 Complaints Procedure DSA',
     html: complaintsHtml,
   },
   sla: {
@@ -96,7 +96,7 @@ export const legalDocs = {
     title: 'Service Level Agreement',
     href: '/sla',
     description: 'Availability and support commitments for eligible business customers.',
-    sourceName: '11 Service Level Agreement',
+    sourceName: '10 Service Level Agreement',
     html: slaHtml,
   },
 } satisfies Record<string, LegalDoc>;
